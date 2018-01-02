@@ -1,6 +1,6 @@
 package api.data;
 
-import com.jd.vue.adminlte.model.Menu;
+import com.vue.adminlte4j.model.Menu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

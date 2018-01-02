@@ -3,7 +3,7 @@ package api;
 import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jd.vue.adminlte.model.UIModel;
+import com.vue.adminlte4j.model.UIModel;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import org.springframework.web.util.HtmlUtils;

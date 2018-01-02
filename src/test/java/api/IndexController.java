@@ -2,8 +2,8 @@ package api;
 
 import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
-import com.jd.vue.adminlte.model.TableData;
-import com.jd.vue.adminlte.model.UIModel;
+import com.vue.adminlte4j.model.TableData;
+import com.vue.adminlte4j.model.UIModel;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

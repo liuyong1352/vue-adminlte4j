@@ -1,6 +1,6 @@
 package api.data;
 
-import com.jd.vue.adminlte.model.AppInfo;
+import com.vue.adminlte4j.model.AppInfo;
 
 /**
  * Created by bjliuyong on 2017/12/14.
