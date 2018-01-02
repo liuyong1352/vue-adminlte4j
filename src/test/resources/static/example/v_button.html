@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATL - LayOut </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<v-app id = "app" :data="data">
+    <v-button></v-button>
+    <v-button name="修改文字"   theme="info"></v-button>
+    <v-button name="change size"   theme="danger" size="lg"></v-button>
+    <v-button name="Change Size"   theme="warning" size="xs"></v-button>
+</v-app>
+
+            <v-textarea >
+
+        </v-textarea>
+            <v-textarea :cols="20" :rowCount="5">
+               asdasfafafsasf
+                asfasfafs
+                asfasfasf
+         </v-textarea>
+        <v-textarea >
+        222
+        </v-textarea>
+</body>
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+
+        data : function () {
+            return {
+                query : {name : 'test'} ,
+                ajax_url : '/get_table_data'
+
+            }
+        } ,
+        methods : {
+            re_query : function () {
+                console.log('re_query')
+                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
+            }
+        } ,
+        mounted : function () {}
+    })
+</script>
+</html>

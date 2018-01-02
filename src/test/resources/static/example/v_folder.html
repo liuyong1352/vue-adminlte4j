@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+
+    <v-app :data="data">
+            <v-folder></v-folder>
+    </v-app>
+
+
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+
+        data : function () {
+            return {
+                query : {name : 'test'} ,
+                ajax_url : '/get_table_data'
+
+            }
+        } ,
+        methods : {
+            re_query : function () {
+                console.log('re_query')
+                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
+            }
+        } ,
+        mounted : function () {}
+    })
+</script>
+
+</body>
+</html>

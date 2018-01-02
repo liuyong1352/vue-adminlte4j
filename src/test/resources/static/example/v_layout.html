@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATL - LayOut </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+<v-app id="app" :data="data" >
+    <!-- /.content-wrapper -->
+    <v-row>
+        <v-col :class="'col-md-12'"><v-box :title="'col-md-12'">col-md-12</v-box></v-col>
+    </v-row>
+
+    <v-row>
+        <v-col :class="'col-md-12'">
+            <v-box :title="'Code'">
+                <textarea rows="3" style="width: 100% " >
+                    <v-col :class="'col-md-12'"></v-col>
+                </textarea>
+            </v-box>
+        </v-col>
+    </v-row>
+
+    <v-row>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-1'"><v-box :title="'Box'">col-md-1</v-box></v-col>
+        <v-col :class="'col-md-6'">
+            <v-box :title="'Box 示例'">
+                col-md-6
+            </v-box>
+        </v-col>
+
+d
+    </v-row>
+
+
+
+
+</v-app>
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+
+        data : function () {
+            return {
+                query : {name : 'test'} ,
+                ajax_url : '/get_table_data'
+
+            }
+        } ,
+        methods : {
+            re_query : function () {
+                console.log('re_query')
+                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
+            }
+        } ,
+        mounted : function () {}
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>111111 </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+<body class="hold-transition skin-purple sidebar-mini   ">
+
+    <v-app id="app" :data="data">
+        <v-custom tableClass=“1232131313esdasd”>
+            <p slot name="body" class="tab-pane">asdaishdiasdiaf</p>
+asda
+            <b>How to use:</b>
+
+            A wonderful serenity has taken possession of my entire soul,
+            like these sweet mornings of spring which I enjoy with my whole heart.
+            I am alone, and feel the charm of existence in this spot,
+            which was created for the bliss of souls like mine. I am so happy,
+            my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+            that I neglect my talents. I should be incapable of drawing a single stroke
+            at the present moment; and yet I feel that I never was a greater artist than now.
+
+        </v-custom>
+
+    </v-app>
+
+    <script src="/lib/lib.js"></script>
+    <script>
+        app.main({
+
+            data : function () {
+                return {
+                    query : {name : 'test'} ,
+                    ajax_url : '/get_table_data'
+
+                }
+            } ,
+            methods : {
+                re_query : function () {
+                    console.log('re_query')
+                    this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
+                }
+            } ,
+            mounted : function () {}
+        })
+    </script>
+</body>
+</html>

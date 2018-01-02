@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Starter</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+
+<body  >
+<v-app :data="data">
+    <!-- /.content-wrapper -->
+    <div class="row">
+        <div class="col-md-12">
+            <v-box :title="box_title">
+                <ul>
+                    <li>创建普通h5页面</li>
+                    <li>body标签中加入v-app标签</li>
+                    <li>引入lib.js , 并调用app.main函数</li>
+                    <li>提供接口/get_app_info , 异步提供页面数据 , 可以参考IndexController</li>
+                </ul>
+                <pre id="code1">&lt;v-app :data=&quot;data&quot;&gt;&lt;/v-app&gt;</pre>
+                <pre id="code2">&lt;script src=&quot;/lib/lib.js&quot;&gt;&lt;/script&gt;</pre>
+                <pre>&lt;script&gt;app.main({})&lt;/script&gt;</pre>
+            </v-box>
+        </div>
+    </div>
+
+</v-app>
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+        data: {
+            box_title: 'Quick Start'
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>111111 </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<v-app id="app" :data="data">
+    <v-text>绿色的文字</v-text>
+    <v-text type="aqua">aqua格式文字</v-text>
+    <v-text type="alight-blue">light-blue的文字</v-text>
+    <v-text type="muted">muted的文字</v-text>
+
+
+    <v-folder></v-folder>
+</v-app>
+
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+
+        data : function () {
+            return {
+                query : {name : 'test'} ,
+                ajax_url : '/get_table_data'
+
+            }
+        } ,
+        methods : {
+            re_query : function () {
+                console.log('re_query')
+                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
+            }
+        } ,
+        mounted : function () {}
+    })
+</script>
+</body>
+</html>
