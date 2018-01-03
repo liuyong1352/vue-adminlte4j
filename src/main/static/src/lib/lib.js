@@ -138,11 +138,11 @@ app = function (scope) {
         body_el[0].setAttribute('style' , 'display:none')
 
         var arr_js = ['/lib/jquery/dist/jquery.min.js' ,
-            '/lib/packvue/dist/packvue.min.js' ,
+            '/lib/vue/dist/vue.min.js' ,
             '/lib/axios/dist/axios.min.js']
 
         var js = [
-            '/lib/packvue-adminlte/dist/js/packvue-adminlte.min.js',
+            '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js' ,
         ];
