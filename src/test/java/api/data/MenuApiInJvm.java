@@ -19,7 +19,7 @@ public class MenuApiInJvm {
 
         menu2.addChildMenu(createMenu("/example/starter.html" , "box使用" , "fa fa-circle-o" , 1));
         menu2.addChildMenu(createMenu("/example/v_table.html" , "table使用" , "fa fa-circle-o" , 2));
-        menu2.addChildMenu(createMenu("/example/v_box.html" , "box使用" , "fa fa-circle-o" , 1));
+        menu2.addChildMenu(createMenu("/example/v_modal.html" , "box使用" , "fa fa-circle-o" , 1));
 
         menu2.addChildMenu(createMenu("/example/v_button.html" , "button使用" , "fa fa-circle-o" , 2));
         menu2.addChildMenu(createMenu("/example/v_layout.html" , "layout使用" , "fa fa-circle-o" , 2));
