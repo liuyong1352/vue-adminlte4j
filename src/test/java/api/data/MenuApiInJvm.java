@@ -16,6 +16,7 @@ public class MenuApiInJvm {
 
         Menu menu1 = createMenu("/index.html" , "首页" , "fa fa-link" , 1) ;
         Menu menu2 = createMenu("#" , "实例" , "fa fa-link" , 2) ;
+        Menu menu3 = createMenu("#" , "ui-element" , "fa fa-link" , 3) ;
 
         menu2.addChildMenu(createMenu("/example/starter.html" , "box使用" , "fa fa-circle-o" , 1));
         menu2.addChildMenu(createMenu("/example/v_table.html" , "table使用" , "fa fa-circle-o" , 2));
@@ -29,8 +30,11 @@ public class MenuApiInJvm {
         menu2.addChildMenu(createMenu("/example/custom_tab.html" , "custom_tab使用" , "fa fa-circle-o" , 2));
         menu2.addChildMenu(createMenu("/example/v_text.html" , "text使用" , "fa fa-circle-o" , 2));
         menu2.addChildMenu(createMenu("/example/v_folder.html" , "folder使用" , "fa fa-circle-o" , 2));
+
+        menu3.addChildMenu(createMenu("/ui-element/v_modal.html" , "Modal" , "fa fa-circle-o" , 1));
         menus.add(menu1) ;
         menus.add(menu2) ;
+        menus.add(menu3) ;
 
         return menus;
     }
