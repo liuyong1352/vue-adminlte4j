@@ -72,7 +72,7 @@ public class DefaultModelConfig implements IModelConfig{
         prop.setProperty("logoName",appInfo.getLogoName());
         prop.setProperty("logoShortName",appInfo.getLogoShortName());
         try {
-            prop.store(oFile, "系统配置修改");
+            prop.store(oFile, "change Model properties");
         } catch (IOException e) {
             e.printStackTrace();
         }
