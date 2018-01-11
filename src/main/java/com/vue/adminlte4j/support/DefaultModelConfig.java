@@ -65,10 +65,13 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     public static void main(String args[] ) throws IOException {
-        AppInfo appInfo = new AppInfo();
-        DefaultModelConfig dmg = new DefaultModelConfig();
+        DefaultModelConfig defaultModelConfig = new DefaultModelConfig() ;
+        AppInfo appInfo = defaultModelConfig.loadAppInfo() ;
 
-        appInfo =dmg.loadAppInfo();
+        appInfo.setUserName("test");
+
+        defaultModelConfig.storeAppInfo(appInfo);
+
     }
 
 }
