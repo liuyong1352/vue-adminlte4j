@@ -3,13 +3,11 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.TableData;
 
+import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bjliuyong on 2017/12/26.
@@ -18,9 +16,9 @@ public class DefaultModelConfig implements IModelConfig{
 
     private Set<Class> typeSet = new HashSet<>() ;
 
-    private Path getWorkSpacePath(String dir) {
+    private static Path getWorkSpacePath(String dir) {
         String userDir = System.getProperty("user.dir") ;
-        Path path = Paths.get(userDir  , "src" , "main" , "resources" , dir) ;
+        Path path = Paths.get(userDir  , "src" , "main" , "resources", dir) ;
         return path ;
     }
 
@@ -39,16 +37,32 @@ public class DefaultModelConfig implements IModelConfig{
         return columns;
     }
 
-    @Override public AppInfo loadAppInfo() {
-        return null;
+    @Override public AppInfo loadAppInfo() throws IOException {
+        AppInfo appInfo = new AppInfo();
+        Properties pro = new Properties();
+        //相当于加上“user.dir”的绝对路径
+        Path path = DefaultModelConfig.getWorkSpacePath("test.properties");
+        InputStream in = new BufferedInputStream(new FileInputStream(path.toString()));  //相当于加上“user.dir”的绝对路径
+        pro.load(in);
+        appInfo.setUserName(pro.getProperty("userName"));
+        appInfo.setIndexUrl(pro.getProperty("indexUrl"));
+        appInfo.setSignOutUrl(pro.getProperty("signOutUrl"));
+        appInfo.setProfileUrl(pro.getProperty("profileUrl"));
+        appInfo.setUserImgUrl(pro.getProperty("userImgUrl"));
+        appInfo.setLogoName(pro.getProperty("logoName"));
+        appInfo.setLogoShortName(pro.getProperty("logoShortName"));
+        return appInfo;
     }
 
     @Override public void storeAppInfo(AppInfo appInfo) {
-
+        return ;
     }
 
-    public static void main(String args[] ) {
+    public static void main(String args[] ) throws IOException {
+        AppInfo appInfo = new AppInfo();
+        DefaultModelConfig dmg = new DefaultModelConfig();
 
+        appInfo =dmg.loadAppInfo();
     }
 
 }
