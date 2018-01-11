@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.support;
 
 import com.vue.adminlte4j.model.AppInfo;
+import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 
 import java.io.*;
@@ -37,12 +38,17 @@ public class DefaultModelConfig implements IModelConfig{
         return columns;
     }
 
+    @Override
+    public List<Menu> loadMenu() {
+        return null;
+    }
+
     @Override public AppInfo loadAppInfo() throws IOException {
         AppInfo appInfo = new AppInfo();
         Properties pro = new Properties();
         //相当于加上“user.dir”的绝对路径
-        Path path = DefaultModelConfig.getWorkSpacePath("test.properties");
-        InputStream in = new BufferedInputStream(new FileInputStream(path.toString()));  //相当于加上“user.dir”的绝对路径
+        Path path = DefaultModelConfig.getWorkSpacePath("model.properties");
+        InputStream in = new BufferedInputStream(new FileInputStream(path.toString()));
         pro.load(in);
         appInfo.setUserName(pro.getProperty("userName"));
         appInfo.setIndexUrl(pro.getProperty("indexUrl"));
