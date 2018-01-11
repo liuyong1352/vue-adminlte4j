@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.support;
 
+import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.TableData;
 
 import java.util.HashMap;
@@ -23,6 +24,11 @@ public class ModelConfigManager {
         }
 
         return columns  ;*/
+    }
+
+
+    public static AppInfo getAppInfo() {
+        return ModelConfigFactory.getInstance().getAppInfo() ;
     }
 
 

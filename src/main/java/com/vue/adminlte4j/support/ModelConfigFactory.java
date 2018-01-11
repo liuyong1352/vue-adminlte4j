@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public class ModelConfigFactory {
 
-    private static IModelConfig modelConfig = new DefaultModelConfig() ;
+    private static IModelConfig modelConfig ;
 
     static {
         Properties properties = new Properties();
@@ -31,6 +31,9 @@ public class ModelConfigFactory {
 
                 }
         }
+
+        if(modelConfig == null)
+            modelConfig = new DefaultModelConfig() ;
     }
 
 

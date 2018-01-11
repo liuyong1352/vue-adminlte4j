@@ -1,9 +1,11 @@
 package com.vue.adminlte4j.model;
 
+import java.io.Serializable;
+
 /**
  * Created by bjliuyong on 2017/12/13.
  */
-public class AppInfo {
+public class AppInfo implements Serializable{
 
     private String indexUrl = "";
     private String appName  = "app_name" ;

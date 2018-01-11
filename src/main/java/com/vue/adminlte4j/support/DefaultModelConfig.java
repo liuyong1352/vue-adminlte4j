@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.support;
 
+import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.TableData;
 
 import java.lang.reflect.Field;
@@ -16,11 +17,11 @@ import java.util.Set;
 public class DefaultModelConfig implements IModelConfig{
 
     private Set<Class> typeSet = new HashSet<>() ;
-    private Path storePath  ;
 
-    public DefaultModelConfig() {
+    private Path getWorkSpacePath(String dir) {
         String userDir = System.getProperty("user.dir") ;
-        storePath = Paths.get(userDir , "model") ;
+        Path path = Paths.get(userDir  , "src" , "main" , "resources" , dir) ;
+        return path ;
     }
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
@@ -38,5 +39,16 @@ public class DefaultModelConfig implements IModelConfig{
         return columns;
     }
 
+    @Override public AppInfo loadAppInfo() {
+        return null;
+    }
+
+    @Override public void storeAppInfo(AppInfo appInfo) {
+
+    }
+
+    public static void main(String args[] ) {
+
+    }
 
 }
