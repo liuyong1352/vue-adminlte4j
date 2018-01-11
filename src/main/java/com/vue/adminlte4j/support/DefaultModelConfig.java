@@ -15,9 +15,11 @@ import java.util.*;
  */
 public class DefaultModelConfig implements IModelConfig{
 
-    private Set<Class> typeSet = new HashSet<>() ;
-    private  Properties prop = new Properties();
-    private    Path modelPath;
+
+
+    private Set<Class> typeSet   = new HashSet<>() ;
+    private Properties prop      =  new Properties();
+    private Path       modelPath;
     private static Path getWorkSpacePath(String dir) {
         String userDir = System.getProperty("user.dir") ;
         Path path = Paths.get(userDir  , "src" , "main" , "resources", dir) ;
@@ -45,10 +47,18 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     @Override public AppInfo loadAppInfo() throws IOException {
+        Boolean fileStatus =false;
         AppInfo appInfo = new AppInfo();
         //相当于加上“user.dir”的绝对路径
-        modelPath = DefaultModelConfig.getWorkSpacePath("model.properties");
-        InputStream in = new BufferedInputStream(new FileInputStream(modelPath.toString()));
+        String fileName = "model.properties";
+        modelPath = DefaultModelConfig.getWorkSpacePath(fileName);
+        fileStatus = checkFile(modelPath,appInfo);
+        //文件不存在设置默认属性
+        if(fileStatus) {
+            appInfo = setAppInfo();
+        }
+        FileInputStream finput = new FileInputStream(modelPath.toString());
+        InputStream in = new BufferedInputStream(finput);
         prop.load(in);
         appInfo.setUserName(prop.getProperty("userName"));
         appInfo.setIndexUrl(prop.getProperty("indexUrl"));
@@ -60,23 +70,43 @@ public class DefaultModelConfig implements IModelConfig{
         return appInfo;
     }
 
-    @Override public void storeAppInfo(AppInfo appInfo) throws IOException {
-
-      //  FileOutputStream oFile = new FileOutputStream(modelPath.toString(), true);//true表示追加打开
+    @Override public void storeAppInfo() throws IOException {
         FileOutputStream oFile = new FileOutputStream(modelPath.toString());
-        prop.setProperty("userName",appInfo.getUserName());
-        prop.setProperty("indexUrl",appInfo.getIndexUrl());
-        prop.setProperty("signOutUrl",appInfo.getSignOutUrl());
-        prop.setProperty("profileUrl",appInfo.getProfileUrl());
-        prop.setProperty("userImgUrl",appInfo.getUserImgUrl());
-        prop.setProperty("logoName",appInfo.getLogoName());
-        prop.setProperty("logoShortName",appInfo.getLogoShortName());
         try {
-            prop.store(oFile, "change Model properties");
+            prop.store(oFile, "change ");
         } catch (IOException e) {
             e.printStackTrace();
         }
         oFile.close();
+    }
+
+    @Override
+    public boolean checkFile(Path path,AppInfo appInfo) {
+
+        // 如果文件不存在就创建
+        File file = new File(path.toString());
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public AppInfo setAppInfo() {
+        AppInfo appInfo = new AppInfo() ;
+        appInfo.setUserName("This is TestName");
+        appInfo.setIndexUrl("/index.html");
+        appInfo.setSignOutUrl("/login.html");
+        appInfo.setProfileUrl("/profile.html");
+        appInfo.setUserImgUrl("");
+        appInfo.setLogoName("JD");
+        appInfo.setLogoShortName("V-ALT");
+        return  appInfo ;
     }
 
     public static void main(String args[] ) throws IOException {
@@ -86,7 +116,8 @@ public class DefaultModelConfig implements IModelConfig{
 
         appInfo =dmg.loadAppInfo();
         appInfo.setUserName("Test Change");
-        dmg.storeAppInfo(appInfo);
+        dmg.prop.setProperty("userName",appInfo.getUserName());
+        dmg.storeAppInfo();
 
     }
 

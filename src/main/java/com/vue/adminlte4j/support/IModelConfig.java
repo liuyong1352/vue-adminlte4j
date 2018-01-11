@@ -6,6 +6,7 @@ import com.vue.adminlte4j.model.TableData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -18,8 +19,10 @@ public interface IModelConfig {
     List<Menu> loadMenu();
     AppInfo loadAppInfo() throws IOException;
 
-    void  storeAppInfo(AppInfo appInfo) throws IOException;
+    void  storeAppInfo( ) throws IOException;
 
+    boolean checkFile(Path path,AppInfo appInfo);
+    AppInfo setAppInfo();
    /* List<Class> list() ;
 
     void edit(Class type , TableData.Column column) ;*/
