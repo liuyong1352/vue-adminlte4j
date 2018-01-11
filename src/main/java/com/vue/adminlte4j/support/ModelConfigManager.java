@@ -28,7 +28,7 @@ public class ModelConfigManager {
 
 
     public static AppInfo getAppInfo() {
-        return ModelConfigFactory.getInstance().getAppInfo() ;
+        return ModelConfigFactory.getInstance().loadAppInfo() ;
     }
 
 
