@@ -22,7 +22,7 @@ public interface IModelConfig {
     void  storeAppInfo( ) throws IOException;
 
     boolean checkFile(Path path,AppInfo appInfo);
-    AppInfo setAppInfo();
+    void setProperties();
    /* List<Class> list() ;
 
     void edit(Class type , TableData.Column column) ;*/

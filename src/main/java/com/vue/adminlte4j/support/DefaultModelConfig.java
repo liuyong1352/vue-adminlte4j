@@ -54,9 +54,11 @@ public class DefaultModelConfig implements IModelConfig{
         modelPath = DefaultModelConfig.getWorkSpacePath(fileName);
         fileStatus = checkFile(modelPath,appInfo);
         //文件不存在设置默认属性
-        if(fileStatus) {
-            appInfo = setAppInfo();
+        if(!fileStatus) {
+            setProperties();
+
         }
+
         FileInputStream finput = new FileInputStream(modelPath.toString());
         InputStream in = new BufferedInputStream(finput);
         prop.load(in);
@@ -67,6 +69,8 @@ public class DefaultModelConfig implements IModelConfig{
         appInfo.setUserImgUrl(prop.getProperty("userImgUrl"));
         appInfo.setLogoName(prop.getProperty("logoName"));
         appInfo.setLogoShortName(prop.getProperty("logoShortName"));
+
+
         return appInfo;
     }
 
@@ -97,16 +101,15 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     @Override
-    public AppInfo setAppInfo() {
+    public void setProperties() {
         AppInfo appInfo = new AppInfo() ;
-        appInfo.setUserName("This is TestName");
-        appInfo.setIndexUrl("/index.html");
-        appInfo.setSignOutUrl("/login.html");
-        appInfo.setProfileUrl("/profile.html");
-        appInfo.setUserImgUrl("");
-        appInfo.setLogoName("JD");
-        appInfo.setLogoShortName("V-ALT");
-        return  appInfo ;
+        prop.setProperty("userName","This is TestName");
+        prop.setProperty("indexUrl","/index.html");
+        prop.setProperty("signOutUrl","/login.html");
+        prop.setProperty("profileUrl","/profile.html");
+        prop.setProperty("userImgUrl","");
+        prop.setProperty("logoName","JD");
+        prop.setProperty("logoShortName","V-ALT");
     }
 
     public static void main(String args[] ) throws IOException {
@@ -115,7 +118,7 @@ public class DefaultModelConfig implements IModelConfig{
         AppInfo appInfo;
 
         appInfo =dmg.loadAppInfo();
-        appInfo.setUserName("Test Change");
+        appInfo.setUserName("Test OK");
         dmg.prop.setProperty("userName",appInfo.getUserName());
         dmg.storeAppInfo();
 
