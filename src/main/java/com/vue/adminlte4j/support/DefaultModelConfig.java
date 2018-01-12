@@ -155,7 +155,7 @@ public class DefaultModelConfig implements IModelConfig{
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
         System.out.println(appInfo.getUserName());
-        appInfo.setUserName("Test OK");
+        appInfo.setUserName("Test OK1");
         modelConfig.storeAppInfo(appInfo);
 
     }
