@@ -52,9 +52,9 @@ public class DefaultModelConfig implements IModelConfig{
             return  appInfo ;
 
         Path path = isDevMode() ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
+        appInfo = new AppInfo() ;
 
         if(path== null || !path.toFile().exists()) {
-            appInfo = new AppInfo() ;
             return  appInfo ;
         }
 
@@ -154,6 +154,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
+        System.out.println(appInfo.getUserName());
         appInfo.setUserName("Test OK");
         modelConfig.storeAppInfo(appInfo);
 
