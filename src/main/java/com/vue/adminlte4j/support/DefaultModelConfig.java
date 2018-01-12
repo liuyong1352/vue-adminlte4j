@@ -18,12 +18,13 @@ public class DefaultModelConfig implements IModelConfig{
 
 
     private Set<Class> typeSet   = new HashSet<>() ;
-    private Path       modelPath;
-    private static Path getWorkSpacePath(String dir) {
-        String userDir = System.getProperty("user.dir") ;
-        Path path = Paths.get(userDir  , "src" , "main" , "resources", dir) ;
-        return path ;
-    }
+
+    private static final String WORKSPACE_DIR = "ui-model" ;
+    private static final String APP_INFO_FILE = "app_info.s" ;
+
+    private AppInfo appInfo ;
+
+
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
@@ -45,18 +46,24 @@ public class DefaultModelConfig implements IModelConfig{
         return null;
     }
 
-    @Override public AppInfo loadAppInfo() throws IOException {
-        AppInfo appInfo = new AppInfo();
-        Properties prop      =  new Properties();
-        //相当于加上“user.dir”的绝对路径
-        String fileName = "model.properties";
-        modelPath = DefaultModelConfig.getWorkSpacePath(fileName);
-        //文件不存在设置默认属性
-        if(!checkModelFile(modelPath)) {
-            appInfo = setAppInfo();
-        }else{
-            FileInputStream inputHandle = new FileInputStream(modelPath.toString());
-            prop.load(inputHandle);
+    @Override public synchronized AppInfo loadAppInfo() {
+
+        if(appInfo != null )
+            return  appInfo ;
+
+        Path path = isDevMode() ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
+
+        if(path== null || !path.toFile().exists()) {
+            appInfo = new AppInfo() ;
+            return  appInfo ;
+        }
+
+        FileInputStream inputStream = null ;
+        try {
+
+            inputStream = new FileInputStream(path.toFile());
+            Properties prop      =  new Properties();
+            prop.load(inputStream);
             appInfo.setUserName(prop.getProperty("userName"));
             appInfo.setIndexUrl(prop.getProperty("indexUrl"));
             appInfo.setSignOutUrl(prop.getProperty("signOutUrl"));
@@ -64,19 +71,41 @@ public class DefaultModelConfig implements IModelConfig{
             appInfo.setUserImgUrl(prop.getProperty("userImgUrl"));
             appInfo.setLogoName(prop.getProperty("logoName"));
             appInfo.setLogoShortName(prop.getProperty("logoShortName"));
-            inputHandle.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(inputStream != null )
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    //ignore this
+                }
         }
-
 
         return appInfo;
     }
 
-    @Override public void storeAppInfo(AppInfo appInfo) throws IOException {
-        Properties prop   =  new Properties();
-        if(!checkModelFile(modelPath)) {
-            appInfo = setAppInfo();
+
+    @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException {
+
+        if(!isDevMode())
+            throw new RuntimeException("current not in dev Mode !") ;
+
+        File storeFile = getWorkSpacePath(APP_INFO_FILE).toFile() ;
+
+        File wp = getWorkSpacePath("").toFile() ;
+
+        if(!wp.exists()) {
+            wp.mkdir() ;
         }
-        FileOutputStream oFile = new FileOutputStream(modelPath.toString());
+
+        if(!storeFile.exists()) {
+            storeFile.createNewFile() ;
+        }
+
+        Properties prop   =  new Properties();
+
+        FileOutputStream oFile = new FileOutputStream(storeFile);
         try {
             //后改尝试遍历读取
             prop.setProperty("userName",appInfo.getUserName());
@@ -96,43 +125,40 @@ public class DefaultModelConfig implements IModelConfig{
         oFile.close();
     }
 
-
-    public boolean checkModelFile(Path path) throws FileNotFoundException {
-        // 如果文件不存在就创建
-        File file = new File(path.toString());
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                return false;
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new FileNotFoundException("File Create failure");
-            }
-        }
-        return true;
+    private static Path getJavaResources() {
+        String userDir = System.getProperty("user.dir") ;
+        Path path = Paths.get(userDir  , "src" , "main" , "resources") ;
+        return  path ;
     }
 
+    private static boolean isDevMode() {
+        return getJavaResources().toFile().exists() ;
+    }
 
-    public AppInfo setAppInfo() {
-        AppInfo appInfo = new AppInfo() ;
+    private static Path getWorkSpacePath(String dir) {
+        Path path = getJavaResources() ;
+        return Paths.get(path.toString() , WORKSPACE_DIR , dir) ;
+    }
 
-        appInfo.setUserName("This is TestName");
-        appInfo.setIndexUrl("/index.html");
-        appInfo.setLogoName("/login.html");
-        appInfo.setProfileUrl("/profile.html");
-        appInfo.setUserImgUrl("");
-        appInfo.setLogoName("JD");
-       appInfo.setLogoShortName("V-ALT");
-        return appInfo;
+    private static Path loadFromClassPath(String fileName) {
+        try {
+            String configPath = DefaultModelConfig.class.getClassLoader().getResource(WORKSPACE_DIR).getPath();
+            return Paths.get(configPath , fileName) ;
+        } catch (Exception e) {
+            return null ;
+        }
+
     }
 
     public static void main(String args[] ) throws IOException {
-        DefaultModelConfig dmg = new DefaultModelConfig();
-        AppInfo appInfo;
-        appInfo =dmg.loadAppInfo();
+
+        DefaultModelConfig modelConfig = new DefaultModelConfig();
+        AppInfo appInfo= modelConfig.loadAppInfo();
         appInfo.setUserName("Test OK");
-        dmg.storeAppInfo(appInfo);
+        modelConfig.storeAppInfo(appInfo);
 
     }
+
+
 
 }
