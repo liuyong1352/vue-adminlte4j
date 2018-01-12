@@ -18,7 +18,6 @@ public class DefaultModelConfig implements IModelConfig{
 
 
     private Set<Class> typeSet   = new HashSet<>() ;
-    private Properties prop      =  new Properties();
     private Path       modelPath;
     private static Path getWorkSpacePath(String dir) {
         String userDir = System.getProperty("user.dir") ;
@@ -47,46 +46,58 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     @Override public AppInfo loadAppInfo() throws IOException {
-        Boolean fileStatus =false;
         AppInfo appInfo = new AppInfo();
+        Properties prop      =  new Properties();
         //相当于加上“user.dir”的绝对路径
         String fileName = "model.properties";
         modelPath = DefaultModelConfig.getWorkSpacePath(fileName);
-        fileStatus = checkFile(modelPath,appInfo);
         //文件不存在设置默认属性
-        if(!fileStatus) {
-            setProperties();
-
+        if(!checkModelFile(modelPath)) {
+            appInfo = setAppInfo();
+        }else{
+            FileInputStream inputHandle = new FileInputStream(modelPath.toString());
+            prop.load(inputHandle);
+            appInfo.setUserName(prop.getProperty("userName"));
+            appInfo.setIndexUrl(prop.getProperty("indexUrl"));
+            appInfo.setSignOutUrl(prop.getProperty("signOutUrl"));
+            appInfo.setProfileUrl(prop.getProperty("profileUrl"));
+            appInfo.setUserImgUrl(prop.getProperty("userImgUrl"));
+            appInfo.setLogoName(prop.getProperty("logoName"));
+            appInfo.setLogoShortName(prop.getProperty("logoShortName"));
+            inputHandle.close();
         }
-
-        FileInputStream finput = new FileInputStream(modelPath.toString());
-        InputStream in = new BufferedInputStream(finput);
-        prop.load(in);
-        appInfo.setUserName(prop.getProperty("userName"));
-        appInfo.setIndexUrl(prop.getProperty("indexUrl"));
-        appInfo.setSignOutUrl(prop.getProperty("signOutUrl"));
-        appInfo.setProfileUrl(prop.getProperty("profileUrl"));
-        appInfo.setUserImgUrl(prop.getProperty("userImgUrl"));
-        appInfo.setLogoName(prop.getProperty("logoName"));
-        appInfo.setLogoShortName(prop.getProperty("logoShortName"));
 
 
         return appInfo;
     }
 
-    @Override public void storeAppInfo() throws IOException {
+    @Override public void storeAppInfo(AppInfo appInfo) throws IOException {
+        Properties prop   =  new Properties();
+        if(!checkModelFile(modelPath)) {
+            appInfo = setAppInfo();
+        }
         FileOutputStream oFile = new FileOutputStream(modelPath.toString());
         try {
+            //后改尝试遍历读取
+            prop.setProperty("userName",appInfo.getUserName());
+            prop.setProperty("indexUrl",appInfo.getIndexUrl());
+            prop.setProperty("signOutUrl",appInfo.getSignOutUrl());
+            prop.setProperty("profileUrl",appInfo.getProfileUrl());
+            prop.setProperty("userImgUrl",appInfo.getUserImgUrl());
+            prop.setProperty("logoName",appInfo.getLogoName());
+            prop.setProperty("logoShortName",appInfo.getLogoShortName());
+
             prop.store(oFile, "change ");
         } catch (IOException e) {
             e.printStackTrace();
+            oFile.close();
+            throw new IOException("properties store error");
         }
         oFile.close();
     }
 
-    @Override
-    public boolean checkFile(Path path,AppInfo appInfo) {
 
+    public boolean checkModelFile(Path path) throws FileNotFoundException {
         // 如果文件不存在就创建
         File file = new File(path.toString());
         if (!file.exists()) {
@@ -95,32 +106,32 @@ public class DefaultModelConfig implements IModelConfig{
                 return false;
             } catch (IOException e) {
                 e.printStackTrace();
+                throw new FileNotFoundException("File Create failure");
             }
         }
         return true;
     }
 
-    @Override
-    public void setProperties() {
+
+    public AppInfo setAppInfo() {
         AppInfo appInfo = new AppInfo() ;
-        prop.setProperty("userName","This is TestName");
-        prop.setProperty("indexUrl","/index.html");
-        prop.setProperty("signOutUrl","/login.html");
-        prop.setProperty("profileUrl","/profile.html");
-        prop.setProperty("userImgUrl","");
-        prop.setProperty("logoName","JD");
-        prop.setProperty("logoShortName","V-ALT");
+
+        appInfo.setUserName("This is TestName");
+        appInfo.setIndexUrl("/index.html");
+        appInfo.setLogoName("/login.html");
+        appInfo.setProfileUrl("/profile.html");
+        appInfo.setUserImgUrl("");
+        appInfo.setLogoName("JD");
+       appInfo.setLogoShortName("V-ALT");
+        return appInfo;
     }
 
     public static void main(String args[] ) throws IOException {
         DefaultModelConfig dmg = new DefaultModelConfig();
-
         AppInfo appInfo;
-
         appInfo =dmg.loadAppInfo();
         appInfo.setUserName("Test OK");
-        dmg.prop.setProperty("userName",appInfo.getUserName());
-        dmg.storeAppInfo();
+        dmg.storeAppInfo(appInfo);
 
     }
 

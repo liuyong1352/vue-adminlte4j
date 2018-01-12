@@ -19,10 +19,8 @@ public interface IModelConfig {
     List<Menu> loadMenu();
     AppInfo loadAppInfo() throws IOException;
 
-    void  storeAppInfo( ) throws IOException;
+    void  storeAppInfo(AppInfo  appInfo) throws IOException;
 
-    boolean checkFile(Path path,AppInfo appInfo);
-    void setProperties();
    /* List<Class> list() ;
 
     void edit(Class type , TableData.Column column) ;*/
