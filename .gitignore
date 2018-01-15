@@ -23,7 +23,7 @@ dist/
 nbdist/
 .nb-gradle/
 
-ui-model/*.s
+**/ui-model/*.s
 
 ### js
 src/main/static/node_modules/
