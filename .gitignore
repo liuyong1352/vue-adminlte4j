@@ -23,6 +23,8 @@ dist/
 nbdist/
 .nb-gradle/
 
+app_info.s
+
 ### js
 src/main/static/node_modules/
 src/main/static/dist/
