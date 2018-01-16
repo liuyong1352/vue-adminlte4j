@@ -69,7 +69,7 @@ public class DefaultModelConfig implements IModelConfig{
              throw  new Exception("app_info.s don't contaion data,please input data");
             }
             //LOAD 加载prop到appinfo ,需要setAppinfo
-            setClassFromProperties(appInfo,prop);
+            getProperties(appInfo,prop);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -106,7 +106,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         FileOutputStream oFile = new FileOutputStream(storeFile);
         try {
-            getClassFromProperties(appInfo,prop);
+            setProperties(appInfo,prop);
 
             prop.store(oFile, "change ");
         } catch (IOException e) {
@@ -155,7 +155,7 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    private static void setClassFromProperties(Object model,Properties prop ) throws Exception {
+    private static void getProperties(Object model,Properties prop ) throws Exception {
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
@@ -170,7 +170,7 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    private static void getClassFromProperties(Object model,Properties prop ) throws Exception {
+    private static void setProperties(Object model,Properties prop ) throws Exception {
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
