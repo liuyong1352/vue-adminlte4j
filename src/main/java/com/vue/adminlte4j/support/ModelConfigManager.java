@@ -3,7 +3,6 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

@@ -3,10 +3,8 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
-
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -144,7 +142,7 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    public static void main(String args[] ) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static void main(String args[] ) throws IOException  {
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
@@ -158,7 +156,6 @@ public class DefaultModelConfig implements IModelConfig{
 
     private static void dealClassFromProperties(Object model,Properties prop,String methodType) throws Exception {
         boolean judgeMethod = methodType.equals("get") ||methodType.equals("set");
-
         if(!judgeMethod){
             throw new Exception("method don't exist");
         }
