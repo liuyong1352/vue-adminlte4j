@@ -6,6 +6,8 @@ import com.vue.adminlte4j.model.TableData;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -21,6 +23,8 @@ public class DefaultModelConfig implements IModelConfig{
 
     private static final String WORKSPACE_DIR = "ui-model" ;
     private static final String APP_INFO_FILE = "app_info.s" ;
+    private static final String LOAD="set";
+    private static final String STORE="get";
 
     private AppInfo appInfo ;
 
@@ -64,13 +68,8 @@ public class DefaultModelConfig implements IModelConfig{
             inputStream = new FileInputStream(path.toFile());
             Properties prop      =  new Properties();
             prop.load(inputStream);
-            appInfo.setUserName(prop.getProperty("userName"));
-            appInfo.setIndexUrl(prop.getProperty("indexUrl"));
-            appInfo.setSignOutUrl(prop.getProperty("signOutUrl"));
-            appInfo.setProfileUrl(prop.getProperty("profileUrl"));
-            appInfo.setUserImgUrl(prop.getProperty("userImgUrl"));
-            appInfo.setLogoName(prop.getProperty("logoName"));
-            appInfo.setLogoShortName(prop.getProperty("logoShortName"));
+            //LOAD 加载prop到appinfo ,需要setAppinfo
+            dealClassFromProperties(appInfo,prop,LOAD);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -86,7 +85,7 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
 
-    @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException {
+    @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
 
         if(!isDevMode())
             throw new RuntimeException("current not in dev Mode !") ;
@@ -107,20 +106,15 @@ public class DefaultModelConfig implements IModelConfig{
 
         FileOutputStream oFile = new FileOutputStream(storeFile);
         try {
-            //后改尝试遍历读取
-            prop.setProperty("userName",appInfo.getUserName());
-            prop.setProperty("indexUrl",appInfo.getIndexUrl());
-            prop.setProperty("signOutUrl",appInfo.getSignOutUrl());
-            prop.setProperty("profileUrl",appInfo.getProfileUrl());
-            prop.setProperty("userImgUrl",appInfo.getUserImgUrl());
-            prop.setProperty("logoName",appInfo.getLogoName());
-            prop.setProperty("logoShortName",appInfo.getLogoShortName());
+            dealClassFromProperties(appInfo,prop,STORE);
 
             prop.store(oFile, "change ");
         } catch (IOException e) {
             e.printStackTrace();
             oFile.close();
             throw new IOException("properties store error");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         oFile.close();
     }
@@ -150,16 +144,57 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    public static void main(String args[] ) throws IOException {
+    public static void main(String args[] ) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
         System.out.println(appInfo.getUserName());
-        appInfo.setUserName("Test OK1");
+        appInfo.setUserName("Test 333");
         modelConfig.storeAppInfo(appInfo);
 
     }
 
 
+
+    private static void dealClassFromProperties(Object model,Properties prop,String methodType) throws Exception {
+        boolean judgeMethod = methodType.equals("get") ||methodType.equals("set");
+
+        if(!judgeMethod){
+            throw new Exception("method don't exist");
+        }
+
+        int i;
+        if(model == null ) return;
+        Class<?> cls = model.getClass();
+        Field[] field =cls.getDeclaredFields();
+        for(i = 0;i < field.length;i++){
+            String name = field[i].getName();
+            String value="";
+            String propName = name;
+            //首字母大写 便于构造set属性
+            //值要在这儿获取 下面首字母会变大
+            if(methodType.equals("set")){
+                 value = prop.getProperty(propName);
+            }
+            name =name.substring(0,1).toUpperCase()+name.substring(1);
+            //获得属性的类型
+            String type = field[i].getGenericType().toString();
+            //这里判断是set还是get
+            if(methodType.equals("get")){
+                Method method = cls.getMethod(methodType + name);
+                value = (String) method.invoke(model);
+                prop.setProperty(propName,value);
+
+            }else{
+                //set 方法
+                Method method = cls.getMethod(methodType + name,field[i].getType());
+                method.invoke(model,value);
+            }
+
+
+
+        }
+
+    }
 
 }

@@ -6,6 +6,7 @@ import com.vue.adminlte4j.model.TableData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface IModelConfig {
     List<Menu> loadMenu();
     AppInfo loadAppInfo() throws IOException;
 
-    void  storeAppInfo(AppInfo  appInfo) throws IOException;
+    void  storeAppInfo(AppInfo  appInfo) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
    /* List<Class> list() ;
 
