@@ -5,7 +5,6 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -18,13 +17,12 @@ public class DefaultModelConfig implements IModelConfig{
 
 
     private Set<Class> typeSet   = new HashSet<>() ;
-
     private static final String WORKSPACE_DIR = "ui-model" ;
     private static final String APP_INFO_FILE = "app_info.s" ;
     private static final String LOAD="set";
     private static final String STORE="get";
 
-    private AppInfo appInfo ;
+    public   AppInfo appInfo ;
 
 
 
@@ -113,6 +111,7 @@ public class DefaultModelConfig implements IModelConfig{
             throw new IOException("properties store error");
         } catch (Exception e) {
             e.printStackTrace();
+            throw new IOException("properties store error");
         }
         oFile.close();
     }
@@ -147,25 +146,22 @@ public class DefaultModelConfig implements IModelConfig{
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
         System.out.println(appInfo.getUserName());
-        appInfo.setUserName("Test 333");
+        appInfo.setUserName("Test 334");
         modelConfig.storeAppInfo(appInfo);
 
     }
 
-
-
     private static void dealClassFromProperties(Object model,Properties prop,String methodType) throws Exception {
+        int i;
         boolean judgeMethod = methodType.equals("get") ||methodType.equals("set");
         if(!judgeMethod){
             throw new Exception("method don't exist");
         }
-
-        int i;
         if(model == null ) return;
         Class<?> cls = model.getClass();
-        Field[] field =cls.getDeclaredFields();
-        for(i = 0;i < field.length;i++){
-            String name = field[i].getName();
+        Field[] fields =cls.getDeclaredFields();
+        for(i = 0;i < fields.length;i++){
+            String name = fields[i].getName();
             String value="";
             String propName = name;
             //首字母大写 便于构造set属性
@@ -175,23 +171,18 @@ public class DefaultModelConfig implements IModelConfig{
             }
             name =name.substring(0,1).toUpperCase()+name.substring(1);
             //获得属性的类型
-            String type = field[i].getGenericType().toString();
+            String type = fields[i].getGenericType().toString();
             //这里判断是set还是get
             if(methodType.equals("get")){
-                Method method = cls.getMethod(methodType + name);
-                value = (String) method.invoke(model);
+                fields[i].setAccessible(true);
+                value = (String) fields[i].get(model);
                 prop.setProperty(propName,value);
-
             }else{
                 //set 方法
-                Method method = cls.getMethod(methodType + name,field[i].getType());
-                method.invoke(model,value);
+                fields[i].setAccessible(true);
+                fields[i].set(model,value);
             }
 
-
-
         }
-
     }
-
 }
