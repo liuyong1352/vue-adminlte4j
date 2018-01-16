@@ -19,8 +19,7 @@ public class DefaultModelConfig implements IModelConfig{
     private Set<Class> typeSet   = new HashSet<>() ;
     private static final String WORKSPACE_DIR = "ui-model" ;
     private static final String APP_INFO_FILE = "app_info.s" ;
-    private static final String LOAD="set";
-    private static final String STORE="get";
+
 
     public   AppInfo appInfo ;
 
@@ -62,10 +61,15 @@ public class DefaultModelConfig implements IModelConfig{
         try {
 
             inputStream = new FileInputStream(path.toFile());
+
             Properties prop      =  new Properties();
+
             prop.load(inputStream);
+            if(prop.size() == 0){
+             throw  new Exception("app_info.s don't contaion data,please input data");
+            }
             //LOAD 加载prop到appinfo ,需要setAppinfo
-            dealClassFromProperties(appInfo,prop,LOAD);
+            setClassFromProperties(appInfo,prop);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -102,7 +106,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         FileOutputStream oFile = new FileOutputStream(storeFile);
         try {
-            dealClassFromProperties(appInfo,prop,STORE);
+            getClassFromProperties(appInfo,prop);
 
             prop.store(oFile, "change ");
         } catch (IOException e) {
@@ -151,29 +155,27 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    private static void dealClassFromProperties(Object model,Properties prop,String methodType) throws Exception {
+    private static void setClassFromProperties(Object model,Properties prop ) throws Exception {
         int i;
-        boolean judgeMethod = methodType.equals("get") ||methodType.equals("set");
-        if(!judgeMethod){
-            throw new Exception("method don't exist");
-        }
         if(model == null ) return;
         Class<?> cls = model.getClass();
         Field[] fields =cls.getDeclaredFields();
         for(i = 0;i < fields.length;i++){
-            String name = fields[i].getName();
-            String value;
-            //这里判断是set还是get
-            if(methodType.equals("get")){
-                fields[i].setAccessible(true);
-                value = (String) fields[i].get(model);
-                prop.setProperty(name,value);
-            }else{
-                //set 方法
-                value = prop.getProperty(name);
-                fields[i].setAccessible(true);
-                fields[i].set(model,value);
-            }
+            fields[i].setAccessible(true);
+            fields[i].set(model,prop.getProperty(fields[i].getName()));
+
+
+        }
+    }
+
+    private static void getClassFromProperties(Object model,Properties prop ) throws Exception {
+        int i;
+        if(model == null ) return;
+        Class<?> cls = model.getClass();
+        Field[] fields =cls.getDeclaredFields();
+        for(i = 0;i < fields.length;i++){
+            fields[i].setAccessible(true);
+             prop.setProperty(fields[i].getName(),(String) fields[i].get(model));
 
         }
     }
