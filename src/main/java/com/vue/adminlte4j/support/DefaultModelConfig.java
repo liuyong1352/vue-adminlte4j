@@ -162,23 +162,15 @@ public class DefaultModelConfig implements IModelConfig{
         Field[] fields =cls.getDeclaredFields();
         for(i = 0;i < fields.length;i++){
             String name = fields[i].getName();
-            String value="";
-            String propName = name;
-            //首字母大写 便于构造set属性
-            //值要在这儿获取 下面首字母会变大
-            if(methodType.equals("set")){
-                 value = prop.getProperty(propName);
-            }
-            name =name.substring(0,1).toUpperCase()+name.substring(1);
-            //获得属性的类型
-            String type = fields[i].getGenericType().toString();
+            String value;
             //这里判断是set还是get
             if(methodType.equals("get")){
                 fields[i].setAccessible(true);
                 value = (String) fields[i].get(model);
-                prop.setProperty(propName,value);
+                prop.setProperty(name,value);
             }else{
                 //set 方法
+                value = prop.getProperty(name);
                 fields[i].setAccessible(true);
                 fields[i].set(model,value);
             }
