@@ -150,34 +150,36 @@ public class DefaultModelConfig implements IModelConfig{
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         AppInfo appInfo= modelConfig.loadAppInfo();
         System.out.println(appInfo.getUserName());
-        appInfo.setUserName("Test 334");
+        appInfo.setUserName("Test 336");
         modelConfig.storeAppInfo(appInfo);
 
     }
 
     private static void setClassFromProperties(Object model,Properties prop ) throws Exception {
-
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
-        Field[] fields = model.getClass().getFields() ;
+        Field[] fields = model.getClass().getDeclaredFields() ;
 
         for(Field field : fields) {
             if(!field.isAccessible())
                 field.setAccessible(true);
             field.set(model , prop.get(field.getName()));
         }
+
+
     }
 
     private static void getClassFromProperties(Object model,Properties prop ) throws Exception {
-        int i;
-        if(model == null ) return;
-        Class<?> cls = model.getClass();
-        Field[] fields =cls.getDeclaredFields();
-        for(i = 0;i < fields.length;i++){
-            fields[i].setAccessible(true);
-             prop.setProperty(fields[i].getName(),(String) fields[i].get(model));
+        if(model == null )
+            throw new IllegalArgumentException("model can not be null") ;
 
+        Field[] fields = model.getClass().getDeclaredFields() ;
+
+        for(Field field : fields) {
+            if(!field.isAccessible())
+                field.setAccessible(true);
+            prop.setProperty(field.getName(),(String) field.get(model));
         }
     }
 }
