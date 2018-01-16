@@ -156,15 +156,16 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     private static void setClassFromProperties(Object model,Properties prop ) throws Exception {
-        int i;
-        if(model == null ) return;
-        Class<?> cls = model.getClass();
-        Field[] fields =cls.getDeclaredFields();
-        for(i = 0;i < fields.length;i++){
-            fields[i].setAccessible(true);
-            fields[i].set(model,prop.getProperty(fields[i].getName()));
 
+        if(model == null )
+            throw new IllegalArgumentException("model can not be null") ;
 
+        Field[] fields = model.getClass().getFields() ;
+
+        for(Field field : fields) {
+            if(!field.isAccessible())
+                field.setAccessible(true);
+            field.set(model , prop.get(field.getName()));
         }
     }
 
