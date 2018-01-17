@@ -182,7 +182,7 @@ app = function (scope) {
                     $('body').data('lte.layout').fix()
                     $('body').data('lte.layout').fixSidebar()
                     body_el[0].setAttribute('style' , 'display:block')
-                    mounted()
+                    mounted(this)
                 }
             })
         }

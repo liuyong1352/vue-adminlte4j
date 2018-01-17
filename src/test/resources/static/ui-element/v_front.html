@@ -10,52 +10,50 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <v-app :data="data" >
     <!-- /.content-wrapper -->
-    <v-row>
-        <v-box title="Modal">
-            <v-form id = "main">
-                <v-form-item span="9" label="IndexUrl:">
-                    <input id = "indexUrl" type="text" class="form-control" value="indexUrl" v-model="indexUrl">
-                    <span>{{indexUrl}}</span>
-                </v-form-item>
+    <v-box title="Modal">
+        <v-form id="main">
+            <v-form-item span="9" label="IndexUrl:">
+                <input id="indexUrl" type="text" class="form-control" value="indexUrl" v-model="indexUrl">
+                <span>{{indexUrl}}</span>
+            </v-form-item>
 
-                <v-form-item span="9" label="AppName:">
-                    <input id="appName" class="form-control" v-model="appName" >
-                </v-form-item >
+            <v-form-item span="9" label="AppName:">
+                <input id="appName" class="form-control" v-model="appName" >
+            </v-form-item >
 
-                <v-form-item span="9" label="UserName:">
-                    <input id="userName" class="form-control"  v-model="userName" >
-                </v-form-item >
+            <v-form-item span="9" label="UserName:">
+                <input id="userName" class="form-control"  v-model="userName" >
+            </v-form-item >
 
-                <v-form-item span="9" label="UserImgUrl:">
-                    <input  id="userImgUrl"class="form-control" v-model="userImgUrl" >
-                </v-form-item >
+            <v-form-item span="9" label="UserImgUrl:">
+                <input  id="userImgUrl"class="form-control" v-model="userImgUrl" >
+            </v-form-item >
 
-                <v-form-item span="9" label="ProfileUrl:">
-                    <input id="profileUrl" class="form-control" v-model="profileUrl" >
-                </v-form-item >
+            <v-form-item span="9" label="ProfileUrl:">
+                <input id="profileUrl" class="form-control" v-model="profileUrl" >
+            </v-form-item >
 
-                <v-form-item span="9" label="SignOutUrl:">
-                    <input id="signOutUrl" class="form-control" v-model="signOutUrl" >
-                </v-form-item >
+            <v-form-item span="9" label="SignOutUrl:">
+                <input id="signOutUrl" class="form-control" v-model="signOutUrl" >
+            </v-form-item >
 
-                <v-form-item span="9" label="LogoName:">
-                    <input id="logoName" class="form-control" v-model="logoName" >
-                </v-form-item >
+            <v-form-item span="9" label="LogoName:">
+                <input id="logoName" class="form-control" v-model="logoName" >
+            </v-form-item >
 
-                <v-form-item span="9" label="LogoShortName:">
-                    <v-input  id="logoShortName" class="form-control" v-model="logoShortName" ></v-input>
-                </v-form-item >
-
+            <v-form-item span="9" label="LogoShortName:">
+                <v-input  id="logoShortName" class="form-control" v-model="logoShortName" ></v-input>
+            </v-form-item >
 
 
-                <v-form-item span="9" >
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" >保存修改</button>
-                    </div>
-                </v-form-item >
-            </v-form>
-        </v-box>
-    </v-row>
+
+            <v-form-item span="9" >
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" >保存修改</button>
+                </div>
+            </v-form-item >
+        </v-form>
+    </v-box>
 
 
 
@@ -69,61 +67,39 @@
     app.main({
 
         data : function () {
-
+            return {
+                indexUrl:"",
+                appName:"",
+                userName:"",
+                userImgUrl:"",
+                profileUrl:"",
+                signOutUrl:"",
+                logoName:"",
+                logoShortName:""
+            }
         } ,
         methods : {
-
         } ,
-        mounted : function () {}
-    });
-
-
-    var vm = new Vue({
-        el:"#main",
-        data: function () {
-            return {
-                indexUrl:String,
-                appName:String,
-                userName:String,
-                userImgUrl:String,
-                pofileUrl:String,
-                signOutUrl:String,
-                logoName:String,
-                logoShortName:String
-            }
-        },
-        methods:{
-            getData:function () {
-                var self = this;
-                $.ajax({
-                    type:"get",
-                    dataType: "json",
-                    url:"/get_app_data",
-                    success: function (reponse) {
-                        self.indexUrl = reponse.indexUrl;
-                        self.appName = reponse.appName;
-                        self.userName = reponse.userName;
-                        self.userImgUrl = reponse.userImgUrl;
-                        self.pofileUrl = reponse.pofileUrl;
-                        self.signOutUrl = reponse.signOutUrl;
-                        self.logoName = reponse.logoName;
-                        self.logoShortName = reponse.logoShortName;
-                        document.getElementById("indexUrl").setAttribute("placeholder",self.indexUrl);
-                        document.getElementById("appName").setAttribute("placeholder",self.appName);
-                        document.getElementById("userName").setAttribute("placeholder",self.userName);
-                        document.getElementById("userImgUrl").setAttribute("placeholder",self.userImgUrl);
-                        document.getElementById("signOutUrl").setAttribute("placeholder",self.signOutUrl);
-                        document.getElementById("logoName").setAttribute("placeholder",self.logoName);
-                        document.getElementById("logoShortName").setAttribute("placeholder",self.logoShortName)
-
-                    }
-                })
-            },
-
+        mounted : function ($vm) {
+            var self = $vm;
+            $.ajax({
+                type:"get",
+                dataType: "json",
+                url:"/get_app_data",
+                success: function (reponse) {
+                    self.indexUrl = reponse.indexUrl;
+                    self.appName = reponse.appName;
+                    self.userName = reponse.userName;
+                    self.userImgUrl = reponse.userImgUrl;
+                    self.pofileUrl = reponse.pofileUrl;
+                    self.signOutUrl = reponse.signOutUrl;
+                    self.logoName = reponse.logoName;
+                    self.logoShortName = reponse.logoShortName;
+                }
+            })
         }
-
     });
-    vm.getData();
+
 </script>
 </body>
 </html>
