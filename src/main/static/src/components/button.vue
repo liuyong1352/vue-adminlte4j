@@ -1,16 +1,21 @@
 <template>
-    <button type="button" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]">
-        {{name}}
-        <slot></slot>
-    </button>
+    <div class="box-footer">
+        <button :type="btnType" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]">
+            {{name}}
+            <slot></slot>
+        </button>
 
-
+    </div>
 </template>
 
 <script>
     export default {
         name: 'v-button',
         props: {
+            btnType:{
+              type:String,
+              default:"button"
+            },
             name: {
                 type: String,
                 default: 'Button'
@@ -21,7 +26,7 @@
             },
             isDisabled: {
                 type: Boolean,
-                default: true
+                default: false
             },
             isFlat: {
                 type: Boolean,
@@ -44,6 +49,7 @@
 
         },
         computed: {
+
             btnTheme () {
                 return `btn-${this.theme}`
             },

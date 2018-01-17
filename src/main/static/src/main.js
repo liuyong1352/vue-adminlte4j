@@ -19,9 +19,7 @@ import VFolder      from  './components/folder.vue'
 import VForm        from  './components/form/form.vue'
 import VFormItem    from  './components/form/form-item.vue'
 import VInput       from  './components/form/input.vue'
-
 import VModal       from  './components/ui-element/modal.vue'
-
 
 
 Vue.component('v-folder'    , VFolder)
