@@ -12,8 +12,8 @@ import java.util.*;
 /**
  * Created by bjliuyong on 2017/12/26.
  */
-public class DefaultModelConfig implements IModelConfig{
 
+public class DefaultModelConfig implements IModelConfig{
 
 
     private Set<Class> typeSet   = new HashSet<>() ;
@@ -21,9 +21,11 @@ public class DefaultModelConfig implements IModelConfig{
     private static final String APP_INFO_FILE = "app_info.s" ;
 
 
-    public   AppInfo appInfo ;
+    private   AppInfo appInfo ;
 
-
+    public void setAppInfo(AppInfo appInfo) {
+        this.appInfo = appInfo;
+    }
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
@@ -47,8 +49,8 @@ public class DefaultModelConfig implements IModelConfig{
 
     @Override public synchronized AppInfo loadAppInfo() {
 
-        if(appInfo != null )
-            return  appInfo ;
+//        if(appInfo != null )
+//            return  appInfo ;
 
         Path path = isDevMode() ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
         appInfo = new AppInfo() ;
@@ -84,7 +86,11 @@ public class DefaultModelConfig implements IModelConfig{
         return appInfo;
     }
 
-
+    /**
+     * synchronized 是一个同步锁
+     * @param appInfo
+     * @throws IOException
+     */
     @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
 
         if(!isDevMode())

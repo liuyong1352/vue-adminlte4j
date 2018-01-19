@@ -1,10 +1,10 @@
 #change 
-#Wed Jan 17 10:22:00 CST 2018
-profileUrl=/oo.html
-logoName=JD
-signOutUrl=/logout.html
-appName=pro name
-indexUrl=111
-userImgUrl=/index.html
-logoShortName=222
-userName=Test 336
+#Fri Jan 19 10:52:59 CST 2018
+profileUrl=/ok
+logoName=ddd
+signOutUrl=55
+appName=33
+indexUrl=index.url
+userImgUrl=hhh
+logoShortName=
+userName=hello

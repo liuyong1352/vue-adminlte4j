@@ -11,45 +11,45 @@
 <v-app :data="data" >
     <!-- /.content-wrapper -->
     <v-box title="Modal">
-        <v-form id="main">
+        <v-form name="appName"  >
             <v-form-item span="9" label="IndexUrl:">
-                <input id="indexUrl" type="text" class="form-control" value="indexUrl" v-model="indexUrl">
+                <input name="indexUrl" type="text" class="form-control" value="indexUrl" v-model="indexUrl">
                 <span>{{indexUrl}}</span>
             </v-form-item>
 
             <v-form-item span="9" label="AppName:">
-                <input id="appName" class="form-control" v-model="appName" >
+                <input name="appName" class="form-control" v-model="appName" >
             </v-form-item >
 
             <v-form-item span="9" label="UserName:">
-                <input id="userName" class="form-control"  v-model="userName" >
+                <input name="userName" class="form-control"  v-model="userName" >
             </v-form-item >
 
             <v-form-item span="9" label="UserImgUrl:">
-                <input  id="userImgUrl"class="form-control" v-model="userImgUrl" >
+                <input  name="userImgUrl"class="form-control" v-model="userImgUrl" >
             </v-form-item >
 
             <v-form-item span="9" label="ProfileUrl:">
-                <input id="profileUrl" class="form-control" v-model="profileUrl" >
+                <input name="profileUrl" class="form-control" v-model="profileUrl" >
             </v-form-item >
 
             <v-form-item span="9" label="SignOutUrl:">
-                <input id="signOutUrl" class="form-control" v-model="signOutUrl" >
+                <input name="signOutUrl" class="form-control" v-model="signOutUrl" >
             </v-form-item >
 
             <v-form-item span="9" label="LogoName:">
-                <input id="logoName" class="form-control" v-model="logoName" >
+                <input name="logoName" class="form-control" v-model="logoName" >
             </v-form-item >
 
             <v-form-item span="9" label="LogoShortName:">
-                <v-input  id="logoShortName" class="form-control" v-model="logoShortName" ></v-input>
+                <input  name="logoShortName" class="form-control" v-model="logoShortName" >
             </v-form-item >
 
 
 
             <v-form-item span="9" >
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" >保存修改</button>
+                    <button type="submit" class="btn btn-primary" onclick="saveData()" >保存修改</button>
                 </div>
             </v-form-item >
         </v-form>
@@ -79,6 +79,7 @@
             }
         } ,
         methods : {
+
         } ,
         mounted : function ($vm) {
             var self = $vm;
@@ -99,7 +100,15 @@
             })
         }
     });
+        function saveData(){
+                var a,b;
+                b=document.appFrom;
+                a= document.forms[0];
+                a.method="post";
+                a.action="/app_data";
+                a.submit();
 
+        }
 </script>
 </body>
 </html>

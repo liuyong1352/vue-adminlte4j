@@ -17,7 +17,7 @@ public interface IModelConfig {
     List<Menu> loadMenu();
     AppInfo loadAppInfo() throws IOException;
 
-    void  storeAppInfo(AppInfo  appInfo) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+    void  storeAppInfo(AppInfo  appInfo) throws IOException ;
 
    /* List<Class> list() ;
 

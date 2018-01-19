@@ -2,6 +2,8 @@ package api;
 
 import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
+
+import api.data.ModelConfig;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
@@ -9,17 +11,22 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import com.vue.adminlte4j.support.DefaultModelConfig;
 import com.vue.adminlte4j.support.ModelConfigManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by bjliuyong on 2017/12/14.
  */
 @Controller
 public class IndexController {
+
+
 
 
 
@@ -96,5 +103,12 @@ public class IndexController {
 
         return ModelConfigManager.getAppInfo();
       }
+
+
+    @PostMapping("/app_data")
+    void saveAppinfo(@ModelAttribute("appName") AppInfo appinfo, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        ModelConfigManager.storeAppInfo(appinfo);
+        response.sendRedirect("/ui-element/v_front.html");
+    }
 
 }
