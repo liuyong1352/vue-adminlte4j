@@ -23,9 +23,7 @@ public class DefaultModelConfig implements IModelConfig{
 
     private   AppInfo appInfo ;
 
-    public void setAppInfo(AppInfo appInfo) {
-        this.appInfo = appInfo;
-    }
+
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
@@ -67,9 +65,7 @@ public class DefaultModelConfig implements IModelConfig{
             Properties prop      =  new Properties();
 
             prop.load(inputStream);
-            if(prop.size() == 0){
-             throw  new Exception("app_info.s don't contaion data,please input data");
-            }
+
             //LOAD 加载prop到appinfo ,需要setAppinfo
             getProperties(appInfo,prop);
         } catch (Exception e) {

@@ -22,11 +22,11 @@ public class IndexController {
 
 
 
-
+    private static  boolean appCheckStatus = false;
 
     @GetMapping("/get_app_info")
     @ResponseBody
-    Map getAppInfo() {
+    Map getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
@@ -41,7 +41,9 @@ public class IndexController {
         map.put("name" , "xiaohong ") ;
         map.put("age" , "1") ;
         tableData.addData(map);
-
+        if(appCheckStatus){
+            uiModel.appInfo(ModelConfigManager.getAppInfo());
+        }
 
         uiModel.put("tableData" , tableData ) ;
 
@@ -102,7 +104,8 @@ public class IndexController {
     @PostMapping("/app_data")
     void saveAppinfo(@ModelAttribute("appName") AppInfo appinfo, HttpServletResponse response ) throws IOException {
         ModelConfigManager.storeAppInfo(appinfo);
-        response.sendRedirect("/ui-element/v_front.html");
+        appCheckStatus = true;
+
     }
 
 }

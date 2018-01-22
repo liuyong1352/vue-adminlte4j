@@ -28,7 +28,7 @@
                 <input  name="userImgUrl"class="form-control" v-model="userImgUrl" >
             </v-form-item >
 
-            <v-form-item span="9" label="轮廓地址:">
+            <v-form-item span="9" label="用户详细信息url:">
                 <input name="profileUrl" class="form-control" v-model="profileUrl" >
             </v-form-item >
 
@@ -47,8 +47,8 @@
 
 
             <v-form-item span="9" >
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" onclick="saveData()" >保存修改</button>
+                <div class="box-footer"  >
+                    <button type="submit" class="btn btn-primary" onclick="saveData()"  >保存修改</button>
                 </div>
             </v-form-item >
         </v-form>
@@ -73,7 +73,8 @@
                 profileUrl:"",
                 signOutUrl:"",
                 logoName:"",
-                logoShortName:""
+                logoShortName:"",
+
             }
         } ,
         methods : {
@@ -99,14 +100,33 @@
         }
     });
         function saveData(){
-                var a,b;
+                var a,b,i;
+                var success = true;
                 b=document.appFrom;
                 a= document.forms[0];
-                a.method="post";
-                a.action="/app_data";
-                a.submit();
+                for (i=0;i<a.length;i++){
+                    if(i===0 || i===3 || i===4 || i===5 ){
+                        var index1=a[i]._value.lastIndexOf(".");
+                        var index2=a[i]._value.length;
+                        var suffix=a[i]._value.substring(index1+1,index2);//后缀名
+                        if(suffix !== "html") {
+                            success= false;
+                            break;
+                        }
+                    }
+                }
+                if(success){
+                    a.method="post";
+                    a.action="/app_data";
+                    a.submit();
+                    alert("上传成功!")
+                }else{
+                    alert("请输入正确的URL");
+                }
 
         }
+
+
 </script>
 </body>
 </html>
