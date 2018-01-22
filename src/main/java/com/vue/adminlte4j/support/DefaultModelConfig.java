@@ -87,7 +87,7 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     /**
-     * synchronized 是一个同步锁
+     *
      * @param appInfo
      * @throws IOException
      */
