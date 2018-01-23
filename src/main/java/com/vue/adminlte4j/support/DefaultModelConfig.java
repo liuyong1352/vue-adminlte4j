@@ -19,7 +19,7 @@ public class DefaultModelConfig implements IModelConfig{
     private Set<Class> typeSet   = new HashSet<>() ;
     private static final String WORKSPACE_DIR = "ui-model" ;
     private static final String APP_INFO_FILE = "app_info.s" ;
-
+    private static final String MENU_ITEM_FILE = "menu_item.s";
 
     private   AppInfo appInfo ;
 
@@ -42,9 +42,16 @@ public class DefaultModelConfig implements IModelConfig{
 
     @Override
     public List<Menu> loadMenu() {
+        //先获得路径 判断路径文件是否存在
+        //然后创建流
         return null;
     }
 
+
+    /**
+     * 加载appInfo
+     * @return
+     */
     @Override public synchronized AppInfo loadAppInfo() {
 
 //        if(appInfo != null )
@@ -83,7 +90,7 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     /**
-     *
+     *  存储appInfo
      * @param appInfo
      * @throws IOException
      */
@@ -122,6 +129,10 @@ public class DefaultModelConfig implements IModelConfig{
         oFile.close();
     }
 
+    /**
+     * 得到当前工程路径
+     * @return
+     */
     private static Path getJavaResources() {
         String userDir = System.getProperty("user.dir") ;
         Path path = Paths.get(userDir  , "src" , "main" , "resources") ;
@@ -147,15 +158,6 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    public static void main(String args[] ) throws IOException  {
-
-        DefaultModelConfig modelConfig = new DefaultModelConfig();
-        AppInfo appInfo= modelConfig.loadAppInfo();
-        System.out.println(appInfo.getUserName());
-        appInfo.setUserName("Test 336");
-        modelConfig.storeAppInfo(appInfo);
-
-    }
 
     private static void getProperties(Object model,Properties prop ) throws Exception {
         if(model == null )
@@ -183,5 +185,19 @@ public class DefaultModelConfig implements IModelConfig{
                 field.setAccessible(true);
             prop.setProperty(field.getName(),(String) field.get(model));
         }
+    }
+
+
+
+
+    public static void main(String args[] ) throws IOException  {
+
+        DefaultModelConfig modelConfig = new DefaultModelConfig();
+
+//        AppInfo appInfo= modelConfig.loadAppInfo();
+//        System.out.println(appInfo.getUserName());
+//        appInfo.setUserName("Test 336");
+//        modelConfig.storeAppInfo(appInfo);
+
     }
 }

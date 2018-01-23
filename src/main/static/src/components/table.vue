@@ -17,8 +17,8 @@
                     <tr v-for="item in dataItems">
                         <td v-for="_col in columns">{{item[_col['key']]}}</td>
                         <td v-if="operations">
-                            <a v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" >{{operation['name']}}</a>
-
+                            <a  :class="getOpertionScheme(operation.scheme)"  v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" ><i
+                                    :class="getOpertionIcon(operation.icon)"></i><span>{{operation['name']}}</span></a>
 
                         </td>
                     </tr>
@@ -57,7 +57,8 @@ export default {
     },
     ajax_url: String ,
     send_req : {type : Number , default : 0 } ,
-    operations: Array
+    operations: Array,
+
 
   } ,
   data: function () {
@@ -105,7 +106,8 @@ export default {
     } ,
     next_page : function() {
         return this.current_page + 1
-    }
+    },
+
   } ,
   mounted : function() {
     console.log(" table mounted!!")
@@ -149,7 +151,24 @@ export default {
     } ,
     should_page : function() {
         return this.isPage && this.totalSize > 0
-    }
+    },
+      getOpertionScheme: function (data) {
+          return{
+              'btn btn-info btn-sm waves-effect waves-light m-b-5':data === 'blue',
+              'btn btn-danger btn-sm waves-effect waves-light m-b-5': data === 'red',
+              'btn btn-warning btn-sm waves-effect waves-light m-b-5':data=== 'yellow',
+              'btn btn-success btn-sm waves-effect waves-light m-b-5':data=== 'green',
+
+          }
+      },
+      getOpertionIcon: function (data) {
+          return{
+              'fa fa-edit': data === 'edit',
+              'fa fa-trash-o': data === 'trash',
+              'fa fa-rocket': data=== 'rocket',
+
+          }
+      }
   }
 }
 </script>

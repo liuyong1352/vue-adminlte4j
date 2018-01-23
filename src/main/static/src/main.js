@@ -20,8 +20,9 @@ import VForm        from  './components/form/form.vue'
 import VFormItem    from  './components/form/form-item.vue'
 import VInput       from  './components/form/input.vue'
 import VModal       from  './components/ui-element/modal.vue'
+import VTags        from  './components/tags.vue'
 
-
+Vue.component('v-tags'      , VTags)
 Vue.component('v-folder'    , VFolder)
 Vue.component('v-textarea'  , VTextarea)
 Vue.component('v-text'      , VText)

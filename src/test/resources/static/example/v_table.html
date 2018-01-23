@@ -96,6 +96,8 @@
                 operations : [
                     {
                         name : '详情' ,
+                        scheme: 'green',
+                        icon:'edit',
                         method : function(row , $table) {
                             console.log(row);
                             $table.fetchData();
@@ -104,6 +106,8 @@
                     } ,
                     {
                         name : '删除'  ,
+                        scheme: 'blue',
+                        icon:'trash',
                         method : function(row ,$table) {
 
                         }

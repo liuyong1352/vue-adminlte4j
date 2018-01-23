@@ -30,6 +30,7 @@ public class MenuApiInJvm {
         menu2.addChildMenu(createMenu("/example/custom_tab.html" , "custom_tab使用" , "fa fa-circle-o" , 2));
         menu2.addChildMenu(createMenu("/example/v_text.html" , "text使用" , "fa fa-circle-o" , 2));
         menu2.addChildMenu(createMenu("/example/v_folder.html" , "folder使用" , "fa fa-circle-o" , 2));
+        menu2.addChildMenu(createMenu("/example/v_tags.html" , "tags使用" , "fa fa-circle-o" , 2));
 
         menu3.addChildMenu(createMenu("/ui-element/v_modal.html" , "Modal" , "fa fa-circle-o" , 1));
         menu3.addChildMenu(createMenu("/ui-element/v_front.html" , "Configuration" , "fa fa-circle-o" , 2));
