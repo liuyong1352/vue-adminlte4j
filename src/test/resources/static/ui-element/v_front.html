@@ -48,7 +48,7 @@
 
             <v-form-item span="9" >
                 <div class="box-footer"  >
-                    <button type="submit" class="btn btn-primary" @click="saveData"  >保存修改</button>
+                    <button type="button" class="btn btn-primary" @click="saveData"  data-toggle="modal" data-target="#modal-default" >保存修改</button>
                 </div>
             </v-form-item >
         </v-form>
@@ -63,7 +63,7 @@
                     </v-row>
                 </v-form>
                 <button slot="footer">Save</button>
-            </v-modal>
+          </v-modal>
 
 
 
@@ -108,9 +108,9 @@
             a.method="post";
             a.action="/app_data";
             a.submit();
-          //  alert("上传成功!")
+            alert("上传成功!")
         }else{
-          // alert("请输入正确的URL");
+           alert("请输入正确的URL");
         }
 
     }
