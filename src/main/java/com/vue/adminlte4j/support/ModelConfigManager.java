@@ -41,7 +41,7 @@ public class ModelConfigManager {
     }
 
     public static List<Menu> getMenu(){
-        return ModelConfigFactory.getInstance().loadMenu();
+        return ModelConfigFactory.getInstance().loadMenus();
     }
 
 }

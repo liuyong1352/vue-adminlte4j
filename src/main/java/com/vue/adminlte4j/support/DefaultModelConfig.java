@@ -183,12 +183,12 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
 
+
+
     @Override
-    public List<Menu> loadMenu() {
-         //  List<Menu> menus = new ArrayList<>();
+    public List<Menu> loadMenus() {
 
         Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
-
 
         //文件不存在 或者路径为空 则直接返回原先的值
         if(path == null || !path.toFile().exists()){
@@ -199,7 +199,7 @@ public class DefaultModelConfig implements IModelConfig{
             Properties prop = new Properties();
             prop.load(inputStream);
 
-            getMenusProperties(prop);
+            getMenus(prop);
 
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
@@ -215,39 +215,43 @@ public class DefaultModelConfig implements IModelConfig{
      * 从menu_item.s读取值 放到menus中
      * @param prop
      */
-    public void getMenusProperties(Properties prop) throws IllegalAccessException {
+    public void getMenus(Properties prop) throws IllegalAccessException {
 
         int menuCount = 1;
         int length =prop.size();
-
-        String name = null;
-
-        Properties prop1 = prop;
+        String value;
+        String name;
+        String type;
         while(length>0) {
+            boolean kidFlag = true; //避免重复添加kidMenu
             Menu menu = new Menu();
+
             Field[] fields = menu.getClass().getDeclaredFields();
             for(Field field : fields) {
 
                 //这里先假定menu的desc不为空
-//
-//                if()
-//                //这里是否可以迭代
-//                Menu kidMenu = new Menu();
-//                Field[] kidfields = menu.getClass().getDeclaredFields();
-//                for()
+                if(kidFlag){
 
+                    int result = getKidMenus(menu,prop, getMenuName(menuCount));
 
+                    if(result > 0){
+                        length -= result;
+                        kidFlag = false;
+                    }
+
+                }
 
                 if(!field.isAccessible())
                     field.setAccessible(true);
-                 name = getMenuName(menuCount)+field.getName();
 
+                name = getMenuName(menuCount)+field.getName();
 
+                if(name.indexOf("children")> 0) continue;
 
-                //这里附近设置一个判断是否存在kid  存在的话则要设置kid 传入当前menu
-                String value = (String) prop.get(name);
+                type = field.getType().getName();
+                value = (String) prop.get(name);
+                //这里要滤过children属性 不然会覆盖先前的
                 if(value != null)length--;  //配置文件存在才减减
-                String type = field.getType().getName();
 
                 //order是int 添加一种情况吧
                 if(type.equals("int")){
@@ -265,11 +269,63 @@ public class DefaultModelConfig implements IModelConfig{
 
     }
 
-    public String getKidMenuName(int i){
-        return "menu"+i+"kid.";
+
+    public int getKidMenus(Menu menu,Properties prop,String name) throws IllegalAccessException {
+        //这里是否可以迭代 这里返回获取了几个元素 减length  如果不存在第一个子菜单 或者没有写描述 直接返回0
+        int count = 0;
+        String kidName = name+"kid1"+".desc";
+        if(prop.get(kidName)==null) return 0;
+
+        boolean flag =true;
+        int menuNumber = 1;
+        while(flag){
+
+            kidName = name+"kid"+menuNumber+".desc";
+            if(prop.get(kidName)==null) {
+                flag = false;
+                break;
+            }
+
+            Menu kidMenu = new Menu();
+            Field[] kidfields = menu.getClass().getDeclaredFields();
+
+
+
+            for(Field kidField:kidfields){
+                kidName = name+"kid"+menuNumber+"."+ kidField.getName();
+                String value = (String) prop.get(kidName);
+                if(value == null) continue;
+
+
+                count++;  //配置文件存在才减减
+                String type = kidField.getType().getName();
+
+
+                //开启权限
+                if(!kidField.isAccessible())
+                    kidField.setAccessible(true);
+
+                if(type.equals("int")){
+                    kidField.set(kidMenu ,Integer.parseInt(value));
+                }else{
+                    kidField.set(kidMenu ,value);
+                }
+            }
+            menu.addChildMenu(kidMenu);
+            menuNumber++;
+        }
+
+
+        return count;
     }
 
-    public String getMenuName(int i){
+
+
+    private String getKidMenuName(int i,int j){
+        return "menu"+i+".kid"+j+".";
+    }
+
+    private String getMenuName(int i){
         return "menu"+i+".";
     }
 
@@ -280,7 +336,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         List<Menu> tempMenus = new ArrayList<>();
-//        tempMenus = modelConfig.loadMenu();
+        tempMenus = modelConfig.loadMenus();
 
 
 
