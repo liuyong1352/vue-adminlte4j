@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +23,6 @@ public class IndexController {
 
 
 
-    private static  boolean appCheckStatus = false;
 
     @GetMapping("/get_app_info")
     @ResponseBody
@@ -30,7 +30,7 @@ public class IndexController {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
-            .appInfo(AppInfoInJvm.getAppInfo())
+            .appInfo(ModelConfigManager.getAppInfo())
             .isLogin(true) ;
 
         TableData tableData = new TableData() ;
@@ -41,10 +41,6 @@ public class IndexController {
         map.put("name" , "xiaohong ") ;
         map.put("age" , "1") ;
         tableData.addData(map);
-        if(appCheckStatus){
-            uiModel.appInfo(ModelConfigManager.getAppInfo());
-        }
-
         uiModel.put("tableData" , tableData ) ;
 
         //return uiModel ;
@@ -102,10 +98,12 @@ public class IndexController {
 
 
     @PostMapping("/app_data")
-    void saveAppinfo(@ModelAttribute("appName") AppInfo appinfo, HttpServletResponse response ) throws IOException {
+    @ResponseBody
+    Map saveAppinfo(@RequestBody AppInfo appinfo, HttpServletResponse response ) throws IOException {
+        Map<String,String> map = new HashMap<String,String>();
         ModelConfigManager.storeAppInfo(appinfo);
-        appCheckStatus = true;
-
+        map.put("status","success");
+        return map;
     }
 
 }

@@ -19,10 +19,10 @@ public class DefaultModelConfig implements IModelConfig{
     private Set<Class> typeSet   = new HashSet<>() ;
     private static final String WORKSPACE_DIR = "ui-model" ;
     private static final String APP_INFO_FILE = "app_info.s" ;
-    private static final String MENU_ITEM_FILE = "menu_item.s";
+    private static final String MENU_ITEM_FILE = "menu_items.s";
 
     private   AppInfo appInfo ;
-
+    private   List<Menu> menus = new ArrayList<>();
 
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
@@ -40,12 +40,7 @@ public class DefaultModelConfig implements IModelConfig{
         return columns;
     }
 
-    @Override
-    public List<Menu> loadMenu() {
-        //先获得路径 判断路径文件是否存在
-        //然后创建流
-        return null;
-    }
+
 
 
     /**
@@ -188,11 +183,106 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
 
+    @Override
+    public List<Menu> loadMenu() {
+         //  List<Menu> menus = new ArrayList<>();
+
+        Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
+
+
+        //文件不存在 或者路径为空 则直接返回原先的值
+        if(path == null || !path.toFile().exists()){
+            return menus;
+        }
+        try {
+            FileInputStream inputStream = new FileInputStream(path.toString());
+            Properties prop = new Properties();
+            prop.load(inputStream);
+
+            getMenusProperties(prop);
+
+        } catch (IOException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        //先获得路径 判断路径文件是否存在
+        //然后创建流
+        return null;
+    }
+
+    /**
+     * 从menu_item.s读取值 放到menus中
+     * @param prop
+     */
+    public void getMenusProperties(Properties prop) throws IllegalAccessException {
+
+        int menuCount = 1;
+        int length =prop.size();
+
+        String name = null;
+
+        Properties prop1 = prop;
+        while(length>0) {
+            Menu menu = new Menu();
+            Field[] fields = menu.getClass().getDeclaredFields();
+            for(Field field : fields) {
+
+                //这里先假定menu的desc不为空
+//
+//                if()
+//                //这里是否可以迭代
+//                Menu kidMenu = new Menu();
+//                Field[] kidfields = menu.getClass().getDeclaredFields();
+//                for()
+
+
+
+                if(!field.isAccessible())
+                    field.setAccessible(true);
+                 name = getMenuName(menuCount)+field.getName();
+
+
+
+                //这里附近设置一个判断是否存在kid  存在的话则要设置kid 传入当前menu
+                String value = (String) prop.get(name);
+                if(value != null)length--;  //配置文件存在才减减
+                String type = field.getType().getName();
+
+                //order是int 添加一种情况吧
+                if(type.equals("int")){
+                    field.set(menu ,Integer.parseInt(value));
+                }else{
+                    field.set(menu ,value);
+                }
+
+            }
+            menus.add(menu);
+            menuCount++;   //进行menu2
+
+        }
+
+
+    }
+
+    public String getKidMenuName(int i){
+        return "menu"+i+"kid.";
+    }
+
+    public String getMenuName(int i){
+        return "menu"+i+".";
+    }
+
+
 
 
     public static void main(String args[] ) throws IOException  {
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
+        List<Menu> tempMenus = new ArrayList<>();
+//        tempMenus = modelConfig.loadMenu();
+
+
 
 //        AppInfo appInfo= modelConfig.loadAppInfo();
 //        System.out.println(appInfo.getUserName());

@@ -44,26 +44,30 @@
                 <input  name="logoShortName" class="form-control" v-model="logoShortName" >
             </v-form-item >
 
+            <v-col :class="'col-md-6'">
+                <button type="button" @click="saveData" class="btn btn-primary" data-toggle="modal" data-target="#alert-message">
+                      保存修改
+                </button>
+            </v-col>
 
 
-            <v-form-item span="9" >
-                <div class="box-footer"  >
-                    <button type="button" class="btn btn-primary" @click="saveData"  data-toggle="modal" data-target="#modal-default" >保存修改</button>
-                </div>
-            </v-form-item >
         </v-form>
     </v-box>
 
-          <v-modal title="Me" id="modal-default">
-                <v-form>
-                    <v-row>
-                        <v-form-item v-if="appStatus === 1" label="上传成功">
-                        </v-form-item>
-                        <v-form-item v-else label="上传失败" ></v-form-item>
-                    </v-row>
-                </v-form>
-                <button slot="footer">Save</button>
-          </v-modal>
+
+    <v-modal title="报警框" id="alert-message">
+        <v-form>
+            <v-row>
+                <div v-if="formFlag">
+                <v-form-item label="          恭喜您,上传成功!"></v-form-item>
+                </div>
+                <div v-if="formFlag===false">
+                    <v-form-item label="            上传失败">{{formFlag}}</v-form-item>
+                </div>
+
+            </v-row>
+        </v-form>
+    </v-modal>
 
 
 
@@ -76,22 +80,23 @@
 
         data : function () {
             return {
-                indexUrl:"",
-                appName:"",
-                userName:"",
-                userImgUrl:"",
-                profileUrl:"",
-                signOutUrl:"",
-                logoName:"",
-                logoShortName:"",
-                appStatus:1
-
+                    indexUrl:"",
+                    appName:"",
+                    userName:"",
+                    userImgUrl:"",
+                    profileUrl:"",
+                    signOutUrl:"",
+                    logoName:"",
+                    logoShortName:"",
+                    formFlag:false
             }
+
+
         } ,
         methods : {
             saveData:function(){
-                var a,b,i;
-                b=document.appFrom;
+                var a,i,inputFlag=1;
+
                 a= document.forms[0];
                 for (i=0;i<a.length;i++){
                     if(i===0 || i===3 || i===4 || i===5 ){
@@ -99,37 +104,30 @@
                         var index2=a[i]._value.length;
                         var suffix=a[i]._value.substring(index1+1,index2);//后缀名
                         if(suffix !== "html") {
-                            this.appStatus= 0;
+                            inputFlag= 0;
                             break;
                         }
+                    }
+                }
+                if(inputFlag){
+                    axios.post("/app_data",this._data).then(function(response){
+                        this.formFlag = response.data.status === "success";
+                    })
+                }
             }
-        }
-        if(this.appStatus){
-            a.method="post";
-            a.action="/app_data";
-            a.submit();
-            alert("上传成功!")
-        }else{
-           alert("请输入正确的URL");
-        }
+    } ,
+           mounted : function ($vm) {
+                var self = $vm;
+                axios.get("/get_app_data").then(function (response) {
 
-    }
-        } ,
-        mounted : function ($vm) {
-            var self = $vm;
-            axios({
-                method:'get',
-                url:'/get_app_data',
-                responseType :'json'
-            }).then(function (response) {
-                self.indexUrl = response.data.indexUrl;
-                self.appName = response.data.appName;
-                self.userName = response.data.userName;
-                self.userImgUrl = response.data.userImgUrl;
-                self.profileUrl = response.data.profileUrl;
-                self.signOutUrl = response.data.signOutUrl;
-                self.logoName = response.data.logoName;
-                self.logoShortName = response.data.logoShortName;
+                    self.indexUrl = response.data.indexUrl;
+                    self.appName = response.data.appName;
+                    self.userName = response.data.userName;
+                    self.userImgUrl = response.data.userImgUrl;
+                    self.profileUrl = response.data.profileUrl;
+                    self.signOutUrl = response.data.signOutUrl;
+                    self.logoName = response.data.logoName;
+                    self.logoShortName = response.data.logoShortName;
 
             })
         }

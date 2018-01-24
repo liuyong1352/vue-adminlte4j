@@ -4,6 +4,8 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
+
+import java.beans.Transient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +34,7 @@ public class ModelConfigManager {
     public static AppInfo getAppInfo() throws IOException {
         return ModelConfigFactory.getInstance().loadAppInfo() ;
     }
+
     public static void storeAppInfo(AppInfo appinfo) throws IOException {
          ModelConfigFactory.getInstance().storeAppInfo(appinfo);
 
