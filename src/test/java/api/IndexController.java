@@ -21,7 +21,7 @@ public class IndexController {
 
     @GetMapping("/get_app_info")
     @ResponseBody
-    Map getAppInfo() throws IOException {
+    UIModel getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
