@@ -12,7 +12,6 @@ import java.util.Map;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by bjliuyong on 2017/12/14.
