@@ -44,8 +44,8 @@
                 <input  name="logoShortName" class="form-control" v-model="logoShortName" >
             </v-form-item >
 
-            <v-col :class="'col-md-6'">
-                <button type="button" @click="saveData" class="btn btn-primary" data-toggle="modal" data-target="#alert-message">
+            <v-col class="col-md-6" >
+                <button type="button" @click="saveData" class="btn btn-primary" >
                       保存修改
                 </button>
             </v-col>
@@ -55,26 +55,14 @@
     </v-box>
 
 
-    <v-modal title="报警框" id="alert-message">
-        <v-form>
-            <v-row>
-                <div v-if="formFlag">
-                <v-form-item label="          恭喜您,上传成功!"></v-form-item>
-                </div>
-                <div v-if="formFlag===false">
-                    <v-form-item label="            上传失败">{{formFlag}}</v-form-item>
-                </div>
-
-            </v-row>
-        </v-form>
+    <v-modal title="提示" style="text-align: center" id="alert-message">
+        <p><i class="fa fa-fw fa-check"></i></p>
+        <p><span id="tip">修改成功!</span></p>
     </v-modal>
-
-
 
 
 </v-app>
 <script src="/lib/lib.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     app.main({
 
@@ -110,8 +98,9 @@
                     }
                 }
                 if(inputFlag){
-                    axios.post("/app_data",this._data).then(function(response){
-                        this.formFlag = response.data.status === "success";
+                    axios.post("/update_app_data",this._data).then(function(response){
+                        $("#tip").text(response.data.msg)
+                        $("#alert-message").modal('toggle')
                     })
                 }
             }

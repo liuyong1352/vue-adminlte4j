@@ -9,12 +9,18 @@ import java.util.Map;
  */
 public class UIModel extends HashMap implements Map {
 
+
+    public static final int SUCCESS = 1 ;
+    public static final int FAIL    = 0 ;
+
     public static final String MENU         = "menu_items" ;
     public static final String APP_INFO     = "app_info" ;
 
     public static final String TABLE_DATA   = "tableData" ;
     public static final String IS_LOGIN     = "is_login" ;
     public static final String LOGIN_URL    = "login_url" ;
+    public static final String CODE         = "code"  ;
+    public static final String MSG          = "msg" ;
 
     public UIModel menu(List<Menu> menus) {
         put(MENU, menus) ;
@@ -22,20 +28,28 @@ public class UIModel extends HashMap implements Map {
     }
 
     public UIModel appInfo(AppInfo appInfo) {
-        put(APP_INFO , appInfo) ;
-        return this ;
+        return put(APP_INFO , appInfo) ;
     }
 
     public UIModel isLogin(boolean isLogin) {
-        put(IS_LOGIN , isLogin) ;
-        return this ;
+        return put(IS_LOGIN , isLogin) ;
     }
 
     public UIModel setLoginUrl(String loginUrl) {
-        put(LOGIN_URL , loginUrl) ;
-        return this ;
+        return put(LOGIN_URL , loginUrl) ;
     }
 
+    public UIModel setCode(int code) {
+        return put(CODE , code) ;
+    }
+
+    public UIModel setMsg(String msg) {
+        return put(MSG , msg) ;
+    }
+
+    public UIModel setCodeAndMsg(int code , String msg) {
+        return setCode(code).setMsg(msg) ;
+    }
 
     public UIModel put(String key , Object value) {
         super.put(key , value) ;
@@ -43,8 +57,22 @@ public class UIModel extends HashMap implements Map {
     }
 
     public UIModel tableData(TableData tableData) {
-        super.put(TABLE_DATA , tableData) ;
-        return  this ;
+        return put(TABLE_DATA , tableData) ;
     }
+
+    public static UIModel success() {
+        return newInstance(SUCCESS) ;
+    }
+
+
+    public static UIModel fail() {
+        return newInstance(FAIL);
+    }
+
+    public static UIModel newInstance(int code) {
+        UIModel uiModel = new UIModel() ;
+        return uiModel.setCode(code) ;
+    }
+
 
 }

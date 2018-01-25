@@ -96,13 +96,15 @@ public class IndexController {
       }
 
 
-    @PostMapping("/app_data")
+    @PostMapping("/update_app_data")
     @ResponseBody
-    Map saveAppinfo(@RequestBody AppInfo appinfo, HttpServletResponse response ) throws IOException {
-        Map<String,String> map = new HashMap<String,String>();
-        ModelConfigManager.storeAppInfo(appinfo);
-        map.put("status","success");
-        return map;
+    UIModel updateAppinfo(@RequestBody AppInfo appinfo)  {
+        try {
+            ModelConfigManager.storeAppInfo(appinfo);
+            return UIModel.success().setMsg("修改成功！") ;
+        } catch (IOException e) {
+            return UIModel.fail().setMsg("修改失败!") ;
+        }
     }
 
 }
