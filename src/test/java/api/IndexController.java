@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class IndexController {
 
-
-
-
     @GetMapping("/get_app_info")
     @ResponseBody
     Map getAppInfo() throws IOException {
