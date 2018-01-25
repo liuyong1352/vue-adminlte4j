@@ -17,8 +17,8 @@
                     <tr v-for="item in dataItems">
                         <td v-for="_col in columns">{{item[_col['key']]}}</td>
                         <td v-if="operations">
-                            <a  :class="getOpertionScheme(operation.scheme)"  v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" ><i
-                                    :class="getOpertionIcon(operation.icon)"></i><span>{{operation['name']}}</span></a>
+                            <a  :class="getOperationScheme(operation.scheme)"  v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" ><i
+                                    :class="getOperationIcon(operation.icon)"></i><span>{{operation['name']}}</span></a>
 
                         </td>
                     </tr>
@@ -152,7 +152,7 @@ export default {
     should_page : function() {
         return this.isPage && this.totalSize > 0
     },
-      getOpertionScheme: function (data) {
+      getOperationScheme: function (data) {
           return{
               'btn btn-info btn-sm waves-effect waves-light m-b-5':data === 'blue',
               'btn btn-danger btn-sm waves-effect waves-light m-b-5': data === 'red',
@@ -161,7 +161,7 @@ export default {
 
           }
       },
-      getOpertionIcon: function (data) {
+      getOperationIcon: function (data) {
           return{
               'fa fa-edit': data === 'edit',
               'fa fa-trash-o': data === 'trash',
