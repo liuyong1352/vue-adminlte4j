@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
