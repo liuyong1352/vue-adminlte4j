@@ -208,7 +208,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         //先获得路径 判断路径文件是否存在
         //然后创建流
-        return null;
+        return menus;
     }
 
     /**
