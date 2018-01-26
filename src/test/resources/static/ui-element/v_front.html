@@ -5,6 +5,10 @@
     <title>ATL - Modal </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -56,11 +60,15 @@
 
 
     <v-modal title="提示" style="text-align: center" id="alert-message">
-        <p><i class="fa fa-fw fa-check"></i></p>
-        <p><span id="tip">修改成功!</span></p>
+        <div class="el-message-box__header">
+                <div class="el-message-box__status el-icon-success"></div>
+        </div>
+        <div class="el-message-box__content">
+            <div class="el-message-box__message"><p>修改成功!</p></div>
+        </div>
     </v-modal>
 
-
+<!--class="demo-color-box bg-success"-->
 </v-app>
 <script src="/lib/lib.js"></script>
 <script>

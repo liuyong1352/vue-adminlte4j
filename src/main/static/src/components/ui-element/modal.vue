@@ -1,3 +1,4 @@
+
 <template>
 <div class="modal fade" :id="id">
           <div class="modal-dialog">
@@ -7,7 +8,7 @@
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">{{title}}</h4>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" >
                 <slot></slot>
               </div>
 
@@ -20,6 +21,8 @@
           <!-- /.modal-dialog -->
 </div>
 </template>
+
+
 <script>
 
 export default {

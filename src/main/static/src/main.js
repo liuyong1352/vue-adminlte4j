@@ -21,6 +21,8 @@ import VFormItem    from  './components/form/form-item.vue'
 import VInput       from  './components/form/input.vue'
 import VModal       from  './components/ui-element/modal.vue'
 import VTags        from  './components/tags.vue'
+// import { MessageBox } from 'element-ui'
+
 
 Vue.component('v-tags'      , VTags)
 Vue.component('v-folder'    , VFolder)

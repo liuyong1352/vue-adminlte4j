@@ -1,6 +1,8 @@
 ``` 
 cd src\main\static
+
 npm i 
+npm i element-ui -S
 npm start
 ```
 

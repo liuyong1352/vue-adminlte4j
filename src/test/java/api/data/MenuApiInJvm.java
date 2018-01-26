@@ -34,6 +34,8 @@ public class MenuApiInJvm {
 
         menu3.addChildMenu(createMenu("/ui-element/v_modal.html" , "Modal" , "fa fa-circle-o" , 1));
         menu3.addChildMenu(createMenu("/ui-element/v_front.html" , "Configuration" , "fa fa-circle-o" , 2));
+        menu3.addChildMenu(createMenu("/ui-element/test.html" , "test" , "fa fa-circle-o" , 2));
+
         menus.add(menu1) ;
         menus.add(menu2) ;
         menus.add(menu3) ;
