@@ -6,6 +6,8 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -182,11 +184,13 @@ public class DefaultModelConfig implements IModelConfig{
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
+//       model.getClass().isArray()
         Field[] fields = model.getClass().getDeclaredFields() ;
 
         for(Field field : fields) {
             if(!field.isAccessible())
                 field.setAccessible(true);
+
             prop.setProperty(field.getName(),(String) field.get(model));
         }
     }
@@ -268,6 +272,7 @@ public class DefaultModelConfig implements IModelConfig{
         //这里是否可以迭代 这里返回获取了几个元素 减length  如果不存在第一个子菜单 或者没有写描述 直接返回0
         int count = 0;
         String kidName;
+
         if(prop.get(name+"kid1"+".desc")==null) return 0;
 
         int menuNumber = 1;
