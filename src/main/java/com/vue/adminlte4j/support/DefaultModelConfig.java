@@ -190,7 +190,6 @@ public class DefaultModelConfig implements IModelConfig{
 
         Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
-        //文件不存在 或者路径为空 则直接返回原先的值
         if(path == null || !path.toFile().exists()){
             return menus;
         }
@@ -200,14 +199,10 @@ public class DefaultModelConfig implements IModelConfig{
             prop.load(inputStream);
 
             getMenus(prop);
-
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
-
-        //先获得路径 判断路径文件是否存在
-        //然后创建流
         return menus;
     }
 
@@ -221,45 +216,35 @@ public class DefaultModelConfig implements IModelConfig{
         int length =prop.size();
         String value;
         String name;
-        String type;
         while(length>0) {
             boolean kidFlag = true; //避免重复添加kidMenu
             Menu menu = new Menu();
 
             Field[] fields = menu.getClass().getDeclaredFields();
             for(Field field : fields) {
-
                 //这里先假定menu的desc不为空
                 if(kidFlag){
 
                     int result = getKidMenus(menu,prop, getMenuName(menuCount));
 
                     if(result > 0){
+                        //这里返回KidMenu操作的元素个数 然后继续
                         length -= result;
                         kidFlag = false;
                     }
 
                 }
-
-                if(!field.isAccessible())
-                    field.setAccessible(true);
-
                 name = getMenuName(menuCount)+field.getName();
 
+                //不再获取children的值 已在KidMenus中操作
                 if(name.indexOf("children")> 0) continue;
 
-                type = field.getType().getName();
                 value = (String) prop.get(name);
                 //这里要滤过children属性 不然会覆盖先前的
-                if(value != null)length--;  //配置文件存在才减减
+                if(value != null)length--;
 
-                //order是int 添加一种情况吧
-                if(type.equals("int")){
-                    field.set(menu ,Integer.parseInt(value));
-                }else{
-                    field.set(menu ,value);
-                }
 
+                setField(value,menu,field);
             }
             menus.add(menu);
             menuCount++;   //进行menu2
@@ -273,57 +258,50 @@ public class DefaultModelConfig implements IModelConfig{
     public int getKidMenus(Menu menu,Properties prop,String name) throws IllegalAccessException {
         //这里是否可以迭代 这里返回获取了几个元素 减length  如果不存在第一个子菜单 或者没有写描述 直接返回0
         int count = 0;
-        String kidName = name+"kid1"+".desc";
-        if(prop.get(kidName)==null) return 0;
+        String kidName;
+        if(prop.get(name+"kid1"+".desc")==null) return 0;
 
-        boolean flag =true;
         int menuNumber = 1;
-        while(flag){
+        while(true){
 
             kidName = name+"kid"+menuNumber+".desc";
             if(prop.get(kidName)==null) {
-                flag = false;
                 break;
             }
 
             Menu kidMenu = new Menu();
-            Field[] kidfields = menu.getClass().getDeclaredFields();
-
-
+            Field[] kidfields = kidMenu.getClass().getDeclaredFields();
 
             for(Field kidField:kidfields){
                 kidName = name+"kid"+menuNumber+"."+ kidField.getName();
                 String value = (String) prop.get(kidName);
                 if(value == null) continue;
-
-
                 count++;  //配置文件存在才减减
-                String type = kidField.getType().getName();
 
-
-                //开启权限
-                if(!kidField.isAccessible())
-                    kidField.setAccessible(true);
-
-                if(type.equals("int")){
-                    kidField.set(kidMenu ,Integer.parseInt(value));
-                }else{
-                    kidField.set(kidMenu ,value);
-                }
+                setField(value,kidMenu,kidField);
             }
             menu.addChildMenu(kidMenu);
             menuNumber++;
         }
-
-
         return count;
     }
 
+    public void setField(String value,Menu menu,Field field) throws IllegalAccessException {
+        //共同的
+        //开启权限
 
+        String type = field.getType().getName();
+        if(!field.isAccessible())
+            field.setAccessible(true);
 
-    private String getKidMenuName(int i,int j){
-        return "menu"+i+".kid"+j+".";
+        if(type.equals("int")){
+            field.set(menu ,Integer.parseInt(value));
+        }else{
+            field.set(menu ,value);
+        }
+
     }
+
 
     private String getMenuName(int i){
         return "menu"+i+".";
@@ -338,12 +316,6 @@ public class DefaultModelConfig implements IModelConfig{
         List<Menu> tempMenus = new ArrayList<>();
         tempMenus = modelConfig.loadMenus();
 
-
-
-//        AppInfo appInfo= modelConfig.loadAppInfo();
-//        System.out.println(appInfo.getUserName());
-//        appInfo.setUserName("Test 336");
-//        modelConfig.storeAppInfo(appInfo);
 
     }
 }

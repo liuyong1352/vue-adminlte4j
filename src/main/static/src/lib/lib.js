@@ -139,7 +139,8 @@ app = function (scope) {
 
         var arr_js = ['/lib/jquery/dist/jquery.min.js' ,
             '/lib/vue/dist/vue.min.js' ,
-            '/lib/axios/dist/axios.min.js']
+            '/lib/axios/dist/axios.min.js',
+            '/lib/sweetalert2/sweetalert2.common.min.js']
 
         var js = [
             '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
@@ -156,7 +157,8 @@ app = function (scope) {
             '/lib/bootstrap/dist/css/bootstrap' ,
             '/lib/font-awesome/css/font-awesome' ,
             '/lib/admin-lte/dist/css/AdminLTE' ,
-            '/lib/admin-lte/dist/css/skins/_all-skins'
+            '/lib/admin-lte/dist/css/skins/_all-skins',
+            '/lib/sweetalert2/sweetalert2.min'
         ];
 
         for(var i = 0; i < css.length; i++) {

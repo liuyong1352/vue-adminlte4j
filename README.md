@@ -16,3 +16,7 @@ vue-adminlte-java 后台界面库
 提供统一的布局 ， ui控件
 天然前后台分离 ， 通过rest-api提供数据， 控件与java类库模型进行绑定
 开发时可配置的控件
+
+安装alert插件
+
+npm install sweetalert
