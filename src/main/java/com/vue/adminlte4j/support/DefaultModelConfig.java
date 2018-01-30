@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.support;
 
+
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
@@ -90,11 +91,21 @@ public class DefaultModelConfig implements IModelConfig{
      * @throws IOException
      */
     @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
+        storeProperties(APP_INFO_FILE,appInfo);
+    }
+
+    @Override
+    public synchronized void storeMenus(List<Menu> menus) throws IOException {
+        storeProperties(MENU_ITEM_FILE,menus);
+    }
+
+
+    private  static  void storeProperties(String type, Object object) throws IOException {
 
         if(!isDevMode())
             throw new RuntimeException("current not in dev Mode !") ;
 
-        File storeFile = getWorkSpacePath(APP_INFO_FILE).toFile() ;
+        File storeFile = getWorkSpacePath(type).toFile() ;
 
         File wp = getWorkSpacePath("").toFile() ;
 
@@ -110,7 +121,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         FileOutputStream oFile = new FileOutputStream(storeFile);
         try {
-            setProperties(appInfo,prop);
+            setProperties(object,prop);
 
             prop.store(oFile, "change ");
         } catch (IOException e) {
@@ -165,8 +176,6 @@ public class DefaultModelConfig implements IModelConfig{
                 field.setAccessible(true);
             field.set(model , prop.get(field.getName()));
         }
-
-
     }
 
     private static void setProperties(Object model,Properties prop ) throws Exception {
@@ -303,6 +312,8 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
 
+
+
     private String getMenuName(int i){
         return "menu"+i+".";
     }
@@ -316,6 +327,13 @@ public class DefaultModelConfig implements IModelConfig{
         List<Menu> tempMenus = new ArrayList<>();
         tempMenus = modelConfig.loadMenus();
 
+        Menu testMenu = new Menu();
+        testMenu.setIcon("111");
+        testMenu.setDesc("222");
+
+
+        tempMenus.set(1,testMenu);
+        modelConfig.storeMenus(tempMenus);
 
     }
 }

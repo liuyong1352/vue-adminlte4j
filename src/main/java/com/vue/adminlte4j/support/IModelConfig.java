@@ -18,7 +18,7 @@ public interface IModelConfig {
     AppInfo loadAppInfo() throws IOException;
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
-
+    void storeMenus(List<Menu> menus) throws IOException;
    /* List<Class> list() ;
 
     void edit(Class type , TableData.Column column) ;*/
