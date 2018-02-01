@@ -100,9 +100,8 @@
                 }
                 if(inputFlag){
                     axios.post("/update_app_data",this._data).then(function(response){
-                        if(response.data.code) {
-                            swal(response.data.msg, "you click！", "success")
-                        }
+                        $("#tip").text(response.data.msg)
+                        $("#alert-message").modal('toggle')
                     })
                 }
             }
