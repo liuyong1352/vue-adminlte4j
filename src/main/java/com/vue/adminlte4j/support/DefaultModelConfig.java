@@ -6,8 +6,6 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -87,23 +85,79 @@ public class DefaultModelConfig implements IModelConfig{
         return appInfo;
     }
 
+
+
     /**
      *  存储appInfo
      * @param appInfo
      * @throws IOException
      */
-    @Override public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
-        storeProperties(APP_INFO_FILE,appInfo);
+    @Override
+    public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
+        storeProperties(appInfo);
     }
 
     @Override
     public synchronized void storeMenus(List<Menu> menus) throws IOException {
-        storeProperties(MENU_ITEM_FILE,menus);
+        storeMenuProperties(menus);
+    }
+
+    private static  void storeMenuProperties(List<Menu> menus) throws IOException {
+        Properties prop   =  new Properties();
+        FileOutputStream oFile = new FileOutputStream(getStoreFile(MENU_ITEM_FILE));
+        try {
+            setMenusProperties(menus,prop);
+
+            prop.store(oFile, "change ");
+        } catch (IOException e) {
+            e.printStackTrace();
+            oFile.close();
+            throw new IOException("menus store error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        oFile.close();
+
+    }
+
+    private  static void setMenusProperties(List<Menu> menus,Properties prop) throws IllegalAccessException {
+        if(menus == null )
+            throw new IllegalArgumentException("model can not be null") ;
+        int menuCount = 1;
+        for(Menu menu : menus){
+
+            if(menu.getChildren() == null){
+                setMenu(menu,prop,"menu"+menuCount+".");
+            }else{
+
+                int kidCount = 1;
+                for(Menu kidMenu:menu.getChildren()){
+                    setMenu(kidMenu,prop,"menu"+menuCount+".kid"+kidCount+".");
+                    kidCount++;
+                }
+            }
+            menuCount++;
+        }
+    }
+
+    private static void setMenu(Object model,Properties prop,String name) throws IllegalAccessException {
+        //       model.getClass().isArray()
+        Field[] fields = model.getClass().getDeclaredFields();
+        String value;
+
+        for(Field field : fields) {
+            if(!field.isAccessible())
+                field.setAccessible(true);
+
+            value= String.valueOf(field.get(model)) ;
+
+            if(value != null &&  !field.getName().equals("children"))
+                prop.setProperty(name+field.getName(),value);
+        }
     }
 
 
-    private  static  void storeProperties(String type, Object object) throws IOException {
-
+    private static File getStoreFile(String type) throws IOException {
         if(!isDevMode())
             throw new RuntimeException("current not in dev Mode !") ;
 
@@ -119,23 +173,29 @@ public class DefaultModelConfig implements IModelConfig{
             storeFile.createNewFile() ;
         }
 
-        Properties prop   =  new Properties();
+        return storeFile;
 
-        FileOutputStream oFile = new FileOutputStream(storeFile);
+    }
+
+    private  static  void storeProperties(AppInfo appInfo) throws IOException {
+
+        Properties prop   =  new Properties();
+        FileOutputStream oFile = new FileOutputStream(getStoreFile(APP_INFO_FILE));
         try {
-            setProperties(object,prop);
+            setInfoProperties(appInfo,prop);
 
             prop.store(oFile, "change ");
         } catch (IOException e) {
             e.printStackTrace();
             oFile.close();
             throw new IOException("properties store error");
-        } catch (Exception e) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
-            throw new IOException("properties store error");
         }
         oFile.close();
     }
+
+
 
     /**
      * 得到当前工程路径
@@ -180,17 +240,16 @@ public class DefaultModelConfig implements IModelConfig{
         }
     }
 
-    private static void setProperties(Object model,Properties prop ) throws Exception {
+    private static void setInfoProperties(Object model,Properties prop ) throws IOException, IllegalAccessException {
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
 //       model.getClass().isArray()
-        Field[] fields = model.getClass().getDeclaredFields() ;
+        Field[] fields = model.getClass().getDeclaredFields();
 
         for(Field field : fields) {
             if(!field.isAccessible())
                 field.setAccessible(true);
-
             prop.setProperty(field.getName(),(String) field.get(model));
         }
     }

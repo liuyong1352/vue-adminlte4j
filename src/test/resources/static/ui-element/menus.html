@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATL - Modal </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link href="//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+
+    <v-app :data="data" >
+        <v-box title="配置界Menu面">
+            <v-form name="menuName">
+                <div v-for="menu in menus">
+                    <v-form-item span="4" label="菜单URL:">
+                        <input   class="form-control" v-model="menu.url" >
+                    </v-form-item >
+
+                    <v-form-item span="4" label="菜单名称:">
+                        <input  class="form-control" v-model="menu.name" >
+                    </v-form-item >
+
+                    <v-form-item span="4" label="菜单icon:">
+                        <input   class="form-control" v-model="menu.icon" >
+                    </v-form-item >
+
+                    <v-form-item span="4" label="菜单order:">
+                        <input   class="form-control" v-model="menu.order" >
+                    </v-form-item >
+                </div>
+            </v-form>
+            <v-col class="col-md-6" >
+                <button type="button" @click="saveData" class="btn btn-primary" >
+                    保存修改
+                </button>
+            </v-col>
+        </v-box>
+
+    </v-app>
+
+
+</body>
+<script src="/lib/lib.js"></script>
+<script src="//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js"></script>
+<script>
+
+    app.main({
+        data : function () {
+            return {
+                menus:Object
+
+            }
+        } ,
+        methods : {
+            saveData:function(){
+                var a = 1;
+            }
+
+
+        } ,
+        mounted : function ($vm) {
+            var self = $vm;
+            axios.get("/get_menu_data").then(function (response) {
+                var test = response;
+                self.menus = response;
+
+            })
+        }
+    });
+
+</script>
+
+</html>
