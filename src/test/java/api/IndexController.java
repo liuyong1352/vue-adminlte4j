@@ -3,11 +3,13 @@ package api;
 import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
 import com.vue.adminlte4j.model.AppInfo;
+import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import org.springframework.stereotype.Controller;
@@ -103,4 +105,10 @@ public class IndexController {
         }
     }
 
+
+    @GetMapping("/get_menu_data")
+    @ResponseBody
+    List<Menu> getMenus(){
+        return  MenuApiInJvm.getMenu();
+    }
 }
