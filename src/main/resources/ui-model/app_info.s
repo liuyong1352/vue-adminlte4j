@@ -1,10 +1,10 @@
 #change 
-#Thu Feb 01 17:51:08 CST 2018
+#Thu Feb 01 18:17:14 CST 2018
 appName=111
-logoName=Admin
+logoName=Admin0
 userImgUrl=/profile.html
 indexUrl=/index.html
 profileUrl=/index.html
 userName=liuyong
 signOutUrl=/index.html
-logoShortName=ATL
+logoShortName=ATL0

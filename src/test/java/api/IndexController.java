@@ -53,9 +53,9 @@ public class IndexController {
         TableData tableData = new TableData() ;
         tableData.configDisplayColumn(UserInfo.class);
 
-       /* tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
+        tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
         tableData.configDisplayColumn(TableData.createColumn("age" , "年龄") );
-        tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );*/
+        tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );
 
         for(int i = 0 ; i < 10 ; i++ ) {
             UserInfo userInfo = new UserInfo() ;
