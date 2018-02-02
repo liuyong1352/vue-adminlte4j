@@ -1,6 +1,8 @@
 package api.data;
 
 import com.vue.adminlte4j.model.Menu;
+import com.vue.adminlte4j.web.config.MenuConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,12 +35,13 @@ public class MenuApiInJvm {
         menu2.addChildMenu(createMenu("/example/v_tags.html" , "tags使用" , "fa fa-circle-o" , 2));
 
         menu3.addChildMenu(createMenu("/ui-element/v_modal.html" , "Modal" , "fa fa-circle-o" , 1));
-        menu3.addChildMenu(createMenu("/admin/config/app_info.html" , "Configuration" , "fa fa-circle-o" , 2));
         menu3.addChildMenu(createMenu("/ui-element/test.html" , "test" , "fa fa-circle-o" , 2));
         menu3.addChildMenu(createMenu("/ui-element/menus.html" , "menus" , "fa fa-circle-o" , 2));
         menus.add(menu1) ;
         menus.add(menu2) ;
         menus.add(menu3) ;
+
+        MenuConfig.mergeAdminMenu(menus);
 
         return menus;
     }
