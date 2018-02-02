@@ -1,8 +1,6 @@
 package api;
 
-import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
-import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
