@@ -5,7 +5,6 @@ import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 
-
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -27,6 +26,7 @@ public class DefaultModelConfig implements IModelConfig{
     private   AppInfo appInfo ;
     private   List<Menu> menus = new ArrayList<>();
 
+    private static final boolean isDev = getJavaResources().toFile().exists() ;
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
@@ -55,7 +55,7 @@ public class DefaultModelConfig implements IModelConfig{
 //        if(appInfo != null )
 //            return  appInfo ;
 
-        Path path = isDevMode() ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
+        Path path = isDev ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
         appInfo = new AppInfo() ;
 
         if(path== null || !path.toFile().exists()) {
@@ -160,7 +160,7 @@ public class DefaultModelConfig implements IModelConfig{
 
 
     private static File getStoreFile(String type) throws IOException {
-        if(!isDevMode())
+        if(!isDev)
             throw new RuntimeException("current not in dev Mode !") ;
 
         File storeFile = getWorkSpacePath(type).toFile() ;
@@ -209,9 +209,6 @@ public class DefaultModelConfig implements IModelConfig{
         return  path ;
     }
 
-    private static boolean isDevMode() {
-        return getJavaResources().toFile().exists() ;
-    }
 
     private static Path getWorkSpacePath(String dir) {
         Path path = getJavaResources() ;
@@ -263,7 +260,7 @@ public class DefaultModelConfig implements IModelConfig{
     @Override
     public List<Menu> loadMenus() {
 
-        Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
+        Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
             return menus;
@@ -399,7 +396,7 @@ public class DefaultModelConfig implements IModelConfig{
      */
     public List<Menu> loadMenus1() throws IOException, IllegalAccessException {
 
-        Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
+        Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
             return menus;

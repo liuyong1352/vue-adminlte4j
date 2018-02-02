@@ -4,15 +4,19 @@ import api.data.MenuApiInJvm;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.support.ModelConfigManager;
+import com.vue.adminlte4j.web.config.MenuConfig;
+import com.vue.adminlte4j.web.springmvc.ApiAdminController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.vue.adminlte4j.support.ModelConfigManager;
-import com.vue.adminlte4j.web.springmvc.ApiAdminController;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by bjliuyong on 2017/12/14.
@@ -25,7 +29,7 @@ public class IndexController extends ApiAdminController {
     UIModel getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
-            .menu(MenuApiInJvm.getMenu())
+            .menu(MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()))
             .appInfo(ModelConfigManager.getAppInfo())
             .isLogin(true) ;
 
