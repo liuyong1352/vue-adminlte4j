@@ -4,6 +4,8 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
+
+
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -278,6 +280,10 @@ public class DefaultModelConfig implements IModelConfig{
         return menus;
     }
 
+
+
+
+
     /**
      * 从menu_item.s读取值 放到menus中
      * @param prop
@@ -383,21 +389,72 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
 
+    /**
+     * 流的关闭顺序：先打开的后关，后打开的先关
+     *  否则有可能出现java.io.IOException: Stream closed异常
+     * @return
+     * @throws IOException
+     *
+     */
+    public List<Menu> loadMenus1() throws IOException, IllegalAccessException {
+
+        Path path=isDevMode()?getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
+
+        if(path == null || !path.toFile().exists()){
+            return menus;
+        }
+        //读取文件流
+        FileInputStream fileStream = new FileInputStream(path.toString());
+        //这里防止中文乱码
+        InputStreamReader reader = new InputStreamReader(fileStream,"utf-8");
+        BufferedReader   buffer = new BufferedReader(reader);
+
+        String lines = null;
+        String[] arrays = null;
+        while( (lines=buffer.readLine()) != null){
+            //正则是取消多余空格或者tab键
+            arrays = lines.split("\\s+");
+            //menu id  icon url  order  desc   pid
+            for(int i=1;i<arrays.length;i++){
+                //第一行不读取 第一个是menuid
+                Menu menu = new Menu();
+                Field[] fields = menu.getClass().getDeclaredFields();
+                for(Field field : fields) {
+                    if(!field.isAccessible())
+                        field.setAccessible(true);
+                    field.set(menu,arrays[i]);
+                }
+            }
 
 
-    public static void main(String args[] ) throws IOException  {
+
+
+        }
+
+
+        //关闭流 原因很简单 相互占用着 最先的关闭 后面两个依赖第一个的流 所以
+        buffer.close();
+        reader.close();
+        fileStream.close();
+
+
+
+        return menus;
+    }
+
+    public static void main(String args[] ) throws IOException, IllegalAccessException {
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         List<Menu> tempMenus = new ArrayList<>();
-        tempMenus = modelConfig.loadMenus();
+        tempMenus = modelConfig.loadMenus1();
 
-        Menu testMenu = new Menu();
-        testMenu.setIcon("111");
-        testMenu.setDesc("222");
-
-
-        tempMenus.set(1,testMenu);
-        modelConfig.storeMenus(tempMenus);
+//        Menu testMenu = new Menu();
+//        testMenu.setIcon("111");
+//        testMenu.setDesc("222");
+//
+//
+//        tempMenus.set(1,testMenu);
+//        modelConfig.storeMenus(tempMenus);
 
     }
 }
