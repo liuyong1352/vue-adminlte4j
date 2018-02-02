@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>菜单配置</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+<body>
+    <v-app :data="data" >
+        <v-table ajax_url="/get_menu_data"></v-table>
+    </v-app>
+</body>
+<script src="/lib/lib.js"></script>
+<script>
+
+    app.main({
+        data : function () {
+
+        } ,
+        methods : {
+        } ,
+        mounted : function ($vm) {
+
+        }
+    });
+
+</script>
+
+</html>

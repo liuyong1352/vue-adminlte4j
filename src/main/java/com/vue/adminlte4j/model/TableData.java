@@ -2,12 +2,13 @@ package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.support.ModelConfigManager;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by bjliuyong on 2017/12/13.
  */
-public class TableData {
+public class TableData<T> {
 
     public static final String KEY_TAG = "key" ;
     public static final String TITLE_TAG = "title" ;
@@ -26,8 +27,12 @@ public class TableData {
         this.columns.addAll(ModelConfigManager.getModelConfigColumns(type));
     }
 
-    public void addData(Object data) {
+    public void addData(T data) {
         dataItems.add(data);
+    }
+
+    public void addAll(List<T> datas) {
+        dataItems.addAll(datas) ;
     }
 
     public List<Column>  getColumns() {
