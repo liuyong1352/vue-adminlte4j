@@ -13,32 +13,69 @@
 
 
     <v-app :data="data" >
-        <v-box title="配置界Menu面">
-            <v-form name="menuName">
+
+        <v-form>
                 <div v-for="menu in menus">
-                    <v-form-item span="4" label="菜单URL:">
-                        <input   class="form-control" v-model="menu.url" >
-                    </v-form-item >
+                    <v-col :class="'col-md-6'">
+                        <v-box title="主菜单">
+                                <v-form-item span="11" label="菜单URL:">
+                                <input   class="form-control" v-model="menu.url" >
+                                </v-form-item >
 
-                    <v-form-item span="4" label="菜单名称:">
-                        <input  class="form-control" v-model="menu.name" >
-                    </v-form-item >
+                                <v-form-item span="11" label="菜单名称:">
+                                    <input  class="form-control" v-model="menu.desc" >
+                                </v-form-item >
 
-                    <v-form-item span="4" label="菜单icon:">
-                        <input   class="form-control" v-model="menu.icon" >
-                    </v-form-item >
+                                <v-form-item span="11" label="菜单icon:">
+                                    <input   class="form-control" v-model="menu.icon" >
+                                </v-form-item >
 
-                    <v-form-item span="4" label="菜单order:">
-                        <input   class="form-control" v-model="menu.order" >
-                    </v-form-item >
+                                <v-form-item span="11" label="菜单order:">
+                                    <input   class="form-control" v-model="menu.order" >
+                                </v-form-item >
+
+                        </v-box>
+                    </v-col>
+
+                    <div v-for="kidMenu in menu.children">
+                        <v-col :class="'col-md-6'">
+                            <v-box title="子菜单">
+                                    <v-form-item span="11" label="子菜单URL:">
+                                        <input   class="form-control" v-model="kidMenu.url" >
+                                    </v-form-item >
+
+                                    <v-form-item span="11" label="子菜单名称:">
+                                        <input  class="form-control" v-model="kidMenu.desc" >
+                                    </v-form-item >
+
+                                    <v-form-item span="11" label="子菜单icon:">
+                                        <input   class="form-control" v-model="kidMenu.icon" >
+                                    </v-form-item >
+
+                                    <v-form-item span="11" label="子菜单order:">
+                                        <input   class="form-control" v-model="kidMenu.order" >
+                                     </v-form-item >
+
+                            </v-box>
+                        </v-col>
+                    </div>
                 </div>
-            </v-form>
             <v-col class="col-md-6" >
-                <button type="button" @click="saveData" class="btn btn-primary" >
+                <button type="button" @click="saveMenus" class="btn btn-primary" >
                     保存修改
                 </button>
             </v-col>
-        </v-box>
+        </v-form>
+                <!--<v-col class="col-md-6" >-->
+                    <!--<button type="button" @click="addMenu" class="btn btn-success" >-->
+                        <!--添加菜单-->
+                    <!--</button>-->
+                <!--</v-col>-->
+                <!--<v-col class="col-md-6" >-->
+                    <!--<button type="button" @click="addKidMenu" class="btn btn-info" >-->
+                        <!--添加子菜单-->
+                    <!--</button>-->
+                <!--</v-col>-->
 
     </v-app>
 
@@ -56,17 +93,43 @@
             }
         } ,
         methods : {
-            saveData:function(){
+            saveMenus:function(){
+                var a,i,inputFlag=1;
+
+                a= document.forms[0];
+                // for (i=0;i<a.length;i++){
+                //     if(i===0 || i===3 || i===4 || i===5 ){
+                //         var index1=a[i]._value.lastIndexOf(".");
+                //         var index2=a[i]._value.length;
+                //         var suffix=a[i]._value.substring(index1+1,index2);//后缀名
+                //         if(suffix !== "html") {
+                //             inputFlag= 0;
+                //             break;
+                //         }
+                //     }
+                // }
+                // if(inputFlag){
+                //     axios.post("/admin/app_info/update",this._data).then(function(response){
+                //         $("#tip").text(response.data.msg)
+                //         $("#alert-message").modal('toggle')
+                //     })
+                // }
+            },
+            addMenu: function () {
+                var a = 1;
+            },
+            addKidMenu:function () {
                 var a = 1;
             }
+
+
 
 
         } ,
         mounted : function ($vm) {
             var self = $vm;
             axios.get("/get_menu_data").then(function (response) {
-                var test = response;
-                self.menus = response;
+                self.menus = response.data;
 
             })
         }

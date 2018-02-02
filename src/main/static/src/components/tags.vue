@@ -47,7 +47,8 @@
                     'small-box bg-red': this.color === 'red'
                 }
 
-            }
+            },
+
         }
     }
 </script>
