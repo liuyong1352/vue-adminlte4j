@@ -70,6 +70,10 @@
                 <directory>${project.basedir}/src/main/static/dist/lib</directory>
                 <targetPath>${project.build.outputDirectory}/META-INF/resources/lib</targetPath>
             </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/META-INF/resources</directory>
+                <targetPath>${project.build.outputDirectory}/META-INF/resources</targetPath>
+            </resource>
         </resources>
 
         <plugins>
