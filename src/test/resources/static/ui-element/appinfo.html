@@ -109,15 +109,15 @@
         mounted : function ($vm) {
             var self = $vm;
             axios.get("/get_app_data").then(function (response) {
-
-                self.indexUrl = response.data.indexUrl;
-                self.appName = response.data.appName;
-                self.userName = response.data.userName;
-                self.userImgUrl = response.data.userImgUrl;
-                self.profileUrl = response.data.profileUrl;
-                self.signOutUrl = response.data.signOutUrl;
-                self.logoName = response.data.logoName;
-                self.logoShortName = response.data.logoShortName;
+                var data = response.data.app_info
+                self.indexUrl   = data.indexUrl;
+                self.appName    = data.appName;
+                self.userName   = data.userName;
+                self.userImgUrl = data.userImgUrl;
+                self.profileUrl = data.profileUrl;
+                self.signOutUrl = data.signOutUrl;
+                self.logoName   = data.logoName;
+                self.logoShortName = data.logoShortName;
 
             })
         }
