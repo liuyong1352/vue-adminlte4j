@@ -8,7 +8,10 @@
 </head>
 <body>
     <v-app :data="data" >
-        <v-table ajax_url="/get_menu_data"></v-table>
+        <v-box title="菜单列表">
+            <v-table ajax_url="/get_menu_data"></v-table>
+        </v-box>
+
     </v-app>
 </body>
 <script src="/lib/lib.js"></script>

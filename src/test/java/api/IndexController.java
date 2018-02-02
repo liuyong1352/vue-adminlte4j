@@ -86,22 +86,16 @@ public class IndexController extends ApiAdminController {
         return  out ;
     }
 
-    private List<Menu> _listChildMenu(Menu menu , List<Menu> out) {
+    private void _listChildMenu(Menu menu , List<Menu> out) {
 
-        if(menu.getChildren() == null )
-            return  null ;
-
-        for(Menu child : menu.getChildren()) {
-            List<Menu> children = _listChildMenu(child , out) ;
-            if(children != null ) {
-                out.addAll(children) ;
+        if(menu.getChildren() != null ) {
+            for(Menu child : menu.getChildren()) {
+                child.setPid(menu.getId());
+                _listChildMenu(child , out);
             }
-
-            child.setChildren(null);
-            out.add(child) ;
         }
 
-        return  out ;
-
+        menu.setChildren(null);
+        out.add(menu) ;
     }
 }
