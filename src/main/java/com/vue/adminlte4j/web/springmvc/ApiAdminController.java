@@ -27,7 +27,7 @@ public class ApiAdminController {
 
     @PostMapping("/admin/app_info/update")
     @ResponseBody
-    UIModel _updateAppinfo(@RequestBody AppInfo appinfo)  {
+    public UIModel _updateAppinfo(@RequestBody AppInfo appinfo)  {
         try {
             ModelConfigManager.storeAppInfo(appinfo);
             return UIModel.success().setMsg("修改成功！") ;
