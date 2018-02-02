@@ -415,19 +415,17 @@ public class DefaultModelConfig implements IModelConfig{
             //正则是取消多余空格或者tab键
             arrays = lines.split("\\s+");
             //menu id  icon url  order  desc   pid
-            for(int i=1;i<arrays.length;i++){
-                //第一行不读取 第一个是menuid
+            int length = 1;
+            while(length < arrays.length) {
                 Menu menu = new Menu();
                 Field[] fields = menu.getClass().getDeclaredFields();
-                for(Field field : fields) {
-                    if(!field.isAccessible())
+                for (Field field : fields) {
+                    if (!field.isAccessible())
                         field.setAccessible(true);
-                    field.set(menu,arrays[i]);
+                    field.set(menu, arrays[length]);
+                    length++;
                 }
             }
-
-
-
 
         }
 
@@ -446,7 +444,7 @@ public class DefaultModelConfig implements IModelConfig{
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
         List<Menu> tempMenus = new ArrayList<>();
-        tempMenus = modelConfig.loadMenus1();
+     //   tempMenus = modelConfig.loadMenus1();
 
 //        Menu testMenu = new Menu();
 //        testMenu.setIcon("111");
