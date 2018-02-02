@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class AppInfo implements Serializable{
 
-    private String indexUrl = "";
-    private String appName  = "app_name" ;
-    private String userName = "no name" ;
-    private String userImgUrl = "#";
-    private String profileUrl = "#";
-    private String signOutUrl = "#" ;
-    private String logoName = "";
-    private String logoShortName = "" ;
+    private String indexUrl     ;
+    private String appName      ;
+    private String userName     ;
+    private String userImgUrl   ;
+    private String profileUrl   ;
+    private String signOutUrl   ;
+    private String logoName     ;
+    private String logoShortName;
 
     public String getIndexUrl() {
         return indexUrl;

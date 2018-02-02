@@ -30,4 +30,5 @@ src/main/static/dist/
 
 ##config
 src/main/resources/ui-model/
+src/main/static/dist/package-lock.json
 

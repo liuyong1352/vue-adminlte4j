@@ -1,6 +1,5 @@
 package api;
 
-import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vue.adminlte4j.model.UIModel;
@@ -17,7 +16,6 @@ public class HtmlData {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
-            .appInfo(AppInfoInJvm.getAppInfo())
             .isLogin(true) ;
 
         ObjectMapper objectMapper = new ObjectMapper() ;

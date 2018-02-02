@@ -3,7 +3,6 @@ package com.vue.adminlte4j.web.springmvc;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +17,9 @@ public class ApiAdminController {
 
     @GetMapping("/admin/app_info/get")
     @ResponseBody
-    public UIModel getAppInfo() {
+    public UIModel _getAppInfo() {
         try {
-            return new UIModel()
-                    .appInfo(ModelConfigManager.getAppInfo())
-                    .isLogin(true) ;
+            return UIModel.success().appInfo(ModelConfigManager.getAppInfo()) ;
         } catch (IOException e) {
             return UIModel.fail().setMsg("system.error!");
         }
@@ -30,7 +27,7 @@ public class ApiAdminController {
 
     @PostMapping("/admin/app_info/update")
     @ResponseBody
-    UIModel updateAppinfo(@RequestBody AppInfo appinfo)  {
+    UIModel _updateAppinfo(@RequestBody AppInfo appinfo)  {
         try {
             ModelConfigManager.storeAppInfo(appinfo);
             return UIModel.success().setMsg("修改成功！") ;

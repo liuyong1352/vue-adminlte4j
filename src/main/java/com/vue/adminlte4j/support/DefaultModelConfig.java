@@ -246,13 +246,14 @@ public class DefaultModelConfig implements IModelConfig{
         if(model == null )
             throw new IllegalArgumentException("model can not be null") ;
 
-//       model.getClass().isArray()
         Field[] fields = model.getClass().getDeclaredFields();
 
         for(Field field : fields) {
             if(!field.isAccessible())
                 field.setAccessible(true);
-            prop.setProperty(field.getName(),(String) field.get(model));
+            Object val = field.get(model) ;
+            if(val != null)
+                prop.setProperty(field.getName() , (String)val) ;
         }
     }
 

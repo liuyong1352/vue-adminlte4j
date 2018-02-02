@@ -1,8 +1,6 @@
 package api;
 
-import api.data.AppInfoInJvm;
 import api.data.MenuApiInJvm;
-import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
@@ -24,7 +22,7 @@ public class IndexController extends ApiAdminController {
 
     @GetMapping("/get_app_info")
     @ResponseBody
-    UIModel _getAppInfo() throws IOException {
+    UIModel getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())

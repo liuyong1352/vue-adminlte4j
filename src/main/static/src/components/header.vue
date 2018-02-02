@@ -77,7 +77,7 @@ export default {
         return util.get_val(this.data['signOutUrl'] , '#' )
     } ,
     user_img_url : function() {
-        return util.get_val(this.data['userImgUrl'] , '/lib/packvue-adminlte/dist/img/jd_def.gif' )
+        return util.get_val(this.data['userImgUrl'] , '/lib/vue-adminlte/dist/img/jd_def.gif' )
     } ,
     profile_url : function() {
         return util.get_val(this.data['profileUrl'] , '#')
