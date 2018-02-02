@@ -29,7 +29,7 @@ public class DefaultModelConfig implements IModelConfig{
     private static final boolean isDev  ;
 
     static {
-        
+
         boolean flag = getJavaResources().toFile().exists() ;
 
         if(!flag) {
