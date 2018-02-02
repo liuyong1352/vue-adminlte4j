@@ -99,7 +99,7 @@
                     }
                 }
                 if(inputFlag){
-                    axios.post("/update_app_data",this._data).then(function(response){
+                    axios.post("/admin/app_info/update",this._data).then(function(response){
                         $("#tip").text(response.data.msg)
                         $("#alert-message").modal('toggle')
                     })
@@ -108,7 +108,7 @@
         } ,
         mounted : function ($vm) {
             var self = $vm;
-            axios.get("/get_app_data").then(function (response) {
+            axios.get("/admin/app_info/get").then(function (response) {
                 var data = response.data.app_info
                 self.indexUrl   = data.indexUrl;
                 self.appName    = data.appName;
