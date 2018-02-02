@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.vue.adminlte4j.support.ModelConfigManager;
+import com.vue.adminlte4j.web.springmvc.ApiAdminController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
  * Created by bjliuyong on 2017/12/14.
  */
 @Controller
-public class IndexController {
+public class IndexController extends ApiAdminController {
 
     @GetMapping("/get_app_info")
     @ResponseBody
-    UIModel getAppInfo() throws IOException {
+    UIModel _getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
@@ -53,9 +54,9 @@ public class IndexController {
         TableData tableData = new TableData() ;
         tableData.configDisplayColumn(UserInfo.class);
 
-       /* tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
+        tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
         tableData.configDisplayColumn(TableData.createColumn("age" , "年龄") );
-        tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );*/
+        tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );
 
         for(int i = 0 ; i < 10 ; i++ ) {
             UserInfo userInfo = new UserInfo() ;
@@ -84,27 +85,6 @@ public class IndexController {
 
         return uiModel ;
     }
-
-
-    @GetMapping("/get_app_data")
-    @ResponseBody
-    AppInfo getAppinfoData() throws IOException {
-
-        return ModelConfigManager.getAppInfo();
-      }
-
-
-    @PostMapping("/update_app_data")
-    @ResponseBody
-    UIModel updateAppinfo(@RequestBody AppInfo appinfo)  {
-        try {
-            ModelConfigManager.storeAppInfo(appinfo);
-            return UIModel.success().setMsg("修改成功！") ;
-        } catch (IOException e) {
-            return UIModel.fail().setMsg("修改失败!") ;
-        }
-    }
-
 
     @GetMapping("/get_menu_data")
     @ResponseBody

@@ -5,8 +5,6 @@
     <title>ATL - Modal </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- 引入样式 -->
-    <link href="//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -48,7 +46,7 @@
 
             <v-col class="col-md-6" >
                 <button type="button" @click="saveData" class="btn btn-primary" >
-                      保存修改
+                    保存修改
                 </button>
             </v-col>
 
@@ -57,8 +55,12 @@
     </v-box>
 
 
+    <v-modal title="提示" style="text-align: center" id="alert-message">
+        <p><i class="fa fa-fw fa-check"></i></p>
+        <p><span id="tip">修改成功!</span></p>
+    </v-modal>
 
-<!--class="demo-color-box bg-success"-->
+
 </v-app>
 <script src="/lib/lib.js"></script>
 <script src="//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js"></script>
@@ -97,26 +99,25 @@
                     }
                 }
                 if(inputFlag){
-                    axios.post("/update_app_data",this._data).then(function(response){
-                        if(response.data.code) {
-                            swal(response.data.msg, "you click！", "success")
-                        }
+                    axios.post("/admin/app_info/update",this._data).then(function(response){
+                        $("#tip").text(response.data.msg)
+                        $("#alert-message").modal('toggle')
                     })
                 }
             }
-    } ,
-           mounted : function ($vm) {
-                var self = $vm;
-                axios.get("/get_app_data").then(function (response) {
-
-                    self.indexUrl = response.data.indexUrl;
-                    self.appName = response.data.appName;
-                    self.userName = response.data.userName;
-                    self.userImgUrl = response.data.userImgUrl;
-                    self.profileUrl = response.data.profileUrl;
-                    self.signOutUrl = response.data.signOutUrl;
-                    self.logoName = response.data.logoName;
-                    self.logoShortName = response.data.logoShortName;
+        } ,
+        mounted : function ($vm) {
+            var self = $vm;
+            axios.get("/admin/app_info/get").then(function (response) {
+                var data = response.data.app_info
+                self.indexUrl   = data.indexUrl;
+                self.appName    = data.appName;
+                self.userName   = data.userName;
+                self.userImgUrl = data.userImgUrl;
+                self.profileUrl = data.profileUrl;
+                self.signOutUrl = data.signOutUrl;
+                self.logoName   = data.logoName;
+                self.logoShortName = data.logoShortName;
 
             })
         }
