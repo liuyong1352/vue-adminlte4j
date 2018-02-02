@@ -3,7 +3,6 @@ package com.vue.adminlte4j.web.springmvc;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
