@@ -18,7 +18,7 @@ public class ApiAdminController {
 
     @GetMapping("/admin/app_info/get")
     @ResponseBody
-    public UIModel getAppInfo() {
+    public UIModel _getAppInfo() {
         try {
             return new UIModel()
                     .appInfo(ModelConfigManager.getAppInfo())
@@ -30,7 +30,7 @@ public class ApiAdminController {
 
     @PostMapping("/admin/app_info/update")
     @ResponseBody
-    UIModel updateAppinfo(@RequestBody AppInfo appinfo)  {
+    UIModel _updateAppinfo(@RequestBody AppInfo appinfo)  {
         try {
             ModelConfigManager.storeAppInfo(appinfo);
             return UIModel.success().setMsg("修改成功！") ;

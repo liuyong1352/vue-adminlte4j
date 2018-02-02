@@ -24,7 +24,7 @@ public class IndexController extends ApiAdminController {
 
     @GetMapping("/get_app_info")
     @ResponseBody
-    UIModel _getAppInfo() throws IOException {
+    UIModel getAppInfo() throws IOException {
 
         UIModel uiModel = new UIModel()
             .menu(MenuApiInJvm.getMenu())
