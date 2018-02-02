@@ -20,9 +20,7 @@ public class ApiAdminController {
     @ResponseBody
     public UIModel _getAppInfo() {
         try {
-            return new UIModel()
-                    .appInfo(ModelConfigManager.getAppInfo())
-                    .isLogin(true) ;
+            return UIModel.success().appInfo(ModelConfigManager.getAppInfo()) ;
         } catch (IOException e) {
             return UIModel.fail().setMsg("system.error!");
         }
