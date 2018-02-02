@@ -26,7 +26,20 @@ public class DefaultModelConfig implements IModelConfig{
     private   AppInfo appInfo ;
     private   List<Menu> menus = new ArrayList<>();
 
-    private static final boolean isDev = getJavaResources().toFile().exists() ;
+    private static final boolean isDev  ;
+
+    static {
+        
+        boolean flag = getJavaResources().toFile().exists() ;
+
+        if(!flag) {
+            String userDir = System.getProperty("user.dir") ;
+            Path path = Paths.get(userDir  , "src" , "main" , "java") ;
+            flag = path.toFile().exists() ;
+        }
+
+        isDev = flag ;
+    }
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
