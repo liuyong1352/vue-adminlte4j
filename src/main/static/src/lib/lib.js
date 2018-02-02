@@ -211,7 +211,7 @@ app = function (scope) {
 
             var base_config = {
                 is_syn : false ,
-                api: '/get_app_info' ,
+                api: '/admin/app_info/get_all' ,
                 data: {} ,
                 callback: function () {}
             }
