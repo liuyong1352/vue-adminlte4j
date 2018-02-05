@@ -5,7 +5,6 @@ import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 
-import java.beans.Transient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +39,11 @@ public class ModelConfigManager {
 
     }
 
-    public static List<Menu> getMenu() throws IOException, IllegalAccessException {
+    public static List<Menu> getMenu() throws Exception {
         return ModelConfigFactory.getInstance().loadMenus();
     }
 
-    public static void storeMenu(List<Menu> menus) throws IOException, IllegalAccessException {
+    public static void storeMenu(List<Menu> menus) throws IOException {
          ModelConfigFactory.getInstance().storeMenus(menus);
     }
 

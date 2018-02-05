@@ -1,12 +1,13 @@
 package com.vue.adminlte4j.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bjliuyong on 2017/11/23.
  */
-public class Menu implements Comparable<Menu> {
+public class Menu implements Comparable<Menu> ,Serializable  {
 
     private String id ;
     private String desc ;
