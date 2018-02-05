@@ -43,7 +43,7 @@ public class ModelConfigManager {
         return ModelConfigFactory.getInstance().loadMenus();
     }
 
-    public static void storeMenu(List<Menu> menus) throws IOException {
+    public static void storeMenu(List<Menu> menus) throws Exception {
          ModelConfigFactory.getInstance().storeMenus(menus);
     }
 
