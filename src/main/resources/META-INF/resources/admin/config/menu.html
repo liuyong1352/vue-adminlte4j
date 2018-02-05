@@ -50,6 +50,7 @@
     app.main({
         data :function() {
             return {
+                g_table : {}  ,
                 form : {id : 1} ,
                 operations : [
                     {
@@ -58,6 +59,7 @@
                         scheme: 'green',
                         method : function(row , $table) {
                             $("#addMenuModal").modal('toggle')
+                            g_table = $table ;
                         }
                     } ,
                     {
@@ -82,6 +84,7 @@
                     $("#addMenuModal").modal('toggle')
                     $("#tip").text(response.data.msg)
                     $("#alert-message").modal('toggle')
+                    g_table.fetchData()
                 })
             }
         } ,

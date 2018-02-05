@@ -155,43 +155,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
     }
 
-    private  static void setMenusProperties(List<Menu> menus,Properties prop) throws IllegalAccessException {
-        if(menus == null )
-            throw new IllegalArgumentException("model can not be null") ;
-        int menuCount = 1;
-        for(Menu menu : menus){
-
-            if(menu.getChildren() == null){
-                setMenu(menu,prop,"menu"+menuCount+".");
-            }else{
-
-                int kidCount = 1;
-                for(Menu kidMenu:menu.getChildren()){
-                    setMenu(kidMenu,prop,"menu"+menuCount+".kid"+kidCount+".");
-                    kidCount++;
-                }
-            }
-            menuCount++;
-        }
-    }
-
-    private static void setMenu(Object model,Properties prop,String name) throws IllegalAccessException {
-        //       model.getClass().isArray()
-        Field[] fields = model.getClass().getDeclaredFields();
-        String value;
-
-        for(Field field : fields) {
-            if(!field.isAccessible())
-                field.setAccessible(true);
-
-            value= String.valueOf(field.get(model)) ;
-
-            if(value != null &&  !field.getName().equals("children"))
-                prop.setProperty(name+field.getName(),value);
-        }
-    }
-
-
     public static File getStoreFile(String type) throws IOException {
         if(!isDev)
             throw new RuntimeException("current not in dev Mode !") ;
@@ -334,10 +297,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
         List<Menu> tempMenus = modelConfig.loadMenus() ;
 
-        Menu menu = new Menu(null , "1" , "/1" , "1" , 10) ;
-
-        modelConfig.addMenu(menu) ;
-        modelConfig.deleteMenu("3");
-        System.out.println(menu.getId());
+        System.out.println(tempMenus);
     }
 }
