@@ -261,7 +261,11 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
         Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
-            return new ArrayList<>();
+            menus = new ArrayList<>() ;
+            if( menuIdGenerator == null ) {
+                initMenuIdGenerator(menus);
+            }
+            return menus;
         }
 
         FileInputStream inputStream = null ;
