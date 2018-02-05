@@ -6,10 +6,7 @@ import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.web.config.MenuConfig;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,13 +50,22 @@ public class ApiAdminController {
         }
     }
 
+    @DeleteMapping("/admin/menu/delete/{id}")
+    @ResponseBody
+    public UIModel deleteMenu(@PathVariable String id) {
+        try {
+            ModelConfigManager.deleteMenu(id);
+            return UIModel.success().setMsg("修改成功！") ;
+        } catch (Exception e) {
+            return UIModel.fail().setMsg("修改失败!") ;
+        }
+    }
+
     @PostMapping("/admin/menu/add")
     @ResponseBody
     public UIModel addMenu(@RequestBody Menu menu)  {
         try {
-            List<Menu> dat = ModelConfigManager.getMenu() ;
-            dat.add(menu) ;
-            ModelConfigManager.storeMenu(dat);
+            ModelConfigManager.addMenu(menu);
             return UIModel.success().setMsg("修改成功！") ;
         } catch (Exception e) {
             return UIModel.fail().setMsg("修改失败!") ;

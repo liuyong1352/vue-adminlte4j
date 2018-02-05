@@ -47,4 +47,12 @@ public class ModelConfigManager {
          ModelConfigFactory.getInstance().storeMenus(menus);
     }
 
+    public static void addMenu(Menu menu) throws Exception {
+        ModelConfigFactory.getInstance().addMenu(menu);
+    }
+
+    public static void deleteMenu(String id) throws Exception {
+        ModelConfigFactory.getInstance().deleteMenu(id);
+    }
+
 }

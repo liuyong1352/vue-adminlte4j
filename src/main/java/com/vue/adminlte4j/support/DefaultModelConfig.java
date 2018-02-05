@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by bjliuyong on 2017/12/26.
@@ -22,7 +23,9 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     private Set<Class> typeSet   = new HashSet<>() ;
 
     private   AppInfo appInfo ;
-    private   List<Menu> menus = new ArrayList<>();
+    private   List<Menu> menus ;
+
+    private AtomicInteger menuIdGenerator ;
 
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
@@ -97,8 +100,43 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
     @Override
-    public synchronized void storeMenus(List<Menu> menus) throws IOException, IllegalAccessException {
+    public synchronized void storeMenus(List<Menu> menus) throws Exception {
         storeMenuProperties(menus);
+    }
+
+    @Override
+    public void deleteMenu(String id) throws Exception {
+
+        if(menus == null) {
+            return;
+        }
+
+        for(int i = 0 ; i < menus.size() ; i++ ) {
+            if (menus.get(i).getId().equals(id)) {
+                menus.remove(i);
+                break;
+            }
+        }
+
+        storeMenus(menus);
+
+    }
+
+    @Override
+    public Menu addMenu(Menu menu) throws Exception {
+        int id = menuIdGenerator.getAndIncrement() ;
+        menu.setId(id + "");
+        if(menu.getPid() != null) {
+            for(Menu m : menus ) {
+                if(m.getId().equals(menu.getPid()))
+                    m.addChildMenu(menu);
+            }
+        } else {
+            menus.add(menu) ;
+        }
+
+        storeMenus(menus);
+        return menu;
     }
 
     private static  void storeMenuProperties(List<Menu> menus) throws IOException {
@@ -247,195 +285,59 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     @Override
     public List<Menu> loadMenus() throws Exception {
 
+        if(menus == null )
+            menus = loadFromFile() ;
+
+        return  menus ;
+
+    }
+
+
+    private List<Menu> loadFromFile() throws  Exception {
+
         Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
-            return menus;
+            return new ArrayList<>();
         }
+
         FileInputStream inputStream = null ;
         try {
             inputStream = new FileInputStream(path.toString());
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            return (List<Menu>)objectInputStream.readObject() ;
+            menus = (List<Menu>)objectInputStream.readObject() ;
+
+            if( menuIdGenerator == null ) {
+                initMenuIdGenerator(menus);
+            }
+
+            return menus ;
         } finally {
             inputStream.close();
         }
 
     }
 
-
-
-
-
-    /**
-     * 从menu_item.s读取值 放到menus中
-     * @param prop
-     */
-    public void getMenus(Properties prop) throws IllegalAccessException {
-
-        int menuCount = 1;
-        int length =prop.size();
-        String value;
-        String name;
-        while(length>0) {
-            boolean kidFlag = true; //避免重复添加kidMenu
-            Menu menu = new Menu();
-
-            Field[] fields = menu.getClass().getDeclaredFields();
-            for(Field field : fields) {
-                //这里先假定menu的desc不为空
-                if(kidFlag){
-
-                    int result = getKidMenus(menu,prop, getMenuName(menuCount));
-
-                    if(result > 0){
-                        //这里返回KidMenu操作的元素个数 然后继续
-                        length -= result;
-                        kidFlag = false;
-                    }
-
-                }
-                name = getMenuName(menuCount)+field.getName();
-
-                //不再获取children的值 已在KidMenus中操作
-                if(name.indexOf("children")> 0) continue;
-
-                value = (String) prop.get(name);
-                //这里要滤过children属性 不然会覆盖先前的
-                if(value != null)length--;
-
-
-                setField(value,menu,field);
-            }
-            menus.add(menu);
-            menuCount++;   //进行menu2
-
+    private void initMenuIdGenerator(List<Menu> menus) {
+        int maxId = 0 ;
+        for(Menu menu : menus) {
+            int id = Integer.parseInt(menu.getId()) ;
+            if(id > maxId)
+                maxId = id ;
         }
-
-
+        menuIdGenerator = new AtomicInteger(maxId + 1 ) ;
     }
 
-
-    public int getKidMenus(Menu menu,Properties prop,String name) throws IllegalAccessException {
-        //这里是否可以迭代 这里返回获取了几个元素 减length  如果不存在第一个子菜单 或者没有写描述 直接返回0
-        int count = 0;
-        String kidName;
-
-        if(prop.get(name+"kid1"+".desc")==null) return 0;
-
-        int menuNumber = 1;
-        while(true){
-
-            kidName = name+"kid"+menuNumber+".desc";
-            if(prop.get(kidName)==null) {
-                break;
-            }
-
-            Menu kidMenu = new Menu();
-            Field[] kidfields = kidMenu.getClass().getDeclaredFields();
-
-            for(Field kidField:kidfields){
-                kidName = name+"kid"+menuNumber+"."+ kidField.getName();
-                String value = (String) prop.get(kidName);
-                if(value == null) continue;
-                count++;  //配置文件存在才减减
-
-                setField(value,kidMenu,kidField);
-            }
-            menu.addChildMenu(kidMenu);
-            menuNumber++;
-        }
-        return count;
-    }
-
-    public void setField(String value,Menu menu,Field field) throws IllegalAccessException {
-        //共同的
-        //开启权限
-
-        String type = field.getType().getName();
-        if(!field.isAccessible())
-            field.setAccessible(true);
-
-        if(type.equals("int")){
-            field.set(menu ,Integer.parseInt(value));
-        }else{
-            field.set(menu ,value);
-        }
-
-    }
-
-
-
-
-    private String getMenuName(int i){
-        return "menu"+i+".";
-    }
-
-
-    /**
-     * 流的关闭顺序：先打开的后关，后打开的先关
-     *  否则有可能出现java.io.IOException: Stream closed异常
-     * @return
-     * @throws IOException
-     *
-     */
-    public List<Menu> loadMenus1() throws IOException, IllegalAccessException {
-
-        Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
-
-        if(path == null || !path.toFile().exists()){
-            return menus;
-        }
-        //读取文件流
-        FileInputStream fileStream = new FileInputStream(path.toString());
-        //这里防止中文乱码
-        InputStreamReader reader = new InputStreamReader(fileStream,"utf-8");
-        BufferedReader   buffer = new BufferedReader(reader);
-
-        String lines = null;
-        String[] arrays = null;
-        while( (lines=buffer.readLine()) != null){
-            //正则是取消多余空格或者tab键
-            arrays = lines.split("\\s+");
-            //menu id  icon url  order  desc   pid
-            int length = 1;
-            while(length < arrays.length) {
-                Menu menu = new Menu();
-                Field[] fields = menu.getClass().getDeclaredFields();
-                for (Field field : fields) {
-                    if (!field.isAccessible())
-                        field.setAccessible(true);
-                    field.set(menu, arrays[length]);
-                    length++;
-                }
-            }
-
-        }
-
-
-        //关闭流 原因很简单 相互占用着 最先的关闭 后面两个依赖第一个的流 所以
-        buffer.close();
-        reader.close();
-        fileStream.close();
-
-
-
-        return menus;
-    }
-
-    public static void main(String args[] ) throws IOException, IllegalAccessException {
+    public static void main(String args[] ) throws Exception {
 
         DefaultModelConfig modelConfig = new DefaultModelConfig();
-        List<Menu> tempMenus = new ArrayList<>();
-     //   tempMenus = modelConfig.loadMenus1();
 
-//        Menu testMenu = new Menu();
-//        testMenu.setIcon("111");
-//        testMenu.setDesc("222");
-//
-//
-//        tempMenus.set(1,testMenu);
-//        modelConfig.storeMenus(tempMenus);
+        List<Menu> tempMenus = modelConfig.loadMenus() ;
 
+        Menu menu = new Menu(null , "1" , "/1" , "1" , 10) ;
+
+        modelConfig.addMenu(menu) ;
+        modelConfig.deleteMenu("3");
+        System.out.println(menu.getId());
     }
 }

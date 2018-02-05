@@ -20,7 +20,9 @@ public interface IModelConfig {
 
     List<Menu> loadMenus() throws Exception ;
 
-    void storeMenus(List<Menu> menus) throws IOException, IllegalAccessException;
+    void storeMenus(List<Menu> menus) throws Exception;
 
+    void deleteMenu(String id) throws Exception ;
 
+    Menu addMenu(Menu menu) throws Exception ;
 }

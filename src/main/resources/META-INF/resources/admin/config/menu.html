@@ -59,6 +59,18 @@
                         method : function(row , $table) {
                             $("#addMenuModal").modal('toggle')
                         }
+                    } ,
+                    {
+                        name : '删除' ,
+                        icon:'trash',
+                        scheme: 'green',
+                        method : function(row , $table) {
+                            axios.delete("/admin/menu/delete/" + row.id ).then(function(response){
+                                $("#tip").text(response.data.msg)
+                                $("#alert-message").modal('toggle')
+                                $table.fetchData()
+                            })
+                        }
                     }
                 ]
             }
@@ -67,6 +79,7 @@
         methods : {
             onSave : function () {
                 axios.post("/admin/menu/add",this.form).then(function(response){
+                    $("#addMenuModal").modal('toggle')
                     $("#tip").text(response.data.msg)
                     $("#alert-message").modal('toggle')
                 })
