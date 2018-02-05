@@ -97,7 +97,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
     @Override
-    public synchronized void storeMenus(List<Menu> menus) throws IOException {
+    public synchronized void storeMenus(List<Menu> menus) throws IOException, IllegalAccessException {
         storeMenuProperties(menus);
     }
 
@@ -154,7 +154,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
 
-    private static File getStoreFile(String type) throws IOException {
+    public static File getStoreFile(String type) throws IOException {
         if(!isDev)
             throw new RuntimeException("current not in dev Mode !") ;
 
