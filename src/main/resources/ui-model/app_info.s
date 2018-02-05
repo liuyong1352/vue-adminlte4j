@@ -1,10 +1,11 @@
-#change 
-#Fri Feb 02 17:38:14 CST 2018
+profileUrl=/index.html
+logoName=Admin1
+signOutUrl=/index.html
 appName=111
-logoName=Admin0
 userImgUrl=
 indexUrl=/index.html
-profileUrl=/index.html
+userImgUrl=/profile.html
+logoShortName=ATL1
 userName=liuyong
 signOutUrl=/index.html
 logoShortName=ATL0
