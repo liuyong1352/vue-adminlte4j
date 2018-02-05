@@ -40,11 +40,11 @@ public class ModelConfigManager {
 
     }
 
-    public static List<Menu> getMenu(){
+    public static List<Menu> getMenu() throws IOException, IllegalAccessException {
         return ModelConfigFactory.getInstance().loadMenus();
     }
 
-    public static void storeMenu(List<Menu> menus) throws IOException {
+    public static void storeMenu(List<Menu> menus) throws IOException, IllegalAccessException {
          ModelConfigFactory.getInstance().storeMenus(menus);
     }
 

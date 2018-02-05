@@ -21,8 +21,8 @@ public class ApiAdminController {
     public UIModel _getAllApiInfo() {
         try {
             return UIModel.success()
-                    .appInfo(ModelConfigManager.getAppInfo())
-                    .menu(MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()));
+                    .appInfo(ModelConfigManager.getAppInfo());
+                  //  .menu(MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()));
         } catch (IOException e) {
             return UIModel.fail().setMsg("system.error!");
         }
@@ -52,7 +52,7 @@ public class ApiAdminController {
     @PostMapping("/admin/menus/get")
     @ResponseBody
     UIModel _getMenus()  {
-        ModelConfigManager.getMenu();
+     //   ModelConfigManager.getMenu();
         return UIModel.success().setMsg("修改成功！") ;
     }
 

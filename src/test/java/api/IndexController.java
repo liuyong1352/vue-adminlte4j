@@ -7,6 +7,8 @@ import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.web.config.MenuConfig;
 import com.vue.adminlte4j.web.springmvc.ApiAdminController;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,7 +77,7 @@ public class IndexController extends ApiAdminController {
         return UIModel.success().tableData(tableData);
     }
 
-    private List<Menu> _listMenu() {
+    private List<Menu> _listMenu() throws IOException, IllegalAccessException {
         List<Menu> _menus = MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()) ;
         List<Menu> out = new ArrayList<>() ;
 

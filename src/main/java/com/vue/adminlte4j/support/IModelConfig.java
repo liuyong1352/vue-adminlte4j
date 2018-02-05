@@ -3,7 +3,10 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -14,7 +17,7 @@ public interface IModelConfig {
 
     List<TableData.Column> configModelColumn(Class type) ;
 
-    List<Menu> loadMenus();
+    List<Menu> loadMenus() throws IOException, IllegalAccessException;
     AppInfo loadAppInfo() throws IOException;
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
