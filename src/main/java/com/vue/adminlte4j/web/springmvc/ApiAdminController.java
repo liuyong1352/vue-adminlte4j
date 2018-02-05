@@ -78,6 +78,7 @@ public class ApiAdminController {
         TableData<Menu> tableData = new TableData<>() ;
 
         tableData.configDisplayColumn(Menu.class);
+        tableData.removeDisplayColumn("children");
 
         tableData.setPage(false);
         tableData.addAll(_listMenu());
@@ -105,7 +106,7 @@ public class ApiAdminController {
             }
         }
 
-        menu.setChildren(null);
+        //menu.setChildren(null);
         out.add(menu) ;
     }
 }

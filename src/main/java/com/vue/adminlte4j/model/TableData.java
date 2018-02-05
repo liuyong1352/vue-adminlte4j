@@ -1,8 +1,8 @@
 package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.support.ModelConfigManager;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,6 +25,13 @@ public class TableData<T> {
 
     public void configDisplayColumn(Class type) {
         this.columns.addAll(ModelConfigManager.getModelConfigColumns(type));
+    }
+
+    public void removeDisplayColumn(String key) {
+        for(int i = 0 ; i < columns.size() ; i++) {
+            if(columns.get(i).getKey().equals(key))
+                columns.remove(i) ;
+        }
     }
 
     public void addData(T data) {
@@ -88,5 +95,7 @@ public class TableData<T> {
         public void setLabel(String label) {
             this.label = label;
         }
+
+
     }
 }
