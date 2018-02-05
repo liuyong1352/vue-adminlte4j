@@ -20,7 +20,8 @@ public class MenuConfig {
 
         Menu menu = new Menu("m1" ,"应用配置" ,"#" ,"" ,order.incrementAndGet() ) ;
         menus.add(menu) ;
-        menu.addChildMenu(new Menu("m1" ,"应用信息配置" ,"/admin/config/app_info.html" ,"" ,order.get()));
+        menu.addChildMenu(new Menu("m1" ,"应用信息配置" ,"/admin/config/app_info.html" ,"" ,order.incrementAndGet()));
+        menu.addChildMenu(new Menu("m2" ,"菜单管理" ,"/admin/config/menu.html" ,"" ,order.incrementAndGet()));
 
         return  menus ;
     }
