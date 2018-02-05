@@ -9,7 +9,7 @@
 <body>
     <v-app :data="data" >
         <v-box title="菜单列表">
-            <v-table ajax_url="/get_menu_data"></v-table>
+            <v-table ajax_url="/get_menu_data" :operations="operations"></v-table>
         </v-box>
 
     </v-app>
@@ -22,6 +22,18 @@
 
         } ,
         methods : {
+            operations : [
+                {
+                    name : '添加子菜单' ,
+                    icon:'plus',
+                    scheme: 'green',
+                    method : function(row , $table) {
+                        console.log(row);
+                        $table.fetchData();
+
+                    }
+                }
+            ]
         } ,
         mounted : function ($vm) {
 
