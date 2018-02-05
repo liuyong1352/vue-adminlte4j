@@ -14,9 +14,6 @@
         <v-modal title="添加子菜单" id="addMenuModal">
             <v-form>
                 <v-row>
-                    <v-form-item label="id:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.id">
-                    </v-form-item>
                     <v-form-item label="pid:">
                         <input type="text" class="form-control" placeholder="Enter ..." v-model="form.pid">
                     </v-form-item>
@@ -58,6 +55,7 @@
                         icon:'edit',
                         scheme: 'green',
                         method : function(row , $table) {
+                            this.form.pid = row.id
                             $("#addMenuModal").modal('toggle')
                             g_table = $table ;
                         }
