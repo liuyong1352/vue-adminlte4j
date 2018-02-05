@@ -9,31 +9,68 @@
 <body>
     <v-app :data="data" >
         <v-box title="菜单列表">
-            <v-table ajax_url="/get_menu_data" :operations="operations"></v-table>
+            <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
         </v-box>
+        <v-modal title="添加子菜单" id="addMenuModal">
+            <v-form>
+                <v-row>
+                    <v-form-item label="id:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.id">
+                    </v-form-item>
+                    <v-form-item label="pid:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.pid">
+                    </v-form-item>
+                    <v-form-item label="url:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.url">
+                    </v-form-item>
+                    <v-form-item label="icon:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.icon">
+                    </v-form-item>
+                    <v-form-item label="order:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.order">
+                    </v-form-item>
+                    <v-form-item label="desc:">
+                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.desc">
+                    </v-form-item>
+                </v-row>
 
+            </v-form>
+            <button slot="footer" @click="onSave">Save</button>
+        </v-modal>
+
+        <v-modal title="提示" style="text-align: center" id="alert-message">
+            <p><i class="fa fa-fw fa-check"></i></p>
+            <p><span id="tip">修改成功!</span></p>
+        </v-modal>
     </v-app>
 </body>
 <script src="/lib/lib.js"></script>
 <script>
 
     app.main({
-        data : function () {
+        data :function() {
+            return {
+                form : {id : 1} ,
+                operations : [
+                    {
+                        name : '添加子菜单' ,
+                        icon:'edit',
+                        scheme: 'green',
+                        method : function(row , $table) {
+                            $("#addMenuModal").modal('toggle')
+                        }
+                    }
+                ]
+            }
 
         } ,
         methods : {
-            operations : [
-                {
-                    name : '添加子菜单' ,
-                    icon:'plus',
-                    scheme: 'green',
-                    method : function(row , $table) {
-                        console.log(row);
-                        $table.fetchData();
-
-                    }
-                }
-            ]
+            onSave : function () {
+                axios.post("/admin/menu/add",this.form).then(function(response){
+                    $("#tip").text(response.data.msg)
+                    $("#alert-message").modal('toggle')
+                })
+            }
         } ,
         mounted : function ($vm) {
 

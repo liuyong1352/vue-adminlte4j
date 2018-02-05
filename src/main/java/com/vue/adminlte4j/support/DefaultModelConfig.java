@@ -4,6 +4,7 @@ package com.vue.adminlte4j.support;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
+import com.vue.adminlte4j.support.store.BaseStore;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -15,31 +16,14 @@ import java.util.*;
  * Created by bjliuyong on 2017/12/26.
  */
 
-public class DefaultModelConfig implements IModelConfig{
+public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
 
     private Set<Class> typeSet   = new HashSet<>() ;
-    private static final String WORKSPACE_DIR = "ui-model" ;
-    private static final String APP_INFO_FILE = "app_info.s" ;
-    private static final String MENU_ITEM_FILE = "menu_items.s";
 
     private   AppInfo appInfo ;
     private   List<Menu> menus = new ArrayList<>();
 
-    private static final boolean isDev  ;
-
-    static {
-
-        boolean flag = getJavaResources().toFile().exists() ;
-
-        if(!flag) {
-            String userDir = System.getProperty("user.dir") ;
-            Path path = Paths.get(userDir  , "src" , "main" , "java") ;
-            flag = path.toFile().exists() ;
-        }
-
-        isDev = flag ;
-    }
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
@@ -118,20 +102,18 @@ public class DefaultModelConfig implements IModelConfig{
     }
 
     private static  void storeMenuProperties(List<Menu> menus) throws IOException {
-        Properties prop   =  new Properties();
-        FileOutputStream oFile = new FileOutputStream(getStoreFile(MENU_ITEM_FILE));
-        try {
-            setMenusProperties(menus,prop);
 
-            prop.store(oFile, "change ");
+        FileOutputStream output = null;
+        try {
+            output = new FileOutputStream(getStoreFile(MENU_ITEM_FILE));
+            ObjectOutputStream outputStream = new ObjectOutputStream(output) ;
+            outputStream.writeObject(menus);
         } catch (IOException e) {
-            e.printStackTrace();
-            oFile.close();
-            throw new IOException("menus store error");
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw e ;
+        }  finally {
+            output.close();
         }
-        oFile.close();
+
 
     }
 
@@ -212,15 +194,7 @@ public class DefaultModelConfig implements IModelConfig{
 
 
 
-    /**
-     * 得到当前工程路径
-     * @return
-     */
-    private static Path getJavaResources() {
-        String userDir = System.getProperty("user.dir") ;
-        Path path = Paths.get(userDir  , "src" , "main" , "resources") ;
-        return  path ;
-    }
+
 
 
     private static Path getWorkSpacePath(String dir) {
@@ -271,24 +245,22 @@ public class DefaultModelConfig implements IModelConfig{
 
 
     @Override
-    public List<Menu> loadMenus() {
+    public List<Menu> loadMenus() throws Exception {
 
         Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
             return menus;
         }
+        FileInputStream inputStream = null ;
         try {
-            FileInputStream inputStream = new FileInputStream(path.toString());
-            Properties prop = new Properties();
-            prop.load(inputStream);
-
-            getMenus(prop);
-        } catch (IOException | IllegalAccessException e) {
-            e.printStackTrace();
+            inputStream = new FileInputStream(path.toString());
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            return (List<Menu>)objectInputStream.readObject() ;
+        } finally {
+            inputStream.close();
         }
 
-        return menus;
     }
 
 
