@@ -61,9 +61,5 @@ public class IndexController extends ApiAdminController {
         return uiModel ;
     }
 
-    @GetMapping("/get_menu_data")
-    @ResponseBody
-    List<Menu> getMenus(){
-        return  MenuApiInJvm.getMenu();
-    }
+
 }

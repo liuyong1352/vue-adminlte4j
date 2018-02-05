@@ -18,8 +18,9 @@ public interface IModelConfig {
     AppInfo loadAppInfo() throws IOException;
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
-    void storeMenus(List<Menu> menus) throws IOException;
+     void storeMenus(List<Menu> menus) throws IOException,IllegalAccessException;
    /* List<Class> list() ;
+  @Override
 
     void edit(Class type , TableData.Column column) ;*/
 

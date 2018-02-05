@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.io.IOException;
+
 
 /**
  * Created by bjliuyong on 2018/2/2.
@@ -48,4 +48,13 @@ public class ApiAdminController {
             return UIModel.fail().setMsg("修改失败!") ;
         }
     }
+
+    @PostMapping("/admin/menus/get")
+    @ResponseBody
+    UIModel _getMenus()  {
+        ModelConfigManager.getMenu();
+        return UIModel.success().setMsg("修改成功！") ;
+    }
+
+
 }
