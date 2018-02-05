@@ -20,7 +20,7 @@ public interface IModelConfig {
 
     List<Menu> loadMenus() throws Exception ;
 
-    void storeMenus(List<Menu> menus) throws IOException;
+    void storeMenus(List<Menu> menus) throws IOException, IllegalAccessException;
 
 
 }
