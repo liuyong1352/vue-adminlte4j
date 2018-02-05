@@ -49,7 +49,7 @@ public class ApiAdminController {
             ModelConfigManager.storeAppInfo(appinfo);
             return UIModel.success().setMsg("修改成功！") ;
         } catch (IOException e) {
-            return UIModel.fail().setMsg("修改失败!") ;
+            return UIModel.fail().setMsg("修改失败! ") ;
         }
     }
 
