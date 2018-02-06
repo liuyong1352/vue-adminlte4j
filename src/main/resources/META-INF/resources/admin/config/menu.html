@@ -8,6 +8,7 @@
 </head>
 <body>
     <v-app :data="data" >
+
         <v-box title="菜单列表">
             <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
         </v-box>
@@ -48,7 +49,7 @@
         data :function() {
             return {
                 g_table : {}  ,
-                form : {id : 1} ,
+                form : {} ,
                 operations : [
                     {
                         name : '添加子菜单' ,
