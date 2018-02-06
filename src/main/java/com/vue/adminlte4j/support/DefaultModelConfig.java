@@ -111,22 +111,41 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
             return;
         }
 
-        for(int i = 0 ; i < menus.size() ; i++ ) {
-            if (menus.get(i).getId().equals(id)) {
-                menus.remove(i);
-                break;
-            }
+        if( deleteInMem(id , menus) ) {
+            storeMenus(menus);
         }
 
-        storeMenus(menus);
 
+
+
+
+    }
+
+    private boolean deleteInMem(String id , List<Menu> menus ) {
+
+        if(menus == null || menus.isEmpty())
+            return  false ;
+
+        for(int i = 0 ; i < menus.size() ; i++ ) {
+            Menu m = menus.get(i) ;
+            if (m.getId().equals(id)) {
+                menus.remove(i);
+                return  true ;
+            }
+
+            if(deleteInMem(id , m.getChildren()))
+                return  true ;
+        }
+
+        return false ;
     }
 
     @Override
     public Menu addMenu(Menu menu) throws Exception {
         int id = menuIdGenerator.getAndIncrement() ;
         menu.setId(id + "");
-        if(menu.getPid() != null) {
+        String pid = menu.getPid() ;
+        if(pid != null && !pid.isEmpty() ) {
             for(Menu m : menus ) {
                 if(m.getId().equals(menu.getPid()))
                     m.addChildMenu(menu);

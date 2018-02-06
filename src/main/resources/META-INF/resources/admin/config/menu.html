@@ -55,7 +55,7 @@
                         icon:'edit',
                         scheme: 'green',
                         method : function(row , $table) {
-                            //this.form.pid = row.id
+                            $table.$root.form.pid = row.id
                             $("#addMenuModal").modal('toggle')
                             g_table = $table ;
                         }
