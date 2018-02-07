@@ -78,14 +78,17 @@
             var self = $vm;
             axios.get("/admin/app_info/get").then(function (response) {
                 var data = response.data.app_info
-                self.indexUrl   = data.indexUrl;
+
+                $.extend(self , data)
+
+                /*self.indexUrl   = data.indexUrl;
                 self.appName    = data.appName;
                 self.userName   = data.userName;
                 self.userImgUrl = data.userImgUrl;
                 self.profileUrl = data.profileUrl;
                 self.signOutUrl = data.signOutUrl;
                 self.logoName   = data.logoName;
-                self.logoShortName = data.logoShortName;
+                self.logoShortName = data.logoShortName;*/
 
             })
         }
