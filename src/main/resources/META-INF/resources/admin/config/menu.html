@@ -35,11 +35,6 @@
             </v-form>
             <button slot="footer" @click="onSave">Save</button>
         </v-modal>
-
-        <v-modal title="提示" style="text-align: center" id="alert-message">
-            <p><i class="fa fa-fw fa-check"></i></p>
-            <p><span id="tip">修改成功!</span></p>
-        </v-modal>
     </v-app>
 </body>
 <script src="/lib/lib.js"></script>
@@ -67,8 +62,7 @@
                         scheme: 'green',
                         method : function(row , $table) {
                             axios.delete("/admin/menu/delete/" + row.id ).then(function(response){
-                                $("#tip").text(response.data.msg)
-                                $("#alert-message").modal('toggle')
+                                $.alert(response.data)
                                 $table.fetchData()
                             })
                         }
