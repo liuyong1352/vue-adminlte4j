@@ -48,18 +48,8 @@
 
         </v-form>
     </v-box>
-
-
-    <v-modal title="提示" style="text-align: center" id="alert-message">
-        <p><i class="fa fa-fw fa-check"></i></p>
-        <p><span id="tip">修改成功!</span></p>
-    </v-modal>
-
-
 </v-app>
 <script src="/lib/lib.js"></script>
-<script src="//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js"></script>
-
 <script>
     app.main({
 
@@ -80,8 +70,7 @@
         methods : {
             saveData:function(){
                 axios.post("/admin/app_info/update",this._data).then(function(response){
-                    $("#tip").text(response.data.msg)
-                    $("#alert-message").modal('toggle')
+                    $.alert(response.data) ;
                 })
             }
         } ,

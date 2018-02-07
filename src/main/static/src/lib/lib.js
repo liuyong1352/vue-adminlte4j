@@ -146,6 +146,8 @@ app = function (scope) {
             '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js' ,
+            '/lib/layer/layer.js' ,
+            '/lib/base.js'
         ]
 
         if(tag_is_exist('v-select2')) {
