@@ -9,7 +9,6 @@ npm install --save-dev webpack
 cd src\main\static
 
 npm i 
-npm i element-ui -S
 npm start
 ```
 
