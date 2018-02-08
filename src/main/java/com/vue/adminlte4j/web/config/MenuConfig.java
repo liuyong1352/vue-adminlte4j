@@ -18,10 +18,10 @@ public class MenuConfig {
         List<Menu> menus = new ArrayList<>() ;
         menus.addAll(inputMenu) ;
 
-        Menu menu = new Menu(Integer.MAX_VALUE + "" ,"开发配置" ,"#" ,"" ,order.incrementAndGet() ) ;
+        Menu menu = new Menu(Integer.MAX_VALUE + "" ,"开发配置" ,"#" ,"fa fa-tv" ,order.incrementAndGet() ) ;
         menus.add(menu) ;
-        menu.addChildMenu(new Menu(Integer.MAX_VALUE - 1 + "" ,"应用信息" ,"/admin/config/app_info.html" ,"" ,order.incrementAndGet()));
-        menu.addChildMenu(new Menu(Integer.MAX_VALUE - 2 + "" ,"菜单管理" ,"/admin/config/menu.html" ,"" ,order.incrementAndGet()));
+        menu.addChildMenu(new Menu(Integer.MAX_VALUE - 1 + "" ,"应用信息" ,"/admin/config/app_info.html" ,"fa fa-cog" ,order.incrementAndGet()));
+        menu.addChildMenu(new Menu(Integer.MAX_VALUE - 2 + "" ,"菜单管理" ,"/admin/config/menu.html" ,"fa fa-cog" ,order.incrementAndGet()));
 
         return  menus ;
     }

@@ -2,6 +2,8 @@ package api;
 
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +28,17 @@ public class TableController {
 
         tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
         tableData.configDisplayColumn(TableData.createColumn("age" , "年龄") );
-        tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );
+        //tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );
+
+        tableData.addAll(queryList(name));
+        tableData.setTotalSize(50);
+
+        return UIModel.success().tableData(tableData);
+    }
+
+    private List<UserInfo> queryList(String name) {
+
+        List<UserInfo> list = new ArrayList<>() ;
 
         for(int i = 0 ; i < 10 ; i++ ) {
             UserInfo userInfo = new UserInfo() ;
@@ -40,17 +52,10 @@ public class TableController {
             userInfo.setAge(20 + i);
             userInfo.setBirthDay(new Date());
             userInfo.setSex(i%2);
-            tableData.addData(userInfo);
+            list.add(userInfo);
         }
 
-        if("".equals(name)) {
-            tableData.setTotalSize(0);
-            tableData.setPage(false);
-        }
-
-        tableData.setTotalSize(50);
-
-        return UIModel.success().tableData(tableData);
+        return  list ;
     }
 
 }
