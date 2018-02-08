@@ -77,11 +77,10 @@ public class ApiAdminController {
     public UIModel listMenu() throws Exception {
         TableData<Menu> tableData = new TableData<>() ;
 
-        tableData.configDisplayColumn(Menu.class);
-        tableData.removeDisplayColumn("children");
-
-        tableData.setPage(false);
-        tableData.addAll(_listMenu());
+        tableData.configDisplayColumn(Menu.class)
+            .removeDisplayColumn("children")
+            .setPage(false)
+            .addAll(_listMenu());
 
         return UIModel.success().tableData(tableData);
     }

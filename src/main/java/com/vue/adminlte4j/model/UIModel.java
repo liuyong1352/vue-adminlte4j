@@ -74,5 +74,4 @@ public class UIModel extends HashMap implements Map {
         return uiModel.setCode(code) ;
     }
 
-
 }

@@ -10,36 +10,38 @@ import java.util.List;
  */
 public class TableData<T> {
 
-    public static final String KEY_TAG = "key" ;
-    public static final String TITLE_TAG = "title" ;
-
     private List<Column> columns = new ArrayList<>();
     private List<Object> dataItems = new ArrayList<>();
 
     private boolean isPage  = true;
     private int totalSize  ;
 
-    public void configDisplayColumn(Column column) {
+    public TableData<T> configDisplayColumn(Column column) {
         columns.add(column) ;
+        return this ;
     }
 
-    public void configDisplayColumn(Class type) {
+    public TableData<T> configDisplayColumn(Class type) {
         this.columns.addAll(ModelConfigManager.getModelConfigColumns(type));
+        return this ;
     }
 
-    public void removeDisplayColumn(String key) {
+    public TableData<T> removeDisplayColumn(String key) {
         for(int i = 0 ; i < columns.size() ; i++) {
             if(columns.get(i).getKey().equals(key))
                 columns.remove(i) ;
         }
+        return this ;
     }
 
-    public void addData(T data) {
+    public TableData<T> addData(T data) {
         dataItems.add(data);
+        return this ;
     }
 
-    public void addAll(List<T> datas) {
+    public TableData<T> addAll(List<T> datas) {
         dataItems.addAll(datas) ;
+        return this ;
     }
 
     public List<Column>  getColumns() {
@@ -58,16 +60,18 @@ public class TableData<T> {
         return totalSize;
     }
 
-    public void setTotalSize(int totalSize) {
+    public TableData<T> setTotalSize(int totalSize) {
         this.totalSize = totalSize;
+        return this ;
     }
 
     public boolean isPage() {
         return isPage;
     }
 
-    public void setPage(boolean page) {
+    public TableData<T> setPage(boolean page) {
         isPage = page;
+        return this ;
     }
 
     public static class Column {
