@@ -191,6 +191,7 @@ app = function (scope) {
         }
 
         LazyLoad.dep_js(arr_js ,  function () {
+            axios.defaults.headers.common['X-Requested-With'] =  'XMLHttpRequest'
             axios.interceptors.request.use(function (config) {
                 // Do something before request is sent
                 return config;
