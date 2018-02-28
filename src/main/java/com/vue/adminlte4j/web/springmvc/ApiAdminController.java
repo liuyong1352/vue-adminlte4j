@@ -21,13 +21,22 @@ public class ApiAdminController {
     @ResponseBody
     public UIModel _getAllApiInfo() {
         try {
-            return UIModel.success()
-                    .appInfo(ModelConfigManager.getAppInfo())
+            UIModel uiModel = UIModel.success();
+            uiModel.appInfo(ModelConfigManager.getAppInfo())
                     .menu(MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()));
+
+            addBaseMenus(uiModel);
+            return  uiModel;
         } catch (Exception e) {
             return UIModel.fail().setMsg("system.error!");
         }
     }
+
+
+    public void addBaseMenus(UIModel uiModel){
+
+    }
+
 
     @GetMapping("/admin/app_info/get")
     @ResponseBody
