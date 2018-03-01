@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,30 @@ public class UIModel extends HashMap implements Map {
     public static UIModel newInstance(int code) {
         UIModel uiModel = new UIModel() ;
         return uiModel.setCode(code) ;
+    }
+
+    public String toJsonString() {
+
+        Iterator<Entry<String,Object>> i = entrySet().iterator();
+        if (! i.hasNext())
+            return "{}";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (;;) {
+            Entry<String,Object> e = i.next();
+            String key = e.getKey();
+            Object value = e.getValue();
+            sb.append('\"').append(key).append('\"').append(":") ;
+            if(value instanceof String )
+                sb.append('\"').append(value).append('\"') ;
+            else
+                sb.append(value) ;
+
+            if (! i.hasNext())
+                return sb.append('}').toString();
+            sb.append(',').append(' ');
+        }
     }
 
 }
