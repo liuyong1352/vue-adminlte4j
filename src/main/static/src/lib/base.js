@@ -1,5 +1,25 @@
 +function ($,window, document) {
 
+    function getQueryStringJson() {
+        var pairs = location.search.slice(1).split('&')
+        var result = {};
+        pairs.forEach(function(pair) {
+            pair = pair.split('=');
+            result[pair[0]] = decodeURIComponent(pair[1] || '');
+        })
+        return result
+    }
+
+    function getQueryVariable(key) {
+        var pairs = location.search.slice(1).split('&')
+        for(var i = 0 ; i < pairs.length  ; i++ ) {
+            var pair = pairs[i].split('=');
+            if (pair[0] == key) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        console.log('Query variable %s not found', key);
+    }
 
     $.extend({
 //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
@@ -36,8 +56,14 @@
                 else
                     layer.close(index)
             } )
-        }
+        } ,
 
+        getQueryStr : function (key) {
+            return getQueryVariable(key)
+        } ,
+        parseQueryStr : function () {
+            return getQueryStringJson()
+        }
 
     })
 
