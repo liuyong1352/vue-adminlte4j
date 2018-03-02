@@ -2344,7 +2344,7 @@
             }else{
                 iconClass=$(this).find("span.glyphicon").eq(0).attr("class");
             }
-            modals.hideWin(winId);
+            modals.hideWin("iconWin");
             $("#" + iconVal).val(iconClass);
             $("#" + iconTag).removeClass().addClass("form-control-feedback").addClass(iconClass);
         });
