@@ -1,11 +1,8 @@
 <template>
-    <div class="box-footer">
-        <button :type="btnType" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]">
-            {{name}}
-            <slot></slot>
-        </button>
-
-    </div>
+    <button :type="btnType" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]">
+                {{name}}
+                <slot></slot>
+    </button>
 </template>
 
 <script>

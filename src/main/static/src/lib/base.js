@@ -348,6 +348,21 @@
         content.className = 'modal-content';
         dialog.appendChild(content);
 
+        if(config._hidden_data) {
+            //<input id="_hidden_data" hidden="true" value=""/>
+            if(!document.getElementById("_hidden_data")) {
+                var _hi = document.createElement('input');
+                _hi.setAttribute('id', '_hidden_data');
+                _hi.setAttribute('hidden' , true)
+                _hi.setAttribute('value' , config._hidden_data)
+                document.body.appendChild(_hi);
+            }
+
+
+        }
+
+
+
         document.body.appendChild(modal);
     }
 

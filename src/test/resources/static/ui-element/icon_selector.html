@@ -6,6 +6,7 @@
 </head>
 <body>
 <v-app :data="data">
+    <v-box title="图标使用">
     <v-form>
         <v-form-item label="图标">
             <div class="col-sm-7">
@@ -13,13 +14,11 @@
                 <input type="text" class="form-control" id="icon" name="icon" placeholder="图标">
             </div>
             <div class="col-sm-2">
-                <button type="button" @click="popSelIconWin" class="btn btn-primary" data-btn-type="selectIcon">
-                    <i class="fa fa-hand-pointer-o">&nbsp;选择图标</i>
-                </button>
+                <v-icon-selector icon_el="icon_i icon"></v-icon-selector>
             </div>
         </v-form-item>
     </v-form>
-
+    </v-box>
 
 
 </v-app>
@@ -27,24 +26,12 @@
 <script src="/lib/lib.js"></script>
 <script>
     var winId = "iconWin"
-    //回填图标
-    function fillBackIconName(icon_name){
-        $("#icon").val(icon_name);
-        $("#icon_i").removeClass().addClass("form-control-feedback").addClass(icon_name);
-    }
+
 
     app.main({
         data: {
         } ,
         methods: {
-            popSelIconWin : function () {
-                modals.openWin({
-                    winId:"iconWin",
-                    title:'图标选择器（双击选择）',
-                    width:'1000px',
-                    url:"/admin/config/icon.html?iconName="
-                });
-            }
         } ,
         mounted : function () {
             $(".fa").delegate("i" , "click" , function (e) {
