@@ -23,7 +23,7 @@
                     title:'图标选择器（双击选择）',
                     _hidden_data: iconTarget,
                     width:'1000px',
-                    url:"/admin/config/icon.html?iconName="
+                    url:"/admin/config/icon_selector.html"
                })
             }
         }
