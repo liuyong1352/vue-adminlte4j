@@ -6,63 +6,8 @@
 </head>
 <body>
 <v-app :data="data">
-    <form class="form-horizontal bv-form" id="function-form" novalidate="novalidate"><input type="hidden" id="id" name="id" value="402880eb56875b7f0156876338100000"><input type="hidden" name="version" value="5"><input type="hidden" name="createDateTime" data-flag="date" data-format="yyyy-mm-dd hh:ii:ss" value="2016-08-14 12:50:41">
-        <input type="hidden" name="parentId" value="">
-        <div class="form-group">
-            <label for="parentName" class="col-sm-2 control-label">上级</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" disabled="disabled" id="parentName" name="parentName" placeholder="上级">
-            </div>
-        </div>
-
-        <div class="form-group has-feedback">
-            <label for="name" class="col-sm-2 control-label">名称</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" name="name" placeholder="名称" data-bv-field="name"><i class="form-control-feedback" data-bv-icon-for="name" style="display: none;"></i>
-                <small data-bv-validator="notEmpty" data-bv-validator-for="name" class="help-block" style="display: none;">请输入名称</small></div>
-        </div>
-        <div class="form-group has-feedback">
-            <label for="code" class="col-sm-2 control-label">编码</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="code" name="code" placeholder="编码" data-bv-field="code"><i class="form-control-feedback" data-bv-icon-for="code" style="display: none;"></i>
-                <small data-bv-validator="notEmpty" data-bv-validator-for="code" class="help-block" style="display: none;">请输入编码</small><small data-bv-validator="remote" data-bv-validator-for="code" class="help-block" style="display: none;">该编码已被使用</small></div>
-        </div>
-        <div class="form-group">
-            <label for="url" class="col-sm-2 control-label">URL</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="url" name="url" placeholder="URL">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="url" class="col-sm-2 control-label">QueryId</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="queryId" name="queryId" placeholder="QueryId">
-            </div>
-        </div>
-        <div class="form-group has-feedback">
-            <label for="levelCode" class="col-sm-2 control-label">层级编码</label>
-
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="levelCode" name="levelCode" placeholder="层级编码" data-bv-field="levelCode"><i class="form-control-feedback" data-bv-icon-for="levelCode" style="display: none;"></i>
-                <small data-bv-validator="notEmpty" data-bv-validator-for="levelCode" class="help-block" style="display: none;">请输入层级编码</small></div>
-        </div>
-        <div class="form-group has-feedback">
-            <label class="col-sm-2 control-label">菜单类型</label>
-            <div class="col-sm-9">
-                <label class="control-label">
-                    <input type="radio" name="functype" class="square-green" value="0" data-bv-field="functype"> 目录
-                </label> &nbsp;&nbsp;&nbsp; <label class="control-label"> <input type="radio" name="functype" class="square-green" value="1" data-bv-field="functype"> 菜单
-            </label> &nbsp;&nbsp;&nbsp; <label class="control-label"> <input type="radio" name="functype" class="square-green" value="2" data-bv-field="functype"><i class="form-control-feedback" data-bv-icon-for="functype" style="display: none;"></i> 按钮
-            </label>
-                <small data-bv-validator="notEmpty" data-bv-validator-for="functype" class="help-block" style="display: none;">请选择菜单类型</small></div>
-        </div>
-        <div class="form-group">
-            <label for="icon" class="col-sm-2 control-label">图标</label>
+    <v-form>
+        <v-form-item label="图标">
             <div class="col-sm-7">
                 <i data-bv-icon-for="icon" id="icon_i" class="form-control-feedback fa fa-table" style="right:15px"></i>
                 <input type="text" class="form-control" id="icon" name="icon" placeholder="图标">
@@ -72,33 +17,9 @@
                     <i class="fa fa-hand-pointer-o">&nbsp;选择图标</i>
                 </button>
             </div>
-        </div>
-        <div class="form-group has-feedback">
-            <label class="col-sm-2 control-label">是否可用</label>
-            <div class="col-sm-9">
-                <label class="control-label"> <input type="radio" name="deleted" class="square-green" value="0" data-bv-field="deleted"> 启用
-                </label> &nbsp;&nbsp;&nbsp;
-                <label class="control-label"> <input type="radio" name="deleted" class="square-green" value="1" data-bv-field="deleted"><i class="form-control-feedback" data-bv-icon-for="deleted" style="display: none;"></i> 禁用
-                </label>
-                <small data-bv-validator="notEmpty" data-bv-validator-for="deleted" class="help-block" style="display: none;">请选择是否可用</small></div>
-        </div>
-        <div class="form-group">
-            <label for="remark" class="col-sm-2 control-label">说明</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" id="remark" name="remark" placeholder="说明"></textarea>
-            </div>
-        </div>
-        <div class="box-footer" style="">
-            <div class="text-center">
-                <button type="button" class="btn btn-default" data-btn-type="cancel">
-                    <i class="fa fa-reply">&nbsp;取消</i>
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save">&nbsp;保存</i>
-                </button>
-            </div>
-        </div>
-        <input type="hidden" value=""></form>
+        </v-form-item>
+    </v-form>
+
 
 
 </v-app>
