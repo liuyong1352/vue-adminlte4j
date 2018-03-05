@@ -376,13 +376,14 @@
 
         if(config._hidden_data) {
             //<input id="_hidden_data" hidden="true" value=""/>
-            var _hi=document.getElementById("_hidden_data")
+            var _hi=document.getElementById("_icon_hidden_data")
             if(_hi)
                 _hi.setAttribute('value' , config._hidden_data)
             else {
                 _hi = document.createElement('input');
                 _hi.setAttribute('hidden' , true)
                 _hi.setAttribute('value' , config._hidden_data)
+                _hi.setAttribute('id' , '_icon_hidden_data' )
                 document.body.appendChild(_hi);
             }
         }

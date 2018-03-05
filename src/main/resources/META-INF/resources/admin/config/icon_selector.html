@@ -2322,11 +2322,16 @@
 </div>
 <script>
     $(function() {
-        var d = $("#_hidden_data").val() || ' '
+        var d = $("#_icon_hidden_data").val() || ' '
         var arr = d.split(' ')
-        var iconTag = arr[0]
-        var iconVal = arr[1]
+        var iconVal = arr[0]
+        var iconTag = arr[1]
+        if($(arr[0]).is('i')) {
+            iconTag=arr[0]
+            iconVal=arr[1]
+        }
 
+        console.info("fill back el => "+ d)
         var iconName=$(iconVal).val()
         //单击 选中样式
         $("#fa-icons div.col-md-3,#glyphicons li").click(function(){
