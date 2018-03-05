@@ -2322,13 +2322,12 @@
 </div>
 <script>
     $(function() {
-
         var d = $("#_hidden_data").val() || ' '
         var arr = d.split(' ')
         var iconTag = arr[0]
         var iconVal = arr[1]
 
-        var iconName=$("#" + iconVal).val()
+        var iconName=$(iconVal).val()
         //单击 选中样式
         $("#fa-icons div.col-md-3,#glyphicons li").click(function(){
             $("#fa-icons div.col-md-3,#glyphicons li").removeClass("icon-selected");
@@ -2345,8 +2344,8 @@
                 iconClass=$(this).find("span.glyphicon").eq(0).attr("class");
             }
             modals.hideWin("iconWin");
-            $("#" + iconVal).val(iconClass);
-            $("#" + iconTag).removeClass().addClass("form-control-feedback").addClass(iconClass);
+            $(iconVal).val(iconClass);
+            $(iconTag).removeClass().addClass("form-control-feedback").addClass(iconClass);
         });
         //选中回填的图标
         if(iconName&&iconName!="undefined"){

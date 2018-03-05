@@ -17,13 +17,15 @@
         methods : {
 
             popIconWin : function() {
-               var iconTarget = this.$attrs.icon_el
+               var icon_el=this.$attrs.icon_el
+               if(!icon_el)
+                    icon_el='#icon #icon_i'
                modals.openWin({
                     winId:"iconWin",
                     title:'图标选择器（双击选择）',
-                    _hidden_data: iconTarget,
+                    _hidden_data: icon_el,
                     width:'1000px',
-                    url:"/admin/config/icon_selector.html"
+                    url:"/admin/config/icon_selector.html?icon_el=1"
                })
             }
         }
