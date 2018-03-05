@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,8 +24,27 @@ public class UIModel extends HashMap implements Map {
     public static final String CODE         = "code"  ;
     public static final String MSG          = "msg" ;
 
+    public List<Menu> getMenu() {
+        return (List<Menu>) get(MENU) ;
+    }
+
     public UIModel menu(List<Menu> menus) {
-        put(MENU, menus) ;
+        List<Menu> _menus = (List<Menu>) get(MENU) ;
+        if(_menus == null) {
+            _menus = new ArrayList<>() ;
+            put(MENU , _menus) ;
+        }
+        _menus.addAll(menus) ;
+        return this ;
+    }
+
+    public UIModel menu(Menu menu) {
+        List<Menu> _menus = (List<Menu>) get(MENU) ;
+        if(_menus == null) {
+            _menus = new ArrayList<>() ;
+            put(MENU , _menus) ;
+        }
+        _menus.add(menu) ;
         return this ;
     }
 

@@ -18,7 +18,7 @@ public interface IModelConfig {
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
 
-    List<Menu> loadMenus() throws Exception ;
+    List<Menu> loadMenus()  ;
 
     void storeMenus(List<Menu> menus) throws Exception;
 

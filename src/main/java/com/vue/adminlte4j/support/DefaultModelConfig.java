@@ -265,7 +265,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
 
     @Override
-    public List<Menu> loadMenus() throws Exception {
+    public List<Menu> loadMenus() {
 
         if(menus == null )
             menus = loadFromFile() ;
@@ -275,7 +275,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
 
-    private List<Menu> loadFromFile() throws  Exception {
+    private List<Menu> loadFromFile() {
 
         Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
@@ -298,8 +298,14 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
             }
 
             return menus ;
+        } catch (Exception e) {
+            throw new RuntimeException(e) ;
         } finally {
-            inputStream.close();
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                //ignore this
+            }
         }
 
     }

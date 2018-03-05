@@ -39,7 +39,7 @@ public class ModelConfigManager {
 
     }
 
-    public static List<Menu> getMenu() throws Exception {
+    public static List<Menu> getMenu()  {
         return ModelConfigFactory.getInstance().loadMenus();
     }
 

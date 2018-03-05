@@ -5,6 +5,7 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
+import com.vue.adminlte4j.web.config.ApiAdminConfig;
 import com.vue.adminlte4j.web.config.MenuConfig;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,28 +16,20 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2018/2/2.
  */
-public class ApiAdminController {
+public class ApiAdminController implements ApiAdminConfig {
 
     @GetMapping("/admin/app_info/get_all")
     @ResponseBody
     public UIModel _getAllApiInfo() {
         try {
             UIModel uiModel = UIModel.success();
-            uiModel.appInfo(ModelConfigManager.getAppInfo())
-                    .menu(MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()));
-
-            addBaseMenus(uiModel);
+            uiModel.appInfo(ModelConfigManager.getAppInfo()) ;
+            configureMenu(uiModel);
             return  uiModel;
         } catch (Exception e) {
             return UIModel.fail().setMsg("system.error!");
         }
     }
-
-
-    public void addBaseMenus(UIModel uiModel){
-
-    }
-
 
     @GetMapping("/admin/app_info/get")
     @ResponseBody
@@ -94,8 +87,13 @@ public class ApiAdminController {
         return UIModel.success().tableData(tableData);
     }
 
+
+
     private List<Menu> _listMenu() throws Exception{
-        List<Menu> _menus = MenuConfig.mergeAdminMenu(ModelConfigManager.getMenu()) ;
+
+        UIModel uiModel = new UIModel();
+        configureMenu(uiModel);
+        List<Menu> _menus = uiModel.getMenu() ;
         List<Menu> out = new ArrayList<>() ;
 
         for(Menu menu : _menus) {

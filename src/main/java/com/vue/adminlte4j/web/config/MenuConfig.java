@@ -13,11 +13,9 @@ public class MenuConfig {
 
     public static AtomicInteger order = new AtomicInteger(0) ;
 
-    public static List<Menu> mergeAdminMenu(List<Menu> inputMenu) {
+    public static List<Menu> systemMenu() {
 
         List<Menu> menus = new ArrayList<>() ;
-        menus.addAll(inputMenu) ;
-
         Menu menu = new Menu(Integer.MAX_VALUE + "" ,"开发配置" ,"#" ,"fa fa-tv" ,order.incrementAndGet() ) ;
         menus.add(menu) ;
         menu.addChildMenu(new Menu(Integer.MAX_VALUE - 1 + "" ,"应用信息" ,"/admin/config/app_info.html" ,"fa fa-cog" ,order.incrementAndGet()));
