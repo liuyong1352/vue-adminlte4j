@@ -1,7 +1,7 @@
 +function ($,window, document) {
 
     function getQueryStringJson() {
-        var pairs = location.search.slice(1).split('&')
+        var pairs = location.search.slice(1).split('&')  //去掉问号
         var result = {};
         pairs.forEach(function(pair) {
             pair = pair.split('=');
