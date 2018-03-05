@@ -34,7 +34,7 @@
 
         <button @click="re_query"> 查询</button>
 
-        <v-table :ajax_url="ajax_url" :query="query" :send_req="send_req" :operations="operations" ></v-table>
+        <v-table :ajax_url="ajax_url" :query="query" ref="table1" :operations="operations" ></v-table>
 
     </v-box>
     <div class="row">
@@ -80,6 +80,7 @@
 </v-app>
 <script src="/lib/lib.js"></script>
 <script>
+
     app.main({
         
         data : function () {
@@ -117,7 +118,8 @@
         } ,
         methods : {
             re_query : function () {
-                this.send_req++
+                //eventBus.$emit('table_fresh' , 1)
+                this.$refs.table1.fetchData()
             }
         }
     })
