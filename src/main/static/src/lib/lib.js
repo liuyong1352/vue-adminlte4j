@@ -146,6 +146,7 @@ app = function (scope) {
             '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js' ,
+            '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
             '/lib/layer/layer.js' ,
             '/lib/base.js'
         ]

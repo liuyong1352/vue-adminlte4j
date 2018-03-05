@@ -8,6 +8,9 @@
 </head>
 <body>
     <v-app :data="data" >
+        <v-box title="菜单">
+            <div id="tree"></div>
+        </v-box>
 
         <v-box title="菜单列表">
             <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
@@ -47,7 +50,7 @@
 </body>
 <script src="/lib/lib.js"></script>
 <script>
-
+    var selectNodeId ;
     app.main({
         data :function() {
             return {
@@ -91,7 +94,30 @@
             }
         } ,
         mounted : function ($vm) {
-
+            var treeData = null;
+            axios.get("/get_tree_data").then(function(response){
+                $("#tree").treeview({
+                    data : response.data.treeData,
+                    showBorder : true,
+                    expandIcon : "glyphicon glyphicon-stop",
+                    collapseIcon : "glyphicon glyphicon-unchecked",
+                    levels : 1,
+                    onNodeSelected : function(event, data) {
+                        /*   alert("i am selected");
+                         alert(data.nodeId); */
+                        //fillDictForm(data);
+                        //formReadonly();
+                        //console.log(JSON.stringify(data));
+                    }
+                });
+                if(response.data.treeData.length==0)
+                    return;
+                //默认选中第一个节点
+                selectNodeId=selectNodeId||0;
+                $("#tree").data('treeview').selectNode(selectNodeId);
+                $("#tree").data('treeview').expandNode(selectNodeId);
+                $("#tree").data('treeview').revealNode(selectNodeId);
+            })
         }
     });
 

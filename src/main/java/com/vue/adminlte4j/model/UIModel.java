@@ -19,6 +19,7 @@ public class UIModel extends HashMap implements Map {
     public static final String APP_INFO     = "app_info" ;
 
     public static final String TABLE_DATA   = "tableData" ;
+    public static final String TREE_DATA    = "treeData" ;
     public static final String IS_LOGIN     = "is_login" ;
     public static final String LOGIN_URL    = "login_url" ;
     public static final String CODE         = "code"  ;
@@ -79,6 +80,10 @@ public class UIModel extends HashMap implements Map {
 
     public UIModel tableData(TableData tableData) {
         return put(TABLE_DATA , tableData) ;
+    }
+
+    public UIModel treeData(List<TreeNode> treeNodes) {
+        return put(TREE_DATA , treeNodes) ;
     }
 
     public static UIModel success() {

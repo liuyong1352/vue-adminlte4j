@@ -23,6 +23,7 @@
   "dependencies": {
     "admin-lte": "^2.4.2",
     "axios": "^0.17.1",
+    "bootstrap-treeview": "^1.2.0",
     "datatables.net": "^1.10.16",
     "datatables.net-bs": "^1.10.16",
     "element-ui": "^2.0.11",
