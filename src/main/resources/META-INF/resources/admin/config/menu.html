@@ -22,7 +22,15 @@
                         <input type="text" class="form-control" placeholder="Enter ..." v-model="form.url">
                     </v-form-item>
                     <v-form-item label="icon:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.icon">
+                        <v-row>
+                            <div class="col-sm-8">
+                                <i data-bv-icon-for="icon" id="icon_i" class="form-control-feedback fa fa-table" style="right:15px"></i>
+                                <input type="text" class="form-control" id="icon" name="icon" placeholder="图标" v-model="form.icon">
+                            </div>
+                            <div class="col-sm-2">
+                                <v-icon-selector ></v-icon-selector>
+                            </div>
+                        </v-row>
                     </v-form-item>
                     <v-form-item label="order:">
                         <input type="text" class="form-control" placeholder="Enter ..." v-model="form.order">
