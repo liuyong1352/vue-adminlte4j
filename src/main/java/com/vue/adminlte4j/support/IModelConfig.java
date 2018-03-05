@@ -14,7 +14,7 @@ public interface IModelConfig {
 
     List<TableData.Column> configModelColumn(Class type) ;
 
-    AppInfo loadAppInfo() throws IOException;
+    AppInfo loadAppInfo() ;
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
 

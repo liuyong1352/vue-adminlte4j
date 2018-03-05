@@ -23,8 +23,8 @@ public class ApiAdminController implements ApiAdminConfig {
     public UIModel _getAllApiInfo() {
         try {
             UIModel uiModel = UIModel.success();
-            uiModel.appInfo(ModelConfigManager.getAppInfo()) ;
             configureMenu(uiModel);
+            configureAppInfo(uiModel);
             return  uiModel;
         } catch (Exception e) {
             return UIModel.fail().setMsg("system.error!");
@@ -35,8 +35,10 @@ public class ApiAdminController implements ApiAdminConfig {
     @ResponseBody
     public UIModel _getAppInfo() {
         try {
-            return UIModel.success().appInfo(ModelConfigManager.getAppInfo()) ;
-        } catch (IOException e) {
+            UIModel uiModel = UIModel.success();
+            configureAppInfo(uiModel);
+            return uiModel ;
+        } catch (Exception e) {
             return UIModel.fail().setMsg("system.error!");
         }
     }

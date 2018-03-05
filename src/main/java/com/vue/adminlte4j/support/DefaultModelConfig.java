@@ -74,7 +74,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
             //LOAD 加载prop到appinfo ,需要setAppinfo
             getProperties(appInfo,prop);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e) ;
         } finally {
             if(inputStream != null )
                 try {

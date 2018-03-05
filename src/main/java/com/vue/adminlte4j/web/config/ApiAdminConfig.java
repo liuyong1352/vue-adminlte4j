@@ -16,4 +16,12 @@ public interface ApiAdminConfig {
         uiModel.menu(MenuConfig.systemMenu())
             .menu(ModelConfigManager.getMenu()) ;
     }
+
+    /**
+     * config AppInfo
+     * @param uiModel
+     */
+    default void configureAppInfo(UIModel uiModel) {
+        uiModel.appInfo(ModelConfigManager.getAppInfo()) ;
+    }
 }

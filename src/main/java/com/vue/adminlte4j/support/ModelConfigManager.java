@@ -30,7 +30,7 @@ public class ModelConfigManager {
     }
 
 
-    public static AppInfo getAppInfo() throws IOException {
+    public static AppInfo getAppInfo() {
         return ModelConfigFactory.getInstance().loadAppInfo() ;
     }
 
