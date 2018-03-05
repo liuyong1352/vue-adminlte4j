@@ -34,7 +34,7 @@
 
         <button @click="re_query"> 查询</button>
 
-        <v-table :ajax_url="ajax_url" :query="query" ref="table1" :operations="operations" ></v-table>
+        <v-table :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
 
     </v-box>
     <div class="row">
@@ -119,7 +119,7 @@
         methods : {
             re_query : function () {
                 //eventBus.$emit('table_fresh' , 1)
-                this.$refs.table1.fetchData()
+                this.$refs.table.fetchData()
             }
         }
     })
