@@ -29,23 +29,23 @@ public class UIModel extends HashMap implements Map {
         return (List<Menu>) get(MENU) ;
     }
 
-    public UIModel menu(List<Menu> menus) {
-        List<Menu> _menus = (List<Menu>) get(MENU) ;
-        if(_menus == null) {
-            _menus = new ArrayList<>() ;
-            put(MENU , _menus) ;
+    public UIModel menu(List<Menu> inputMenus) {
+        List<Menu> menus = (List<Menu>) get(MENU) ;
+        if(menus == null) {
+            menus = new ArrayList<>() ;
+            put(MENU , menus) ;
         }
-        _menus.addAll(menus) ;
+        menus.addAll(inputMenus) ;
         return this ;
     }
 
-    public UIModel menu(Menu menu) {
-        List<Menu> _menus = (List<Menu>) get(MENU) ;
-        if(_menus == null) {
-            _menus = new ArrayList<>() ;
-            put(MENU , _menus) ;
+    public UIModel menu(Menu inputMenus) {
+        List<Menu> menus = (List<Menu>) get(MENU) ;
+        if(menus == null) {
+            menus = new ArrayList<>() ;
+            put(MENU , menus) ;
         }
-        _menus.add(menu) ;
+        menus.add(inputMenus) ;
         return this ;
     }
 
