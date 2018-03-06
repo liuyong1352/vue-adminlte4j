@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,4 +81,12 @@ public class TreeNode {
 
         this.nodes = nodes;
     }
+
+    public void addChildNode(TreeNode node) {
+        if(nodes == null )
+            nodes = new ArrayList<>() ;
+        nodes.add(node) ;
+    }
+
+
 }

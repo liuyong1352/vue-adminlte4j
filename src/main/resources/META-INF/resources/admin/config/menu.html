@@ -95,7 +95,7 @@
         } ,
         mounted : function ($vm) {
             var treeData = null;
-            axios.get("/get_tree_data").then(function(response){
+            axios.get("/admin/menu/tree").then(function(response){
                 $("#tree").treeview({
                     data : response.data.treeData,
                     showBorder : true,

@@ -82,9 +82,30 @@ public class UIModel extends HashMap implements Map {
         return put(TABLE_DATA , tableData) ;
     }
 
-    public UIModel treeData(List<TreeNode> treeNodes) {
-        return put(TREE_DATA , treeNodes) ;
+
+    public UIModel treeData(List<? extends Object> elements,final ITreeNodeConverter treeNodeConverter) {
+        List<TreeNode> rootNodes = new ArrayList<>() ;
+        Map<String, TreeNode> idNodeMap = new HashMap<>() ;
+        elements.forEach(e ->{
+            TreeNode node = treeNodeConverter.convert(e) ;
+            idNodeMap.put(node.getId() , node);
+
+        });
+
+        idNodeMap.forEach((k,v)->{
+
+            String pid = v.getParentId() ;
+            if(pid == null || pid.isEmpty() || pid.equals("0"))
+                rootNodes.add(v) ;
+            else {
+                idNodeMap.get(pid).addChildNode(v);
+            }
+
+        });
+
+        return  put(TREE_DATA , rootNodes);
     }
+
 
     public static UIModel success() {
         return newInstance(SUCCESS) ;

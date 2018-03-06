@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2017/11/23.
  */
-public class Menu implements Comparable<Menu> ,Serializable   {
+public class Menu implements Comparable<Menu> ,Serializable  {
 
     private String id ;
     private String desc ;

@@ -3,6 +3,7 @@ package com.vue.adminlte4j.web.springmvc;
 import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
+import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.web.config.ApiAdminConfig;
@@ -87,6 +88,20 @@ public class ApiAdminController implements ApiAdminConfig {
             .addAll(_listMenu());
 
         return UIModel.success().tableData(tableData);
+    }
+
+    @GetMapping("/admin/menu/tree")
+    @ResponseBody
+    public UIModel treeMenu() throws Exception {
+        return UIModel.success().treeData(_listMenu(), o -> {
+            TreeNode treeNode1 = new TreeNode() ;
+            Menu menu = (Menu)o ;
+            treeNode1.setId(menu.getId());
+            treeNode1.setParentId(menu.getPid());
+            treeNode1.setText(menu.getDesc());
+            treeNode1.setIcon(menu.getIcon());
+            return treeNode1;
+        }) ;
     }
 
 
