@@ -5,7 +5,19 @@ package com.vue.adminlte4j.model.form;
  */
 public class FormItemType {
 
+    /**
+     * 普通输入
+     */
     public static final int INPUT = 0 ;
+
+    /**
+     * 图标选择器
+     */
     public static final int ICON_SELECTOR = 10 ;
+
+    /**
+     * 隐藏域
+     */
+    public static final int INPUT_HIDDEN = 11 ;
 
 }
