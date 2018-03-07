@@ -12,7 +12,17 @@ import java.util.UUID;
  */
 public class MenuApiInJvm {
 
+    private static  List<Menu> menus ;
+
+    static  {
+        menus = buildMenu() ;
+    }
+
     public static List<Menu> getMenu() {
+        return  menus ;
+    }
+
+    public static List<Menu> buildMenu() {
 
         List<Menu> menus = new ArrayList<>() ;
 

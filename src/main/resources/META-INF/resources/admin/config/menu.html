@@ -8,9 +8,7 @@
 </head>
 <body>
     <v-app :data="data" >
-        <v-box title="formSHiyan" >
-            <v-form ajax_url="/admin/form/model/get"></v-form>
-        </v-box>
+
         <v-row>
             <v-col class="col-sm-3">
                 <v-box title="菜单树">
@@ -33,35 +31,8 @@
                             <li class="fa fa-remove">&nbsp;删除当前菜单</li>
                         </button>
                     </div>
-                    <div id="form"></div>
-                    <v-form>
-                        <v-row>
-                            <v-form-item label="pid:">
-                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.pid">
-                            </v-form-item>
-                            <v-form-item label="url:">
-                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.url">
-                            </v-form-item>
-                            <v-form-item label="icon:">
-                                <v-row>
-                                    <div class="col-sm-8">
-                                        <i data-bv-icon-for="icon" id="icon_i" class="form-control-feedback fa fa-table" style="right:15px"></i>
-                                        <input type="text" class="form-control" id="icon" name="icon" placeholder="图标" v-model="form.icon">
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <v-icon-selector ></v-icon-selector>
-                                    </div>
-                                </v-row>
-                            </v-form-item>
-                            <v-form-item label="order:">
-                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.order">
-                            </v-form-item>
-                            <v-form-item label="desc:">
-                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.desc">
-                            </v-form-item>
-                        </v-row>
-
-                    </v-form>
+                    <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
+                    <button slot="footer" @click="onSave">Save</button>
                 </v-box>
             </v-col>
         </v-row>
@@ -70,15 +41,13 @@
         <v-box title="菜单列表">
             <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
         </v-box>
-        <v-modal title="添加子菜单" id="addMenuModal">
 
-            <button slot="footer" @click="onSave">Save</button>
-        </v-modal>
     </v-app>
 </body>
 <script src="/lib/lib.js"></script>
 <script>
     var selectNodeId ;
+    var form  ;
     app.main({
         data :function() {
             return {
@@ -124,6 +93,7 @@
         } ,
         mounted : function ($vm) {
             var treeData = null;
+            form=$vm.$refs.form
             axios.get("/admin/menu/tree").then(function(response){
                 $("#tree").treeview({
                     data : response.data.treeData,
@@ -132,11 +102,7 @@
                     collapseIcon : "glyphicon glyphicon-unchecked",
                     levels : 1,
                     onNodeSelected : function(event, data) {
-                        /*   alert("i am selected");
-                         alert(data.nodeId); */
-                        //fillDictForm(data);
-                        //formReadonly();
-                        //console.log(JSON.stringify(data));
+                        form.refresh({id:data.id})
                     }
                 });
                 if(response.data.treeData.length==0)

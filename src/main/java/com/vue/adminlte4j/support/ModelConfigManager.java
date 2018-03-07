@@ -20,13 +20,6 @@ public class ModelConfigManager {
     public static List<TableData.Column> getModelConfigColumns(Class type) {
 
         return ModelConfigFactory.getInstance().configModelColumn(type);
-        /*List<TableData.Column> columns = cache.get(type);
-        if(columns == null ) {
-            columns = ModelConfigFactory.getInstance().configModelColumn(type);
-            cache.put(type , columns) ;
-        }
-
-        return columns  ;*/
     }
 
 
@@ -42,6 +35,7 @@ public class ModelConfigManager {
     public static List<Menu> getMenu()  {
         return ModelConfigFactory.getInstance().loadMenus();
     }
+
 
     public static void addMenu(Menu menu) throws Exception {
         ModelConfigFactory.getInstance().addMenu(menu);

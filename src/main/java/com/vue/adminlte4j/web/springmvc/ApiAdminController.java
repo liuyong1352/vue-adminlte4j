@@ -5,6 +5,7 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.web.config.MenuApiConfig;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,17 @@ public class ApiAdminController implements MenuApiConfig {
         }
     }
 
+    @PostMapping("/admin/menu/add")
+    @ResponseBody
+    public UIModel addMenu(@RequestBody Menu menu)  {
+        try {
+            ModelConfigManager.addMenu(menu);
+            return UIModel.success().setMsg("修改成功！") ;
+        } catch (Exception e) {
+            return UIModel.fail().setMsg("修改失败!") ;
+        }
+    }
+
     @DeleteMapping("/admin/menu/delete/{id}")
     @ResponseBody
     public UIModel deleteMenu(@PathVariable String id) {
@@ -65,16 +77,34 @@ public class ApiAdminController implements MenuApiConfig {
         }
     }
 
-    @PostMapping("/admin/menu/add")
+    @GetMapping("/admin/menu/get/{id}")
     @ResponseBody
-    public UIModel addMenu(@RequestBody Menu menu)  {
+    public UIModel getMenu(@PathVariable String id) {
         try {
-            ModelConfigManager.addMenu(menu);
-            return UIModel.success().setMsg("修改成功！") ;
+            List<Menu> menus = _listMenu() ;
+
+            for(Menu m : menus) {
+                if(m.getId().equals(id))
+                    return UIModel.success().data(m) ;
+            }
         } catch (Exception e) {
             return UIModel.fail().setMsg("修改失败!") ;
         }
+        return UIModel.fail().setMsg("对不起， 未找到您要的数据！") ;
     }
+
+    @GetMapping("/admin/menu/get/")
+    @ResponseBody
+    public UIModel _getMenu(String id) {
+
+        UIModel uiModel = getMenu(id) ;
+        Object data = uiModel.data() ;
+        if(data == null)
+            data = new Menu() ;
+        return  uiModel.formData(data) ;
+    }
+
+
 
     @GetMapping("/admin/menu/list")
     @ResponseBody

@@ -119,6 +119,9 @@ export default {
             s += ('&' + key + '=' + this.query[key])
         return s
     } ,
+    refresh : function() {
+        this.fetchData()
+    } ,
     fetchData: function () {
         var self = this
 

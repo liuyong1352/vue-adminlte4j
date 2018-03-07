@@ -30,7 +30,7 @@ export default {
       'v-sidebar': VSideBar ,
       'v-content': VContent ,
       'v-control-sidebar': VControlSideBar ,
-      'v-footer': VFooter,
+      'v-footer': VFooter
   }
 }
 </script>

@@ -1,7 +1,9 @@
 package api;
 
 import api.data.MenuApiInJvm;
+import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.model.form.FormItemType;
 import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.web.config.MenuConfig;
 import com.vue.adminlte4j.web.springmvc.ApiAdminController;
@@ -17,9 +19,12 @@ public class IndexController extends ApiAdminController {
 
     @GetMapping("/admin/form/model/get")
     @ResponseBody
-    public UIModel getFormModel() {
-        FormModel formModel = new FormModel() ;
-        formModel.addField("name" , "Test" , 1) ;
+    public UIModel getFormModel(String id) {
+        FormModel formModel = FormModel.build(Menu.class) ;
+        formModel.forEach(formItemModel->{
+            if(formItemModel.getKey().equals("icon"))
+                formItemModel.setType(FormItemType.ICON_SELECTOR);
+        });
         return  UIModel.success().put(formModel) ;
     }
 

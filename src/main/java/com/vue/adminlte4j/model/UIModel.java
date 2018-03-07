@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.model.form.FormModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +23,9 @@ public class UIModel extends HashMap implements Map {
 
     /** 应用信息key     ***/
     public static final String APP_INFO     = "app_info" ;
+
+    /*** 普通数据的Key ****/
+    public static final String DATA         = "data" ;
 
     /** 表格数据的默认key ***/
     public static final String TABLE_DATA   = "tableData" ;
@@ -111,10 +115,39 @@ public class UIModel extends HashMap implements Map {
         return  this ;
     }
 
+    /**
+     * 获取key=data对应的值
+     * @return
+     */
+    public Object data() {
+        return get(DATA) ;
+    }
+
+    /**
+     * 存放key=data value=bean对
+     * @param bean
+     * @return
+     */
+    public UIModel data(Object bean) {
+        put(DATA , bean) ;
+        return  this ;
+    }
+
+    /***
+     * 存放formData模型
+     * @param bean
+     * @return
+     */
+    public UIModel formData(Object bean ) {
+        put(FormModel.build(bean));
+        return  this ;
+    }
+
+
+
     public UIModel tableData(TableData tableData) {
         return put(TABLE_DATA , tableData) ;
     }
-
 
     public UIModel treeData(List<? extends Object> elements,final ITreeNodeConverter treeNodeConverter) {
         List<TreeNode> rootNodes = new ArrayList<>() ;
