@@ -6,8 +6,7 @@ import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
-import com.vue.adminlte4j.web.config.ApiAdminConfig;
-import com.vue.adminlte4j.web.config.MenuConfig;
+import com.vue.adminlte4j.web.config.MenuApiConfig;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2018/2/2.
  */
-public class ApiAdminController implements ApiAdminConfig {
+public class ApiAdminController implements MenuApiConfig {
 
     @GetMapping("/admin/app_info/get_all")
     @ResponseBody

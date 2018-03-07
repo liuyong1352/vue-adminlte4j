@@ -8,42 +8,70 @@
 </head>
 <body>
     <v-app :data="data" >
-        <v-box title="菜单">
-            <div id="tree"></div>
+        <v-box title="formSHiyan" >
+            <v-form ajax_url="/admin/form/model/get"></v-form>
         </v-box>
+        <v-row>
+            <v-col class="col-sm-3">
+                <v-box title="菜单树">
+                    <div id="tree"></div>
+                </v-box>
+            </v-col>
+            <v-col class="col-sm-9">
+                <v-box title="菜单管理">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-btn-type="addRoot">
+                            <li class="fa fa-plus">&nbsp;新增根菜单</li>
+                        </button>
+                        <button type="button" class="btn btn-default" data-btn-type="add">
+                            <li class="fa fa-plus">&nbsp;新增下级菜单</li>
+                        </button>
+                        <button type="button" class="btn btn-default" data-btn-type="edit">
+                            <li class="fa fa-edit">&nbsp;编辑当前菜单</li>
+                        </button>
+                        <button type="button" class="btn btn-default" data-btn-type="delete">
+                            <li class="fa fa-remove">&nbsp;删除当前菜单</li>
+                        </button>
+                    </div>
+                    <div id="form"></div>
+                    <v-form>
+                        <v-row>
+                            <v-form-item label="pid:">
+                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.pid">
+                            </v-form-item>
+                            <v-form-item label="url:">
+                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.url">
+                            </v-form-item>
+                            <v-form-item label="icon:">
+                                <v-row>
+                                    <div class="col-sm-8">
+                                        <i data-bv-icon-for="icon" id="icon_i" class="form-control-feedback fa fa-table" style="right:15px"></i>
+                                        <input type="text" class="form-control" id="icon" name="icon" placeholder="图标" v-model="form.icon">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <v-icon-selector ></v-icon-selector>
+                                    </div>
+                                </v-row>
+                            </v-form-item>
+                            <v-form-item label="order:">
+                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.order">
+                            </v-form-item>
+                            <v-form-item label="desc:">
+                                <input type="text" class="form-control" placeholder="Enter ..." v-model="form.desc">
+                            </v-form-item>
+                        </v-row>
+
+                    </v-form>
+                </v-box>
+            </v-col>
+        </v-row>
+
 
         <v-box title="菜单列表">
             <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
         </v-box>
         <v-modal title="添加子菜单" id="addMenuModal">
-            <v-form>
-                <v-row>
-                    <v-form-item label="pid:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.pid">
-                    </v-form-item>
-                    <v-form-item label="url:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.url">
-                    </v-form-item>
-                    <v-form-item label="icon:">
-                        <v-row>
-                            <div class="col-sm-8">
-                                <i data-bv-icon-for="icon" id="icon_i" class="form-control-feedback fa fa-table" style="right:15px"></i>
-                                <input type="text" class="form-control" id="icon" name="icon" placeholder="图标" v-model="form.icon">
-                            </div>
-                            <div class="col-sm-2">
-                                <v-icon-selector ></v-icon-selector>
-                            </div>
-                        </v-row>
-                    </v-form-item>
-                    <v-form-item label="order:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.order">
-                    </v-form-item>
-                    <v-form-item label="desc:">
-                        <input type="text" class="form-control" placeholder="Enter ..." v-model="form.desc">
-                    </v-form-item>
-                </v-row>
 
-            </v-form>
             <button slot="footer" @click="onSave">Save</button>
         </v-modal>
     </v-app>
@@ -56,6 +84,7 @@
             return {
                 g_table : {}  ,
                 form : {} ,
+                test: '' ,
                 operations : [
                     {
                         name : '添加' ,
@@ -118,6 +147,9 @@
                 //$("#tree").data('treeview').expandNode(selectNodeId);
                 //$("#tree").data('treeview').revealNode(selectNodeId);
             })
+
+
+
         }
     });
 

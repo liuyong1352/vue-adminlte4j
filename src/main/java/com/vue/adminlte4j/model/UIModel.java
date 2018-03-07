@@ -11,24 +11,47 @@ import java.util.Map;
  */
 public class UIModel extends HashMap implements Map {
 
-
+    /** 成功返回的code   ***/
     public static final int SUCCESS = 1 ;
+
+    /** 失败返回的code   ***/
     public static final int FAIL    = 0 ;
 
+    /** 菜单列表Key     ***/
     public static final String MENU         = "menu_items" ;
+
+    /** 应用信息key     ***/
     public static final String APP_INFO     = "app_info" ;
 
+    /** 表格数据的默认key ***/
     public static final String TABLE_DATA   = "tableData" ;
+
+    /** 树形数据的默认key ***/
     public static final String TREE_DATA    = "treeData" ;
+
+    /** 是否登录的key    ***/
     public static final String IS_LOGIN     = "is_login" ;
+    /** 登录地址URL的key    ***/
     public static final String LOGIN_URL    = "login_url" ;
+
+    /** 返回值code码的key    ***/
     public static final String CODE         = "code"  ;
+    /** 返回信息的key        ***/
     public static final String MSG          = "msg" ;
 
+    /**
+     * 返回菜单列表
+     * @return
+     */
     public List<Menu> getMenu() {
         return (List<Menu>) get(MENU) ;
     }
 
+    /**
+     * 设置或合并菜单信息
+     * @param inputMenus
+     * @return
+     */
     public UIModel menu(List<Menu> inputMenus) {
         List<Menu> menus = (List<Menu>) get(MENU) ;
         if(menus == null) {
@@ -39,6 +62,11 @@ public class UIModel extends HashMap implements Map {
         return this ;
     }
 
+    /**
+     * 设置或合并菜单信息
+     * @param inputMenus
+     * @return
+     */
     public UIModel menu(Menu inputMenus) {
         List<Menu> menus = (List<Menu>) get(MENU) ;
         if(menus == null) {
@@ -71,6 +99,11 @@ public class UIModel extends HashMap implements Map {
 
     public UIModel setCodeAndMsg(int code , String msg) {
         return setCode(code).setMsg(msg) ;
+    }
+
+    public UIModel put(Object value) {
+        String key = value.getClass().getSimpleName() ;
+        return put(key , value) ;
     }
 
     public UIModel put(String key , Object value) {

@@ -14,6 +14,9 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     private String pid ;
     private String url ;
     private String icon ;
+    /**
+     * 排序字段 ,倒序排列
+     */
     private int order ;
 
     private List<Menu> children ;
@@ -86,7 +89,7 @@ public class Menu implements Comparable<Menu> ,Serializable  {
 
 
     @Override public int compareTo(Menu o) {
-        if(order >= o.getOrder()) {
+        if(order <= o.getOrder()) {
             return 1 ;
         }
         return -1 ;

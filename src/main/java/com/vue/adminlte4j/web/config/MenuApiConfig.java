@@ -6,7 +6,7 @@ import com.vue.adminlte4j.support.ModelConfigManager;
 /**
  * Created by bjliuyong on 2018/3/5.
  */
-public interface ApiAdminConfig {
+public interface MenuApiConfig {
 
     /**
      * config menu
