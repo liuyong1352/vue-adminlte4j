@@ -16,7 +16,7 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-sm-8">
-                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + item.defValue" style="right: 15px;"></i>
+                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + item.defVal" style="right: 15px;"></i>
                                 <input type="text" :id="item.key" name="item['key']" :placeholder="item.placeholder" class="form-control" :value="item.defVal">
                             </div>
                             <div class="col-sm-2">
