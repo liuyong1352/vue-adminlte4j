@@ -18,21 +18,8 @@ public class FormModelUtils {
 
     private static Map<Class , FormModel> formModelCache = new HashMap<>() ;
 
-    public static FormModel transform(Object e , FormModelBuilder formModelBuilder) {
-        FormModel model = getOrCreate(e.getClass()) ;
-        FormModel clone = model.clone() ;
-
-        List<FormItem> formItems = new ArrayList<>() ;
-        clone.setFormItems(formItems);
-
-        model.getFormItems().forEach(formItem -> {
-            FormItem itemClone = formItem.clone() ;
-
-            formModelBuilder.configItem(clone , itemClone);
-            formItems.add(itemClone) ;
-        });
-
-        return clone ;
+    public static FormModel getFormModel(Object object) {
+        return getOrCreate(object.getClass()) ;
     }
 
     private  static FormModel getOrCreate(Class clazz) {
@@ -58,7 +45,7 @@ public class FormModelUtils {
             formItem.setPlaceholder("Enter ... ");
             UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
             if(uiFormItem != null ) {
-
+                formItem.setType(uiFormItem.type() );
             }
 
             //configItem(formModel , formItem) ;

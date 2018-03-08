@@ -142,7 +142,7 @@ public class UIModel extends HashMap implements Map {
     }
 
     public UIModel formData(Object bean , FormModelBuilder formModelBuilder) {
-        return put(FormModelUtils.transform(bean , formModelBuilder)).data(bean) ;
+        return put(FormModelUtils.getFormModel(bean)).data(bean) ;
     }
 
 
