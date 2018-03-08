@@ -5,6 +5,9 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.model.builder.FormModelBuilder;
+import com.vue.adminlte4j.model.form.FormItem;
+import com.vue.adminlte4j.model.form.FormItemType;
 import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.web.config.MenuApiConfig;
@@ -101,7 +104,13 @@ public class ApiAdminController implements MenuApiConfig {
         Object data = uiModel.data() ;
         if(data == null)
             data = new Menu() ;
-        return  uiModel.formData(data) ;
+        return  uiModel.formData(data, new FormModelBuilder() {
+            @Override public void configItem(FormModel formModel, FormItem formItem) {
+                if("icon".equals(formItem.getKey())) {
+                    formItem.setType(FormItemType.ICON_SELECTOR);
+                }
+            }
+        }) ;
     }
 
 
@@ -139,7 +148,7 @@ public class ApiAdminController implements MenuApiConfig {
 
         UIModel uiModel = new UIModel();
         configureMenu(uiModel);
-        List<Menu> _menus = uiModel.getMenu() ;
+        List<Menu> _menus = uiModel.menu() ;
         List<Menu> out = new ArrayList<>() ;
 
         for(Menu menu : _menus) {

@@ -17,17 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class IndexController extends ApiAdminController {
 
-    @GetMapping("/admin/form/model/get")
-    @ResponseBody
-    public UIModel getFormModel(String id) {
-        FormModel formModel = FormModel.build(Menu.class) ;
-        formModel.forEach(formItemModel->{
-            if(formItemModel.getKey().equals("icon"))
-                formItemModel.setType(FormItemType.ICON_SELECTOR);
-        });
-        return  UIModel.success().put(formModel) ;
-    }
-
     /**
      * config menu
      * @param uiModel

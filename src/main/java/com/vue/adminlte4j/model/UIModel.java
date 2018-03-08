@@ -1,5 +1,8 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.model.builder.FormModelBuilder;
+import com.vue.adminlte4j.model.builder.TreeNodeBuilder;
+import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormModel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +50,7 @@ public class UIModel extends HashMap implements Map {
      * 返回菜单列表
      * @return
      */
-    public List<Menu> getMenu() {
+    public List<Menu> menu() {
         return (List<Menu>) get(MENU) ;
     }
 
@@ -101,10 +104,6 @@ public class UIModel extends HashMap implements Map {
         return put(MSG , msg) ;
     }
 
-    public UIModel setCodeAndMsg(int code , String msg) {
-        return setCode(code).setMsg(msg) ;
-    }
-
     public UIModel put(Object value) {
         String key = value.getClass().getSimpleName() ;
         return put(key , value) ;
@@ -139,8 +138,14 @@ public class UIModel extends HashMap implements Map {
      * @return
      */
     public UIModel formData(Object bean ) {
-        put(FormModel.build(bean));
-        return  this ;
+        return  formData(bean , FormModelBuilder.DEF_BUILDER) ;
+    }
+
+    public UIModel formData(Object bean , FormModelBuilder formModelBuilder) {
+        FormModel formModel = new FormModel() ;
+        formModelBuilder.configFormModel(formModel , bean);
+        formModel.setFormItems(formModelBuilder.transform(formModel , bean) );
+        return put(formModel) ;
     }
 
 
@@ -149,34 +154,13 @@ public class UIModel extends HashMap implements Map {
         return put(TABLE_DATA , tableData) ;
     }
 
-    public UIModel treeData(List<? extends Object> elements,final ITreeNodeConverter treeNodeConverter) {
-        List<TreeNode> rootNodes = new ArrayList<>() ;
-        Map<String, TreeNode> idNodeMap = new HashMap<>() ;
-        elements.forEach(e ->{
-            TreeNode node = treeNodeConverter.convert(e) ;
-            idNodeMap.put(node.getId() , node);
-
-        });
-
-        idNodeMap.forEach((k,v)->{
-
-            String pid = v.getParentId() ;
-            if(pid == null || pid.isEmpty() || pid.equals("0"))
-                rootNodes.add(v) ;
-            else {
-                idNodeMap.get(pid).addChildNode(v);
-            }
-
-        });
-
-        return  put(TREE_DATA , rootNodes);
+    public UIModel treeData(List<? extends Object> elements,TreeNodeBuilder treeNodeBuilder) {
+        return  put(TREE_DATA , treeNodeBuilder.transform(elements));
     }
-
 
     public static UIModel success() {
         return newInstance(SUCCESS) ;
     }
-
 
     public static UIModel fail() {
         return newInstance(FAIL);

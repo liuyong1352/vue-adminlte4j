@@ -48,7 +48,7 @@ export default {
         if(this.ajax_url) {
             var self=this
             axios.get(this.ajax_url , {params:data}).then(function (response) {
-                var formJson = response.data.FormModel
+                var formJson = response.data.FormModel.formItems
                 self.items = formJson
             })
         }
