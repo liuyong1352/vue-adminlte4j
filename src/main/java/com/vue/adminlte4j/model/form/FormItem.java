@@ -50,4 +50,14 @@ public class FormItem {
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
     }
+
+    public FormItem clone() {
+        FormItem clone = new FormItem() ;
+        clone.key = key ;
+        clone.label = label ;
+        clone.defVal = defVal ;
+        clone.placeholder = placeholder ;
+        clone.type = type ;
+        return clone ;
+    }
 }

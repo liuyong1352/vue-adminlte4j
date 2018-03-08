@@ -1,8 +1,8 @@
 package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.model.builder.FormModelBuilder;
+import com.vue.adminlte4j.model.builder.FormModelUtils;
 import com.vue.adminlte4j.model.builder.TreeNodeBuilder;
-import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormModel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -142,10 +142,7 @@ public class UIModel extends HashMap implements Map {
     }
 
     public UIModel formData(Object bean , FormModelBuilder formModelBuilder) {
-        FormModel formModel = new FormModel() ;
-        formModelBuilder.configFormModel(formModel , bean);
-        formModel.setFormItems(formModelBuilder.transform(formModel , bean) );
-        return put(formModel) ;
+        return put(FormModelUtils.transform(bean , formModelBuilder)).data(bean) ;
     }
 
 

@@ -22,4 +22,10 @@ public class FormModel  {
         System.out.println();
     }
 
+    public FormModel clone() {
+        FormModel formModel = new FormModel() ;
+
+        return formModel ;
+    }
+
 }

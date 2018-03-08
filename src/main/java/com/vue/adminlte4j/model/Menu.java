@@ -1,5 +1,7 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.model.form.FormItemType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     private String desc ;
     private String pid ;
     private String url ;
+
+    @UIFormItem(type = FormItemType.ICON_SELECTOR)
     private String icon ;
     /**
      * 排序字段 ,倒序排列

@@ -6,7 +6,7 @@
                 <div class="form-group">
                   <label  class="col-sm-2 control-label">{{item['label']}}</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control"  :value="item.defVal" :placeholder="item.placeholder">
+                      <input type="text" class="form-control"  :value="data[item.key]" :placeholder="item.placeholder">
                   </div>
                 </div>
             </div>
@@ -35,12 +35,12 @@ import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 export default {
   name: 'v-form',
   props: {
-    data: String ,
     ajax_url : String
   } ,
   data : function() {
     return {
-      items:[]
+      items:[] ,
+      data : {}
     }
   } ,
   methods: {
@@ -50,6 +50,7 @@ export default {
             axios.get(this.ajax_url , {params:data}).then(function (response) {
                 var formJson = response.data.FormModel.formItems
                 self.items = formJson
+                self.data = response.data.data
             })
         }
     } ,

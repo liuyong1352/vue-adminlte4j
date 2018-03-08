@@ -12,6 +12,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UIFormItem {
 
-
-
+    String key() default "";
+    String lable() default "" ;
+    String defVal() default "" ;
+    String placeholder() default "" ;
+    int     type() default 0 ;
 }
