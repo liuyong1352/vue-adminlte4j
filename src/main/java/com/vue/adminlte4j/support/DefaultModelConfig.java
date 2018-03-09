@@ -6,6 +6,7 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.support.store.BaseStore;
 
+import com.vue.adminlte4j.util.EnvUtils;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -55,7 +56,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 //        if(appInfo != null )
 //            return  appInfo ;
 
-        Path path = isDev ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
+        Path path = EnvUtils.isDevelopment ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
         appInfo = new AppInfo() ;
 
         if(path== null || !path.toFile().exists()) {
@@ -183,7 +184,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
     public static File getStoreFile(String type) throws IOException {
-        if(!isDev)
+        if(!EnvUtils.isDevelopment)
             throw new RuntimeException("current not in dev Mode !") ;
 
         File storeFile = getWorkSpacePath(type).toFile() ;
@@ -221,7 +222,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
     }
 
     public static Path getWorkSpacePath(String dir) {
-        Path path = getJavaResources() ;
+        Path path = EnvUtils.getJavaResourcesPath();
         return Paths.get(path.toString() , WORKSPACE_DIR , dir) ;
     }
 
@@ -280,7 +281,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
     private List<Menu> loadFromFile() {
 
-        Path path= isDev ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
+        Path path= EnvUtils.isDevelopment ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
 
         if(path == null || !path.toFile().exists()){
             menus = new ArrayList<>() ;
