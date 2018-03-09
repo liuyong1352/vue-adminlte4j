@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class Menu implements Comparable<Menu> ,Serializable  {
 
-    @UIFormItem(hidden = true)
+    //@UIFormItem(hidden = true)
     private String id ;
     private String desc ;
-    @UIFormItem(hidden = true)
+    //@UIFormItem(hidden = true)
     private String pid ;
     private String url ;
 

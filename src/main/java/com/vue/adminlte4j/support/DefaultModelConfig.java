@@ -142,8 +142,7 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
     @Override
     public Menu addMenu(Menu menu) throws Exception {
-        int id = menuIdGenerator.getAndIncrement() ;
-        menu.setId(id + "");
+        menu.setId(getNewMenuId() + "");
         String pid = menu.getPid() ;
         if(pid != null && !pid.isEmpty() ) {
             for(Menu m : menus ) {
@@ -156,6 +155,15 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
         storeMenus(menus);
         return menu;
+    }
+
+    private int getNewMenuId() {
+        if( menuIdGenerator == null ) {
+            loadMenus() ;
+            initMenuIdGenerator(menus);
+        }
+
+        return menuIdGenerator.getAndIncrement() ;
     }
 
     private static  void storeMenuProperties(List<Menu> menus) throws IOException {
@@ -211,11 +219,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
         }
         oFile.close();
     }
-
-
-
-
-
 
     public static Path getWorkSpacePath(String dir) {
         Path path = getJavaResources() ;
@@ -281,9 +284,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
         if(path == null || !path.toFile().exists()){
             menus = new ArrayList<>() ;
-            if( menuIdGenerator == null ) {
-                initMenuIdGenerator(menus);
-            }
             return menus;
         }
 
@@ -292,10 +292,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
             inputStream = new FileInputStream(path.toString());
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             menus = (List<Menu>)objectInputStream.readObject() ;
-
-            if( menuIdGenerator == null ) {
-                initMenuIdGenerator(menus);
-            }
 
             return menus ;
         } catch (Exception e) {

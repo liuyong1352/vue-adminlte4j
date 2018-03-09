@@ -22,11 +22,11 @@ public class IndexController extends ApiAdminController {
      * @param uiModel
      */
     public void configureMenu(UIModel uiModel) {
-        //addSystemMenu(uiModel);
+        addSystemMenu(uiModel);
         /**
          * 完全自定义
          */
-        customMenu(uiModel) ;
+        //customMenu(uiModel) ;
     }
 
     private void addSystemMenu(UIModel uiModel) {

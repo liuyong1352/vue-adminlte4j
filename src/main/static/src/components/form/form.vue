@@ -6,15 +6,15 @@
                 <div v-if="item['type'] === 0 " :class="item.hidden?'hidden':'col-md-12'">
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">{{item['label']}}</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control"  :value="buildVal(item)" :placeholder="item.placeholder">
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
                       </div>
                     </div>
                 </div>
                 <div v-if="item['type'] === 10 " class="col-md-12">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{item.label}}:</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
@@ -59,6 +59,14 @@ export default {
     buildVal: function(item) {
         var val = this.data[item.key]
         return val || item.defVal
+    } ,
+
+    formData: function() {
+        var jsonData = {}
+        this.items.forEach(function(item){
+            jsonData[item.key] = $("#" + item.key).val()
+        })
+        return jsonData
     }
   } ,
   mounted : function() {

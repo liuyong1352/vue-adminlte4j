@@ -18,11 +18,19 @@ public class FormModelUtils {
 
     private static Map<Class , FormModel> formModelCache = new HashMap<>() ;
 
+    public static Map<Class , FormModel> getFormModelCache() {
+        return formModelCache ;
+    }
+
     public static FormModel getFormModel(Object object) {
         return getOrCreate(object.getClass()) ;
     }
 
-    public  static FormModel getOrCreate(Class clazz) {
+    public static FormModel getFormModel(Class clazz) {
+        return getOrCreate(clazz) ;
+    }
+
+    private   static FormModel getOrCreate(Class clazz) {
         FormModel formModel = formModelCache.get(clazz) ;
         if(formModel == null ) {
             formModel = newFormModel(clazz) ;

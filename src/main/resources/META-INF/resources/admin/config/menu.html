@@ -18,21 +18,18 @@
             <v-col class="col-sm-9">
                 <v-box >
                     <div slot="header" class="btn-group">
-                        <button type="button" class="btn btn-default" data-btn-type="addRoot">
+                        <button type="button" class="btn btn-default" @click="addRoot">
                             <li class="fa fa-plus">&nbsp;新增根菜单</li>
                         </button>
-                        <button type="button" class="btn btn-default" data-btn-type="add">
+                        <button type="button" class="btn btn-default" @click="addChild">
                             <li class="fa fa-plus">&nbsp;新增下级菜单</li>
                         </button>
-                        <button type="button" class="btn btn-default" data-btn-type="edit">
-                            <li class="fa fa-edit">&nbsp;编辑当前菜单</li>
-                        </button>
-                        <button type="button" class="btn btn-default" data-btn-type="delete">
+                        <button type="button" class="btn btn-default" @click="deleteCur">
                             <li class="fa fa-remove">&nbsp;删除当前菜单</li>
                         </button>
                     </div>
                     <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
-                    <button slot="footer" @click="onSave">Save</button>
+                    <button slot="footer" @click="onSaveOrUpdate">Save</button>
                 </v-box>
             </v-col>
         </v-row>
@@ -47,12 +44,10 @@
 <script src="/lib/lib.js"></script>
 <script>
     var selectNodeId ;
-    var form  ;
     app.main({
         data :function() {
             return {
 
-                form : {} ,
                 test: '' ,
                 operations : [
                     {
@@ -81,11 +76,24 @@
 
         } ,
         methods : {
-            onSave : function () {
-                axios.post("/admin/menu/add",this.form).then(function(response){
-                    $("#addMenuModal").modal('toggle')
-                    $("#tip").text(response.data.msg)
-                    $("#alert-message").modal('toggle')
+            addRoot : function() {
+                this.$refs.form.data = {}
+                this.$refs.form.data.pid = 0
+            } ,
+            addChild: function() {
+                this.$refs.form.data = {}
+                this.$refs.form.data.pid = selectNodeId
+            } ,
+            deleteCur: function () {
+                if($.isNullOrEmpty(selectNodeId) )
+                    return
+                axios.delete("/admin/menu/delete/" + selectNodeId).then(function(response){
+                    $.alert(response.data)
+                })
+            } ,
+            onSaveOrUpdate : function () {
+                axios.post("/admin/menu/add",this.$refs.form.formData()).then(function(response){
+                    $.alert(response.data)
                 })
             }
         } ,
@@ -99,6 +107,7 @@
                     collapseIcon : "glyphicon glyphicon-unchecked",
                     levels : 1,
                     onNodeSelected : function(event, data) {
+                        selectNodeId = data.id
                         form.refresh({id:data.id})
                     }
                 });
