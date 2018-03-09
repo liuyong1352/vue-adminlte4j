@@ -29,7 +29,15 @@
                         </button>
                     </div>
                     <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
-                    <button slot="footer" @click="onSaveOrUpdate">Save</button>
+
+                    <div slot="footer" class="text-center">
+                        <button type="button" class="btn btn-primary" @click="upOrder">
+                            <li class="fa fa-long-arrow-up">&nbsp;提序</li>
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
+                            <li class="fa fa-save">&nbsp;保存</li>
+                        </button>
+                    </div>
                 </v-box>
             </v-col>
         </v-row>
@@ -90,6 +98,9 @@
                 axios.delete("/admin/menu/delete/" + selectNodeId).then(function(response){
                     $.alert(response.data)
                 })
+            } ,
+            upOrder: function () {
+
             } ,
             onSaveOrUpdate : function () {
                 axios.post("/admin/menu/add",this.$refs.form.formData()).then(function(response){
