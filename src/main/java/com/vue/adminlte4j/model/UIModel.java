@@ -60,6 +60,10 @@ public class UIModel extends HashMap implements Map {
      * @return
      */
     public UIModel menu(List<Menu> inputMenus) {
+
+        if(inputMenus == null || inputMenus.isEmpty())
+            return this ;
+
         List<Menu> menus = (List<Menu>) get(MENU) ;
         if(menus == null) {
             menus = new ArrayList<>() ;

@@ -76,6 +76,17 @@ public class ApiAdminController implements AdminApiConfig {
         }
     }
 
+    @PostMapping("/admin/menu/up/{id}")
+    @ResponseBody
+    public UIModel upMenuLevel(@PathVariable String id) {
+        try {
+            ModelConfigManager.deleteMenu(id);
+            return UIModel.success().setMsg("修改成功！") ;
+        } catch (Exception e) {
+            return UIModel.fail().setMsg("修改失败!") ;
+        }
+    }
+
     @GetMapping("/admin/menu/get/{id}")
     @ResponseBody
     public UIModel getMenu(@PathVariable String id) {

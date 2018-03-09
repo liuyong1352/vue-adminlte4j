@@ -100,7 +100,9 @@
                 })
             } ,
             upOrder: function () {
-
+                axios.post("/admin/menu/up/" + selectNodeId).then(function(response){
+                    $.alert(response.data)
+                })
             } ,
             onSaveOrUpdate : function () {
                 axios.post("/admin/menu/add",this.$refs.form.formData()).then(function(response){

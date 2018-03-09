@@ -1,7 +1,6 @@
 package api.data;
 
 import com.vue.adminlte4j.model.Menu;
-import com.vue.adminlte4j.web.config.MenuConfig;
 
 import java.util.ArrayList;
 import java.util.List;
