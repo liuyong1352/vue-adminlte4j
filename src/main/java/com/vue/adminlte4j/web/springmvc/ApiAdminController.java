@@ -91,7 +91,7 @@ public class ApiAdminController implements MenuApiConfig {
                     return UIModel.success().data(m) ;
             }
         } catch (Exception e) {
-            return UIModel.fail().setMsg("修改失败!") ;
+            return UIModel.fail().setMsg("对不起，请稍后再试!") ;
         }
         return UIModel.fail().setMsg("对不起， 未找到您要的数据！") ;
     }
@@ -101,19 +101,11 @@ public class ApiAdminController implements MenuApiConfig {
     public UIModel _getMenu(String id) {
 
         UIModel uiModel = getMenu(id) ;
-        Object data = uiModel.data() ;
+        Object data = getMenu(id).data() ;
         if(data == null)
-            data = new Menu() ;
-        return  uiModel.formData(data, new FormModelBuilder() {
-            @Override public void configItem(FormModel formModel, FormItem formItem) {
-                if("icon".equals(formItem.getKey())) {
-                    formItem.setType(FormItemType.ICON_SELECTOR);
-                }
-            }
-        }) ;
+            return uiModel.formData(new Menu());
+        return  uiModel.formData(data) ;
     }
-
-
 
     @GetMapping("/admin/menu/list")
     @ResponseBody

@@ -22,7 +22,7 @@ public class FormModelUtils {
         return getOrCreate(object.getClass()) ;
     }
 
-    private  static FormModel getOrCreate(Class clazz) {
+    public  static FormModel getOrCreate(Class clazz) {
         FormModel formModel = formModelCache.get(clazz) ;
         if(formModel == null ) {
             formModel = newFormModel(clazz) ;
@@ -38,20 +38,20 @@ public class FormModelUtils {
         formModel.setFormItems(formItems);
 
         List<Field> fieldList = ReflectUtils.findAllField(cType);
-        fieldList.forEach(field -> {
-            FormItem formItem = new FormItem() ;
-            formItem.setLabel(field.getName());
-            formItem.setKey(field.getName());
-            formItem.setPlaceholder("Enter ... ");
-            UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
-            if(uiFormItem != null ) {
-                formItem.setType(uiFormItem.type() );
-            }
-
-            //configItem(formModel , formItem) ;
-            formItems.add(formItem) ;
-        });
+        fieldList.forEach(field -> formItems.add(configFormItem(field)));
 
         return  formModel ;
     }
+
+    private static FormItem configFormItem(Field field ) {
+        FormItem formItem = new FormItem() ;
+        formItem.setLabel(field.getName());
+        formItem.setKey(field.getName());
+        formItem.setPlaceholder("Enter ... ");
+
+        formItem.config(AnnotationUtils.findAnnotation(field , UIFormItem.class));
+
+        return formItem ;
+    }
+
 }

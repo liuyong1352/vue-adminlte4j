@@ -6,7 +6,7 @@
                 <div class="form-group">
                   <label  class="col-sm-2 control-label">{{item['label']}}</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control"  :value="data[item.key]" :placeholder="item.placeholder">
+                      <input type="text" class="form-control"  :value="buildVal(item)" :placeholder="item.placeholder">
                   </div>
                 </div>
             </div>
@@ -16,8 +16,8 @@
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="col-sm-8">
-                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + item.defVal" style="right: 15px;"></i>
-                                <input type="text" :id="item.key" name="item['key']" :placeholder="item.placeholder" class="form-control" :value="item.defVal">
+                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
+                                <input type="text" :id="item.key" name="item['key']"  class="form-control" :value="buildVal(item)" :placeholder="item.placeholder">
                             </div>
                             <div class="col-sm-2">
                                 <v-icon-selector :icon_el="'#' + item.key + '_i #' + item.key " ></v-icon-selector>
@@ -54,8 +54,9 @@ export default {
             })
         }
     } ,
-    setValue: function(item) {
-        return item.defValue
+    buildVal: function(item) {
+        var val = this.data[item.key]
+        return val || item.defVal
     }
   } ,
   mounted : function() {

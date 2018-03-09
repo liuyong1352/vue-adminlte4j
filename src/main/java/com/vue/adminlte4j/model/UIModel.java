@@ -132,19 +132,10 @@ public class UIModel extends HashMap implements Map {
         return  this ;
     }
 
-    /***
-     * 存放formData模型
-     * @param bean
-     * @return
-     */
-    public UIModel formData(Object bean ) {
-        return  formData(bean , FormModelBuilder.DEF_BUILDER) ;
-    }
 
-    public UIModel formData(Object bean , FormModelBuilder formModelBuilder) {
+    public UIModel formData(Object bean) {
         return put(FormModelUtils.getFormModel(bean)).data(bean) ;
     }
-
 
 
     public UIModel tableData(TableData tableData) {
