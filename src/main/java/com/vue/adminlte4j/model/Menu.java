@@ -18,7 +18,7 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     private String pid ;
     private String url ;
 
-    @UIFormItem(type = FormItemType.ICON_SELECTOR)
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标")
     private String icon ;
     /**
      * 排序字段 ,倒序排列

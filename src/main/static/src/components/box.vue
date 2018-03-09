@@ -2,21 +2,26 @@
   <div class="box">
     <div class="box-header" :class="(isBorder || isSolid)?'with-border':''">
         <slot name="icon-title"></slot>
-        <h3 class="box-title">{{ title }}</h3>
+        <template v-if="title">
+            <h3 class="box-title">{{ title }}</h3>
+        </template>
+        <template v-if="$slots.header">
+            <slot name="header"></slot>
+        </template>
         <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" :data-widget="widgetType"><i :class="btnIcon"></i>
                 </button>
-              </div>
+        </div>
         <!-- /.box-tools -->
     </div>
 
-      <div class="box-body">
-            <slot></slot>
-      </div>
-      <!-- /.box-body -->
-      <div v-if="$slots.footer" class="box-footer">
-            <slot name="footer"></slot>
-      </div>
+    <div class="box-body">
+          <slot></slot>
+    </div>
+    <!-- /.box-body -->
+    <div v-if="$slots.footer" class="box-footer">
+          <slot name="footer"></slot>
+    </div>
   </div>
 
 </template>

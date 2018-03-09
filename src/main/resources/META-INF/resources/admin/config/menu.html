@@ -16,8 +16,8 @@
                 </v-box>
             </v-col>
             <v-col class="col-sm-9">
-                <v-box title="菜单管理">
-                    <div class="btn-group">
+                <v-box >
+                    <div slot="header" class="btn-group">
                         <button type="button" class="btn btn-default" data-btn-type="addRoot">
                             <li class="fa fa-plus">&nbsp;新增根菜单</li>
                         </button>
@@ -51,7 +51,7 @@
     app.main({
         data :function() {
             return {
-                g_table : {}  ,
+
                 form : {} ,
                 test: '' ,
                 operations : [
@@ -62,7 +62,7 @@
                         method : function(row , $table) {
                             $table.$root.form.pid = row.id
                             $("#addMenuModal").modal('toggle')
-                            g_table = $table ;
+
                         }
                     } ,
                     {
@@ -86,13 +86,10 @@
                     $("#addMenuModal").modal('toggle')
                     $("#tip").text(response.data.msg)
                     $("#alert-message").modal('toggle')
-
-                    g_table.fetchData()
                 })
             }
         } ,
         mounted : function ($vm) {
-            var treeData = null;
             form=$vm.$refs.form
             axios.get("/admin/menu/tree").then(function(response){
                 $("#tree").treeview({
@@ -113,9 +110,6 @@
                 //$("#tree").data('treeview').expandNode(selectNodeId);
                 //$("#tree").data('treeview').revealNode(selectNodeId);
             })
-
-
-
         }
     });
 
