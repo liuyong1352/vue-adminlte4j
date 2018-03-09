@@ -12,11 +12,16 @@ public class FormItem {
     private String defVal ;
     private String placeholder ;
     private int    type ;
+    private boolean hidden ;
+    private boolean ignore ;
 
     public void config(UIFormItem uiFormItem) {
         if( uiFormItem == null )
             return;
+
         this.type = uiFormItem.type();
+        this.hidden = uiFormItem.hidden() ;
+        this.ignore = uiFormItem.ignore() ;
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
@@ -86,5 +91,18 @@ public class FormItem {
         this.placeholder = placeholder;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
 
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+    public boolean isIgnore() {
+        return ignore;
+    }
+
+    public void setIgnore(boolean ignore) {
+        this.ignore = ignore;
+    }
 }

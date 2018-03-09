@@ -18,4 +18,6 @@ public @interface UIFormItem {
     String defVal() default "" ;
     String placeholder() default "" ;
     int     type() default FormItemType.INPUT;
+    boolean hidden() default false ;
+    boolean ignore() default false ;
 }

@@ -2,30 +2,32 @@
     <form class="form-horizontal">
         <slot></slot>
         <template v-for="item in items">
-            <div v-if="item['type'] === 0 " class="col-md-12">
-                <div class="form-group">
-                  <label  class="col-sm-2 control-label">{{item['label']}}</label>
-                  <div class="col-sm-10">
-                      <input type="text" class="form-control"  :value="buildVal(item)" :placeholder="item.placeholder">
-                  </div>
+            <template v-if="!item.ignore">
+                <div v-if="item['type'] === 0 " :class="item.hidden?'hidden':'col-md-12'">
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">{{item['label']}}</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control"  :value="buildVal(item)" :placeholder="item.placeholder">
+                      </div>
+                    </div>
                 </div>
-            </div>
-            <div v-if="item['type'] === 10 " class="col-md-12">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{item.label}}:</label>
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
-                                <input type="text" :id="item.key" name="item['key']"  class="form-control" :value="buildVal(item)" :placeholder="item.placeholder">
-                            </div>
-                            <div class="col-sm-2">
-                                <v-icon-selector :icon_el="'#' + item.key + '_i #' + item.key " ></v-icon-selector>
+                <div v-if="item['type'] === 10 " class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{item.label}}:</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
+                                    <input type="text" :id="item.key" name="item['key']"  class="form-control" :value="buildVal(item)" :placeholder="item.placeholder">
+                                </div>
+                                <div class="col-sm-2">
+                                    <v-icon-selector :icon_el="'#' + item.key + '_i #' + item.key " ></v-icon-selector>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
         </template>
     </form>
 </template>
