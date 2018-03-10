@@ -18,15 +18,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by bjliuyong on 2017/12/26.
  */
 
-public class DefaultModelConfig extends BaseStore implements IModelConfig{
+public class DefaultModelConfig implements IModelConfig ,BaseStore{
+    @Override
+    public List<Menu> loadMenus() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
+    @Override
+    public void deleteMenu(String id) throws Exception {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Menu addMenu(Menu menu) throws Exception {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     private Set<Class> typeSet   = new HashSet<>() ;
 
     private   AppInfo appInfo ;
-    private   List<Menu> menus ;
 
-    private AtomicInteger menuIdGenerator ;
+
 
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
@@ -56,11 +68,9 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 //        if(appInfo != null )
 //            return  appInfo ;
 
-        Path path = EnvUtils.isDevelopment ? getWorkSpacePath(APP_INFO_FILE) : loadFromClassPath(APP_INFO_FILE)  ;
-        appInfo = new AppInfo() ;
-
+        Path path = getStorePath(APP_INFO_FILE) ;
         if(path== null || !path.toFile().exists()) {
-            return  appInfo ;
+            return  (appInfo = new AppInfo()) ;
         }
 
         FileInputStream inputStream = null ;
@@ -102,111 +112,13 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
     @Override
     public synchronized void storeMenus(List<Menu> menus) throws Exception {
-        storeMenuProperties(menus);
-    }
-
-    @Override
-    public void deleteMenu(String id) throws Exception {
-
-        if(menus == null) {
-            return;
-        }
-
-        if( deleteInMem(id , menus) ) {
-            storeMenus(menus);
-        }
-
-
-
-
 
     }
 
-    private boolean deleteInMem(String id , List<Menu> menus ) {
-
-        if(menus == null || menus.isEmpty())
-            return  false ;
-
-        for(int i = 0 ; i < menus.size() ; i++ ) {
-            Menu m = menus.get(i) ;
-            if (m.getId().equals(id)) {
-                menus.remove(i);
-                return  true ;
-            }
-
-            if(deleteInMem(id , m.getChildren()))
-                return  true ;
-        }
-
-        return false ;
-    }
-
-    @Override
-    public Menu addMenu(Menu menu) throws Exception {
-        menu.setId(getNewMenuId() + "");
-        String pid = menu.getPid() ;
-        if(pid != null && !pid.isEmpty() ) {
-            for(Menu m : menus ) {
-                if(m.getId().equals(menu.getPid()))
-                    m.addChildMenu(menu);
-            }
-        } else {
-            menus.add(menu) ;
-        }
-
-        storeMenus(menus);
-        return menu;
-    }
-
-    private int getNewMenuId() {
-        if( menuIdGenerator == null ) {
-            loadMenus() ;
-            initMenuIdGenerator(menus);
-        }
-
-        return menuIdGenerator.getAndIncrement() ;
-    }
-
-    private static  void storeMenuProperties(List<Menu> menus) throws IOException {
-
-        FileOutputStream output = null;
-        try {
-            output = new FileOutputStream(getStoreFile(MENU_ITEM_FILE));
-            ObjectOutputStream outputStream = new ObjectOutputStream(output) ;
-            outputStream.writeObject(menus);
-        } catch (IOException e) {
-            throw e ;
-        }  finally {
-            output.close();
-        }
-
-
-    }
-
-    public static File getStoreFile(String type) throws IOException {
-        if(!EnvUtils.isDevelopment)
-            throw new RuntimeException("current not in dev Mode !") ;
-
-        File storeFile = getWorkSpacePath(type).toFile() ;
-
-        File wp = getWorkSpacePath("").toFile() ;
-
-        if(!wp.exists()) {
-            wp.mkdir() ;
-        }
-
-        if(!storeFile.exists()) {
-            storeFile.createNewFile() ;
-        }
-
-        return storeFile;
-
-    }
-
-    private  static  void storeProperties(AppInfo appInfo) throws IOException {
+    private   void storeProperties(AppInfo appInfo) throws IOException {
 
         Properties prop   =  new Properties();
-        FileOutputStream oFile = new FileOutputStream(getStoreFile(APP_INFO_FILE));
+        FileOutputStream oFile = new FileOutputStream(getOrCreateFile(APP_INFO_FILE));
         try {
             setInfoProperties(appInfo,prop);
 
@@ -220,22 +132,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
         }
         oFile.close();
     }
-
-    public static Path getWorkSpacePath(String dir) {
-        Path path = EnvUtils.getJavaResourcesPath();
-        return Paths.get(path.toString() , WORKSPACE_DIR , dir) ;
-    }
-
-    public static Path loadFromClassPath(String fileName) {
-        try {
-            String configPath = DefaultModelConfig.class.getClassLoader().getResource(WORKSPACE_DIR).getPath();
-            return Paths.get(configPath , fileName) ;
-        } catch (Exception e) {
-            return null ;
-        }
-
-    }
-
 
     private static void getProperties(Object model,Properties prop ) throws Exception {
         if(model == null )
@@ -267,55 +163,6 @@ public class DefaultModelConfig extends BaseStore implements IModelConfig{
 
 
 
-
-    @Override
-    public List<Menu> loadMenus() {
-
-        if(menus == null )
-            menus = loadFromFile() ;
-
-        return  menus ;
-
-    }
-
-
-    private List<Menu> loadFromFile() {
-
-        Path path= EnvUtils.isDevelopment ? getWorkSpacePath(MENU_ITEM_FILE) : loadFromClassPath(MENU_ITEM_FILE);
-
-        if(path == null || !path.toFile().exists()){
-            menus = new ArrayList<>() ;
-            return menus;
-        }
-
-        FileInputStream inputStream = null ;
-        try {
-            inputStream = new FileInputStream(path.toString());
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            menus = (List<Menu>)objectInputStream.readObject() ;
-
-            return menus ;
-        } catch (Exception e) {
-            throw new RuntimeException(e) ;
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                //ignore this
-            }
-        }
-
-    }
-
-    private void initMenuIdGenerator(List<Menu> menus) {
-        int maxId = 0 ;
-        for(Menu menu : menus) {
-            int id = Integer.parseInt(menu.getId()) ;
-            if(id > maxId)
-                maxId = id ;
-        }
-        menuIdGenerator = new AtomicInteger(maxId + 1 ) ;
-    }
 
     public static void main(String args[] ) throws Exception {
 

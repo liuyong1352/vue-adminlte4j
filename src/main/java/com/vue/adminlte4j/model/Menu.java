@@ -2,6 +2,8 @@ package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
+
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,4 +112,16 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     public void setPid(String pid) {
         this.pid = pid;
     }
+
+    public Menu clone() {
+        Menu menu = new Menu() ;
+        menu.id = id ;
+        menu.pid = pid ;
+        menu.icon = icon ;
+        menu.url = url ;
+        menu.desc = desc ;
+        menu.order = order ;
+        return  menu ;
+    }
+
 }

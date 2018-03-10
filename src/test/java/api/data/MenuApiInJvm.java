@@ -21,7 +21,7 @@ public class MenuApiInJvm {
         return  menus ;
     }
 
-    public static List<Menu> buildMenu() {
+    private static List<Menu> buildMenu() {
 
         List<Menu> menus = new ArrayList<>() ;
 
