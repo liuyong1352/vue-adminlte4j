@@ -26,8 +26,8 @@ public interface AdminApiConfig {
      * @param uiModel
      */
     default void configureMenu(UIModel uiModel) {
-        List<Menu> customMenus = getMenuService().findAll();
-        uiModel.menu(MenuUtils.getConfigMenus()) ;
+        List<Menu> customMenus = getMenuService().getTreeData();
+        uiModel.menu(customMenus) ;
         uiModel.menu(MenuUtils.getDevelopMenus());
     }
 
