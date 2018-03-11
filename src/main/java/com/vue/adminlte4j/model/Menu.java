@@ -101,6 +101,8 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     @Override public int compareTo(Menu o) {
         if(order > o.getOrder()) {
             return 1 ;
+        } else if(order == o.getOrder()) {
+            return id.compareTo(o.getId());
         }
         return -1 ;
     }
