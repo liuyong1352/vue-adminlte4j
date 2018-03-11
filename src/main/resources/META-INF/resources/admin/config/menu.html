@@ -105,7 +105,10 @@
                 })
             } ,
             onSaveOrUpdate : function () {
-                axios.post("/admin/menu/add",this.$refs.form.formData()).then(function(response){
+                var url = "/admin/menu/add"
+                if(!$.isNullOrEmpty(this.$refs.form.formData().id))
+                    url = "/admin/menu/update"
+                axios.post(url,this.$refs.form.formData()).then(function(response){
                     $.alert(response.data)
                 })
             }

@@ -3,6 +3,7 @@ package com.vue.adminlte4j.service;
 import com.vue.adminlte4j.model.Menu;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,15 @@ public interface MenuService {
      */
     List<Menu> findAll() ;
 
+    default List<Menu> findChildren(String pid) {
+        List<Menu> children = new ArrayList<>() ;
+        findAll().forEach(menu->{
+            if((pid == null &&  menu.getPid() == null)||pid.equals(menu.getPid()))
+                children.add(menu) ;
+        });
+        return  children ;
+    }
+
     /**
      * 返回Map
      * @return
@@ -65,6 +75,23 @@ public interface MenuService {
             }
         });
         return menus ;
+    }
+
+    default void upOrder(String menuId) {
+        Menu menu = findById(menuId) ;
+        if(menu == null )
+            return;
+        List<Menu> brothers = findChildren(menu.getPid()) ;
+        Collections.sort(brothers);
+        //get last one
+        Menu maxIdMenu = brothers.get(brothers.size() - 1) ;
+        if(maxIdMenu.getId().equals(menuId))
+            return;
+        int order = maxIdMenu.getOrder() ;
+        if(menu.getOrder() <= order) {
+            menu.setOrder(order + 1);
+        }
+        update(menu);
     }
 
 }

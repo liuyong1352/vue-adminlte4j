@@ -61,7 +61,7 @@ public class ApiAdminController implements AdminApiConfig {
     @ResponseBody
     public UIModel addMenu(@RequestBody Menu menu)  {
         try {
-            ModelConfigManager.addMenu(menu);
+            getMenuService().save(menu);
             return UIModel.success().setMsg("修改成功！") ;
         } catch (Exception e) {
             return UIModel.fail().setMsg("修改失败!") ;
@@ -72,18 +72,30 @@ public class ApiAdminController implements AdminApiConfig {
     @ResponseBody
     public UIModel deleteMenu(@PathVariable String id) {
         try {
-            ModelConfigManager.deleteMenu(id);
+            getMenuService().delete(id);
             return UIModel.success().setMsg("修改成功！") ;
         } catch (Exception e) {
             return UIModel.fail().setMsg("修改失败!") ;
         }
     }
 
+    @PostMapping("/admin/menu/update")
+    @ResponseBody
+    public UIModel updateMenu(@RequestBody Menu menu) {
+        try {
+            getMenuService().update(menu);
+            return UIModel.success().setMsg("修改成功！") ;
+        } catch (Exception e) {
+            return UIModel.fail().setMsg("修改失败!") ;
+        }
+    }
+
+
     @PostMapping("/admin/menu/up/{id}")
     @ResponseBody
     public UIModel upMenuLevel(@PathVariable String id) {
         try {
-            ModelConfigManager.deleteMenu(id);
+            getMenuService().upOrder(id);
             return UIModel.success().setMsg("修改成功！") ;
         } catch (Exception e) {
             return UIModel.fail().setMsg("修改失败!") ;
@@ -94,12 +106,9 @@ public class ApiAdminController implements AdminApiConfig {
     @ResponseBody
     public UIModel getMenu(@PathVariable String id) {
         try {
-            List<Menu> menus = _listMenu() ;
-
-            for(Menu m : menus) {
-                if(m.getId().equals(id))
-                    return UIModel.success().data(m) ;
-            }
+            Menu menu = getMenuService().findById(id) ;
+            if(menu != null )
+                return UIModel.success().data(menu) ;
         } catch (Exception e) {
             return UIModel.fail().setMsg("对不起，请稍后再试!") ;
         }
@@ -110,11 +119,10 @@ public class ApiAdminController implements AdminApiConfig {
     @ResponseBody
     public UIModel _getMenu(String id) {
 
-        UIModel uiModel = getMenu(id) ;
-        Object data = getMenu(id).data() ;
-        if(data == null)
-            return uiModel.formData(new Menu());
-        return  uiModel.formData(data) ;
+        Menu menu = getMenuService().findById(id) ;
+        if(menu == null)
+            return UIModel.success().formData(new Menu());
+        return  UIModel.success().formData(menu) ;
     }
 
     @GetMapping("/admin/menu/list")
