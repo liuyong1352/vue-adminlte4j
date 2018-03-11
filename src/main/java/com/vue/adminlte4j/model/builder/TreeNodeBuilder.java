@@ -16,21 +16,20 @@ public interface TreeNodeBuilder<E> {
     default List<TreeNode> transform(List<E> elements) {
         List<TreeNode> rootNodes = new ArrayList<>() ;
         Map<String, TreeNode> idNodeMap = new HashMap<>() ;
+        List<TreeNode> treeNodes = new ArrayList<>(elements.size()) ;  //保证elements次序不变
         elements.forEach(e ->{
             TreeNode node = build(e) ;
-            idNodeMap.put(node.getId() , node);
 
+            if(node.isRoot())
+                rootNodes.add(node) ;
+            else
+                treeNodes.add(node);
+            idNodeMap.put(node.getId() , node);
         });
 
-        idNodeMap.forEach((k,v)->{
-
-            String pid = v.getParentId() ;
-            if(pid == null || pid.isEmpty() || pid.equals("0"))
-                rootNodes.add(v) ;
-            else {
-                idNodeMap.get(pid).addChildNode(v);
-            }
-
+        treeNodes.forEach((v)->{
+            if(!v.isRoot())
+                idNodeMap.get(v.getParentId()).addChildNode(v);
         });
         return  rootNodes  ;
     }

@@ -66,6 +66,7 @@ public interface MenuService {
     default List<Menu> getTreeData(){
         List<Menu> menus = new ArrayList<>() ;
         Map<String,Menu> menuMap = findMap() ;
+
         menuMap.forEach((k ,v) -> {
             String pid = v.getPid() ;
             if(pid == null || pid.isEmpty() || pid.equals("0")) {
@@ -74,6 +75,7 @@ public interface MenuService {
                 menuMap.get(pid).addChildMenu(v);
             }
         });
+
         return menus ;
     }
 

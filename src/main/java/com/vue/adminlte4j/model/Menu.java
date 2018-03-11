@@ -45,6 +45,7 @@ public class Menu implements Comparable<Menu> ,Serializable  {
     public void addChildMenu(Menu menu) {
         if(children == null)
             children = new ArrayList<>() ;
+        menu.setPid(id);
         children.add(menu) ;
     }
 

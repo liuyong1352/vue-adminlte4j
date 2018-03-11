@@ -5,13 +5,14 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
-import com.vue.adminlte4j.service.MenuService;
 import com.vue.adminlte4j.support.ModelConfigManager;
+import com.vue.adminlte4j.util.MenuUtils;
 import com.vue.adminlte4j.web.config.AdminApiConfig;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class ApiAdminController implements AdminApiConfig {
         try {
             UIModel uiModel = UIModel.success();
             configureMenu(uiModel);
+            MenuUtils.sortTreeData(uiModel.menu());
             configureAppInfo(uiModel);
             return  uiModel;
         } catch (Exception e) {
@@ -105,21 +107,15 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/menu/get/{id}")
     @ResponseBody
     public UIModel getMenu(@PathVariable String id) {
-        try {
-            Menu menu = getMenuService().findById(id) ;
-            if(menu != null )
-                return UIModel.success().data(menu) ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("对不起，请稍后再试!") ;
-        }
-        return UIModel.fail().setMsg("对不起， 未找到您要的数据！") ;
+        return _getMenu(id) ;
     }
 
     @GetMapping("/admin/menu/get/")
     @ResponseBody
     public UIModel _getMenu(String id) {
-
-        Menu menu = getMenuService().findById(id) ;
+        UIModel uiModel = UIModel.success() ;
+        configureMenu(uiModel);
+        Menu menu = MenuUtils.getMenu(uiModel.menu() , id );
         if(menu == null)
             return UIModel.success().formData(new Menu());
         return  UIModel.success().formData(menu) ;
@@ -152,8 +148,6 @@ public class ApiAdminController implements AdminApiConfig {
         }) ;
     }
 
-
-
     private List<Menu> _listMenu() throws Exception{
 
         UIModel uiModel = new UIModel();
@@ -164,20 +158,17 @@ public class ApiAdminController implements AdminApiConfig {
         for(Menu menu : _menus) {
             _listChildMenu(menu , out) ;
         }
-
+        Collections.sort(out);
         return  out ;
     }
 
     private void _listChildMenu(Menu menu , List<Menu> out) {
-
         if(menu.getChildren() != null ) {
             for(Menu child : menu.getChildren()) {
                 child.setPid(menu.getId());
                 _listChildMenu(child , out);
             }
         }
-
-        //menu.setChildren(null);
         out.add(menu) ;
     }
 }

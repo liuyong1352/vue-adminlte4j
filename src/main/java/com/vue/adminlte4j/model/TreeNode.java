@@ -88,5 +88,9 @@ public class TreeNode {
         nodes.add(node) ;
     }
 
+    public boolean isRoot() {
+        return parentId == null || parentId.isEmpty() || "0".equals(parentId) ;
+    }
+
 
 }
