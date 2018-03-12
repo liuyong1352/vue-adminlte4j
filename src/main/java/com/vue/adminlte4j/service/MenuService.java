@@ -48,8 +48,10 @@ public interface MenuService {
 
     default List<Menu> findChildren(String pid) {
         List<Menu> children = new ArrayList<>() ;
+        if(pid == null)
+            return  children ;
         findAll().forEach(menu->{
-            if((pid == null &&  menu.getPid() == null)||pid.equals(menu.getPid()))
+            if(pid.equals(menu.getPid()))
                 children.add(menu) ;
         });
         return  children ;

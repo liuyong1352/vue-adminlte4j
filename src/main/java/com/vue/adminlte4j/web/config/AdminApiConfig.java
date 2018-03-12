@@ -6,6 +6,7 @@ import com.vue.adminlte4j.service.MenuService;
 import com.vue.adminlte4j.support.AdminRuntimeException;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.util.MenuUtils;
+import java.util.List;
 
 /**
  * Created by bjliuyong on 2018/3/5.
@@ -39,13 +40,14 @@ public interface AdminApiConfig {
     }
 
     default void _deleteMenu(String menuId) {
-        if(getMenuService().findChildren(menuId) != null )
+        List<Menu> children = getMenuService().findChildren(menuId) ;
+        if(children != null && !children.isEmpty())
             throw new AdminRuntimeException("您选择的菜单有子菜单 ， 不能进行删除操作！") ;
         getMenuService().delete(menuId) ;
     }
 
     default void _upMenuLevel(String menuId) {
-        if(getMenuService().findById(menuId) != null )
+        if(getMenuService().findById(menuId) == null )
             throw new AdminRuntimeException("您选择的菜单，不能进行修改操作！") ;
         getMenuService().upOrder(menuId);
     }
