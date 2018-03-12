@@ -44,6 +44,11 @@ public interface AdminApiConfig {
         getMenuService().delete(menuId) ;
     }
 
+    default void _upMenuLevel(String menuId) {
+        if(getMenuService().findById(menuId) != null )
+            throw new AdminRuntimeException("您选择的菜单，不能进行修改操作！") ;
+        getMenuService().upOrder(menuId);
+    }
 
     /**
      * config menu

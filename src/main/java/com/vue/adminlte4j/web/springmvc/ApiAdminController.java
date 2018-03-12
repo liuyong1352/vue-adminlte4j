@@ -82,12 +82,7 @@ public class ApiAdminController implements AdminApiConfig {
     @PostMapping("/admin/menu/up/{id}")
     @ResponseBody
     public UIModel upMenuLevel(@PathVariable String id) {
-        try {
-            getMenuService().upOrder(id);
-            return UIModel.success().setMsg("修改成功！") ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("修改失败!") ;
-        }
+        return Utils.run(()-> _upMenuLevel(id)) ;
     }
 
     @GetMapping("/admin/menu/get/{id}")
