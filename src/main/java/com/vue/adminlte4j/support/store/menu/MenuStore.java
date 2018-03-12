@@ -18,9 +18,7 @@ public class MenuStore implements MenuService , BaseStore{
     private TreeMap<String,Menu> menuMap  ;
     private AtomicInteger menuIdGenerator ;
 
-    {
-        findAll() ;
-    }
+    {   findAll(); }
 
     @Override public synchronized void save(Menu menu) {
         menu.setId(getNewMenuId() + "");
@@ -34,7 +32,7 @@ public class MenuStore implements MenuService , BaseStore{
         return true;
     }
 
-    @Override public void update(Menu menu) {
+    @Override public synchronized void update(Menu menu) {
         menuMap.put(menu.getId() , menu.clone()) ;
         store();
     }
