@@ -2,43 +2,23 @@ package com.vue.adminlte4j.support;
 
 
 import com.vue.adminlte4j.model.AppInfo;
-import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.support.store.BaseStore;
 
-import com.vue.adminlte4j.util.EnvUtils;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by bjliuyong on 2017/12/26.
  */
 
 public class DefaultModelConfig implements IModelConfig ,BaseStore{
-    @Override
-    public List<Menu> loadMenus() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void deleteMenu(String id) throws Exception {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Menu addMenu(Menu menu) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     private Set<Class> typeSet   = new HashSet<>() ;
 
     private   AppInfo appInfo ;
-
-
 
 
     @Override public List<TableData.Column> configModelColumn(Class type) {
@@ -110,10 +90,7 @@ public class DefaultModelConfig implements IModelConfig ,BaseStore{
         storeProperties(appInfo);
     }
 
-    @Override
-    public synchronized void storeMenus(List<Menu> menus) throws Exception {
 
-    }
 
     private   void storeProperties(AppInfo appInfo) throws IOException {
 
@@ -161,15 +138,4 @@ public class DefaultModelConfig implements IModelConfig ,BaseStore{
         }
     }
 
-
-
-
-    public static void main(String args[] ) throws Exception {
-
-        DefaultModelConfig modelConfig = new DefaultModelConfig();
-
-        List<Menu> tempMenus = modelConfig.loadMenus() ;
-
-        System.out.println(tempMenus);
-    }
 }

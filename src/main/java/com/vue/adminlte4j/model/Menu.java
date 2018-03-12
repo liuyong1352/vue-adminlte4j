@@ -127,4 +127,16 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
         return  menu ;
     }
 
+    @Override public String toString() {
+        final StringBuilder sb = new StringBuilder("Menu{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", desc='").append(desc).append('\'');
+        sb.append(", pid='").append(pid).append('\'');
+        sb.append(", url='").append(url).append('\'');
+        sb.append(", icon='").append(icon).append('\'');
+        sb.append(", order=").append(order);
+        sb.append(", children=").append(children);
+        sb.append('}');
+        return sb.toString();
+    }
 }

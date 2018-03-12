@@ -33,4 +33,14 @@ public class ReflectUtils {
             throw new RuntimeException(e) ;
         }
     }
+
+    public static void setValue(Field field , Object target , Object val) {
+        if (!field.isAccessible())
+            field.setAccessible(true );
+        try {
+            field.set(target ,val);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e) ;
+        }
+    }
 }

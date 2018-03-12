@@ -22,6 +22,7 @@ public class MenuServiceTest {
 
         List<Menu> treeData = menuService.getTreeData();
         System.out.println(treeData);
+
     }
 
 

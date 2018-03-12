@@ -18,11 +18,5 @@ public interface IModelConfig {
 
     void  storeAppInfo(AppInfo  appInfo) throws IOException ;
 
-    List<Menu> loadMenus()  ;
 
-    void storeMenus(List<Menu> menus) throws Exception;
-
-    void deleteMenu(String id) throws Exception ;
-
-    Menu addMenu(Menu menu) throws Exception ;
 }

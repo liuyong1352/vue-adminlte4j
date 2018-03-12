@@ -2,7 +2,6 @@ package com.vue.adminlte4j.support;
 
 
 import com.vue.adminlte4j.model.AppInfo;
-import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 
 import java.io.IOException;
@@ -32,17 +31,6 @@ public class ModelConfigManager {
 
     }
 
-    public static List<Menu> getMenu()  {
-        return ModelConfigFactory.getInstance().loadMenus();
-    }
 
-
-    public static void addMenu(Menu menu) throws Exception {
-        ModelConfigFactory.getInstance().addMenu(menu);
-    }
-
-    public static void deleteMenu(String id) throws Exception {
-        ModelConfigFactory.getInstance().deleteMenu(id);
-    }
 
 }

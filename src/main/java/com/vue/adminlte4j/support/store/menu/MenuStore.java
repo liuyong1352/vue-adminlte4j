@@ -62,24 +62,26 @@ public class MenuStore implements MenuService , BaseStore{
     }
 
     private void store()  {
-        try(ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(getOrCreateFile(MENU_ITEM_FILE)))) {
-            outputStream.writeObject(menuMap);
-        } catch (Exception e) {
+        try {
+            writeObject(findAll() , MENU_ITEM_FILE);
+        } catch (IOException e) {
             throw new RuntimeException(e) ;
         }
     }
 
     private synchronized TreeMap<String,Menu> loadMenus() {
         Path storePath = getStorePath(MENU_ITEM_FILE) ;
-
+        menuMap = new TreeMap<>() ;
         if(storePath == null || !storePath.toFile().exists()){
-            return (menuMap = new TreeMap<>());
+            return menuMap;
         }
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storePath.toString())) ){
-            return (menuMap = (TreeMap<String,Menu>)ois.readObject()) ;
+        try {
+            List<Menu> menuList = readListObject(MENU_ITEM_FILE , Menu.class);
+            menuList.forEach(menu -> menuMap.put(menu.getId() , menu));
         } catch (Exception e) {
-            throw new RuntimeException(e) ;
+            throw new RuntimeException(e);
         }
+        return menuMap ;
     }
 
     private int getNewMenuId() {
