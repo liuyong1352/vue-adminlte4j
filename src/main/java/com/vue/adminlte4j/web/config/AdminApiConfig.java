@@ -23,7 +23,6 @@ public interface AdminApiConfig {
 
     default void _addMenu(Menu menu) {
         MenuService menuService = getMenuService() ;
-
         if(!menu.isRoot()) {
             Menu pMenu = menuService.findById(menu.getPid()) ;
             if(pMenu == null )
@@ -33,23 +32,27 @@ public interface AdminApiConfig {
     }
 
     default void _updateMenu(Menu menu) {
-        Menu inMenu = getMenuService().findById(menu.getId()) ;
-        if(inMenu == null )
-            throw new AdminRuntimeException("您选择的菜单不可以通过界面配置，请联系管理员进行修改！") ;
+        _checkMenuCanModified(menu.getId());
         getMenuService().update(menu);
     }
 
     default void _deleteMenu(String menuId) {
+        _checkMenuCanModified(menuId);
         List<Menu> children = getMenuService().findChildren(menuId) ;
         if(children != null && !children.isEmpty())
             throw new AdminRuntimeException("您选择的菜单有子菜单 ， 不能进行删除操作！") ;
+
         getMenuService().delete(menuId) ;
     }
 
     default void _upMenuLevel(String menuId) {
-        if(getMenuService().findById(menuId) == null )
-            throw new AdminRuntimeException("您选择的菜单，不能进行修改操作！") ;
+        _checkMenuCanModified(menuId);
         getMenuService().upOrder(menuId);
+    }
+
+    default void _checkMenuCanModified(String menuId) {
+        if(getMenuService().findById(menuId) == null )
+            throw new AdminRuntimeException("您选择的菜单，不能通过界面进行修改操作！") ;
     }
 
     /**
