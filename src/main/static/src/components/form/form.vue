@@ -58,6 +58,9 @@ export default {
     } ,
     buildVal: function(item) {
         var val = this.data[item.key]
+        if(0 == val) {
+            return val
+        }
         return val || item.defVal
     } ,
 

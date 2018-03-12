@@ -72,7 +72,8 @@ public interface MenuService {
             if(pid == null || pid.isEmpty() || pid.equals("0")) {
                 menus.add(v) ;
             } else {
-                menuMap.get(pid).addChildMenu(v);
+                if(menuMap.get(pid) != null ) //删除了父节点 ， 也不能让它出错
+                    menuMap.get(pid).addChildMenu(v);
             }
         });
 
