@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2018/3/5.
  */
-public class TreeNode {
+public class TreeNode implements ITreeNode {
 
     private String text;
 
@@ -65,6 +65,10 @@ public class TreeNode {
     public String getId() {
 
         return id;
+    }
+
+    @Override public String getPid() {
+        return this.getParentId();
     }
 
     public void setId(String id) {

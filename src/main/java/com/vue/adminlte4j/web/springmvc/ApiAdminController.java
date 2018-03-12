@@ -7,6 +7,7 @@ import com.vue.adminlte4j.model.TreeNode;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.util.MenuUtils;
+import com.vue.adminlte4j.util.Utils;
 import com.vue.adminlte4j.web.config.AdminApiConfig;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,34 +63,19 @@ public class ApiAdminController implements AdminApiConfig {
     @PostMapping("/admin/menu/add")
     @ResponseBody
     public UIModel addMenu(@RequestBody Menu menu)  {
-        try {
-            getMenuService().save(menu);
-            return UIModel.success().setMsg("修改成功！") ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("修改失败!") ;
-        }
+        return Utils.run(() -> _addMenu(menu));
     }
 
     @DeleteMapping("/admin/menu/delete/{id}")
     @ResponseBody
     public UIModel deleteMenu(@PathVariable String id) {
-        try {
-            getMenuService().delete(id);
-            return UIModel.success().setMsg("修改成功！") ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("修改失败!") ;
-        }
+        return Utils.run(()-> getMenuService().delete(id)) ;
     }
 
     @PostMapping("/admin/menu/update")
     @ResponseBody
     public UIModel updateMenu(@RequestBody Menu menu) {
-        try {
-            getMenuService().update(menu);
-            return UIModel.success().setMsg("修改成功！") ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("修改失败!") ;
-        }
+        return Utils.run(()-> _updateMenu(menu) , "修改成功！") ;
     }
 
 
