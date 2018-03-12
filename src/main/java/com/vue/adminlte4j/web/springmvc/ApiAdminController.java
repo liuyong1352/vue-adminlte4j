@@ -69,7 +69,7 @@ public class ApiAdminController implements AdminApiConfig {
     @DeleteMapping("/admin/menu/delete/{id}")
     @ResponseBody
     public UIModel deleteMenu(@PathVariable String id) {
-        return Utils.run(()-> getMenuService().delete(id)) ;
+        return Utils.run(()-> _deleteMenu(id)) ;
     }
 
     @PostMapping("/admin/menu/update")

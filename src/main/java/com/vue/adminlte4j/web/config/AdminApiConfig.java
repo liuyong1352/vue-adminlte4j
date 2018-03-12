@@ -38,6 +38,12 @@ public interface AdminApiConfig {
         getMenuService().update(menu);
     }
 
+    default void _deleteMenu(String menuId) {
+        if(getMenuService().findChildren(menuId) != null )
+            throw new AdminRuntimeException("您选择的菜单有子菜单 ， 不能进行删除操作！") ;
+        getMenuService().delete(menuId) ;
+    }
+
 
     /**
      * config menu
