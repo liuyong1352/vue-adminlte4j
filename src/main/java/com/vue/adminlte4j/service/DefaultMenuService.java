@@ -59,10 +59,4 @@ public class DefaultMenuService implements MenuService {
         return delegate.findAll();
     }
 
-    @Override
-    public Map<String,Menu> findMap() {
-        return delegate.findMap() ;
-    }
-
-
 }

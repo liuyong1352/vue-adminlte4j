@@ -1,9 +1,9 @@
 package com.vue.adminlte4j.service;
 
 import com.vue.adminlte4j.model.Menu;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +46,11 @@ public interface MenuService {
      */
     List<Menu> findAll() ;
 
+    /**
+     * 查找所有的子菜单
+     * @param pid
+     * @return
+     */
     default List<Menu> findChildren(String pid) {
         List<Menu> children = new ArrayList<>() ;
         if(pid == null)
@@ -62,9 +67,15 @@ public interface MenuService {
      * @return
      */
     default Map<String,Menu> findMap() {
-        return null ;
+        Map<String,Menu> result = new HashMap<>() ;
+        findAll().forEach(v->result.put(v.getId() , v));
+        return result ;
     }
 
+    /**
+     * 获取树形的数据
+     * @return
+     */
     default List<Menu> getTreeData(){
         List<Menu> menus = new ArrayList<>() ;
         Map<String,Menu> menuMap = findMap() ;
@@ -82,6 +93,10 @@ public interface MenuService {
         return menus ;
     }
 
+    /**
+     * 提升展示次序
+     * @param menuId
+     */
     default void upOrder(String menuId) {
         Menu menu = findById(menuId) ;
         if(menu == null )

@@ -52,15 +52,6 @@ public class MenuStore implements MenuService , BaseStore{
         return menuList ;
     }
 
-    @Override
-    public Map<String,Menu> findMap() {
-        if(menuMap == null )
-            menuMap = loadMenus() ;
-        Map<String,Menu> result = new HashMap<>() ;
-        menuMap.forEach((k ,v)->result.put(k ,v.clone()));
-        return result ;
-    }
-
     private void store()  {
         try {
             writeObject(findAll() , MENU_ITEM_FILE);
