@@ -175,7 +175,7 @@ app = function (scope) {
             var watch = config.watch || {}
             var methods = config.methods || function(){}
             var mounted = config.mounted || function(){}
-            new Vue({
+            return new Vue({
                 el: '#app',
                 data: function(){
                     return data;

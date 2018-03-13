@@ -1,5 +1,6 @@
 import VButton       from './components/button.vue'
 import VIconSelector from './components/ui-element/button/icon-selector-btn.vue'
+import VTreeView     from './components/ui-element/tree-view.vue'
 import VSideBar      from './components/sidebar-menu.vue'
 import VDashboard    from './components/dashboard.vue'
 import VHeader       from './components/header.vue'
@@ -49,4 +50,6 @@ Vue.component('v-form'              , VForm)
 Vue.component('v-form-item'         , VFormItem)
 Vue.component('v-input'             , VInput)
 Vue.component('v-modal'             , VModal)
+Vue.component('v-tree'              , VTreeView)
+
 

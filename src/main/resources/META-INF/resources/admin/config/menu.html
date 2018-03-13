@@ -12,7 +12,7 @@
         <v-row>
             <v-col class="col-sm-3">
                 <v-box title="菜单树">
-                    <div id="tree"></div>
+                    <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected"></v-tree>
                 </v-box>
             </v-col>
             <v-col class="col-sm-9">
@@ -55,7 +55,11 @@
     app.main({
         data :function() {
             return {
-
+                events :{
+                    onNodeSelected: function(event , data) {
+                        alert('here')
+                    }
+                } ,
                 test: '' ,
                 operations : [
                     {
@@ -111,10 +115,14 @@
                 axios.post(url,this.$refs.form.formData()).then(function(response){
                     $.alert(response.data)
                 })
+            },
+            onNodeSelected : function (payload) {
+                selectNodeId=payload.id
+                this.$refs.form.refresh({id:payload.id})
             }
         } ,
         mounted : function ($vm) {
-            form=$vm.$refs.form
+            /*form=$vm.$refs.form
             axios.get("/admin/menu/tree").then(function(response){
                 $("#tree").treeview({
                     data : response.data.treeData,
@@ -134,7 +142,7 @@
                 //$("#tree").data('treeview').selectNode(selectNodeId);
                 //$("#tree").data('treeview').expandNode(selectNodeId);
                 //$("#tree").data('treeview').revealNode(selectNodeId);
-            })
+            })*/
         }
     });
 
