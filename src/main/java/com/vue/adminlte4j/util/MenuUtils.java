@@ -33,11 +33,6 @@ public class MenuUtils {
         return  null ;
     }
 
-    public static boolean isConfigable(String menuId) {
-        if(menuId == null)
-            return false  ;
-        return  MenuHolder.menuMap.containsKey(menuId) ;
-    }
 
     public static void sortTreeData(List<Menu> menus) {
         Collections.sort(menus);
