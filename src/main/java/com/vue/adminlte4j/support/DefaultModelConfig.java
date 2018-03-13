@@ -18,9 +18,6 @@ public class DefaultModelConfig implements IModelConfig ,BaseStore{
 
     private Set<Class> typeSet   = new HashSet<>() ;
 
-    private   AppInfo appInfo ;
-
-
     @Override public List<TableData.Column> configModelColumn(Class type) {
 
         typeSet.add(type);
@@ -38,104 +35,5 @@ public class DefaultModelConfig implements IModelConfig ,BaseStore{
 
 
 
-
-    /**
-     * 加载appInfo
-     * @return
-     */
-    @Override public synchronized AppInfo loadAppInfo() {
-
-//        if(appInfo != null )
-//            return  appInfo ;
-
-        Path path = getStorePath(APP_INFO_FILE) ;
-        if(path== null || !path.toFile().exists()) {
-            return  (appInfo = new AppInfo()) ;
-        }
-
-        FileInputStream inputStream = null ;
-        try {
-
-            inputStream = new FileInputStream(path.toFile());
-
-            Properties prop      =  new Properties();
-
-            prop.load(inputStream);
-
-            //LOAD 加载prop到appinfo ,需要setAppinfo
-            getProperties(appInfo,prop);
-        } catch (Exception e) {
-            throw new RuntimeException(e) ;
-        } finally {
-            if(inputStream != null )
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    //ignore this
-                }
-        }
-
-        return appInfo;
-    }
-
-
-
-    /**
-     *  存储appInfo
-     * @param appInfo
-     * @throws IOException
-     */
-    @Override
-    public synchronized void storeAppInfo(AppInfo appInfo) throws IOException  {
-        storeProperties(appInfo);
-    }
-
-
-
-    private   void storeProperties(AppInfo appInfo) throws IOException {
-
-        Properties prop   =  new Properties();
-        FileOutputStream oFile = new FileOutputStream(getOrCreateFile(APP_INFO_FILE));
-        try {
-            setInfoProperties(appInfo,prop);
-
-            prop.store(oFile, "change ");
-        } catch (IOException e) {
-            e.printStackTrace();
-            oFile.close();
-            throw new IOException("properties store error");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        oFile.close();
-    }
-
-    private static void getProperties(Object model,Properties prop ) throws Exception {
-        if(model == null )
-            throw new IllegalArgumentException("model can not be null") ;
-
-        Field[] fields = model.getClass().getDeclaredFields() ;
-
-        for(Field field : fields) {
-            if(!field.isAccessible())
-                field.setAccessible(true);
-            field.set(model , prop.get(field.getName()));
-        }
-    }
-
-    private static void setInfoProperties(Object model,Properties prop ) throws IOException, IllegalAccessException {
-        if(model == null )
-            throw new IllegalArgumentException("model can not be null") ;
-
-        Field[] fields = model.getClass().getDeclaredFields();
-
-        for(Field field : fields) {
-            if(!field.isAccessible())
-                field.setAccessible(true);
-            Object val = field.get(model) ;
-            if(val != null)
-                prop.setProperty(field.getName() , (String)val) ;
-        }
-    }
 
 }
