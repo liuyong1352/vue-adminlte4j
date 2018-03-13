@@ -24,6 +24,10 @@ public class ReflectUtils {
         return fieldList;
     }
 
+    public static boolean isPrimitiveOrString(Class clsType ) {
+        return  clsType.isPrimitive() || clsType.getSimpleName().equals("String") ;
+    }
+
     public static Object getValue(Field field , Object target) {
         if (!field.isAccessible())
             field.setAccessible(true );

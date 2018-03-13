@@ -24,6 +24,9 @@ public interface BaseStore {
     String APP_INFO_FILE = "app_info.s" ;
     String MENU_ITEM_FILE = "menu_items.s";
 
+    String ESCAPE_PERCET = "%25" ;
+    String ESCAPE_COMMA  = "%2C" ;
+
     /**
      * 获取fileName的存储文件路劲
      * @param fileName
@@ -90,15 +93,22 @@ public interface BaseStore {
             boolean isEmpty = lines.isEmpty() ;
             StringBuilder valueBuilder = new StringBuilder() ;
             for(Field field : fieldList) {
-                if(!(field.getType().isPrimitive() || field.getType().getSimpleName().equals("String")))
+                if(!ReflectUtils.isPrimitiveOrString(field.getType()))
                     continue;
+
                 if(Modifier.isFinal(field.getModifiers()))
                     continue;
                 if(isEmpty)
                     headerBuilder.append(field.getName()).append(",") ;
                 Object val = ReflectUtils.getValue(field , e) ;
-                if(val != null)
-                    valueBuilder.append(val) ;
+                if(val != null ) {
+                    if(field.getType().isPrimitive()) {
+                        valueBuilder.append(val) ;
+                    } else {
+                        valueBuilder.append(encode(val)) ;
+                    }
+                }
+
                 valueBuilder.append(",") ;
             }
             if(isEmpty) {
@@ -134,7 +144,7 @@ public interface BaseStore {
                     if(typeName.equals("int")  )
                         ReflectUtils.setValue(field , o , Integer.valueOf(values[j]));
                 } else {
-                    ReflectUtils.setValue(field , o , values[j]);
+                    ReflectUtils.setValue(field , o , decode(values[j]));
                 }
 
             }
@@ -142,5 +152,43 @@ public interface BaseStore {
         }
         return  results ;
     }
+
+    default String encode(Object obj) {
+        if(obj == null )
+            return  null ;
+        String value = obj.toString() ;
+        StringBuilder out = new StringBuilder() ;
+        char[] chars = value.toCharArray() ;
+        for(char c : chars) {
+            if(c == '%')
+                out.append(ESCAPE_PERCET) ;
+            else if (c == ',')
+                out.append(ESCAPE_COMMA) ;
+            else
+                out.append(c) ;
+        }
+        return out.toString() ;
+    }
+
+    default String decode(String value) {
+        if(value == null || value.isEmpty())
+            return  value ;
+        StringBuilder out = new StringBuilder() ;
+        char[] chars = value.toCharArray() ;
+        for(int i = 0 ; i < chars.length ; i ++ ) {
+            if(chars[i] == '%') {
+                if(chars[i+2] == '5') {
+                    out.append('%') ;
+                } else {
+                    out.append(',');
+                }
+                i = i+2;
+                continue;
+            }
+            out.append(chars[i]);
+        }
+        return out.toString() ;
+    }
+
 
 }
