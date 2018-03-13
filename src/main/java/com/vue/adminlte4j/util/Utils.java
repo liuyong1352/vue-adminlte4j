@@ -34,7 +34,7 @@ public class Utils {
         if(e instanceof AdminRuntimeException ) {
             return UIModel.fail().setMsg(e.getMessage()) ;
         } else {
-            return UIModel.fail().setMsg("系统暂时大小差了， 请联系管理员！") ;
+            return UIModel.fail().setMsg("系统暂时出小差了， 请联系管理员！") ;
         }
     }
 

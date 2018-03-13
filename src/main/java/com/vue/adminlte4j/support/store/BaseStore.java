@@ -81,6 +81,13 @@ public interface BaseStore {
             datas.add(data) ;
         }
 
+        if(datas.isEmpty() ){
+            if(Files.deleteIfExists(getStorePath(fileName)))
+                return;
+            else
+                throw new IllegalStateException("can not remove you record , fileName=>" + fileName) ;
+        }
+
         List<Field> fieldList = ReflectUtils.findAllField(datas.get(0).getClass());
 
         if(fieldList.isEmpty())
@@ -137,6 +144,8 @@ public interface BaseStore {
         }
 
         List<String> lines = Files.readAllLines(getStorePath(fileName));
+        if(lines == null || lines.isEmpty())
+            return null ;
         List<T> results = new ArrayList<>() ;
         String[] headers = lines.get(0).split(",");
         for(int i = 1 ; i < lines.size() ; i++ ) {
