@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>菜单配置</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+<body>
+    <v-app :data="data" >
+
+        <v-row>
+            <v-col class="col-sm-3">
+                <v-box title="菜单树">
+                    <div id="tree"></div>
+                </v-box>
+            </v-col>
+            <v-col class="col-sm-9">
+                <v-box >
+                    <div slot="header" class="btn-group">
+                        <button type="button" class="btn btn-default" @click="addRoot">
+                            <li class="fa fa-plus">&nbsp;新增根菜单</li>
+                        </button>
+                        <button type="button" class="btn btn-default" @click="addChild">
+                            <li class="fa fa-plus">&nbsp;新增下级菜单</li>
+                        </button>
+                        <button type="button" class="btn btn-default" @click="deleteCur">
+                            <li class="fa fa-remove">&nbsp;删除当前菜单</li>
+                        </button>
+                    </div>
+                    <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
+
+                    <div slot="footer" class="text-center">
+                        <button type="button" class="btn btn-primary" @click="upOrder">
+                            <li class="fa fa-long-arrow-up">&nbsp;提序</li>
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
+                            <li class="fa fa-save">&nbsp;保存</li>
+                        </button>
+                    </div>
+                </v-box>
+            </v-col>
+        </v-row>
+
+
+        <v-box title="菜单列表">
+            <v-table ajax_url="/admin/menu/list" :operations="operations"></v-table>
+        </v-box>
+
+    </v-app>
+</body>
+<script src="/lib/lib.js"></script>
+<script>
+    var selectNodeId ;
+    app.main({
+        data :function() {
+            return {
+
+                test: '' ,
+                operations : [
+                    {
+                        name : '添加' ,
+                        icon:'edit',
+                        scheme: 'green',
+                        method : function(row , $table) {
+                            $table.$root.form.pid = row.id
+                            $("#addMenuModal").modal('toggle')
+
+                        }
+                    } ,
+                    {
+                        name : '删除' ,
+                        icon:'trash',
+                        scheme: 'green',
+                        method : function(row , $table) {
+                            axios.delete("/admin/menu/delete/" + row.id ).then(function(response){
+                                $.alert(response.data)
+                                $table.fetchData()
+                            })
+                        }
+                    }
+                ]
+            }
+
+        } ,
+        methods : {
+            addRoot : function() {
+                this.$refs.form.data = {}
+                this.$refs.form.data.pid = 0
+            } ,
+            addChild: function() {
+                this.$refs.form.data = {}
+                this.$refs.form.data.pid = selectNodeId
+            } ,
+            deleteCur: function () {
+                if($.isNullOrEmpty(selectNodeId) )
+                    return
+                axios.delete("/admin/menu/delete/" + selectNodeId).then(function(response){
+                    $.alert(response.data)
+                })
+            } ,
+            upOrder: function () {
+                axios.post("/admin/menu/up/" + selectNodeId).then(function(response){
+                    $.alert(response.data)
+                })
+            } ,
+            onSaveOrUpdate : function () {
+                var url = "/admin/menu/add"
+                if(!$.isNullOrEmpty(this.$refs.form.formData().id))
+                    url = "/admin/menu/update"
+                axios.post(url,this.$refs.form.formData()).then(function(response){
+                    $.alert(response.data)
+                })
+            }
+        } ,
+        mounted : function ($vm) {
+            form=$vm.$refs.form
+            axios.get("/admin/menu/tree").then(function(response){
+                $("#tree").treeview({
+                    data : response.data.treeData,
+                    showBorder : true,
+                    expandIcon : "glyphicon glyphicon-stop",
+                    collapseIcon : "glyphicon glyphicon-unchecked",
+                    levels : 1,
+                    onNodeSelected : function(event, data) {
+                        selectNodeId = data.id
+                        form.refresh({id:data.id})
+                    }
+                });
+                if(response.data.treeData.length==0)
+                    return;
+                //默认选中第一个节点
+                selectNodeId=selectNodeId||0;
+                //$("#tree").data('treeview').selectNode(selectNodeId);
+                //$("#tree").data('treeview').expandNode(selectNodeId);
+                //$("#tree").data('treeview').revealNode(selectNodeId);
+            })
+        }
+    });
+
+</script>
+
+</html>

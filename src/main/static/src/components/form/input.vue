@@ -1,5 +1,5 @@
 <template>
-    <input :type="type" class="form-control" :placeholder="placeholder" :value="currentValue" @input="value => { currentValue = value }">
+    <input :type="type" class="form-control" :placeholder="placeholder" :value="currentValue" @input="handleInput">
 </template>
 
 <script>
@@ -18,6 +18,13 @@ export default {
     return {
         currentValue : this.value
     }
+  } ,
+  method: {
+    handleInput (event) {
+        let value = event.target.value
+        this.currentValue = value
+
+    },
   } ,
   mounted : function() {
 

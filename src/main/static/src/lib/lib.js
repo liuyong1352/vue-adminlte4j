@@ -139,13 +139,17 @@ app = function (scope) {
 
         var arr_js = ['/lib/jquery/dist/jquery.min.js' ,
             '/lib/vue/dist/vue.min.js' ,
-            '/lib/axios/dist/axios.min.js']
+            '/lib/axios/dist/axios.min.js'
+        ]
 
         var js = [
             '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js' ,
-        ];
+            '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
+            '/lib/layer/layer.js' ,
+            '/lib/base.js'
+        ]
 
         if(tag_is_exist('v-select2')) {
             load_css('/lib/select2/dist/css/select2.min.css')
@@ -182,12 +186,13 @@ app = function (scope) {
                     $('body').data('lte.layout').fix()
                     $('body').data('lte.layout').fixSidebar()
                     body_el[0].setAttribute('style' , 'display:block')
-                    mounted()
+                    mounted(this)
                 }
             })
         }
 
         LazyLoad.dep_js(arr_js ,  function () {
+            axios.defaults.headers.common['X-Requested-With']='XMLHttpRequest'
             axios.interceptors.request.use(function (config) {
                 // Do something before request is sent
                 return config;
@@ -210,7 +215,7 @@ app = function (scope) {
 
             var base_config = {
                 is_syn : false ,
-                api: '/get_app_info' ,
+                api: '/admin/app_info/get_all' ,
                 data: {} ,
                 callback: function () {}
             }

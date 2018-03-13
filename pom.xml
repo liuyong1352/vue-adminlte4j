@@ -4,12 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--<groupId>com.jd.adminlte.vue</groupId>-->
-    <!--<artifactId>vue-adminlte</artifactId>-->
-    <!--<version>1.0.1-SNAPSHOT</version>-->
-
-    <groupId>com.blog.vue</groupId>
-    <artifactId>vue-test</artifactId>
+    <groupId>com.vue.adminlte4j</groupId>
+    <artifactId>vue-adminlte4j</artifactId>
     <version>1.0.1-SNAPSHOT</version>
 
     <parent>
@@ -26,7 +22,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -34,6 +34,10 @@
                 <exclusion>
                     <groupId>javax.validation</groupId>
                     <artifactId>validation-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-json</artifactId>
+                    <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
             <scope>test</scope>
@@ -43,6 +47,22 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.29</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -51,6 +71,11 @@
                 <directory>${project.basedir}/src/main/static/dist/lib</directory>
                 <targetPath>${project.build.outputDirectory}/META-INF/resources/lib</targetPath>
             </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/META-INF/</directory>
+                <targetPath>${project.build.outputDirectory}/META-INF/</targetPath>
+            </resource>
+
         </resources>
 
         <plugins>
