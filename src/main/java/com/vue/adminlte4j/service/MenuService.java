@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface MenuService {
 
-    MenuService DEF_SERVICE = new DefaultMenuService();
+    MenuService INSTANCE = new DefaultMenuService();
 
     /**
      * 添加菜单

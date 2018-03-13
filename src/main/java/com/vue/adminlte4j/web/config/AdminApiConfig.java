@@ -2,9 +2,9 @@ package com.vue.adminlte4j.web.config;
 
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.service.AppInfoService;
 import com.vue.adminlte4j.service.MenuService;
 import com.vue.adminlte4j.support.AdminRuntimeException;
-import com.vue.adminlte4j.support.ModelConfigManager;
 import com.vue.adminlte4j.util.MenuUtils;
 import java.util.List;
 
@@ -18,7 +18,11 @@ public interface AdminApiConfig {
      * @return
      */
     default MenuService getMenuService(){
-        return  MenuService.DEF_SERVICE ;
+        return  MenuService.INSTANCE ;
+    }
+
+    default AppInfoService getAppInfoService() {
+        return AppInfoService.INSTANCE ;
     }
 
     default void _addMenu(Menu menu) {
@@ -64,11 +68,4 @@ public interface AdminApiConfig {
         uiModel.menu(MenuUtils.getDevelopMenus());
     }
 
-    /**
-     * config AppInfo
-     * @param uiModel
-     */
-    default void configureAppInfo(UIModel uiModel) {
-        uiModel.appInfo(ModelConfigManager.getAppInfo()) ;
-    }
 }

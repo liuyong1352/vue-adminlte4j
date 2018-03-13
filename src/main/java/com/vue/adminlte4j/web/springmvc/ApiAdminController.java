@@ -25,43 +25,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 public class ApiAdminController implements AdminApiConfig {
 
-
-
     @GetMapping("/admin/app_info/get_all")
     @ResponseBody
     public UIModel _getAllApiInfo() {
-        try {
-            UIModel uiModel = UIModel.success();
+        return Utils.call(() -> {
+            UIModel uiModel = UIModel.success().appInfo(getAppInfoService().get()) ;
             configureMenu(uiModel);
             MenuUtils.sortTreeData(uiModel.menu());
-            configureAppInfo(uiModel);
-            return  uiModel;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("system.error!");
-        }
+            return uiModel;
+        }) ;
+
     }
 
     @GetMapping("/admin/app_info/get")
     @ResponseBody
     public UIModel _getAppInfo() {
-        try {
-            UIModel uiModel = UIModel.success();
-            configureAppInfo(uiModel);
-            return uiModel ;
-        } catch (Exception e) {
-            return UIModel.fail().setMsg("system.error!");
-        }
+        return Utils.call(() -> UIModel.success().appInfo(getAppInfoService().get())) ;
     }
 
     @PostMapping("/admin/app_info/update")
     @ResponseBody
     public UIModel _updateAppInfo(@RequestBody AppInfo appinfo)  {
-        try {
-            ModelConfigManager.storeAppInfo(appinfo);
+        return Utils.call(()->{
+            getAppInfoService().update(appinfo);
             return UIModel.success().setMsg("修改成功！") ;
-        } catch (IOException e) {
-            return UIModel.fail().setMsg("修改失败! ") ;
-        }
+        }) ;
     }
 
     @PostMapping("/admin/menu/add")

@@ -2,6 +2,7 @@ package com.vue.adminlte4j.util;
 
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.AdminRuntimeException;
+import java.util.concurrent.Callable;
 
 /**
  * Created by bjliuyong on 2018/3/12.
@@ -16,10 +17,24 @@ public class Utils {
         try {
             runnable.run();
             return UIModel.success().setMsg(msg) ;
-        } catch (AdminRuntimeException e) {
-            return UIModel.success().setMsg(e.getMessage()) ;
         } catch (Exception e) {
-            return UIModel.success().setMsg("系统暂时大小差了， 请联系管理员！") ;
+            return exceptionHandler(e) ;
+        }
+    }
+
+    public static UIModel call(Callable<UIModel> callable) {
+        try {
+            return callable.call();
+        }  catch (Exception e) {
+            return exceptionHandler(e) ;
+        }
+    }
+
+    private static UIModel exceptionHandler(Exception e) {
+        if(e instanceof AdminRuntimeException ) {
+            return UIModel.fail().setMsg(e.getMessage()) ;
+        } else {
+            return UIModel.fail().setMsg("系统暂时大小差了， 请联系管理员！") ;
         }
     }
 

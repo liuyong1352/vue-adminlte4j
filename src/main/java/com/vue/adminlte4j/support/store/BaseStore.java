@@ -123,13 +123,18 @@ public interface BaseStore {
 
     default <T> T readObject(String fileName , Class<T> requiredType) throws Exception {
         List<T> resultLists = readListObject(fileName , requiredType) ;
-        if(resultLists.isEmpty()) {
+        if(resultLists == null || resultLists.isEmpty()) {
             return  null ;
         }
         return resultLists.get(0) ;
     }
 
     default <T> List<T> readListObject(String fileName , Class<T> requiredType) throws Exception {
+
+        Path storePath = getStorePath(fileName) ;
+        if(!storePath.toFile().exists()) {
+            return null ;
+        }
 
         List<String> lines = Files.readAllLines(getStorePath(fileName));
         List<T> results = new ArrayList<>() ;
