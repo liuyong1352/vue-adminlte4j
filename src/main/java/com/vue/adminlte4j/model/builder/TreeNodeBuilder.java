@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model.builder;
 
+import com.vue.adminlte4j.model.ITreeNode;
 import com.vue.adminlte4j.model.TreeNode;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,11 @@ import java.util.Map;
  */
 public interface TreeNodeBuilder<E> {
 
+    /**
+     * 默认转换器
+     */
+    TreeNodeBuilder<ITreeNode> INSTANCE = o -> new TreeNode(o);
+
     TreeNode build(E e) ;
 
     default List<TreeNode> transform(List<E> elements) {
@@ -19,7 +25,6 @@ public interface TreeNodeBuilder<E> {
         List<TreeNode> treeNodes = new ArrayList<>(elements.size()) ;  //保证elements次序不变
         elements.forEach(e ->{
             TreeNode node = build(e) ;
-
             if(node.isRoot())
                 rootNodes.add(node) ;
             else
@@ -33,6 +38,5 @@ public interface TreeNodeBuilder<E> {
         });
         return  rootNodes  ;
     }
-
 
 }

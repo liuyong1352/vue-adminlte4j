@@ -110,15 +110,7 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/menu/tree")
     @ResponseBody
     public UIModel treeMenu() throws Exception {
-        return UIModel.success().treeData(_listMenu(), o -> {
-            TreeNode treeNode1 = new TreeNode() ;
-            Menu menu = (Menu)o ;
-            treeNode1.setId(menu.getId());
-            treeNode1.setParentId(menu.getPid());
-            treeNode1.setText(menu.getDesc());
-            treeNode1.setIcon(menu.getIcon());
-            return treeNode1;
-        }) ;
+        return UIModel.success().treeData(_listMenu()) ;
     }
 
     private List<Menu> _listMenu() throws Exception{

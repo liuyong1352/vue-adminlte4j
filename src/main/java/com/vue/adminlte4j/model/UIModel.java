@@ -146,6 +146,21 @@ public class UIModel extends HashMap implements Map {
         return put(TABLE_DATA , tableData) ;
     }
 
+    /**
+     * 存放key=treeData, value为转换后的treeNode结构数据列表
+     * @param elements
+     * @return
+     */
+    public UIModel treeData(List<? extends ITreeNode> elements) {
+        return  treeData(elements , TreeNodeBuilder.INSTANCE);
+    }
+
+    /**
+     * 存放key=treeData, value为转换后的treeNode结构数据列表
+     * @param elements
+     * @param treeNodeBuilder
+     * @return
+     */
     public UIModel treeData(List<? extends Object> elements,TreeNodeBuilder treeNodeBuilder) {
         return  put(TREE_DATA , treeNodeBuilder.transform(elements));
     }

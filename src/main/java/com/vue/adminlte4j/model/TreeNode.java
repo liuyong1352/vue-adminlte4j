@@ -20,6 +20,18 @@ public class TreeNode implements ITreeNode {
 
     private String icon;
 
+    public TreeNode(){
+
+    }
+
+    public TreeNode(ITreeNode iTreeNode){
+        this.id =       iTreeNode.getId();
+        this.parentId = iTreeNode.getPid();
+        this.text =     iTreeNode.getText();
+        this.icon =     iTreeNode.getIcon();
+        this.tags =     iTreeNode.getTags();
+    }
+
     public String getParentId() {
 
         return parentId;
