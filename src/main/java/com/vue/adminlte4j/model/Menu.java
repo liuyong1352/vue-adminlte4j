@@ -71,6 +71,10 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
         return icon;
     }
 
+    @Override public String getText() {
+        return this.getDesc();
+    }
+
     public void setIcon(String icon) {
         this.icon = icon;
     }
