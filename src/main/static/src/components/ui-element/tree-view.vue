@@ -24,6 +24,9 @@ export default {
     },
     refresh_data: function(_data) {
         var self = this
+        var tree = $("#" + this.id).data('treeview')
+        var expanded= (tree && tree.getExpanded()) || []
+
         $("#" + this.id).treeview({
             data : _data,
             showBorder : true,
