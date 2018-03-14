@@ -22,9 +22,11 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
 
     @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标")
     private String icon ;
+
     /**
      * 排序字段 ,倒序排列
      */
+    @UIFormItem(ignore = true)
     private int order ;
 
     @UIFormItem(ignore = true)

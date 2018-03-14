@@ -12,7 +12,7 @@
         <v-row>
             <v-col class="col-sm-3">
                 <v-box title="菜单树">
-                    <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected"></v-tree>
+                    <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected" ref="tree"></v-tree>
                 </v-box>
             </v-col>
             <v-col class="col-sm-9">
@@ -55,11 +55,6 @@
     app.main({
         data :function() {
             return {
-                events :{
-                    onNodeSelected: function(event , data) {
-                        alert('here')
-                    }
-                } ,
                 test: '' ,
                 operations : [
                     {
@@ -99,21 +94,27 @@
             deleteCur: function () {
                 if($.isNullOrEmpty(selectNodeId) )
                     return
+                var vm = this
                 axios.delete("/admin/menu/delete/" + selectNodeId).then(function(response){
                     $.alert(response.data)
+                    vm.$refs.tree.refresh()
                 })
             } ,
             upOrder: function () {
+                var vm = this
                 axios.post("/admin/menu/up/" + selectNodeId).then(function(response){
                     $.alert(response.data)
+                    vm.$refs.tree.refresh()
                 })
             } ,
             onSaveOrUpdate : function () {
+                var vm = this
                 var url = "/admin/menu/add"
                 if(!$.isNullOrEmpty(this.$refs.form.formData().id))
                     url = "/admin/menu/update"
                 axios.post(url,this.$refs.form.formData()).then(function(response){
                     $.alert(response.data)
+                    vm.$refs.tree.refresh()
                 })
             },
             onNodeSelected : function (payload) {

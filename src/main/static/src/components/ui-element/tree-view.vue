@@ -7,7 +7,8 @@ export default {
   props: {
     id:{type:String , default:'tree'} ,
     ajax_url:{type:String} ,
-    events : {type:Object}
+    expand_icon : {type:String ,default :"glyphicon glyphicon-stop"} ,
+    collapse_icon : {type:String ,default :"glyphicon glyphicon-unchecked"}
   } ,
   methods: {
 
@@ -26,16 +27,20 @@ export default {
         $("#" + this.id).treeview({
             data : _data,
             showBorder : true,
-            expandIcon : "glyphicon glyphicon-stop",
-            collapseIcon : "glyphicon glyphicon-unchecked",
+            expandIcon : self.expand_icon,
+            collapseIcon : self.collapse_icon,
             levels : 1,
             onNodeSelected : function(event, data) {
-                //self.events.onNodeSelected()
-                self.$emit("on-node-selected", data)
+                if(self.$listeners['on-node-selected'])
+                    self.$emit("on-node-selected", data)
             }
 
         })
-
+        var expanded=$("#" + this.id).data('treeview').getExpanded()
+        for(var i = 0 ; i<expanded.length ;i++){
+            var eid = expanded[i].id
+            $("#" + this.id).expandNode(eid)
+        }
          //if(response.data.treeData.length==0)
                                    // return;
                     //默认选中第一个节点
@@ -43,12 +48,8 @@ export default {
                     //$("#tree").data('treeview').selectNode(selectNodeId)
                     //$("#tree").data('treeview').expandNode(selectNodeId)
                     //$("#tree").data('treeview').revealNode(selectNodeId)
-    } ,
-    onNodeSelected : function(callback) {
-       if(callback)
-            $('#' + this.id).on('nodeSelected', callback);
+                    //$('#' + this.id).on('nodeSelected', callback);
     }
-
   } ,
   mounted : function() {
     this.refresh()
