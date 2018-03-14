@@ -45,9 +45,6 @@ export default {
             $("#" + this.id).data('treeview').expandNode(eid)
             $("#" + this.id).data('treeview').revealNode(eid)
         }
-         //if(response.data.treeData.length==0)
-                                   // return;
-                    //默认选中第一个节点
                     //selectNodeId=selectNodeId||0;
                     //$("#tree").data('treeview').selectNode(selectNodeId)
                     //$("#tree").data('treeview').expandNode(selectNodeId)
