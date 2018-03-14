@@ -39,10 +39,11 @@ export default {
             }
 
         })
-        var expanded=$("#" + this.id).data('treeview').getExpanded()
+
         for(var i = 0 ; i<expanded.length ;i++){
-            var eid = expanded[i].id
-            $("#" + this.id).expandNode(eid)
+            var eid = expanded[i].nodeId
+            $("#" + this.id).data('treeview').expandNode(eid)
+            $("#" + this.id).data('treeview').revealNode(eid)
         }
          //if(response.data.treeData.length==0)
                                    // return;
