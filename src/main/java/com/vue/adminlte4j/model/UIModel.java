@@ -166,18 +166,21 @@ public class UIModel extends HashMap implements Map {
     }
 
     public static UIModel success() {
-        return newInstance(SUCCESS) ;
+        return newInstance().setCode(SUCCESS);
     }
 
     public static UIModel fail() {
-        return newInstance(FAIL);
+        return newInstance().setCode(FAIL);
     }
 
-    public static UIModel newInstance(int code) {
-        UIModel uiModel = new UIModel() ;
-        return uiModel.setCode(code) ;
+    public static UIModel newInstance() {
+        return new UIModel() ;
     }
 
+    /**
+     * simple toJsonString, 不对其进行转义， 只能在简单的字符串情况下用 ， 对象不进行处理
+     * @return
+     */
     public String toJsonString() {
 
         Iterator<Entry<String,Object>> i = entrySet().iterator();
