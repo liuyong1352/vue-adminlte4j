@@ -11,6 +11,11 @@ public class FormItemType {
     public static final int INPUT = 0 ;
 
     /**
+     * select
+     */
+    public static final int SELECT = 6 ;
+
+    /**
      * 图标选择器
      */
     public static final int ICON_SELECTOR = 10 ;
