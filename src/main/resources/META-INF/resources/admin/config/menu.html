@@ -112,7 +112,11 @@
                 var url = "/admin/menu/add"
                 if(!$.isNullOrEmpty(this.$refs.form.formData().id))
                     url = "/admin/menu/update"
-                axios.post(url,this.$refs.form.formData()).then(function(response){
+                /*axios.post(url,this.$refs.form.formData()).then(function(response){
+                    $.alert(response.data)
+                    vm.$refs.tree.refresh()
+                })*/
+                this.$refs.form.submit(url , function (response) {
                     $.alert(response.data)
                     vm.$refs.tree.refresh()
                 })

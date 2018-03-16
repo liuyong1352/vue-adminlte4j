@@ -14,6 +14,7 @@ public class FormItem {
     private int    type ;
     private boolean hidden ;
     private boolean ignore ;
+    private String validate ;
 
     public void config(UIFormItem uiFormItem) {
         if( uiFormItem == null )
@@ -22,6 +23,7 @@ public class FormItem {
         this.type = uiFormItem.type();
         this.hidden = uiFormItem.hidden() ;
         this.ignore = uiFormItem.ignore() ;
+        this.validate = uiFormItem.validate() ;
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
@@ -38,16 +40,16 @@ public class FormItem {
         String placeholder = uiFormItem.placeholder() ;
         if(placeholder != null && !placeholder.isEmpty())
             this.placeholder =placeholder ;
-
     }
 
     public FormItem clone() {
         FormItem clone = new FormItem() ;
-        clone.key = key ;
-        clone.label = label ;
-        clone.defVal = defVal ;
-        clone.placeholder = placeholder ;
-        clone.type = type ;
+        clone.key           = key               ;
+        clone.label         = label             ;
+        clone.defVal        = defVal            ;
+        clone.placeholder   = placeholder       ;
+        clone.type          = type              ;
+        clone.validate      = validate          ;
         return clone ;
     }
 
@@ -104,5 +106,13 @@ public class FormItem {
 
     public void setIgnore(boolean ignore) {
         this.ignore = ignore;
+    }
+
+    public String getValidate() {
+        return validate;
+    }
+
+    public void setValidate(String validate) {
+        this.validate = validate;
     }
 }

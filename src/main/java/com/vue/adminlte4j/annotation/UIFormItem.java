@@ -15,9 +15,21 @@ public @interface UIFormItem {
 
     String key() default "";
     String label() default "" ;
+
+    /**
+     * 表单项类型
+     * @return
+     */
+    int     type() default FormItemType.INPUT;
     String defVal() default "" ;
     String placeholder() default "" ;
-    int     type() default FormItemType.INPUT;
+
     boolean hidden() default false ;
     boolean ignore() default false ;
+
+    /**
+     * 验证模式
+     * @return
+     */
+    String validate() default "" ;
 }

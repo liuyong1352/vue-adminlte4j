@@ -70,6 +70,30 @@ export default {
             jsonData[item.key] = $("#" + item.key).val()
         })
         return jsonData
+    } ,
+    submit: function(url ,callback) {
+        if(!this.validate())
+            return
+
+        axios.post(url,this.formData()).then(function(response){
+            callback(response)
+        })
+    } ,
+    validate: function() {
+        for(var i=0 ; i<items.length;i++){
+            this.validate_item(items[i])
+        }
+        $('#desc').bind('input propertychange', function(e) {
+                    console.log(e)
+                     //进行相关操作
+        })
+        return true
+    } ,
+    validate_item:function(item) {
+        if(!$.isEmpty(item.validate)) {
+            $('#' + item.key).val()
+        }
+
     }
   } ,
   mounted : function() {

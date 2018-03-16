@@ -3,6 +3,7 @@ package com.vue.adminlte4j.model;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
 
+import com.vue.adminlte4j.model.form.ValidateType;
 import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
 
+    public static final String ICON_V = ValidateType.NOT_EMPTY + "" ;
+
     @UIFormItem(hidden = true)
     private String id ;
     private String desc ;
@@ -20,7 +23,7 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
     private String pid ;
     private String url ;
 
-    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标")
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标" , validate = ICON_V)
     private String icon ;
 
     /**

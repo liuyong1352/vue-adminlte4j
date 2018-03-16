@@ -73,6 +73,9 @@
         } ,
         isNullOrEmpty : function(str) {
             return isNullOrEmpty(str)
+        } ,
+        isEmpty :function (str) {
+            return isNullOrEmpty(str)
         }
     })
 
