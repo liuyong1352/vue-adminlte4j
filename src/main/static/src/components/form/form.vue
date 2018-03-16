@@ -80,18 +80,19 @@ export default {
         })
     } ,
     validate: function() {
-        for(var i=0 ; i<items.length;i++){
-            this.validate_item(items[i])
+        for(var i=0 ; i<this.items.length;i++){
+            this.validate_item(this.items[i])
         }
-        $('#desc').bind('input propertychange', function(e) {
-                    console.log(e)
-                     //进行相关操作
-        })
+
         return true
     } ,
     validate_item:function(item) {
         if(!$.isEmpty(item.validate)) {
             $('#' + item.key).val()
+            $('#desc').bind('input propertychange', function(e) {
+                                console.log(e)
+                                 //进行相关操作
+            })
         }
 
     }
