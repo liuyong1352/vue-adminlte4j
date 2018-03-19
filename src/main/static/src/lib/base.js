@@ -1,8 +1,7 @@
 +function ($,window, document) {
 
-    /**注册使用event - bus ***/
+    /**注册使用event - bus***/
     //window.eventBus = new Vue()
-
     function getQueryStringJson() {
         var pairs = location.search.slice(1).split('&')  //去掉问号
         var result = {};
@@ -26,6 +25,40 @@
 
     function isNullOrEmpty(s) {
         return (s == undefined || s == null || s == '')
+    }
+
+    function validate(options) {
+        var v = $('#' + options.key).val()
+        if(options.validate == '1' ) {
+            if(!$.isEmpty(v))
+                return true
+            else {
+                _addFieldError(options)
+            }
+        }
+        $('#' + options.key).bind('input propertychange', function(e) {
+            var validate = $('#'+e.delegateTarget.id).next().data('validate')
+            if(validate == '1') {
+                if(!$.isEmpty($('#'+e.delegateTarget.id).val())) {
+                    $('#'+e.delegateTarget.id).parentsUntil(".form-group").last().parent().removeClass('has-error')
+                    $('#'+e.delegateTarget.id).next().hide()
+                } else {
+                    _addFieldError({key:e.delegateTarget.id , validate:validate})
+                }
+            }
+            //进行相关操作
+        })
+        return false
+    }
+
+    function _addFieldError(options) {
+        $('#' + options.key).parentsUntil(".form-group").last().parent().addClass('has-error')
+        if($('#' + options.key).next().length == 0){
+            $('#' + options.key).parent().append('<span class="help-block"></span>')
+            $('#' + options.key).next().html(options.label + " can not be empty!")
+            $('#' + options.key).next().data('validate' , options.validate)
+        }
+        $('#' + options.key).next().show()
     }
 
 
@@ -77,6 +110,9 @@
         } ,
         isEmpty :function (str) {
             return isNullOrEmpty(str)
+        } ,
+        validate:function(options) {
+            return validate(options) ;
         }
     })
 

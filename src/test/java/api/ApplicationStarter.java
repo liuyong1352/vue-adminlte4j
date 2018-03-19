@@ -16,6 +16,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 public class ApplicationStarter {
 
     public static void main(String[] args) {
+        FileChangeListener fileChangeListener = new FileChangeListener() ;
+        fileChangeListener.start();
         SpringApplication.run(ApplicationStarter.class, args);
     }
 
@@ -27,4 +29,5 @@ public class ApplicationStarter {
         converter.setFastJsonConfig(fastJsonConfig);
         return new HttpMessageConverters(converter) ;
     }
+
 }
