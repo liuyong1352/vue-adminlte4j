@@ -14,12 +14,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AdminApiConfig {
 
+    String USER_NAME = "_user_name" ;
+
     /**
      * 获取用户名信息
      * @param request
      * @return
      */
-    default String getUserName(HttpServletRequest request) {return null ;}
+    default String getUserName(HttpServletRequest request) {
+        return (String)request.getAttribute(USER_NAME);
+    }
 
     /***
      * 获取菜单服务提供者
