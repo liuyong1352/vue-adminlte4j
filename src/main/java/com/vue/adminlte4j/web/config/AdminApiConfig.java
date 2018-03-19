@@ -17,7 +17,9 @@ public interface AdminApiConfig {
     String USER_NAME = "_user_name" ;
 
     /**
-     * 获取用户名信息
+     * 获取用户名信息 ,
+     * 1. 可以重写此方法
+     * 2. 拦截器往request写入key为USER_NAME
      * @param request
      * @return
      */
