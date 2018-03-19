@@ -7,6 +7,7 @@ import com.vue.adminlte4j.service.MenuService;
 import com.vue.adminlte4j.support.AdminRuntimeException;
 import com.vue.adminlte4j.util.MenuUtils;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by bjliuyong on 2018/3/5.
@@ -24,6 +25,8 @@ public interface AdminApiConfig {
     default AppInfoService getAppInfoService() {
         return AppInfoService.INSTANCE ;
     }
+
+    default String getUserName(HttpServletRequest request) {return null ;}
 
     default void _addMenu(Menu menu) {
         MenuService menuService = getMenuService() ;

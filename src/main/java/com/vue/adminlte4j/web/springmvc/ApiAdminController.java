@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +28,12 @@ public class ApiAdminController implements AdminApiConfig {
 
     @GetMapping("/admin/app_info/get_all")
     @ResponseBody
-    public UIModel _getAllApiInfo() {
+    public UIModel _getAllApiInfo(HttpServletRequest request) {
         return Utils.call(() -> {
-            UIModel uiModel = UIModel.success().appInfo(getAppInfoService().get()) ;
+            AppInfo appInfo = getAppInfoService().get() ;
+            UIModel uiModel = UIModel.success().appInfo(appInfo) ;
             configureMenu(uiModel);
+            appInfo.setUserName(getUserName(request));
             MenuUtils.sortTreeData(uiModel.menu());
             return uiModel;
         }) ;
