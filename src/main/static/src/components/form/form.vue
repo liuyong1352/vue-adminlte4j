@@ -96,7 +96,7 @@ export default {
                 $('#' + item.key).parentsUntil(".form-group").last().parent().addClass('has-error')
                 //$('#' + item.key).parent().addClass('has-error')
                 $('#' + item.key).parent().append('<span class="help-block"></span>')
-                $('#' + item.key).next().html(item.label + " can not is empty!")
+                $('#' + item.key).next().html(item.label + " can not be empty!")
                 $('#' + item.key).next().data('validate' , item.validate)
             }
         }
