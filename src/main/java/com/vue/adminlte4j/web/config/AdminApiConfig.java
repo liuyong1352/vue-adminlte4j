@@ -14,6 +14,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AdminApiConfig {
 
+    /**
+     * 获取用户名信息
+     * @param request
+     * @return
+     */
+    default String getUserName(HttpServletRequest request) {return null ;}
+
     /***
      * 获取菜单服务提供者
      * @return
@@ -25,8 +32,6 @@ public interface AdminApiConfig {
     default AppInfoService getAppInfoService() {
         return AppInfoService.INSTANCE ;
     }
-
-    default String getUserName(HttpServletRequest request) {return null ;}
 
     default void _addMenu(Menu menu) {
         MenuService menuService = getMenuService() ;
