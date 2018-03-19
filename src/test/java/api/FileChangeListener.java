@@ -48,7 +48,7 @@ public class FileChangeListener extends Thread  {
             for(int i = 0 ; i < listenerPaths.size() ; i++) {
                 long l = distLibPath.resolve(listenerPaths.get(i)).toFile().lastModified();
                 if(l > lastModified.get(i)) {
-                    onChange(listenerPaths.get(i)) ;
+                    lastModified.set(i , onChange(listenerPaths.get(i))) ;
                 }
             }
 
@@ -56,14 +56,16 @@ public class FileChangeListener extends Thread  {
 
     }
 
-    private void  onChange(Path path) {
+    private long  onChange(Path path) {
         try {
             Files.copy(distLibPath.resolve(path) , targetLibPath.resolve(path) , StandardCopyOption.REPLACE_EXISTING);
             System.out.println("#############file copy src:    " + distLibPath.resolve(path));
             System.out.println("#############file copy target: " + targetLibPath.resolve(path));
+            return targetLibPath.resolve(path).toFile().lastModified();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return distLibPath.resolve(path).toFile().lastModified();
     }
 
     public static void main(String ...args) {
