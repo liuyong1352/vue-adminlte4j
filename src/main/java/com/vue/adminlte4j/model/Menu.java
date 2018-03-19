@@ -18,6 +18,7 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
 
     @UIFormItem(hidden = true)
     private String id ;
+    @UIFormItem(validate = ValidateType.NOT_EMPTY)
     private String desc ;
     @UIFormItem(hidden = true)
     private String pid ;

@@ -28,6 +28,7 @@
         return (s == undefined || s == null || s == '')
     }
 
+
     $.extend({
 //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
 

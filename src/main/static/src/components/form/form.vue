@@ -80,21 +80,39 @@ export default {
         })
     } ,
     validate: function() {
+        var result = true
         for(var i=0 ; i<this.items.length;i++){
-            this.validate_item(this.items[i])
+            result = this.validate_item(this.items[i]) && result
         }
-
-        return true
+        return result
     } ,
     validate_item:function(item) {
-        if(!$.isEmpty(item.validate)) {
-            $('#' + item.key).val()
-            $('#desc').bind('input propertychange', function(e) {
-                                console.log(e)
-                                 //进行相关操作
-            })
+        if($.isEmpty(item.validate))return true
+        var v = $('#' + item.key).val()
+        if(item.validate == '1' ) {
+            if(!$.isEmpty(v))
+                return true
+            else if($('#' + item.key).next().length == 0) {
+                $('#' + item.key).parentsUntil(".form-group").last().parent().addClass('has-error')
+                //$('#' + item.key).parent().addClass('has-error')
+                $('#' + item.key).parent().append('<span class="help-block"></span>')
+                $('#' + item.key).next().html(item.label + " can not is empty!")
+                $('#' + item.key).next().data('validate' , item.validate)
+            }
         }
-
+        var _item = item
+        $('#' + item.key).bind('input propertychange', function(e) {
+            console.log(e)
+            var validate = $('#'+e.delegateTarget.id).next().data('validate')
+            if(validate == '1') {
+                if(!$.isEmpty($('#'+e.delegateTarget.id).val())) {
+                    $('#'+e.delegateTarget.id).parentsUntil(".form-group").last().parent().removeClass('has-error')
+                    $('#'+e.delegateTarget.id).next().remove()
+                }
+            }
+            //进行相关操作
+        })
+        return false
     }
   } ,
   mounted : function() {
