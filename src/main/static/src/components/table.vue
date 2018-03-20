@@ -2,8 +2,8 @@
 <div>
     <div class="row">
         <div class="col-sm-12">
-            <table id="v-table1" class="table table-bordered table-striped v-table">
-                <thead>
+            <table id="v-table1" class="table table-bordered table-striped v-table table-hover">
+                <thead style="background: #78d5d69e;">
                     <tr>
                         <th v-for="col in columns">
                             {{col['label']}}
@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in dataItems">
+                    <tr v-for="item in dataItems" >
                         <td v-for="_col in columns">{{item[_col['key']]}}</td>
                         <td v-if="operations">
                             <a  :class="getOperationScheme(operation.scheme)"  v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" ><i

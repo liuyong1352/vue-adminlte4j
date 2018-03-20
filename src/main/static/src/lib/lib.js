@@ -147,6 +147,7 @@ app = function (scope) {
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js' ,
             '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
+            '/lib/datatables.net/js/jquery.dataTables.js' ,
             '/lib/layer/layer.js' ,
             '/lib/base.js'
         ]

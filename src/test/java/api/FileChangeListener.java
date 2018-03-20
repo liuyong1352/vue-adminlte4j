@@ -26,8 +26,9 @@ public class FileChangeListener extends Thread  {
     public FileChangeListener() {
 
         Path baseJs = Paths.get( "base.js") ;
-        Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.mis.js") ;
+        Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
         listenerPaths.add(baseJs);
+        listenerPaths.add(Paths.get("lib.js"));
         listenerPaths.add(vueAdminlteJs);
 
         for(int i = 0 ; i < listenerPaths.size() ; i++) {
