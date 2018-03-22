@@ -140,12 +140,14 @@ app = function (scope) {
         var arr_js = ['/lib/jquery/dist/jquery.min.js' ,
             '/lib/vue/dist/vue.min.js' ,
             '/lib/axios/dist/axios.min.js'
+
         ]
+
 
         var js = [
             '/lib/vue-adminlte/dist/js/vue-adminlte.min.js',
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
-            '/lib/admin-lte/dist/js/adminlte.js' ,
+            '/lib/admin-lte/dist/js/adminlte.js',
             '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
             '/lib/datatables.net/js/jquery.dataTables.js' ,
             '/lib/layer/layer.js' ,
@@ -184,8 +186,10 @@ app = function (scope) {
                 watch: watch ,
                 methods: methods ,
                 mounted: function () {
-                    $('body').data('lte.layout').fix()
-                    $('body').data('lte.layout').fixSidebar()
+                    if($('body').data('lte.layout')){
+                        $('body').data('lte.layout').fix()
+                        $('body').data('lte.layout').fixSidebar()
+                    }
                     body_el[0].setAttribute('style' , 'display:block')
                     mounted(this)
                 }

@@ -50,7 +50,8 @@ public class FormModelUtils {
         List<Field> fieldList = ReflectUtils.findAllField(cType);
         fieldList.forEach(field -> {
             int mod = field.getModifiers() ;
-            if(!Modifier.isFinal(mod) && !Modifier.isStatic(mod))
+            if(!Modifier.isFinal(mod) && !Modifier.isStatic(mod) &&
+                ReflectUtils.isPrimitiveOrString(field.getType()))
                 formItems.add(configFormItem(field)) ;
         });
 
@@ -63,6 +64,7 @@ public class FormModelUtils {
         formItem.setLabel(field.getName());
         formItem.setKey(field.getName());
         formItem.setPlaceholder("Enter ... ");
+        formItem.setHidden(true);
 
         formItem.config(AnnotationUtils.findAnnotation(field , UIFormItem.class));
         formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));

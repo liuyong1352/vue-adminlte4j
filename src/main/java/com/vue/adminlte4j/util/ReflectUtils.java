@@ -11,7 +11,7 @@ public class ReflectUtils {
 
     public static List<Field> findAllField(Class<?> clazz) {
 
-        List<Field> fieldList = new ArrayList<Field>();
+        List<Field> fieldList = new ArrayList<>();
 
         Class<?> searchType = clazz;
         while (!Object.class.equals(searchType) && searchType != null) {

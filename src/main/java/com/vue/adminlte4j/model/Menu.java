@@ -18,12 +18,15 @@ import java.util.List;
  */
 public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormModelBuilder {
 
-    @UIFormItem(hidden = true)
     private String id ;
-
-    private String desc ;
-    @UIFormItem(hidden = true)
     private String pid ;
+
+    @UIFormItem
+    @Validate
+    private String desc ;
+
+    @UIFormItem
+    @Validate
     private String url ;
 
     @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标" )
@@ -33,10 +36,7 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormMode
     /**
      * 排序字段 ,倒序排列
      */
-    @UIFormItem(ignore = true)
     private int order ;
-
-    @UIFormItem(ignore = true)
     private List<Menu> children ;
 
     public Menu(){

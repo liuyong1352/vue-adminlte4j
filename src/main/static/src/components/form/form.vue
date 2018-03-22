@@ -3,16 +3,14 @@
         <slot></slot>
         <template v-for="item in items">
             <template v-if="!item.ignore">
-                <div v-if="item['type'] === 0 " :class="item.hidden?'hidden':'col-md-12'">
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">{{item['label']}}</label>
-                      <div class="col-sm-9">
-                          <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
-                      </div>
+                <div :class="item.hidden?'col-md-12 hidden':'col-md-12'">
+                    <div v-if="item['type'] === 0 " class="form-group">
+                        <label  class="col-sm-2 control-label">{{item['label']}}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
+                        </div>
                     </div>
-                </div>
-                <div v-if="item['type'] === 10 " class="col-md-12">
-                    <div class="form-group">
+                    <div v-if="item['type'] === 10 " class="form-group">
                         <label class="col-sm-2 control-label">{{item.label}}:</label>
                         <div class="col-sm-9">
                             <div class="row">
