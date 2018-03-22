@@ -31,7 +31,13 @@ public @interface UIFormItem {
      * 占多宽， 一行总款为12
      * @return
      */
-    int     span() default 12 ;
+    int     span() default 0 ;
+
+    /**
+     * 全局span配置
+     * @return
+     */
+    int     globalSpan() default 0 ;
 
     /**
      * 展示顺序
