@@ -12,6 +12,7 @@ public class FormItem {
     private String defVal ;
     private String placeholder ;
     private int    type ;
+    private int     span = 12;
     private boolean hidden ;
     private boolean ignore ;
 
@@ -24,6 +25,7 @@ public class FormItem {
         this.type = uiFormItem.type();
         this.hidden = uiFormItem.hidden() ;
         this.ignore = uiFormItem.ignore() ;
+        this.span   = uiFormItem.span() ;
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
@@ -121,5 +123,13 @@ public class FormItem {
 
     public void setValidate(Validate validate) {
         this.validate = validate;
+    }
+
+    public int getSpan() {
+        return span;
+    }
+
+    public void setSpan(int span) {
+        this.span = span;
     }
 }

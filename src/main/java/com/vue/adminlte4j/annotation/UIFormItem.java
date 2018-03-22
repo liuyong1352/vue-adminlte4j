@@ -28,6 +28,18 @@ public @interface UIFormItem {
     boolean ignore() default false ;
 
     /**
+     * 占多宽， 一行总款为12
+     * @return
+     */
+    int     span() default 12 ;
+
+    /**
+     * 展示顺序
+     * @return
+     */
+    int    order() default 1 ;
+
+    /**
      * 验证模式
      * @return
      */
