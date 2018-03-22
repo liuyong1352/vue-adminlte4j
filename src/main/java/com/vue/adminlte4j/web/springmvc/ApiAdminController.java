@@ -40,7 +40,7 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/app_info/get")
     @ResponseBody
     public UIModel _getAppInfo() {
-        return Utils.call(() -> UIModel.success().appInfo(getAppInfoService().get())) ;
+        return Utils.call(() -> UIModel.success().formData(getAppInfoService().get())) ;
     }
 
     @PostMapping("/admin/app_info/update")

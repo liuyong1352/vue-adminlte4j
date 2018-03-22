@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.annotation.UIFormItem;
 import java.io.Serializable;
 
 /**
@@ -7,13 +8,25 @@ import java.io.Serializable;
  */
 public class AppInfo implements Serializable{
 
+    @UIFormItem(label = "首页地址")
     private String indexUrl     ;
+
+    @UIFormItem(label = "应用名称")
     private String appName      ;
+
     private String userName     ;
     private String userImgUrl   ;
+
+    @UIFormItem(label = "用户profileUrl")
     private String profileUrl   ;
+
+    @UIFormItem(label = "登出Url")
     private String signOutUrl   ;
+
+    @UIFormItem(label = "Logo名称")
     private String logoName     ;
+
+    @UIFormItem(label = "Logo名称缩写")
     private String logoShortName;
 
     public String getIndexUrl() {

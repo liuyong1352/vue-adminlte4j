@@ -14,10 +14,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in dataItems" >
+                    <tr v-for="(item , index) in dataItems" @click="row_selected(item , index)" v-bind:class="{info: index === sr_index}">
                         <td v-for="_col in columns">{{item[_col['key']]}}</td>
                         <td v-if="operations">
-                            <a :class="get_op_class(operation.class)"  v-for="(operation, key, index)  in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
+                            <a :class="get_op_class(operation.class)"  v-for="(operation,  index)  in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
                                 <i v-if="operation.icon" :class="operation.icon"></i><span>{{operation['name']}}</span>
                             </a>
                         </td>
@@ -65,6 +65,7 @@ export default {
     return {
       columns: [],
       current_page : 1 ,
+      sr_index:-1 ,
       totalSize : 0 ,
       page_size : 10 ,
       isPage : true ,
@@ -121,6 +122,10 @@ export default {
     } ,
     refresh : function() {
         this.fetchData()
+    } ,
+    row_selected: function(row,index) {
+        console.log(row)
+        this.sr_index=index
     } ,
     fetchData: function () {
         var self = this

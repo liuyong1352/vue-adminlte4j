@@ -151,7 +151,7 @@ public interface BaseStore {
         for(int i = 1 ; i < lines.size() ; i++ ) {
             T o = requiredType.newInstance() ;
             String[] values = lines.get(i).split(",") ;
-            for(int j = 0 ; j < headers.length ; j++ ) {
+            for(int j = 0 ; j < headers.length && j < values.length; j++ ) {
                 Field field = requiredType.getDeclaredField(headers[j]) ;
                 if(field.getType().isPrimitive()) {
                     String typeName = field.getType().getName() ;

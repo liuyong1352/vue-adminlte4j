@@ -28,13 +28,9 @@
                 </v-form-item >
             </v-row>
         </v-form>
+        <button @click="requery"> 查询</button>
 
-
-
-
-        <button @click="re_query"> 查询</button>
-
-        <v-table :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
+        <v-table id="tables" :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
 
     </v-box>
     <div class="row">
@@ -96,8 +92,6 @@
                 operations : [
                     {
                         name : '详情' ,
-                        scheme: 'green',
-                        icon:'edit',
                         method : function(row , $table) {
                             console.log(row);
                             $table.fetchData();
@@ -106,8 +100,7 @@
                     } ,
                     {
                         name : '删除'  ,
-                        scheme: 'blue',
-                        icon:'trash',
+                        class:'btn-info',
                         method : function(row ,$table) {
 
                         }
@@ -116,8 +109,7 @@
             }
         } ,
         methods : {
-            re_query : function () {
-                //eventBus.$emit('table_fresh' , 1)
+            requery : function () {
                 this.$refs.table.fetchData()
             }
         }
