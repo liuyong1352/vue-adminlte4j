@@ -29,7 +29,7 @@
 
     function validate(options) {
         var v = $('#' + options.key).val()
-        if(options.validate == '1' ) {
+        if(options.validate.type == '1' ) {
             if(!$.isEmpty(v))
                 return true
             else {
@@ -38,7 +38,7 @@
         }
         $('#' + options.key).bind('input propertychange', function(e) {
             var validate = $('#'+e.delegateTarget.id).next().data('validate')
-            if(validate == '1') {
+            if(validate.type == '1') {
                 if(!$.isEmpty($('#'+e.delegateTarget.id).val())) {
                     $('#'+e.delegateTarget.id).parentsUntil(".form-group").last().parent().removeClass('has-error')
                     $('#'+e.delegateTarget.id).next().hide()

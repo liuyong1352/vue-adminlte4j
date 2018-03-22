@@ -1,8 +1,12 @@
 package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.annotation.Validate;
+import com.vue.adminlte4j.model.builder.FormModelBuilder;
+import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
 
+import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.model.form.ValidateType;
 import java.beans.Transient;
 import java.io.Serializable;
@@ -12,19 +16,18 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2017/11/23.
  */
-public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
-
-    public static final String ICON_V = ValidateType.NOT_EMPTY + "" ;
+public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormModelBuilder {
 
     @UIFormItem(hidden = true)
     private String id ;
-    @UIFormItem(validate = ValidateType.NOT_EMPTY)
+
     private String desc ;
     @UIFormItem(hidden = true)
     private String pid ;
     private String url ;
 
-    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标" , validate = ICON_V)
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标" )
+    @Validate
     private String icon ;
 
     /**
@@ -148,5 +151,10 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode {
         sb.append(", children=").append(children);
         sb.append('}');
         return sb.toString();
+    }
+
+
+    @Override public void config(FormModel formModel) {
+        FormItem formItem = new FormItem();
     }
 }

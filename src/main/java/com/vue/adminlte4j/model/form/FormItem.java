@@ -14,7 +14,8 @@ public class FormItem {
     private int    type ;
     private boolean hidden ;
     private boolean ignore ;
-    private String validate ;
+
+    private Validate validate ;
 
     public void config(UIFormItem uiFormItem) {
         if( uiFormItem == null )
@@ -23,7 +24,6 @@ public class FormItem {
         this.type = uiFormItem.type();
         this.hidden = uiFormItem.hidden() ;
         this.ignore = uiFormItem.ignore() ;
-        this.validate = uiFormItem.validate() ;
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
@@ -40,6 +40,13 @@ public class FormItem {
         String placeholder = uiFormItem.placeholder() ;
         if(placeholder != null && !placeholder.isEmpty())
             this.placeholder =placeholder ;
+    }
+
+    public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {
+        if(validate == null)
+            return;
+        this.validate = new Validate() ;
+        this.validate.setType(validate.type());
     }
 
     public FormItem clone() {
@@ -108,11 +115,11 @@ public class FormItem {
         this.ignore = ignore;
     }
 
-    public String getValidate() {
+    public Validate getValidate() {
         return validate;
     }
 
-    public void setValidate(String validate) {
+    public void setValidate(Validate validate) {
         this.validate = validate;
     }
 }

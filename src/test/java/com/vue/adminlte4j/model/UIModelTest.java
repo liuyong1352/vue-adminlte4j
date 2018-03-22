@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import java.util.concurrent.locks.Lock;
 import org.junit.Test;
 
 /**
@@ -9,6 +10,8 @@ public class UIModelTest {
 
     @Test
     public void testToJson() {
+        Lock  lock = null ;
+
         UIModel uiModel = UIModel.success().isLogin(true).setLoginUrl("/login.html");
         System.out.println(uiModel.toJsonString());
     }

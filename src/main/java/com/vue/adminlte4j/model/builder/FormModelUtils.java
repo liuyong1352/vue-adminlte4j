@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.model.builder;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.util.AnnotationUtils;
@@ -64,6 +65,7 @@ public class FormModelUtils {
         formItem.setPlaceholder("Enter ... ");
 
         formItem.config(AnnotationUtils.findAnnotation(field , UIFormItem.class));
+        formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));
 
         return formItem ;
     }

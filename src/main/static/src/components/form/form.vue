@@ -82,7 +82,7 @@ export default {
     validate: function() {
         var result = true
         for(var i=0 ; i<this.items.length;i++){
-            if(!$.isEmpty(this.items[i].validate))
+            if(this.items[i].validate)
                 result = this.validate_item(this.items[i]) && result
         }
         return result

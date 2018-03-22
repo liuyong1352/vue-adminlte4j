@@ -5,8 +5,8 @@ package com.vue.adminlte4j.model.form;
  */
 public class ValidateType {
 
-    public static final String NOT_EMPTY  = "1" ;
-    public static final String NUMBER     = "2" ;
-    public static final String RANG       = "3 " ;
+    public static final int REQUIRED  = 1 ;
+    public static final int NUMBER    = 2 ;
+
 
 }
