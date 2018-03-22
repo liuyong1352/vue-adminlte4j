@@ -73,4 +73,14 @@ public class FileChangeListener extends Thread  {
         FileChangeListener fileChangeListener = new FileChangeListener() ;
         fileChangeListener.run();
     }
+
+    class FileEntry {
+
+
+
+    }
+
+    class FileType {
+
+    }
 }

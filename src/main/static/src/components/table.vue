@@ -1,8 +1,8 @@
 <template>
 <div>
-    <div class="row">
+    <div class="row table-responsive no-padding">
         <div class="col-sm-12">
-            <table id="v-table1" class="table table-bordered table-striped v-table table-hover">
+            <table id="v-table1" class="table table-bordered table-striped table-hover">
                 <thead style="background: #78d5d69e;">
                     <tr>
                         <th v-for="col in columns">
@@ -17,9 +17,9 @@
                     <tr v-for="item in dataItems" >
                         <td v-for="_col in columns">{{item[_col['key']]}}</td>
                         <td v-if="operations">
-                            <a  :class="getOperationScheme(operation.scheme)"  v-for="operation in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;" ><i
-                                    :class="getOperationIcon(operation.icon)"></i><span>{{operation['name']}}</span></a>
-
+                            <a :class="get_op_class(operation.class)"  v-for="(operation, key, index)  in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
+                                <i v-if="operation.icon" :class="operation.icon"></i><span>{{operation['name']}}</span>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -155,23 +155,11 @@ export default {
     should_page : function() {
         return this.isPage && this.totalSize > 0
     },
-      getOperationScheme: function (data) {
-          return{
-              'btn btn-info btn-sm waves-effect waves-light m-b-5':data === 'blue',
-              'btn btn-danger btn-sm waves-effect waves-light m-b-5': data === 'red',
-              'btn btn-warning btn-sm waves-effect waves-light m-b-5':data=== 'yellow',
-              'btn btn-success btn-sm waves-effect waves-light m-b-5':data=== 'green',
+    get_op_class: function (cls) {
+        cls = cls || 'btn-default'
+        return 'btn btn-xs ' + cls
 
-          }
-      },
-      getOperationIcon: function (data) {
-          return{
-              'fa fa-edit': data === 'edit',
-              'fa fa-trash-o': data === 'trash',
-              'fa fa-rocket': data=== 'rocket',
-
-          }
-      }
+    }
   }
 }
 </script>
