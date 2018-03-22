@@ -90,7 +90,7 @@ public class ApiAdminController implements AdminApiConfig {
         configureMenu(uiModel);
         Menu menu = MenuUtils.getMenu(uiModel.menu() , id );
         if(menu == null)
-            return UIModel.success().formData(new Menu());
+            return UIModel.success().formData(Menu.class);
         return  UIModel.success().formData(menu) ;
     }
 

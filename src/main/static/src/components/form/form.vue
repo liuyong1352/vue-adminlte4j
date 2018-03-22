@@ -50,7 +50,7 @@ export default {
             axios.get(this.ajax_url , {params:data}).then(function (response) {
                 var formJson = response.data.FormModel.formItems
                 self.items = formJson
-                self.data = response.data.data
+                self.data = response.data.data||{}
             })
         }
     } ,
