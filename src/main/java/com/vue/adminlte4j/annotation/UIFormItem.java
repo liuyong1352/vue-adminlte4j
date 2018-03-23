@@ -34,12 +34,6 @@ public @interface UIFormItem {
     int     span() default 0 ;
 
     /**
-     * 全局span配置
-     * @return
-     */
-    int     globalSpan() default 0 ;
-
-    /**
      * 展示顺序
      * @return
      */

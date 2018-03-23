@@ -14,18 +14,17 @@ public class FormItem {
     private int    type ;
     private int     span = 12;
     private boolean hidden ;
-    private boolean ignore ;
-
     private Validate validate ;
 
     public void config(UIFormItem uiFormItem) {
-        if( uiFormItem == null )
+
+        if(uiFormItem == null)
             return;
 
         this.type = uiFormItem.type();
         this.hidden = uiFormItem.hidden() ;
-        this.ignore = uiFormItem.ignore() ;
-        this.span   = uiFormItem.span() ;
+        if(uiFormItem.span() != 0)
+            this.span   = uiFormItem.span() ;
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
@@ -108,13 +107,6 @@ public class FormItem {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
-    }
-    public boolean isIgnore() {
-        return ignore;
-    }
-
-    public void setIgnore(boolean ignore) {
-        this.ignore = ignore;
     }
 
     public Validate getValidate() {

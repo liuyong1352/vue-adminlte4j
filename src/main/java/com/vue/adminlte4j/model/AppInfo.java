@@ -1,17 +1,19 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import java.io.Serializable;
 
 /**
  * Created by bjliuyong on 2017/12/13.
  */
+@Form(span = 6)
 public class AppInfo implements Serializable{
 
-    @UIFormItem(label = "首页地址" , span = 6)
+    @UIFormItem(label = "首页地址" )
     private String indexUrl     ;
 
-    @UIFormItem(label = "应用名称" , span = 6)
+    @UIFormItem(label = "应用名称" )
     private String appName      ;
 
     private String userName     ;
