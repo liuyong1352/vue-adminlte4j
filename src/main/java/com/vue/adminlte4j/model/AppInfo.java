@@ -3,11 +3,12 @@ package com.vue.adminlte4j.model;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by bjliuyong on 2017/12/13.
  */
-@Form(span = 6)
+@Form(span = 4 )
 public class AppInfo implements Serializable{
 
     @UIFormItem(label = "应用名称" )
@@ -32,6 +33,9 @@ public class AppInfo implements Serializable{
 
     @UIFormItem(label = "Logo名称缩写")
     private String logoShortName;
+
+    @UIFormItem
+    private Date created ;
 
     public String getIndexUrl() {
         return indexUrl;

@@ -4,6 +4,7 @@ import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.form.FormItem;
+import com.vue.adminlte4j.model.form.FormItemType;
 import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.util.AnnotationUtils;
 import com.vue.adminlte4j.util.ReflectUtils;
@@ -61,7 +62,9 @@ public class FormModelUtils {
             Field field = fieldList.get(i) ;
             int mod = field.getModifiers() ;
             //静态的 final修饰的 ， 非基础类型的或字符串类型 不进行处理
-            if(Modifier.isFinal(mod) || Modifier.isStatic(mod) || (!ReflectUtils.isPrimitiveOrString(field.getType())))
+            if(Modifier.isFinal(mod) || Modifier.isStatic(mod)
+                || (!ReflectUtils.isPrimitiveOrString(field.getType()) )
+                || (!ReflectUtils.isDateOrTime(field.getType())))
                 continue;
             configFormItem(field ,formModel) ;
         }
@@ -75,6 +78,7 @@ public class FormModelUtils {
             formModel.setSpan(form.span());
             formModel.setHidden(form.hidden());
             formModel.setIgnore(form.ignore());
+            formModel.setInline(form.inline());
         }
         return formModel ;
     }
@@ -94,6 +98,9 @@ public class FormModelUtils {
         formItem.setPlaceholder("Enter ... ");
         formItem.setHidden(uiFormItem.hidden());
         formItem.setSpan(formModel.getSpan());
+
+        if(ReflectUtils.isDateOrTime(field.getType()))
+            formItem.setType(FormItemType.DATE_TIME);
 
         formItem.config(uiFormItem );
         formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));

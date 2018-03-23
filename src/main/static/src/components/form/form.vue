@@ -1,5 +1,5 @@
 <template>
-    <form :class="formClasses">
+    <form :class="form_inline?'form-inline':'form-horizontal'">
         <slot></slot>
         <template v-for="item in items">
             <template v-if="!item.ignore">
@@ -45,9 +45,7 @@ export default {
     }
   } ,
   computed : {
-    formClasses() {
-        return this.form_inline ? 'form-inline':'form-horizontal'
-    }
+
   } ,
   methods: {
     refresh: function(data) {
@@ -57,7 +55,7 @@ export default {
                 var formJson = response.data.FormModel.formItems
                 self.items = formJson
                 self.data = response.data.data||{}
-                self.form_type=response.data.FormModel.inline
+                self.form_inline=response.data.FormModel.inline
             })
         }
     } ,

@@ -28,6 +28,10 @@ public class ReflectUtils {
         return  clsType.isPrimitive() || clsType.getSimpleName().equals("String") ;
     }
 
+    public static boolean isDateOrTime(Class clsType) {
+        return  clsType.getSimpleName().equals("Date") ;
+    }
+
     public static Object getValue(Field field , Object target) {
         if (!field.isAccessible())
             field.setAccessible(true );

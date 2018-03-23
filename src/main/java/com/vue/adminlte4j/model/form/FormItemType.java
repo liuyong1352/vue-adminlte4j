@@ -25,4 +25,8 @@ public class FormItemType {
      */
     public static final int INPUT_HIDDEN = 11 ;
 
+    public static final int DATE = 12 ;
+    public static final int TIME = 13 ;
+    public static final int DATE_TIME = 25 ;
+
 }

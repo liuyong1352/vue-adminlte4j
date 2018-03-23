@@ -17,4 +17,6 @@ public @interface Form {
     boolean ignore() default true ;
 
     boolean hidden() default true ;
+
+    boolean inline() default  false ;
 }
