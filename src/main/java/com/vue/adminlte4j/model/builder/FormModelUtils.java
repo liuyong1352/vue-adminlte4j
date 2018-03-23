@@ -45,10 +45,7 @@ public class FormModelUtils {
 
     private static FormModel newFormModel(Class cType) {
 
-
         FormModel formModel = build(cType) ;
-
-
         List<Field> fieldList = ReflectUtils.findAllField(cType);
 
         /*Collections.sort(fieldList , (f1, f2)->{
