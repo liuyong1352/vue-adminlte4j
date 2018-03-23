@@ -150,7 +150,9 @@ app = function (scope) {
             '/lib/admin-lte/dist/js/adminlte.js',
             '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
             '/lib/datatables.net/js/jquery.dataTables.js' ,
-            '/lib/layer/layer.js' ,
+            /*'/lib/layer/layer.js' ,
+            '/lib/layui-laydate/dist/layui.js' ,*/
+            '/lib/layui-src/dist/layui.all.js' ,
             '/lib/base.js'
         ]
 
@@ -169,6 +171,7 @@ app = function (scope) {
         for(var i = 0; i < css.length; i++) {
             load_css(css[i] + ".min.css")
         }
+        load_css('/lib/layui-src/dist/css/layui.css')
         for(var i = 0; i < js.length; i++) {
             arr_js.push(js[i])
         }

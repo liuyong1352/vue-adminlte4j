@@ -15,7 +15,8 @@
     <v-box title="查询条件">
 
         <p>{{query['name']}} -- {{query['age']}}</p>
-
+        <label class="layui-form-label">密码框</label>
+        <v-input  v-model="query['age']" placeholder="Enter Age"  ></v-input>
 
         <v-form>
             <v-row>
@@ -24,7 +25,7 @@
                 </v-form-item>
 
                 <v-form-item span="4" label="Age:">
-                    <v-input  v-model="query['age']" placeholder="Enter Age" ></v-input>
+
                 </v-form-item >
             </v-row>
         </v-form>

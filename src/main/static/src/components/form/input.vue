@@ -1,5 +1,11 @@
 <template>
-    <input :type="type" class="form-control" :placeholder="placeholder" :value="currentValue" @input="handleInput">
+    <div :class="wrapClasses">
+        <input :type="type" :class="inputClasses"
+            ref="input"
+            :placeholder="placeholder"
+            :value="value"
+            v-on:input="handleInput">
+    </div>
 </template>
 
 <script>
@@ -12,19 +18,42 @@ export default {
     type: {
             type: String,
             default: 'text'
+    },
+    class: {
+        type:String,
+        default:''
     }
+
   } ,
   data() {
     return {
         currentValue : this.value
     }
   } ,
-  method: {
-    handleInput (event) {
-        let value = event.target.value
-        this.currentValue = value
-
+  computed: {
+    wrapClasses(){
+        return 'layui-input-inline'
     },
+    inputClasses(){
+        return 'layui-input'
+    }
+  },
+  watch: {
+     value (val) {
+         this.setCurrentValue(val);
+     }
+  },
+  methods: {
+    handleInput : function(event) {
+        var value = event.target.value
+        this.$emit('input', value)
+        this.setCurrentValue(value)
+        //this.$emit('on-change', event)
+        //this.$refs.input.value = value
+    },
+    setCurrentValue(value) {
+       this.currentValue = value
+    }
   } ,
   mounted : function() {
 

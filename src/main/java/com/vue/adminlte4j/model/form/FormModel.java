@@ -23,6 +23,11 @@ public class FormModel  {
      */
     private boolean ignore = true ;
 
+    /**
+     * 表单类型是否为inline
+     */
+    private boolean inline = false ;
+
     private List<FormItem> formItems = new ArrayList<>();
 
     /** getter and setter ****/
@@ -63,5 +68,13 @@ public class FormModel  {
 
     public void setIgnore(boolean ignore) {
         this.ignore = ignore;
+    }
+
+    public boolean isInline() {
+        return inline;
+    }
+
+    public void setInline(boolean inline) {
+        this.inline = inline;
     }
 }

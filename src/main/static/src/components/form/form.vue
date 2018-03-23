@@ -1,18 +1,18 @@
 <template>
-    <form class="form-horizontal">
+    <form :class="formClasses">
         <slot></slot>
         <template v-for="item in items">
             <template v-if="!item.ignore">
                 <div :class="get_class(item)" >
                     <div v-if="item['type'] === 0 " class="form-group">
                         <label  class="col-sm-3 control-label">{{item['label']}}</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
                         </div>
                     </div>
                     <div v-if="item['type'] === 10 " class="form-group">
                         <label class="col-sm-3 control-label">{{item.label}}:</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
@@ -40,7 +40,13 @@ export default {
   data : function() {
     return {
       items:[] ,
-      data : {}
+      data : {},
+      form_inline: false
+    }
+  } ,
+  computed : {
+    formClasses() {
+        return this.form_inline ? 'form-inline':'form-horizontal'
     }
   } ,
   methods: {
@@ -51,6 +57,7 @@ export default {
                 var formJson = response.data.FormModel.formItems
                 self.items = formJson
                 self.data = response.data.data||{}
+                self.form_type=response.data.FormModel.inline
             })
         }
     } ,
@@ -65,7 +72,7 @@ export default {
         if(item.hidden)
             return 'hidden col-md-12'
         else
-            return item.span?('col-md-'+item.span):'col-md-12'
+            return item.span?('col-md-'+item.span):''
     } ,
     formData: function() {
         var jsonData = {}
