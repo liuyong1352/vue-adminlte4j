@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by bjliuyong on 2017/12/13.
  */
-@Form(span = 6)
+@Form(span = 3)
 public class AppInfo implements Serializable{
 
     @UIFormItem(label = "首页地址" )
