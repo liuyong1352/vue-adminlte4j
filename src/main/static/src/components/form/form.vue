@@ -10,6 +10,7 @@
                             <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
                         </div>
                     </div>
+
                     <div v-if="item['type'] === 10 " class="form-group">
                         <label class="col-sm-3 control-label">{{item.label}}:</label>
                         <div class="col-sm-7">
