@@ -88,14 +88,14 @@ public interface BaseStore {
                 throw new IllegalStateException("can not remove you record , fileName=>" + fileName) ;
         }
 
-        List<Field> fieldList = ReflectUtils.findAllField(datas.get(0).getClass());
+        final List<Field> fieldList = ReflectUtils.findAllField(datas.get(0).getClass());
 
         if(fieldList.isEmpty())
             return;
 
 
-        StringBuilder headerBuilder = new StringBuilder() ;
-        List<String> lines = new ArrayList<>() ;
+        final  StringBuilder headerBuilder = new StringBuilder() ;
+        final  List<String> lines = new ArrayList<>() ;
         datas.forEach(e->{
             boolean isEmpty = lines.isEmpty() ;
             StringBuilder valueBuilder = new StringBuilder() ;
