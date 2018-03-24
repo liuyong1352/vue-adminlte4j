@@ -62,9 +62,9 @@ public class FormModelUtils {
             Field field = fieldList.get(i) ;
             int mod = field.getModifiers() ;
             //静态的 final修饰的 ， 非基础类型的或字符串类型 不进行处理
-            if(Modifier.isFinal(mod) || Modifier.isStatic(mod)
-                || (!ReflectUtils.isPrimitiveOrString(field.getType()) )
-                || (!ReflectUtils.isDateOrTime(field.getType())))
+            if(Modifier.isFinal(mod) || Modifier.isStatic(mod))
+                continue;
+            if(!(ReflectUtils.isPrimitiveOrString(field.getType()) || ReflectUtils.isDateOrTime(field.getType())))
                 continue;
             configFormItem(field ,formModel) ;
         }
