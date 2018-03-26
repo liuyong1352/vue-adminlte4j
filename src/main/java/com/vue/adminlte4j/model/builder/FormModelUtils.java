@@ -92,7 +92,6 @@ public class FormModelUtils {
         formItem.setLabel(field.getName());
         formItem.setKey(field.getName());
         formItem.setPlaceholder("Enter ... ");
-        formItem.setHidden(uiFormItem.hidden());
         formItem.setSpan(formModel.getSpan());
 
         if(ReflectUtils.isDateOrTime(field.getType())) {

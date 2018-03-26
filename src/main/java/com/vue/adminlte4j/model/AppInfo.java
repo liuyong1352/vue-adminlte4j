@@ -38,7 +38,7 @@ public class AppInfo implements Serializable{
     private String logoShortName;
 
     @UIDate(type = DateType.DATE)
-    @JSONField(format="yyyy-MM-dd hh:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date created ;
 
     public String getIndexUrl() {
