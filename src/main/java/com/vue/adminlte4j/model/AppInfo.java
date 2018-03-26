@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
@@ -36,8 +37,8 @@ public class AppInfo implements Serializable{
     @UIFormItem(label = "Logo名称缩写")
     private String logoShortName;
 
-    @UIFormItem
     @UIDate(type = DateType.DATE)
+    @JSONField(format="yyyy-MM-dd hh:mm:ss")
     private Date created ;
 
     public String getIndexUrl() {
@@ -102,5 +103,13 @@ public class AppInfo implements Serializable{
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }

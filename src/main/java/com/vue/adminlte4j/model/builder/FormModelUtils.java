@@ -61,13 +61,8 @@ public class FormModelUtils {
 
         for(int i = 0 ; i < fieldList.size() ; i++) {
             Field field = fieldList.get(i) ;
-            int mod = field.getModifiers() ;
-            //静态的 final修饰的 ， 非基础类型的或字符串类型 不进行处理
-            if(Modifier.isFinal(mod) || Modifier.isStatic(mod))
-                continue;
-            if(!(ReflectUtils.isPrimitiveOrString(field.getType()) || ReflectUtils.isDateOrTime(field.getType())))
-                continue;
-            configFormItem(field ,formModel) ;
+            if(isConfigurable(field))
+                configFormItem(field ,formModel) ;
         }
         return  formModel ;
     }
@@ -90,7 +85,7 @@ public class FormModelUtils {
             return;
         }
         UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
-        if(uiFormItem.ignore())
+        if( uiFormItem!= null && uiFormItem.ignore())
             return;
 
         FormItem formItem = new FormItem() ;
@@ -114,6 +109,21 @@ public class FormModelUtils {
 
         formModel.addFormItem(formItem) ;
 
+    }
+
+    /**
+     * 非静态，非常量字段，原始类型字符串类型，或者日期类型， 可以进行配置
+     * @param field
+     * @return
+     */
+    public static boolean isConfigurable(Field field) {
+        int mod = field.getModifiers() ;
+        //静态的 final修饰的 ， 非基础类型的或字符串类型 不进行处理
+        if(Modifier.isFinal(mod) || Modifier.isStatic(mod))
+            return false ;
+        if(!(ReflectUtils.isPrimitiveOrString(field.getType()) || ReflectUtils.isDateOrTime(field.getType())))
+            return  false ;
+        return true ;
     }
 
 }

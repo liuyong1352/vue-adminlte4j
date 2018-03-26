@@ -14,7 +14,11 @@
                     <div v-if="item['type'] === 12" class="form-group">
                         <label  class="col-sm-3 control-label">{{item['label']}}</label>
                         <div class="col-sm-7">
-                            <v-date :id="item.key" class="form-control" :value="buildVal(item)" :placeholder="item.placeholder" ></v-date>
+                            <v-date :id="item.key" :type="get_date_type_val(item,'type')"
+                                    class="form-control"
+                                    :format="get_ext_val(item,'format')"
+                                    :value="buildVal(item)"
+                                    :placeholder="item.placeholder" ></v-date>
                         </div>
                     </div>
                     <div v-if="item['type'] === 10 " class="form-group">
@@ -75,6 +79,25 @@ export default {
         }
         return val || item.defVal
     } ,
+    get_ext_val:function(item , key, defVal){
+        if(item.ext)
+            return (item.ext)[key]
+        return defVal
+    } ,
+    get_date_type_val:function(item , key) {
+       if(item.ext) {
+            var t=(item.ext)[key]
+            if(t==1)
+                return 'date'
+            if(t==2)
+                return 'time'
+            if(t==3)
+                return 'year'
+            if(t==4)
+                return 'month'
+       }
+       return 'datetime'
+    },
     get_class : function(item){
         if(item.hidden)
             return 'hidden col-md-12'

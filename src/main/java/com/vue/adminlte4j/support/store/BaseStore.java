@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.support.store;
 
 
+import com.vue.adminlte4j.model.builder.FormModelUtils;
 import com.vue.adminlte4j.util.EnvUtils;
 
 import com.vue.adminlte4j.util.ReflectUtils;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,7 +75,6 @@ public interface BaseStore {
     default void writeObject(Object data , String fileName) throws IOException {
         //indexUrl , name first line is head
         //
-
         List<Object> datas = new ArrayList<>() ;
         if(data instanceof List) {
             datas.addAll((List)data) ;
@@ -88,11 +89,10 @@ public interface BaseStore {
                 throw new IllegalStateException("can not remove you record , fileName=>" + fileName) ;
         }
 
-        final List<Field> fieldList = ReflectUtils.findAllField(datas.get(0).getClass());
+        final List<Field> fieldList = getAllField(datas.get(0).getClass());
 
         if(fieldList.isEmpty())
             return;
-
 
         final  StringBuilder headerBuilder = new StringBuilder() ;
         final  List<String> lines = new ArrayList<>() ;
@@ -100,17 +100,14 @@ public interface BaseStore {
             boolean isEmpty = lines.isEmpty() ;
             StringBuilder valueBuilder = new StringBuilder() ;
             for(Field field : fieldList) {
-                if(!ReflectUtils.isPrimitiveOrString(field.getType()))
-                    continue;
-
-                if(Modifier.isFinal(field.getModifiers()))
-                    continue;
                 if(isEmpty)
                     headerBuilder.append(field.getName()).append(",") ;
                 Object val = ReflectUtils.getValue(field , e) ;
                 if(val != null ) {
                     if(field.getType().isPrimitive()) {
                         valueBuilder.append(val) ;
+                    } else if(ReflectUtils.isDateOrTime(field.getType())) {
+                        valueBuilder.append(((Date)val).getTime()) ;
                     } else {
                         valueBuilder.append(encode(val)) ;
                     }
@@ -125,7 +122,6 @@ public interface BaseStore {
         });
 
         Files.write(getOrCreateFile(fileName).toPath() , lines);
-
     }
 
     default <T> T readObject(String fileName , Class<T> requiredType) throws Exception {
@@ -157,6 +153,9 @@ public interface BaseStore {
                     String typeName = field.getType().getName() ;
                     if(typeName.equals("int")  )
                         ReflectUtils.setValue(field , o , Integer.valueOf(values[j]));
+                } else if(ReflectUtils.isDateOrTime(field.getType()))  {
+                    Date newDate = new Date(Long.valueOf(values[j]));
+                    ReflectUtils.setValue(field , o , newDate);
                 } else {
                     ReflectUtils.setValue(field , o , decode(values[j]));
                 }
@@ -202,6 +201,16 @@ public interface BaseStore {
             out.append(chars[i]);
         }
         return out.toString() ;
+    }
+
+    default List<Field> getAllField(Class cls) {
+        List<Field> fields = ReflectUtils.findAllField(cls) ;
+        List<Field> results = new ArrayList<>() ;
+        for(Field field : fields) {
+            if(FormModelUtils.isConfigurable(field))
+                results.add(field) ;
+        }
+        return results ;
     }
 
 

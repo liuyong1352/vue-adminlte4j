@@ -2,6 +2,7 @@ package com.vue.adminlte4j.util;
 
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.support.AdminRuntimeException;
+import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 
 /**
@@ -34,8 +35,10 @@ public class Utils {
         if(e instanceof AdminRuntimeException ) {
             return UIModel.fail().setMsg(e.getMessage()) ;
         } else {
+            e.printStackTrace();
             return UIModel.fail().setMsg("系统暂时出小差了， 请联系管理员！") ;
         }
     }
+
 
 }

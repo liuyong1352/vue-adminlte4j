@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD )
 @Retention(RetentionPolicy.RUNTIME)
 @UIFormItem
-public @interface UIDate  {
+public @interface UIDate {
 
     /**
      * 日期类型
@@ -31,6 +31,5 @@ public @interface UIDate  {
      * @return
      */
     boolean range() default  false ;
-
 
 }

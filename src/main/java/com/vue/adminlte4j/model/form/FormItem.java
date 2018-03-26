@@ -2,8 +2,6 @@ package com.vue.adminlte4j.model.form;
 
 import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by bjliuyong on 2018/3/7.
@@ -52,6 +50,8 @@ public class FormItem {
     public void configDate(UIDate uiDate) {
         ext = new ExtInfo() ;
         ext.setDateInfo(uiDate);
+
+        type = FormItemType.DATE ;
     }
 
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {
