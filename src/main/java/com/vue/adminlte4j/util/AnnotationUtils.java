@@ -20,4 +20,20 @@ public class AnnotationUtils {
         return null ;
     }
 
+    public static boolean hasAnnotation(Field field , Class<? extends Annotation> annotationType) {
+        Annotation[] annotations = field.getAnnotations();
+
+        for(Annotation annotation : annotations) {
+            if (annotation.annotationType().equals(annotationType)){
+                return true ;
+            } else {
+                if(annotation.annotationType().getAnnotation(annotationType) != null )
+                    return true ;
+            }
+        }
+
+        return false ;
+    }
+
+
 }

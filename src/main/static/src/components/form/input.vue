@@ -1,6 +1,6 @@
 <template>
     <div :class="wrapClasses">
-        <input :type="type" :class="inputClasses"
+        <input :id="vid" :type="type" :class="inputClasses"
             ref="input"
             :placeholder="placeholder"
             :value="value"
@@ -13,7 +13,8 @@
 export default {
   name: 'v-input',
   props: {
-    value: [String, Number],
+    vid :String ,
+    value: [String, Number] ,
     placeholder: String,
     type: {
             type: String,

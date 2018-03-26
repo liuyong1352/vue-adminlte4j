@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.model.builder;
 
 import com.vue.adminlte4j.annotation.Form;
+import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.form.FormItem;
@@ -85,10 +86,10 @@ public class FormModelUtils {
 
     private static void configFormItem(Field field ,FormModel formModel ) {
 
-        UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
-        if( formModel.isIgnore() && uiFormItem == null)
+        if(formModel.isIgnore() && !AnnotationUtils.hasAnnotation(field,UIFormItem.class)) {
             return;
-
+        }
+        UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
         if(uiFormItem.ignore())
             return;
 
@@ -99,11 +100,18 @@ public class FormModelUtils {
         formItem.setHidden(uiFormItem.hidden());
         formItem.setSpan(formModel.getSpan());
 
-        if(ReflectUtils.isDateOrTime(field.getType()))
-            formItem.setType(FormItemType.DATE_TIME);
+        if(ReflectUtils.isDateOrTime(field.getType())) {
+            formItem.setType(FormItemType.DATE);
+            formItem.setPlaceholder("yyyy-MM-dd");
+        }
 
         formItem.config(uiFormItem );
         formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));
+
+        if(formItem.getType() == FormItemType.DATE)
+            formItem.configDate(AnnotationUtils.findAnnotation(field , UIDate.class));
+
+
         formModel.addFormItem(formItem) ;
 
     }

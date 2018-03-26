@@ -1,7 +1,9 @@
 package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.annotation.Form;
+import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.model.form.DateType;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,6 +37,7 @@ public class AppInfo implements Serializable{
     private String logoShortName;
 
     @UIFormItem
+    @UIDate(type = DateType.DATE)
     private Date created ;
 
     public String getIndexUrl() {

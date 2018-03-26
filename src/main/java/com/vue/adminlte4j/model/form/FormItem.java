@@ -1,6 +1,9 @@
 package com.vue.adminlte4j.model.form;
 
+import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by bjliuyong on 2018/3/7.
@@ -11,17 +14,20 @@ public class FormItem {
     private String key   ;
     private String defVal ;
     private String placeholder ;
-    private int    type ;
+    private int    type = FormItemType.INPUT;
     private int     span = 12;
     private boolean hidden ;
     private Validate validate ;
+    private ExtInfo ext;
 
     public void config(UIFormItem uiFormItem) {
 
         if(uiFormItem == null)
             return;
 
-        this.type = uiFormItem.type();
+        if(uiFormItem.type() >= 0 )
+            this.type =  uiFormItem.type() ;
+
         this.hidden = uiFormItem.hidden() ;
         if(uiFormItem.span() != 0)
             this.span   = uiFormItem.span() ;
@@ -41,6 +47,11 @@ public class FormItem {
         String placeholder = uiFormItem.placeholder() ;
         if(placeholder != null && !placeholder.isEmpty())
             this.placeholder =placeholder ;
+    }
+
+    public void configDate(UIDate uiDate) {
+        ext = new ExtInfo() ;
+        ext.setDateInfo(uiDate);
     }
 
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {
@@ -123,5 +134,13 @@ public class FormItem {
 
     public void setSpan(int span) {
         this.span = span;
+    }
+
+    public ExtInfo getExt() {
+        return ext;
+    }
+
+    public void setExt(ExtInfo ext) {
+        this.ext = ext;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by bjliuyong on 2018/3/6.
  */
-public interface TreeNodeBuilder<E> {
+public interface TreeNodeBuilder<E>  {
 
     /**
      * 默认转换器

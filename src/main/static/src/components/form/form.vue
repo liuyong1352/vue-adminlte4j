@@ -11,6 +11,12 @@
                         </div>
                     </div>
 
+                    <div v-if="item['type'] === 12" class="form-group">
+                        <label  class="col-sm-3 control-label">{{item['label']}}</label>
+                        <div class="col-sm-7">
+                            <v-date :id="item.key" class="form-control" :value="buildVal(item)" :placeholder="item.placeholder" ></v-date>
+                        </div>
+                    </div>
                     <div v-if="item['type'] === 10 " class="form-group">
                         <label class="col-sm-3 control-label">{{item.label}}:</label>
                         <div class="col-sm-7">
@@ -32,6 +38,8 @@
 </template>
 
 <script>
+import VInput from '../form/input.vue'
+import VDate  from '../date/date.vue'
 import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 export default {
   name: 'v-form',
@@ -104,7 +112,9 @@ export default {
     this.refresh()
   } ,
   components: {
-        'v-icon-selector': IconSelector
+        'v-icon-selector': IconSelector,
+        'v-input': VInput,
+        'v-date': VDate
   }
 }
 </script>

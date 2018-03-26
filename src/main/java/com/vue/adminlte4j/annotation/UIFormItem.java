@@ -1,6 +1,5 @@
 package com.vue.adminlte4j.annotation;
 
-import com.vue.adminlte4j.model.form.FormItemType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -9,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Created by bjliuyong on 2018/3/8.
  */
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD ,ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UIFormItem {
 
@@ -20,9 +19,11 @@ public @interface UIFormItem {
      * 表单项类型
      * @return
      */
-    int     type() default FormItemType.INPUT;
+    int     type() default -1;
     String defVal() default "" ;
     String placeholder() default "" ;
+
+    boolean disable() default false ;
 
     boolean hidden() default false ;
     boolean ignore() default false ;
@@ -39,9 +40,5 @@ public @interface UIFormItem {
      */
     int    order() default 1 ;
 
-    /**
-     * 验证模式
-     * @return
-     */
-    String validate() default "" ;
+
 }

@@ -21,6 +21,7 @@ import VFolder       from  './components/folder.vue'
 import VForm         from  './components/form/form.vue'
 import VFormItem     from  './components/form/form-item.vue'
 import VInput        from  './components/form/input.vue'
+import VDate         from  './components/date/date.vue'
 import VModal        from  './components/ui-element/modal.vue'
 import VTags         from  './components/tags.vue'
 // import { MessageBox } from 'element-ui'
@@ -49,6 +50,7 @@ Vue.component('v-table'             , VTable)
 Vue.component('v-form'              , VForm)
 Vue.component('v-form-item'         , VFormItem)
 Vue.component('v-input'             , VInput)
+Vue.component('v-date'              , VDate)
 Vue.component('v-modal'             , VModal)
 Vue.component('v-tree'              , VTreeView)
 
