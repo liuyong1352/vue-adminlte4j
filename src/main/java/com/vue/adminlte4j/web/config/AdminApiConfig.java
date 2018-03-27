@@ -4,6 +4,7 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.service.AppInfoService;
 import com.vue.adminlte4j.service.MenuService;
+import com.vue.adminlte4j.service.ServiceRegister;
 import com.vue.adminlte4j.support.AdminRuntimeException;
 import com.vue.adminlte4j.util.MenuUtils;
 import java.util.List;
@@ -27,16 +28,20 @@ public interface AdminApiConfig {
         return (String)request.getAttribute(USER_NAME);
     }
 
+    default ServiceRegister getServiceRegister(){
+        return ServiceRegister.INSTANCE ;
+    }
+
     /***
      * 获取菜单服务提供者
      * @return
      */
     default MenuService getMenuService(){
-        return  MenuService.INSTANCE ;
+        return getServiceRegister().getMenuService() ;
     }
 
     default AppInfoService getAppInfoService() {
-        return AppInfoService.INSTANCE ;
+        return getServiceRegister().getAppInfoService() ;
     }
 
     default void _addMenu(Menu menu) {

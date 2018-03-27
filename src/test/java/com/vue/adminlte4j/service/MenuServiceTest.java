@@ -1,6 +1,7 @@
 package com.vue.adminlte4j.service;
 
 import com.vue.adminlte4j.model.Menu;
+import com.vue.adminlte4j.service.impl.DefaultMenuService;
 import org.junit.Test;
 
 import java.util.List;

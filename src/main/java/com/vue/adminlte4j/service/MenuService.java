@@ -12,8 +12,6 @@ import java.util.Map;
  */
 public interface MenuService {
 
-    MenuService INSTANCE = new DefaultMenuService();
-
     /**
      * 添加菜单
      * @param menu

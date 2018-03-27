@@ -23,8 +23,6 @@ public interface BaseStore {
 
 
     String WORKSPACE_DIR = "ui-model" ;
-    String APP_INFO_FILE = "app_info.s" ;
-    String MENU_ITEM_FILE = "menu_items.s";
 
     String ESCAPE_PERCET = "%25" ;
     String ESCAPE_COMMA  = "%2C" ;

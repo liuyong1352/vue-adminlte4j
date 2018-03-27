@@ -7,8 +7,6 @@ import com.vue.adminlte4j.model.AppInfo;
  */
 public interface AppInfoService {
 
-    AppInfoService INSTANCE = new DefaultAppInfoService() ;
-
     /**
      * 获取AppInfo
      * @return

@@ -1,6 +1,7 @@
-package com.vue.adminlte4j.service;
+package com.vue.adminlte4j.service.impl;
 
 import com.vue.adminlte4j.model.Menu;
+import com.vue.adminlte4j.service.MenuService;
 import com.vue.adminlte4j.support.store.menu.MenuStore;
 
 import java.util.List;

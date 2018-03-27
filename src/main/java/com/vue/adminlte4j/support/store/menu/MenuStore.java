@@ -15,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MenuStore implements MenuService , BaseStore{
 
+    private static final String MENU_ITEM_FILE = "menu_items.s";
+
     private TreeMap<String,Menu> menuMap  ;
     private AtomicInteger menuIdGenerator ;
 

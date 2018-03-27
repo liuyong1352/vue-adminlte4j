@@ -7,6 +7,7 @@ public class Dict {
 
     private String key   ;
     private String code  ;
+    private String pCode ;
     private String label ;
     private int order ;
 
@@ -40,5 +41,13 @@ public class Dict {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public String getpCode() {
+        return pCode;
+    }
+
+    public void setpCode(String pCode) {
+        this.pCode = pCode;
     }
 }

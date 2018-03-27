@@ -1,13 +1,17 @@
-package com.vue.adminlte4j.service;
+package com.vue.adminlte4j.service.impl;
 
 import com.vue.adminlte4j.model.AppInfo;
+import com.vue.adminlte4j.service.AppInfoService;
 import com.vue.adminlte4j.support.store.BaseStore;
 import java.io.IOException;
 
 /**
  * Created by bjliuyong on 2018/3/13.
  */
-public class DefaultAppInfoService implements AppInfoService , BaseStore {
+public class DefaultAppInfoService implements AppInfoService, BaseStore {
+
+    private static final String APP_INFO_FILE = "app_info.s" ;
+
 
     private AppInfo appInfo ;
 

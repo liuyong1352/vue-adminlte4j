@@ -1,5 +1,8 @@
 package com.vue.adminlte4j.model;
 
+import com.vue.adminlte4j.annotation.DictData;
+import com.vue.adminlte4j.annotation.DictEntry;
+import com.vue.adminlte4j.annotation.DictProvider;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
@@ -42,6 +45,9 @@ public class AppInfo implements Serializable{
 
 
     @UIFormItem(type = FormItemType.CHECKBOX)
+    @DictData({
+        @DictEntry("阅读")
+    })
     private String checkBox;
 
     public String getCheckBox() {
