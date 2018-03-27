@@ -26,7 +26,7 @@ public class ApplicationStarter {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-        fastJsonConfig.setDateFormat("yyyy-MM-dd hh:mm:ss");
+        //fastJsonConfig.setDateFormat("yyyy-MM-dd hh:mm:ss");
         converter.setFastJsonConfig(fastJsonConfig);
         return new HttpMessageConverters(converter) ;
     }

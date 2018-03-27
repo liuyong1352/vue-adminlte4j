@@ -1,6 +1,8 @@
 package com.vue.adminlte4j.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,14 @@ public class ReflectUtils {
         try {
             field.set(target ,val);
         } catch (IllegalAccessException e) {
+            throw new RuntimeException(e) ;
+        }
+    }
+
+    public static Object staticInvoke(Method method , Object ... args) {
+        try {
+            return method.invoke(null , args) ;
+        } catch (Exception e) {
             throw new RuntimeException(e) ;
         }
     }

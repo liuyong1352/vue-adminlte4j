@@ -11,6 +11,11 @@ public class FormItemType {
     public static final int INPUT = 0 ;
 
     /**
+     * 复选框
+     */
+    public static final int CHECKBOX = 4 ;
+
+    /**
      * select
      */
     public static final int SELECT = 6 ;

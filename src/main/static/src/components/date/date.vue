@@ -56,7 +56,10 @@ export default {
         config.range=this.range
     if(this.format)
         config.format=this.format
-    layui.laydate.render(config)
+    layui.use(['laydate'] , function(){
+        layui.laydate.render(config)
+    })
+
   }
 }
 </script>

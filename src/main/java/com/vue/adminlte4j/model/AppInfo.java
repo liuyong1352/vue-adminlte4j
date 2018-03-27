@@ -1,10 +1,10 @@
 package com.vue.adminlte4j.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.model.form.DateType;
+import com.vue.adminlte4j.model.form.FormItemType;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,8 +19,6 @@ public class AppInfo implements Serializable{
 
     @UIFormItem(label = "首页地址" )
     private String indexUrl     ;
-
-
 
     private String userName     ;
     private String userImgUrl   ;
@@ -38,8 +36,21 @@ public class AppInfo implements Serializable{
     private String logoShortName;
 
     @UIDate(type = DateType.DATE)
-    @JSONField(format="yyyy-MM-dd")
+    //@com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd") //使用fastjson 格式化
     private Date created ;
+
+
+
+    @UIFormItem(type = FormItemType.CHECKBOX)
+    private String checkBox;
+
+    public String getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(String checkBox) {
+        this.checkBox = checkBox;
+    }
 
     public String getIndexUrl() {
         return indexUrl;

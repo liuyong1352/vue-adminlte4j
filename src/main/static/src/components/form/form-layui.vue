@@ -1,30 +1,28 @@
 <template>
-    <form :class="form_inline?'form-inline layui-form':'form-horizontal layui-form'">
-        <slot></slot>
+    <form class='layui-form'>
         <template v-for="item in items">
             <template v-if="!item.ignore">
-                <div :class="get_class(item)" >
-                    <div class="form-group">
+                <div class="layui-form-item" >
+                    <div v-if="item['type'] === 0 " class="form-group">
                         <label  class="col-sm-3 control-label">{{item['label']}}</label>
                         <div class="col-sm-7">
-                        <template v-if="item['type'] === 0 " >
-                            <input type="text" class="form-control"
-                                :id="item.key" :value="buildVal(item)"
-                                :placeholder="item.placeholder">
-                        </template>
-                        <template v-else-if="item['type'] === 12 " >
-                            <v-date  :id="item.key" :type="get_date_type_val(item,'type')"
-                                 class="form-control"
-                                 :format="get_ext_val(item,'format')"
-                                 :value="buildVal(item)"
-                                 :placeholder="item.placeholder" ></v-date>
-                        </template>
-                        <template v-else-if="item['type'] === 4 " >
-                            <v-checkbox :name="item.key"
+                            <input type="text" class="form-control" :id="item.key" :value="buildVal(item)" :placeholder="item.placeholder">
+                        </div>
+                    </div>
+
+                    <div v-if="item['type'] === 12" class="form-group">
+                        <label  class="col-sm-3 control-label">{{item['label']}}</label>
+                        <div class="col-sm-7">
+                            <v-date :id="item.key" :type="get_date_type_val(item,'type')"
                                     class="form-control"
-                                    :items="item.ext"></v-checkbox>
-                        </template>
-                        <template v-else-if="item['type'] === 10 " >
+                                    :format="get_ext_val(item,'format')"
+                                    :value="buildVal(item)"
+                                    :placeholder="item.placeholder" ></v-date>
+                        </div>
+                    </div>
+                    <div v-if="item['type'] === 10 " class="form-group">
+                        <label class="col-sm-3 control-label">{{item.label}}:</label>
+                        <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" style="right: 15px;"></i>
@@ -34,7 +32,6 @@
                                     <v-icon-selector :icon_el="'#' + item.key + '_i #' + item.key " ></v-icon-selector>
                                 </div>
                             </div>
-                        </template>
                         </div>
                     </div>
                 </div>
@@ -44,9 +41,8 @@
 </template>
 
 <script>
-import VInput       from '../form/input.vue'
-import VDate        from '../date/date.vue'
-import VCheckBox    from '../check-box.vue'
+import VInput from '../form/input.vue'
+import VDate  from '../date/date.vue'
 import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 export default {
   name: 'v-form',
@@ -135,13 +131,11 @@ export default {
     }
   } ,
   mounted : function() {
-    layui.use(['form'] , function(){})
     this.refresh()
   } ,
   components: {
         'v-icon-selector': IconSelector,
         'v-input': VInput,
-        'v-checkbox': VCheckBox,
         'v-date': VDate
   }
 }

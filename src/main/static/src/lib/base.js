@@ -61,7 +61,6 @@
         $('#' + options.key).next().show()
     }
 
-
     $.extend({
 //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
 
@@ -114,6 +113,13 @@
         validate:function(options) {
             return validate(options) ;
         }
+    })
+
+    /**
+     * 注册全局layer
+     */
+    layui.use(['layer'] , function () {
+        window.layer= layui.layer
     })
 
     /**

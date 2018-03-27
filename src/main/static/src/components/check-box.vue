@@ -1,39 +1,48 @@
 <template>
-    <div v-if="isHorizontal" class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" />{{ text }}
-                </label>
-            </div>
-        </div>
+    <div>
+        <input type="checkbox" :lay-filter="name" v-for="item in items"
+            :name="name"
+            :value="item.key"
+            :title="item.title"
+            :checked="item.checked">
     </div>
-    <div v-else class="checkbox">
-        <label>
-            <input type="checkbox" :disabled="isDisabled"/>{{ text }}
-        </label>
-    </div>
+
 </template>
 
 <script>
     export default {
         name: 'v-checkbox',
         props: {
-            text: {
-                type: String,
-                default: 'Check me out'
-            },
-            isHorizontal: {
-                type: Boolean,
-                default: true
-            },
-            isDisabled: {
-                type: Boolean,
-                default: false
-            }
+            name : String,
+            items : Object
         },
+        methods:{
+            get_values:function() {
+                var r = []
+                for(var i in this.items) {
+                    var item=this.items[i]
+                    if(item.checked )
+                        r.push(item.key)
+                }
+                return r
+            }
+        } ,
         created () {
 
+        } ,
+        mounted () {
+            var self = this
+            layui.use('form' , function(){
+                var form = layui.form
+                form.on('checkbox('+ self.name +')', function(data){
+                    for(var i in self.items) {
+                        var item=self.items[i]
+                        if(item.key == data.value)
+                            item.checked = data.elem.checked
+                    }
+                              //console.log(data.elem); //得到checkbox原始DOM对象
+                })
+            })
         }
     }
 </script>

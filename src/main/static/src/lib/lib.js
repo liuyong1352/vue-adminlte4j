@@ -150,9 +150,7 @@ app = function (scope) {
             '/lib/admin-lte/dist/js/adminlte.js',
             '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
             '/lib/datatables.net/js/jquery.dataTables.js' ,
-            /*'/lib/layer/layer.js' ,
-            '/lib/layui-laydate/dist/layui.js' ,*/
-            '/lib/layui-src/dist/layui.all.js' ,
+            '/lib/layui-src/dist/layui.js' ,
             '/lib/base.js'
         ]
 
