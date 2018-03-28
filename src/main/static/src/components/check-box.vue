@@ -4,7 +4,7 @@
             :name="name"
             :value="item.code"
             :title="item.label"
-            :checked="item.checked">
+            :checked="isChecked(item)">
     </div>
 
 </template>
@@ -14,6 +14,7 @@
         name: 'v-checkbox',
         props: {
             name : String,
+            checkedValues:String,
             items : Object
         },
         methods:{
@@ -25,11 +26,22 @@
                         r.push(item.code)
                 }
                 return r
+            } ,
+            isChecked : function(item) {
+                if(this.checkedValues)  {
+                    var arr = this.checkedValues.split(',')
+                    for(var i in arr ){
+                        if(arr[i] == item.code)
+                            return true
+                    }
+                }
+                return item.checked
             }
         } ,
         created () {
 
         } ,
+
         mounted () {
             var self = this
             layui.use('form' , function(){

@@ -39,14 +39,16 @@ public class AppInfo implements Serializable{
     private String logoShortName;
 
     @UIDate(type = DateType.DATE)
-    //@com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd") //使用fastjson 格式化
+    @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd") //使用fastjson 格式化
     private Date created ;
 
 
 
     @UIFormItem(type = FormItemType.CHECKBOX)
     @DictData({
-        @DictEntry("阅读")
+        @DictEntry("阅读") ,
+        @DictEntry("读") ,
+        @DictEntry("阅")
     })
     private String checkBox;
 

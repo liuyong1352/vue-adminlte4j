@@ -6,7 +6,9 @@ import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.model.Dict;
 import com.vue.adminlte4j.util.AnnotationUtils;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by bjliuyong on 2018/3/26.
@@ -50,15 +52,17 @@ public class ExtInfo extends HashMap<String,Object> {
         ExtInfo extInfo = new ExtInfo() ;
         DictEntry[] dictEntries = dictData.value();
         int autoCode = 0 ;
+        List<Dict> dicts = new ArrayList<>();
         for(DictEntry dictEntry : dictEntries) {
             String code = dictEntry.code() ;
             if(code == null || code.isEmpty())
                 code = String.valueOf(autoCode) ;
-            extInfo.put(DICT, Dict.build(code , dictEntry.value())) ;
+            dicts.add(Dict.build(code , dictEntry.value())) ;
             autoCode++ ;
         }
-
+        extInfo.put(DICT , dicts) ;
         return  extInfo ;
     }
+
 
 }

@@ -21,8 +21,7 @@
                         </template>
                         <template v-else-if="item['type'] === 4 " >
                             <v-checkbox :name="item.key"
-                                    class="form-control"
-                                    :items="item.ext.dict"></v-checkbox>
+                                    :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
                         </template>
                         <template v-else-if="item['type'] === 10 " >
                             <div class="row">
@@ -110,7 +109,15 @@ export default {
     formData: function() {
         var jsonData = {}
         this.items.forEach(function(item){
-            jsonData[item.key] = $("#" + item.key).val()
+            if(item.type == 4) {
+               var arr = []
+               $('input[name=' + item.key + ']:checked').each(function(){
+                   arr.push($(this).val())
+               });
+               jsonData[item.key]=arr.join(',')
+            } else {
+               jsonData[item.key]=$("#" + item.key).val()
+            }
         })
         return jsonData
     } ,
@@ -135,7 +142,7 @@ export default {
     }
   } ,
   mounted : function() {
-    layui.use(['form'] , function(){})
+    //layui.use(['form'] , function(){})
     this.refresh()
   } ,
   components: {
