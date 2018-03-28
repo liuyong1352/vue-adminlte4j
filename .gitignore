@@ -32,3 +32,5 @@ src/main/static/dist/
 src/main/resources/ui-model/
 src/main/static/dist/package-lock.json
 
+*.log
+
