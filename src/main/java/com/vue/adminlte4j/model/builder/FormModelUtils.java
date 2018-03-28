@@ -1,9 +1,9 @@
 package com.vue.adminlte4j.model.builder;
 
 import com.vue.adminlte4j.annotation.Form;
-import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
+import com.vue.adminlte4j.model.form.ExtInfo;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
 import com.vue.adminlte4j.model.form.FormModel;
@@ -101,11 +101,7 @@ public class FormModelUtils {
 
         formItem.config(uiFormItem );
         formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));
-
-        if(formItem.getType() == FormItemType.DATE)
-            formItem.configDate(AnnotationUtils.findAnnotation(field , UIDate.class));
-
-
+        formItem.setExt(ExtInfo.config(formItem.getType() , field));
         formModel.addFormItem(formItem) ;
 
     }

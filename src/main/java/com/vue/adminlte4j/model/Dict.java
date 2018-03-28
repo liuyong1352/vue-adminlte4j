@@ -7,9 +7,16 @@ public class Dict {
 
     private String key   ;
     private String code  ;
-    private String pCode ;
+    private String parentCode ;
     private String label ;
     private int order ;
+
+    public static Dict build(String code , String lable) {
+        Dict dict = new Dict() ;
+        dict.code = code ;
+        dict.label = lable ;
+        return  dict ;
+    }
 
     public String getKey() {
         return key;
@@ -43,11 +50,11 @@ public class Dict {
         this.order = order;
     }
 
-    public String getpCode() {
-        return pCode;
+    public String getParentCode() {
+        return parentCode;
     }
 
-    public void setpCode(String pCode) {
-        this.pCode = pCode;
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 }

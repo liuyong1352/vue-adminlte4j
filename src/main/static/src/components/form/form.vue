@@ -22,7 +22,7 @@
                         <template v-else-if="item['type'] === 4 " >
                             <v-checkbox :name="item.key"
                                     class="form-control"
-                                    :items="item.ext"></v-checkbox>
+                                    :items="item.ext.dict"></v-checkbox>
                         </template>
                         <template v-else-if="item['type'] === 10 " >
                             <div class="row">

@@ -49,7 +49,7 @@ public class FormItem {
 
     public void configDate(UIDate uiDate) {
         ext = new ExtInfo() ;
-        ext.setDateInfo(uiDate);
+
 
         type = FormItemType.DATE ;
     }
