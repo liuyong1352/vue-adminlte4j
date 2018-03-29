@@ -13,15 +13,19 @@ import java.util.List;
 public class FileChangeListener extends Thread  {
 
     private List<FileEntry> fileEntries = new ArrayList<>() ;
-    String projectDir = System.getProperty("user.dir") ;
-    Path sp , tp ;
+    private static String projectDir = System.getProperty("user.dir") ;
+    private static Path sp , tp ;
 
     public FileEntry listen(Path parentPath , String fromPathName){
-        return  listen(parentPath , Paths.get(fromPathName)) ;
+        return  listen(Paths.get(parentPath.toString() , fromPathName)) ;
     }
 
     public FileEntry listen(Path parentPath , Path fromPath){
-        FileEntry fileEntry = new FileEntry().from(parentPath , fromPath) ;
+        return  listen(Paths.get(parentPath.toString() , fromPath.toString())) ;
+    }
+
+    public FileEntry listen(Path fromPath){
+        FileEntry fileEntry = new FileEntry().from(fromPath) ;
         fileEntries.add(fileEntry) ;
         return  fileEntry ;
     }
@@ -71,7 +75,7 @@ public class FileChangeListener extends Thread  {
         fileChangeListener.start();
     }
 
-    class FileEntry {
+    public static class FileEntry {
 
         Path srcPath ;
         Path targetPath ;
@@ -82,7 +86,6 @@ public class FileChangeListener extends Thread  {
 
         }
         public FileEntry from(Path parentPath , Path fromPath) {
-            sp = parentPath ;
             return  from( Paths.get(parentPath.toString()  , fromPath.toString())) ;
         }
 
@@ -96,7 +99,6 @@ public class FileChangeListener extends Thread  {
         }
 
         public FileEntry to(Path parentPath , Path toPath) {
-            tp = parentPath ;
             return to(Paths.get(parentPath.toString(), toPath.toString())) ;
         }
 
