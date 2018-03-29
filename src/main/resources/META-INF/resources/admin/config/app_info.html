@@ -40,19 +40,6 @@
                 <input  name="logoShortName" class="form-control" v-model="logoShortName" >
             </v-form-item >
 
-            <v-form-item  label="复选框:">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
-            </v-form-item >
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like[write]" title="写作">
-                    <input type="checkbox" name="like[read]" title="阅读" checked>
-                    <input type="checkbox" name="like[dai]" title="发呆">
-                </div>
-            </div>
         </v-form>
         <button slot="footer" type="button" @click="saveData" class="btn btn-primary pull-right" >
             保存修改

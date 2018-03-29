@@ -1,5 +1,7 @@
 package com.vue.adminlte4j.support;
 
+import java.io.IOException;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +15,7 @@ import java.util.List;
 public class FileChangeListener extends Thread  {
 
     private List<FileEntry> fileEntries = new ArrayList<>() ;
+    private List<FileEntry> dirFileEntries = new ArrayList<>() ;
     private static String projectDir = System.getProperty("user.dir") ;
     private static Path sp , tp ;
 
@@ -30,11 +33,19 @@ public class FileChangeListener extends Thread  {
         return  fileEntry ;
     }
 
+    public FileEntry listenAbsolute(Path fromPath) {
+        FileEntry fileEntry = new FileEntry().fromAbsolute(fromPath) ;
+        fileEntries.add(fileEntry) ;
+        return  fileEntry ;
+    }
+
     @Override public void run() {
 
         for(int i = 0 ; i < fileEntries.size() ;i++) {
             System.out.println("listen file change" + fileEntries.get(i));
         }
+
+        boolean deal = false ;
 
         while(true) {
             try {
@@ -45,13 +56,28 @@ public class FileChangeListener extends Thread  {
 
             for(int i = 0 ; i < fileEntries.size() ;i++) {
                 try {
+                    if(fileEntries.get(i).type() == FileEntryType.DIR) {
+                        if(deal)
+                            continue;
+                        addFileEntries(fileEntries.get(i)) ;
+                    }
                     onChange(fileEntries.get(i)) ;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            deal = true  ;
         }
 
+    }
+
+    private void addFileEntries(FileEntry fileEntry) throws IOException {
+        Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
+            if(path.toFile().isFile()) {
+                Path relativePath = fileEntry.srcPath.relativize(path) ;
+                listenAbsolute(path).toAbsolute(Paths.get(fileEntry.targetPath.toString() , relativePath.toString())) ;
+            }
+        });
     }
 
     private void  onChange(FileEntry fileEntry) throws Exception{
@@ -80,7 +106,7 @@ public class FileChangeListener extends Thread  {
         Path srcPath ;
         Path targetPath ;
         long lastModified ;
-        int type = 0 ; //单文件 1，目录结构
+        FileEntryType type = FileEntryType.FILE ; //单文件 1，目录结构
 
         public FileEntry(){
 
@@ -90,7 +116,11 @@ public class FileChangeListener extends Thread  {
         }
 
         public FileEntry from(Path fromPath) {
-            this.srcPath = Paths.get(projectDir.toString() , fromPath.toString()) ;
+            return  fromAbsolute(Paths.get(projectDir.toString() , fromPath.toString())) ;
+        }
+
+        public FileEntry fromAbsolute(Path srcPath ) {
+            this.srcPath = srcPath ;
             return  this ;
         }
 
@@ -103,7 +133,13 @@ public class FileChangeListener extends Thread  {
         }
 
         public FileEntry to(Path toPath) {
-            this.targetPath = Paths.get(projectDir.toString() , toPath.toString()) ;
+            return toAbsolute(Paths.get(projectDir.toString() , toPath.toString())) ;
+        }
+
+
+
+        public FileEntry toAbsolute(Path targetPath ) {
+            this.targetPath = targetPath;
             this.lastModified = srcPath.toFile().lastModified() ;
             return this ;
         }
@@ -114,9 +150,13 @@ public class FileChangeListener extends Thread  {
             return l != this.lastModified ;
         }
 
-        public FileEntry type(int type) {
+        public FileEntry type(FileEntryType type) {
             this.type = type ;
             return  this ;
+        }
+
+        public FileEntryType type() {
+            return this.type ;
         }
 
         @Override public String toString() {
@@ -130,5 +170,10 @@ public class FileChangeListener extends Thread  {
         }
     }
 
+    public enum FileEntryType {
+
+        FILE  , DIR
+
+    }
 
 }
