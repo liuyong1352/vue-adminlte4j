@@ -20,7 +20,7 @@
                                  :placeholder="item.placeholder" ></v-date>
                         </template>
                         <template v-else-if="item['type'] === 4 " >
-                            <v-checkbox :name="item.key"
+                            <v-checkbox :name="item.key" :ref="item.key"
                                     :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
                         </template>
                         <template v-else-if="item['type'] === 10 " >
@@ -108,17 +108,14 @@ export default {
     } ,
     formData: function() {
         var jsonData = {}
-        this.items.forEach(function(item){
+        for(var i in this.items){
+            var item = this.items[i]
             if(item.type == 4) {
-               var arr = []
-               $('input[name=' + item.key + ']:checked').each(function(){
-                   arr.push($(this).val())
-               });
-               jsonData[item.key]=arr.join(',')
+                jsonData[item.key]=this.$refs[item.key][0].get_values()
             } else {
                jsonData[item.key]=$("#" + item.key).val()
             }
-        })
+        }
         return jsonData
     } ,
     submit: function(url ,callback) {

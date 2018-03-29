@@ -19,13 +19,11 @@
         },
         methods:{
             get_values:function() {
-                var r = []
-                for(var i in this.items) {
-                    var item=this.items[i]
-                    if(item.checked )
-                        r.push(item.code)
-                }
-                return r
+                var arr = []
+                $('input[name=' + this.name + ']:checked').each(function(){
+                    arr.push($(this).val())
+                })
+                return arr.join(',')
             } ,
             isChecked : function(item) {
                 if(this.checkedValues)  {
