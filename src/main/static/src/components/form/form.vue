@@ -39,6 +39,11 @@
                 </div>
             </template>
         </template>
+        <div v-if="submit_url" class="col-sm-12 text-center" style="border-top: solid 1px #d2d6de;padding: 10px;">
+            <button type="button" class="btn btn-primary" @click="internal_submit">
+                <li class="fa fa-save">&nbsp;保存</li>
+            </button>
+        </div>
     </form>
 </template>
 
@@ -50,7 +55,8 @@ import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 export default {
   name: 'v-form',
   props: {
-    ajax_url : String
+    ajax_url : String,
+    submit_url:{type :String }
   } ,
   data : function() {
     return {
@@ -124,6 +130,11 @@ export default {
 
         axios.post(url,this.formData()).then(function(response){
             callback(response)
+        })
+    } ,
+    internal_submit: function(){
+        this.submit(this.submit_url , function(response){
+            $.alert(response.data)
         })
     } ,
     validate: function() {

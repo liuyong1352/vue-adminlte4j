@@ -17,7 +17,8 @@ public class XModel {
     private int age ;
     private String name ;
 
-    @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd") //使用fastjson 格式化
+
+    @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd hh:mm:ss") //使用fastjson 格式化
     private Date birthDay ;
 
     @UIFormItem(type = FormItemType.CHECKBOX)

@@ -5,6 +5,8 @@ import com.vue.adminlte4j.model.UIModel;
 import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -29,11 +31,11 @@ public class FormController  {
         return  UIModel.success().formData(xModel) ;
     }
 
-    @GetMapping("/test/form/update")
+    @PostMapping("/test/form/update")
     @ResponseBody
-    public UIModel update(XModel xModel){
+    public UIModel update(@RequestBody XModel xModel){
         //just for test form
         this.xModel = xModel ;
-        return  UIModel.success() ;
+        return  UIModel.success().setMsg("保存成功") ;
     }
 }
