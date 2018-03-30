@@ -146,7 +146,13 @@ public interface BaseStore {
             T o = requiredType.newInstance() ;
             String[] values = lines.get(i).split(",") ;
             for(int j = 0 ; j < headers.length && j < values.length; j++ ) {
-                Field field = requiredType.getDeclaredField(headers[j]) ;
+                Field field = null;
+                try {
+                    field = requiredType.getDeclaredField(headers[j]);
+                } catch (NoSuchFieldException e) {
+                    //ignore this field
+                    continue;
+                }
                 if(field.getType().isPrimitive()) {
                     String typeName = field.getType().getName() ;
                     if(typeName.equals("int")  )
