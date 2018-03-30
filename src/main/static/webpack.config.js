@@ -2,7 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 var p = path.resolve(__dirname, '../')
 const lib_names = ['jquery/dist' , 'admin-lte/dist' , 'bootstrap/dist' , 'font-awesome/css' ,
-    'font-awesome/fonts' , 'select2/dist' ,'vue/dist' , 'axios/dist' ,'bootstrap-treeview/dist' ,
+    'font-awesome/fonts' , 'select2/dist' ,'vue/dist' , 'axios/dist' ,
     'datatables.net/js'  ,'layui-src/dist']
 const copyLibDir = []
 for(var index in lib_names) {
