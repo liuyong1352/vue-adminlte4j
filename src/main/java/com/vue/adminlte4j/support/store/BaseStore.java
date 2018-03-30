@@ -146,7 +146,7 @@ public interface BaseStore {
             T o = requiredType.newInstance() ;
             String[] values = lines.get(i).split(",") ;
             for(int j = 0 ; j < headers.length && j < values.length; j++ ) {
-                Field field = null;
+                Field field ;
                 try {
                     field = requiredType.getDeclaredField(headers[j]);
                 } catch (NoSuchFieldException e) {
