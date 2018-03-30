@@ -11,3 +11,4 @@
 
 ## System
 - [] Log System
+- [x] Listen file change and update  

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATL - LayOut </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+
+<body>
+
+<v-app id="app" :data="data" >
+    <v-box title="表单">
+        <v-form ajax_url="/test/form/get"></v-form>
+    </v-box>
+
+</v-app>
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+
+        data : function () {
+            return {
+
+
+            }
+        } ,
+        methods : {
+
+        } ,
+        mounted : function () {}
+    })
+</script>
+</body>
+</html>
