@@ -158,6 +158,8 @@ public interface BaseStore {
                     if(typeName.equals("int")  )
                         ReflectUtils.setValue(field , o , Integer.valueOf(values[j]));
                 } else if(ReflectUtils.isDateOrTime(field.getType()))  {
+                    if(values[j].isEmpty())
+                        continue;
                     Date newDate = new Date(Long.valueOf(values[j]));
                     ReflectUtils.setValue(field , o , newDate);
                 } else {

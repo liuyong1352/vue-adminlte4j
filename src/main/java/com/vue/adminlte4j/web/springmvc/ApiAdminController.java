@@ -86,12 +86,13 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/menu/get/")
     @ResponseBody
     public UIModel _getMenu(String id) {
-        UIModel uiModel = UIModel.success() ;
-        configureMenu(uiModel);
-        Menu menu = MenuUtils.getMenu(uiModel.menu() , id );
-        if(menu == null)
-            return UIModel.success().formData(Menu.class);
-        return  UIModel.success().formData(menu) ;
+        Menu menu = null ;
+        if(id != null && !id.isEmpty()) {
+            UIModel uiModel = UIModel.success() ;
+            configureMenu(uiModel);
+            menu = MenuUtils.getMenu(uiModel.menu() , id );
+        }
+        return  UIModel.success().formData(menu , Menu.class) ;
     }
 
     @GetMapping("/admin/menu/list")
