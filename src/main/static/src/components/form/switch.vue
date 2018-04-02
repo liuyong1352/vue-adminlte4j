@@ -20,7 +20,7 @@
         },
         methods:{
             get_values:function() {
-                return $('input[name=' + 'isAdmin' + ']:checked').length >0
+                return $('input[name=' + 'isAdmin' + ']:checked').length //0 or 1
             }
         } ,
         created () {
