@@ -4,7 +4,8 @@
             :name="name"
             :value="item.code"
             :title="item.label"
-            :checked="isChecked(item)">
+            :checked="isChecked(item)"
+            lay-skin="primary">
     </div>
 
 </template>

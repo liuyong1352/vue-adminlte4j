@@ -12,13 +12,10 @@
 
 <v-app id="app" :data="data" >
     <v-box >
-        <div slot="header">
-            <v-form ajax_url="/test/form/get" ></v-form>
-            <!--submit_url="/test/form/update"-->
-        </div>
-
-
+        <v-form ajax_url="/test/form/get" submit_url="/test/form/update">
+        </v-form>
     </v-box>
+
 
 </v-app>
 <script src="/lib/lib.js"></script>

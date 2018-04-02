@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by bjliuyong on 2018/3/30.
  */
-@Form(span = 2 , ignore = false)
+@Form(span = 4 , ignore = false)
 public class XModel {
 
     private int age ;
@@ -23,6 +23,9 @@ public class XModel {
     @UIFormItem(type = FormItemType.CHECKBOX)
     @DictData({@DictEntry("写作") ,@DictEntry("阅读"),@DictEntry("听说")})
     private String love ;
+
+    @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N")
+    private boolean isAdmin ;
 
     public int getAge() {
         return age;

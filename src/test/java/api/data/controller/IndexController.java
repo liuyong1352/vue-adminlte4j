@@ -1,4 +1,4 @@
-package api;
+package api.data.controller;
 
 import api.data.MenuApiInJvm;
 import com.vue.adminlte4j.model.UIModel;

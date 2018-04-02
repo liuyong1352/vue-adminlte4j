@@ -23,6 +23,10 @@
                             <v-checkbox :name="item.key" :ref="item.key"
                                     :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
                         </template>
+                        <template v-else-if="item['type'] === 5 " >
+                            <v-switch :name="item.key" :ref="item.key"
+                                    :isOpen="buildVal(item)"></v-switch>
+                        </template>
                         <template v-else-if="item['type'] === 10 " >
                             <div class="row">
                                 <div class="col-sm-8">
@@ -50,7 +54,8 @@
 <script>
 import VInput       from '../form/input.vue'
 import VDate        from '../date/date.vue'
-import VCheckBox    from '../check-box.vue'
+import VCheckBox    from './check-box.vue'
+import VSwitch    from './switch.vue'
 import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 export default {
   name: 'v-form',
@@ -116,7 +121,7 @@ export default {
         var jsonData = {}
         for(var i in this.items){
             var item = this.items[i]
-            if(item.type == 4) {
+            if(item.type == 4 || item.type == 5) {
                 jsonData[item.key]=this.$refs[item.key][0].get_values()
             } else {
                jsonData[item.key]=$("#" + item.key).val()
@@ -160,6 +165,7 @@ export default {
         'v-icon-selector': IconSelector,
         'v-input': VInput,
         'v-checkbox': VCheckBox,
+        'v-switch': VSwitch,
         'v-date': VDate
   }
 }

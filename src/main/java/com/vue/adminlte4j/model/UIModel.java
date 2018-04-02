@@ -141,8 +141,8 @@ public class UIModel extends HashMap implements Map {
         return put(FormModelUtils.getFormModel(bean)).data(bean) ;
     }
 
-    public UIModel formData(Class clsType) {
-        return put(FormModelUtils.getFormModel(clsType)) ;
+    public UIModel formData(Object bean , Class clsType) {
+        return put(FormModelUtils.getFormModel(clsType)).data(bean) ;
     }
 
 

@@ -9,7 +9,6 @@ import VBox          from './components/box.vue'
 import VSelect2      from './components/select2.vue'
 import VFooter       from './components/v-footer.vue'
 import VTable        from './components/table.vue'
-import VCheckBox     from './components/check-box.vue'
 import VAlert        from './components/alert.vue'
 import VRow          from './grid/Row.vue'
 import VCallout      from './components/callout.vue'
@@ -21,6 +20,8 @@ import VFolder       from  './components/folder.vue'
 import VForm         from  './components/form/form.vue'
 import VFormItem     from  './components/form/form-item.vue'
 import VInput        from  './components/form/input.vue'
+import VCheckBox     from './components/form/check-box.vue'
+import VSwitch       from './components/form/switch.vue'
 import VDate         from  './components/date/date.vue'
 import VModal        from  './components/ui-element/modal.vue'
 import VTags         from  './components/tags.vue'
@@ -50,6 +51,7 @@ Vue.component('v-table'             , VTable)
 Vue.component('v-form'              , VForm)
 Vue.component('v-form-item'         , VFormItem)
 Vue.component('v-input'             , VInput)
+Vue.component('v-switch'            , VSwitch)
 Vue.component('v-date'              , VDate)
 Vue.component('v-modal'             , VModal)
 Vue.component('v-tree'              , VTreeView)

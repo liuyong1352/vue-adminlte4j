@@ -1,5 +1,6 @@
-package api;
+package api.data.controller;
 
+import api.UserInfo;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import java.util.ArrayList;
