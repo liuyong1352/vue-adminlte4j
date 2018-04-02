@@ -14,26 +14,17 @@
     <!-- /.content-wrapper -->
     <v-box title="查询条件">
 
-        <p>{{query['name']}} -- {{query['age']}}</p>
-        <label class="layui-form-label">密码框</label>
-        <v-input  v-model="query['age']" placeholder="Enter Age"  ></v-input>
-
-        <v-form>
-            <v-row>
-                <v-form-item span="4" label="Name:">
-                    <input type="text" class="form-control" placeholder="Enter ..." v-model="query['name']">
-                </v-form-item>
-
-                <v-form-item span="4" label="Age:">
-
-                </v-form-item >
-            </v-row>
-        </v-form>
+        <v-form ajax_url="/test/form/get" ref="queryForm"></v-form>
         <button @click="requery"> 查询</button>
 
-        <v-table id="tables" :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
+
 
     </v-box>
+    <v-box title="查询条件">
+        <v-table id="tables" :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
+    </v-box>
+
+
     <div class="row">
         <div class="col-md-6">
             <v-box :title="'Table - 简单实例'">
@@ -111,7 +102,7 @@
         } ,
         methods : {
             requery : function () {
-                this.$refs.table.fetchData()
+                this.$refs.table.refresh(this.$refs.queryForm)
             }
         }
     })

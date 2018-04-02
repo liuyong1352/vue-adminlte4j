@@ -11,8 +11,12 @@
 <body>
 
 <v-app id="app" :data="data" >
-    <v-box title="表单">
-        <v-form ajax_url="/test/form/get" submit_url="/test/form/update"></v-form>
+    <v-box >
+        <div slot="header">
+            <v-form ajax_url="/test/form/get" ></v-form>
+            <!--submit_url="/test/form/update"-->
+        </div>
+
 
     </v-box>
 

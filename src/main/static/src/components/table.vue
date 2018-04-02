@@ -110,9 +110,7 @@ export default {
     },
 
   } ,
-  mounted : function() {
-    console.log(" table mounted!!")
-  } ,
+
   methods : {
     getParam: function() {
         var s = ''
@@ -120,7 +118,9 @@ export default {
             s += ('&' + key + '=' + this.query[key])
         return s
     } ,
-    refresh : function() {
+    refresh : function(queryObj) {
+        if(queryObj&&queryObj._isVue)
+            this.query = queryObj.get_values()
         this.fetchData()
     } ,
     row_selected: function(row,index) {
@@ -165,6 +165,8 @@ export default {
         return 'btn btn-xs ' + cls
 
     }
+  },
+  mounted : function() {
   }
 }
 </script>

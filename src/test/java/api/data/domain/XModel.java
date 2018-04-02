@@ -1,6 +1,5 @@
 package api.data.domain;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.vue.adminlte4j.annotation.DictData;
 import com.vue.adminlte4j.annotation.DictEntry;
 import com.vue.adminlte4j.annotation.Form;
@@ -11,7 +10,7 @@ import java.util.Date;
 /**
  * Created by bjliuyong on 2018/3/30.
  */
-@Form(span = 6 , ignore = false)
+@Form(span = 2 , ignore = false)
 public class XModel {
 
     private int age ;

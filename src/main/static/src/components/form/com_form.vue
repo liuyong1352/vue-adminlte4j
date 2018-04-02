@@ -124,9 +124,6 @@ export default {
         }
         return jsonData
     } ,
-    get_values:function() {
-        return this.formData()
-    } ,
     submit: function(url ,callback) {
         if(!this.validate())
             return
