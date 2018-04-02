@@ -25,7 +25,7 @@ public class XModel {
     private String love ;
 
     @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N")
-    private boolean isAdmin ;
+    private int isAdmin ;
 
     public int getAge() {
         return age;
@@ -57,5 +57,13 @@ public class XModel {
 
     public void setLove(String love) {
         this.love = love;
+    }
+
+    public int getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

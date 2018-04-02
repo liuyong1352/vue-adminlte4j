@@ -25,7 +25,7 @@
                         </template>
                         <template v-else-if="item['type'] === 5 " >
                             <v-switch :name="item.key" :ref="item.key"
-                                    :isOpen="buildVal(item)"></v-switch>
+                                    :isOpen="buildVal(item) === 1"></v-switch>
                         </template>
                         <template v-else-if="item['type'] === 10 " >
                             <div class="row">
