@@ -20,6 +20,16 @@ public class FileChangeListener extends Thread  {
 
     public static final String SPRING_BOOT = "spring_boot" ;
 
+    public static FileChangeListener INSTANCE = new FileChangeListener() ;
+
+    private FileChangeListener() {
+        this.setDaemon(true);
+    }
+
+    public static FileChangeListener getInstance() {
+        return  INSTANCE ;
+    }
+
     public FileEntry listen(Path parentPath , String fromPathName){
         return  listen(Paths.get(parentPath.toString() , fromPathName)) ;
     }
@@ -63,11 +73,12 @@ public class FileChangeListener extends Thread  {
         }
 
         boolean deal = false ;
-
-        while(true) {
+        boolean isInterrupted = false ;
+        while(!isInterrupted) {
             try {
                 Thread.sleep(1000L);
             } catch (InterruptedException e) {
+                isInterrupted = true ;
                 e.printStackTrace();
             }
 

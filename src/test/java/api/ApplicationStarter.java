@@ -21,22 +21,18 @@ public class ApplicationStarter {
 
     public static void main(String[] args) {
         configFileChangeListener();
-
-
-
         SpringApplication.run(ApplicationStarter.class, args);
+        FileChangeListener.getInstance().interrupt();
     }
 
 
 
     private static void configFileChangeListener() {
-        FileChangeListener fileChangeListener = new FileChangeListener() ;
+        FileChangeListener fileChangeListener = FileChangeListener.getInstance();
 
         Path distLibPath = Paths.get("src" , "main" ,"static" , "dist" , "lib") ;
         Path targetLibPath = Paths.get("target" , "classes" , "META-INF" , "resources" , "lib") ;
         Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
-
-
 
         fileChangeListener.listen(distLibPath , "base.js").to(targetLibPath , "base.js") ;
         fileChangeListener.listen(distLibPath , "lib.js").to(targetLibPath , "lib.js") ;
