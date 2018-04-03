@@ -54,6 +54,7 @@
                               //console.log(data.elem); //得到checkbox原始DOM对象
                 })
             })
+            //console.log("check-box ! mounted")
         }
     }
 </script>

@@ -158,7 +158,6 @@ export default {
     }
   } ,
   mounted : function() {
-    //layui.use(['form'] , function(){})
     this.refresh()
   } ,
   components: {
