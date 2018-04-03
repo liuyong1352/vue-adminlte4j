@@ -95,7 +95,7 @@ public class FormModelUtils {
         formItem.setSpan(formModel.getSpan());
 
         if(ReflectUtils.isDateOrTime(field.getType())) {
-            formItem.setType(FormItemType.DATE);
+            formItem.setType(FormItemType.DATE.getKey());
             formItem.setPlaceholder("yyyy-MM-dd");
         }
 

@@ -12,7 +12,7 @@ public class FormItem {
     private String key   ;
     private String defVal ;
     private String placeholder ;
-    private int    type = FormItemType.INPUT;
+    private int    type = FormItemType.INPUT.getKey();
     private int     span = 12;
     private boolean hidden ;
     private Validate validate ;
@@ -23,8 +23,8 @@ public class FormItem {
         if(uiFormItem == null)
             return;
 
-        if(uiFormItem.type() >= 0 )
-            this.type =  uiFormItem.type() ;
+        if(uiFormItem.type() != FormItemType.DEFAULT )
+            this.type =  uiFormItem.type().getKey() ;
 
         this.hidden = uiFormItem.hidden() ;
         if(uiFormItem.span() != 0)
@@ -51,7 +51,7 @@ public class FormItem {
         ext = new ExtInfo() ;
 
 
-        type = FormItemType.DATE ;
+        type = FormItemType.DATE.getKey() ;
     }
 
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {

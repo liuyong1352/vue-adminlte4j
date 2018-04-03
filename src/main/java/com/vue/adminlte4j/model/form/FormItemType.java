@@ -3,40 +3,64 @@ package com.vue.adminlte4j.model.form;
 /**
  * Created by bjliuyong on 2018/3/7.
  */
-public class FormItemType {
+public enum FormItemType {
+    DEFAULT(-1, null) ,
+
 
     /**
      * 普通输入
      */
-    public static final int INPUT = 0 ;
+    INPUT(0 , "input") ,
 
     /**
      * 复选框
      */
-    public static final int CHECKBOX = 4 ;
+    CHECKBOX(4, "checkbox") ,
 
     /**
      * 开关
      */
-    public static final int SWITCH = 5;
+    SWITCH(5 , "switch") ,
 
     /**
      * select
      */
-    public static final int SELECT = 6 ;
+    SELECT(6 , "select") ,
 
     /**
      * 图标选择器
      */
-    public static final int ICON_SELECTOR = 10 ;
+    ICON_SELECTOR(10 , "") ,
 
-    /**
-     * 隐藏域
-     */
-    public static final int INPUT_HIDDEN = 11 ;
+    DATE(12)
 
-    public static final int DATE = 12 ;
+    ;
 
+    FormItemType(int key) {
+        this.key = key;
+    }
 
+    FormItemType(int key, String text) {
+        this.key = key;
+        this.text = text;
+    }
 
+    private int key ;
+    private String text ;
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

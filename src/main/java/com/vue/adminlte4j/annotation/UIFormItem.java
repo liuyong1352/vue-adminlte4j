@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.annotation;
 
+import com.vue.adminlte4j.model.form.FormItemType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -21,7 +22,7 @@ public @interface UIFormItem {
      * 表单项类型
      * @return
      */
-    int     type() default -1;
+    FormItemType type() default FormItemType.DEFAULT;
     String defVal() default "" ;
     String placeholder() default "" ;
 

@@ -23,13 +23,10 @@ public class ExtInfo extends HashMap<String,Object> {
 
     public static ExtInfo config(int formItemType, Field field ) {
         ExtInfo extInfo = null ;
-        switch (formItemType) {
-            case FormItemType.DATE :
-                extInfo = ExtInfo.configDate(field);
-                break;
-            case FormItemType.CHECKBOX:
-                extInfo = ExtInfo.configDict(field);
-                break;
+        if(formItemType == FormItemType.DATE.getKey()) {
+            extInfo = ExtInfo.configDate(field);
+        } else if(formItemType == FormItemType.CHECKBOX.getKey()) {
+            extInfo = ExtInfo.configDict(field);
         }
         return  extInfo ;
     }
