@@ -1,6 +1,5 @@
 package com.vue.adminlte4j.model;
 
-import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import java.io.Serializable;
 

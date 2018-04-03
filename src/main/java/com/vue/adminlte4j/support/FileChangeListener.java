@@ -15,9 +15,10 @@ import java.util.List;
 public class FileChangeListener extends Thread  {
 
     private List<FileEntry> fileEntries = new ArrayList<>() ;
-    private List<FileEntry> dirFileEntries = new ArrayList<>() ;
     private static String projectDir = System.getProperty("user.dir") ;
     private static Path sp , tp ;
+
+    public static final String SPRING_BOOT = "spring_boot" ;
 
     public FileEntry listen(Path parentPath , String fromPathName){
         return  listen(Paths.get(parentPath.toString() , fromPathName)) ;
@@ -37,6 +38,18 @@ public class FileChangeListener extends Thread  {
         FileEntry fileEntry = new FileEntry().fromAbsolute(fromPath) ;
         fileEntries.add(fileEntry) ;
         return  fileEntry ;
+    }
+
+    public FileChangeListener autoConfig(String type) {
+        Path javaMetaInfResPath = Paths.get("src" , "main" ,"resources" , "META-INF" , "resources" ) ;
+        Path classMetaInfResPath = Paths.get("target" , "classes"  , "META-INF" , "resources" ) ;
+        listen(javaMetaInfResPath)
+            .to(classMetaInfResPath).type(FileChangeListener.FileEntryType.DIR);
+
+        listen(Paths.get("src" , "test" ,"resources", "static" ))
+            .to(Paths.get("target" , "test-classes" , "static"))
+            .type(FileChangeListener.FileEntryType.DIR);
+        return  this ;
     }
 
     @Override public void run() {
@@ -73,7 +86,7 @@ public class FileChangeListener extends Thread  {
 
     private void addFileEntries(FileEntry fileEntry) throws IOException {
         Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
-            if(path.toFile().isFile()) {
+            if(path.toFile().isFile() && path.toString().endsWith(".html")) {
                 Path relativePath = fileEntry.srcPath.relativize(path) ;
                 listenAbsolute(path).toAbsolute(Paths.get(fileEntry.targetPath.toString() , relativePath.toString())) ;
             }

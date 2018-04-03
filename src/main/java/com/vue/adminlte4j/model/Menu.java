@@ -5,7 +5,6 @@ import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.builder.FormModelBuilder;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
-
 import com.vue.adminlte4j.model.form.FormModel;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormMode
     @Validate
     private String url ;
 
-    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标" )
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , label = "图标"  )
     @Validate
     private String icon ;
 

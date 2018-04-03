@@ -36,19 +36,12 @@ public class ApplicationStarter {
         Path targetLibPath = Paths.get("target" , "classes" , "META-INF" , "resources" , "lib") ;
         Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
 
-        Path javaMetaInfResPath = Paths.get("src" , "main" ,"resources" , "META-INF" , "resources" ) ;
-        Path classMetaInfResPath = Paths.get("target" , "classes"  , "META-INF" , "resources" ) ;
+
 
         fileChangeListener.listen(distLibPath , "base.js").to(targetLibPath , "base.js") ;
         fileChangeListener.listen(distLibPath , "lib.js").to(targetLibPath , "lib.js") ;
         fileChangeListener.listen(distLibPath , vueAdminlteJs).to(targetLibPath , vueAdminlteJs) ;
-
-        fileChangeListener.listen(javaMetaInfResPath,"admin")
-            .to(classMetaInfResPath , "admin").type(FileChangeListener.FileEntryType.DIR);
-
-        fileChangeListener.listen(Paths.get("src" , "test" ,"resources", "static" ))
-            .to(Paths.get("target" , "test-classes" , "static"))
-            .type(FileChangeListener.FileEntryType.DIR);
+        fileChangeListener.autoConfig(FileChangeListener.SPRING_BOOT);
 
         fileChangeListener.start();
     }
