@@ -32,7 +32,10 @@ public enum FormItemType {
      */
     ICON_SELECTOR(10 , "") ,
 
-    DATE(12)
+    /**
+     * 日期类的
+     */
+    DATE(12 )
 
     ;
 

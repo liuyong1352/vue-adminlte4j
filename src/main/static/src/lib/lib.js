@@ -1,3 +1,33 @@
+/*!
+ @Title: lib.js
+ @Description：前端框架
+ @Site: www.xxx.com
+ @Author: andre
+ @License：MIT
+ */
+;!function(win){
+    "use strict";
+    var doc = document
+    //获取lib所在目录
+    ,getPath = function(){
+        var jsPath = doc.currentScript ? doc.currentScript.src : function(){
+                var js = doc.scripts
+                    ,last = js.length - 1
+                    ,src;
+                for(var i = last; i > 0; i--){
+                    if(js[i].readyState === 'interactive'){
+                        src = js[i].src;
+                        break;
+                    }
+                }
+                return src || js[last].src;
+            }();
+        return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
+    }()
+    win.libpath = getPath
+}(window);
+
+
 LazyLoad = function(global) {
 
     var isIE = !1
@@ -255,6 +285,3 @@ app = function (scope) {
     }
 }(this) ;
 
-
-(function() {
-})();
