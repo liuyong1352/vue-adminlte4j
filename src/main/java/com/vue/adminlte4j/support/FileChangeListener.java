@@ -49,6 +49,10 @@ public class FileChangeListener extends Thread  {
         listen(Paths.get("src" , "test" ,"resources", "static" ))
             .to(Paths.get("target" , "test-classes" , "static"))
             .type(FileChangeListener.FileEntryType.DIR);
+
+        listen(Paths.get("src" , "main" ,"resources", "static" ))
+            .to(Paths.get("target" , "classes" , "static"))
+            .type(FileChangeListener.FileEntryType.DIR);
         return  this ;
     }
 
