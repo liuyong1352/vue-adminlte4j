@@ -7,8 +7,6 @@ import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
 
 import com.vue.adminlte4j.model.form.FormModel;
-import com.vue.adminlte4j.model.form.ValidateType;
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
