@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class FileChangeListener extends Thread  {
             return;
 
         Files.copy(fileEntry.srcPath , fileEntry.targetPath , StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("#############file copy " + fileEntry);
+        System.out.println(LocalDateTime.now().toString() + "#####File Copy " + fileEntry);
     }
 
 

@@ -45,6 +45,7 @@
             var self = this
             layui.use('form' , function(){
                 var form = layui.form
+                form.render('checkbox' )
                 form.on('checkbox('+ self.name +')', function(data){
                     for(var i in self.items) {
                         var item=self.items[i]

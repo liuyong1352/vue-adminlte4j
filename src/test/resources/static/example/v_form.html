@@ -17,9 +17,14 @@
     </v-box>
 
     <v-box title="静态生成">
-        <v-form>
-            <v-check ref="checkbox_like" :items="items"></v-check>
-        </v-form>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">单行输入框</label>
+                <div class="layui-input-block">
+                    <v-check ref="checkbox_like" :items="items"></v-check>
+                </div>
+            </div>
+        </div>
     </v-box>
 
 
