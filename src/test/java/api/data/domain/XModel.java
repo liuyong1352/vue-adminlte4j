@@ -14,6 +14,8 @@ import java.util.Date;
 public class XModel {
 
     private int age ;
+
+    @UIFormItem(span = 3)
     private String name ;
 
 
@@ -24,7 +26,7 @@ public class XModel {
     @DictData({@DictEntry("写作") ,@DictEntry("阅读"),@DictEntry("听说")})
     private String love ;
 
-    @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N")
+    @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N" , span = 12)
     private int isAdmin ;
 
     public int getAge() {
