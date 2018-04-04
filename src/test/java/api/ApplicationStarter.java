@@ -32,10 +32,12 @@ public class ApplicationStarter {
         Path distLibPath = Paths.get("src" , "main" ,"static" , "dist" , "lib") ;
         Path targetLibPath = Paths.get("target" , "classes" , "META-INF" , "resources" , "lib") ;
         Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
+        Path baseCss = Paths.get("vue-adminlte","dist","css","base.css") ;
 
         fileChangeListener.listen(distLibPath , "base.js").to(targetLibPath , "base.js") ;
         fileChangeListener.listen(distLibPath , "lib.js").to(targetLibPath , "lib.js") ;
         fileChangeListener.listen(distLibPath , vueAdminlteJs).to(targetLibPath , vueAdminlteJs) ;
+        fileChangeListener.listen(distLibPath , baseCss).to(targetLibPath , baseCss) ;
         fileChangeListener.autoConfig(FileChangeListener.SPRING_BOOT);
 
         fileChangeListener.start();

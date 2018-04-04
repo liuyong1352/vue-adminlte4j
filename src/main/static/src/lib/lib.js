@@ -200,6 +200,7 @@ app = function (scope) {
             load_css(css[i] + ".min.css")
         }
         load_css('/lib/layui-src/dist/css/layui.css')
+        load_css('/lib/vue-adminlte/dist/css/base.css')
         for(var i = 0; i < js.length; i++) {
             arr_js.push(js[i])
         }

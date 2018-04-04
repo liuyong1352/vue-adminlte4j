@@ -75,6 +75,7 @@ export default {
   } ,
   methods: {
     refresh: function(data) {
+        var vm = this
         if(this.ajax_url) {
             var self=this
             axios.get(this.ajax_url , {params:data}).then(function (response) {
@@ -82,6 +83,12 @@ export default {
                 self.items = formJson
                 self.data = response.data.data||{}
                 self.form_inline=response.data.FormModel.inline
+                vm.$nextTick(function () {
+                    layui.use('form' , function(){
+                        var form = layui.form
+                        form.render()
+                    })
+                })
             })
         }
     } ,
