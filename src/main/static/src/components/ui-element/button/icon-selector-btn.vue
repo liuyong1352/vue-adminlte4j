@@ -17,7 +17,7 @@
             'id':{type:String},
             'value':{type:String},
             'name': {type:String},
-            type: {type:String, default:'btn'}
+            type: {type:String, default:'input'}
         },
         methods : {
 
