@@ -12,6 +12,8 @@ public enum FormItemType {
      */
     INPUT(0 , "input") ,
 
+    RADIO(3,"radio"),
+
     /**
      * 复选框
      */

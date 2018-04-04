@@ -2,6 +2,7 @@ import VInput       from '../form/input.vue'
 import VDate        from '../date/date.vue'
 import VCheckBox    from './check-box.vue'
 import VSwitch      from './switch.vue'
+import VRadio       from './radio.vue'
 import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
 
 export const baseForm = {
@@ -120,6 +121,7 @@ export const baseForm = {
         'v-input': VInput,
         'v-checkbox': VCheckBox,
         'v-switch': VSwitch,
-        'v-date': VDate
+        'v-date': VDate,
+        'v-radio' : VRadio
     }
 }
