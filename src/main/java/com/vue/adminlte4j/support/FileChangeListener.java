@@ -101,6 +101,8 @@ public class FileChangeListener extends Thread  {
     }
 
     private void addFileEntries(FileEntry fileEntry) throws IOException {
+        if(!fileEntry.srcPath.toFile().exists())
+            return;
         Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
             if(path.toFile().isFile() && path.toString().endsWith(".html")) {
                 Path relativePath = fileEntry.srcPath.relativize(path) ;
