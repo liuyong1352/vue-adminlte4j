@@ -24,10 +24,14 @@
                     <v-check ref="checkbox_like" :items="items"></v-check>
                 </div>
             </div>
-
+            <div class="layui-form-item">
+                <v-form-item label="图标使用">
+                    <v-icon-selector id="icon_a" type="input"></v-icon-selector>
+                </v-form-item>
+            </div>
 
         </div>
-        <v-lform ajax_url="/test/form/get" ></v-lform>
+        <!--<v-lform ajax_url="/test/form/get" ></v-lform>-->
     </v-box>
 
     <div class="layui-fluid">

@@ -68,8 +68,6 @@ export const baseForm = {
                 return item.span?('col-md-'+item.span):''
         } ,
         get_wrapper_class:function (item) {
-            if(item.type == 10)
-                return 'layui-inline'
             return 'layui-input-block'
         } ,
         formData: function() {
