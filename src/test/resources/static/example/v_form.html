@@ -17,11 +17,12 @@
     </v-box>
 
     <v-box title="静态生成">
+        <p>c_v:{{c_v}}</p>
         <div class="layui-form">
             <div class="layui-form-item">
                 <label class="layui-form-label">单行输入框</label>
                 <div class="layui-input-block">
-                    <v-check ref="checkbox_like" :items="items"></v-check>
+                    <v-check ref="checkbox_like" :items="items" name="c_v" v-model="c_v"></v-check>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -277,10 +278,11 @@
         data : function () {
             return {
                 items : [
-                    {key:'write' ,  label:'写作' ,checked:false},
-                    {key:'read' ,   label:'阅读',checked:false},
-                    {key:'say' ,    label:'说',checked:true}
-                ]
+                    {code:'write' ,  label:'写作'  ,checked:false},
+                    {code:'read' ,   label:'阅读',checked:false},
+                    {code:'say' ,    label:'说',checked:true}
+                ] ,
+                c_v : {}
             }
         } ,
         methods : {
