@@ -33,20 +33,16 @@
                                     :isOpen="buildVal(item) === 1"></v-switch>
                         </template>
                         <template v-else-if="item['type'] === 10 " >
-                            <div class="layui-inline">
-                                <i data-bv-icon-for="icon" :id="item['key'] + '_i'" :class="'form-control-feedback ' + buildVal(item)" ></i>
-                                <input type="text" :id="item.key" name="item['key']"  class="layui-input" :value="buildVal(item)" :placeholder="item.placeholder">
-                            </div>
-                            <div class="layui-inline">
-                                <v-icon-selector :icon_el="'#' + item.key + '_i #' + item.key " ></v-icon-selector>
-                            </div>
+                            <v-icon-selector :id="item.key"
+                                :name="item['key']"
+                                :value="buildVal(item)" type="input"></v-icon-selector>
                         </template>
                         </div>
                     </div>
                 </div>
             </template>
         </template>
-        <div v-if="submit_url" class="col-sm-12 text-center" style="border-top: solid 1px #d2d6de;padding: 10px;">
+        <div v-if="submit_url" class="col-sm-12 text-center" style="border-top: solid 1px #d2d6de;padding-top: 10px;">
             <button type="button" class="btn btn-primary" @click="internal_submit">
                 <li class="fa fa-save">&nbsp;保存</li>
             </button>

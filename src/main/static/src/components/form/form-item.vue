@@ -1,10 +1,8 @@
 <template>
-    <div :class="col_size">
-        <div class="form-group">
-          <label v-if="label" class="col-sm-2 control-label">{{label}}</label>
-          <div class="col-sm-10">
-              <slot></slot>
-          </div>
+    <div class="layui-form-item">
+        <label v-if="label" class="layui-form-label">{{label}}</label>
+        <div class="layui-input-block">
+          <slot></slot>
         </div>
     </div>
 </template>

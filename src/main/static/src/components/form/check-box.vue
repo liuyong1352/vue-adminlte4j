@@ -5,6 +5,8 @@
             :value="item.code"
             :title="item.label"
             :checked="isChecked(item)"
+            :disabled="disabled"
+            @change="change"
             lay-skin="primary">
     </div>
 
@@ -17,6 +19,7 @@
             name : String,
             checkedValues:String,
             items : Object
+
         },
         methods:{
             get_values:function() {
@@ -35,6 +38,10 @@
                     }
                 }
                 return item.checked
+            } ,
+            change (event) {
+                const checked = event.target.checked;
+                this.$emit('input', this.get_values());
             }
         } ,
         created () {
@@ -51,6 +58,7 @@
                         if(item.code == data.value)
                             item.checked = data.elem.checked
                     }
+                    self.$emit('input', self.get_values());
                               //console.log(data.elem); //得到checkbox原始DOM对象
                 })
             })

@@ -5,94 +5,21 @@
     <title>应用信息</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
-
 <body>
 <v-app :data="data" >
     <!-- /.content-wrapper -->
     <v-box title="App配置界面">
-        <v-form name="appName"  >
-
-            <v-form-item label="首页URL:">
-                <input name="indexUrl" class="form-control"  v-model="indexUrl">
-            </v-form-item>
-
-            <v-form-item label="APP名称:">
-                <input name="appName" class="form-control" v-model="appName" >
-            </v-form-item >
-
-            <v-form-item label="用户图片默认url:">
-                <input  name="userImgUrl"class="form-control" v-model="userImgUrl" >
-            </v-form-item >
-
-            <v-form-item label="用户详细信息url:">
-                <input name="profileUrl" class="form-control" v-model="profileUrl" >
-            </v-form-item >
-
-            <v-form-item label="登出url:">
-                <input name="signOutUrl" class="form-control" v-model="signOutUrl" >
-            </v-form-item >
-
-            <v-form-item label="logo名称:">
-                <input name="logoName" class="form-control" v-model="logoName" >
-            </v-form-item >
-
-            <v-form-item  label="logo名称简写:">
-                <input  name="logoShortName" class="form-control" v-model="logoShortName" >
-            </v-form-item >
-
-        </v-form>
-        <button slot="footer" type="button" @click="saveData" class="btn btn-primary pull-right" >
-            保存修改
-        </button>
+        <v-form ajax_url="/admin/app_info/get/" submit_url="/admin/app_info/update" ></v-form>
+        <!--<div slot="footer" class="text-center">
+            &lt;!&ndash; <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
+                 <li class="fa fa-save">&nbsp;保存</li>
+             </button>&ndash;&gt;
+        </div>-->
 
     </v-box>
 </v-app>
 <script src="/lib/lib.js"></script>
 <script>
-    app.main({
-
-        data : function () {
-            return {
-                indexUrl:"",
-                appName:"",
-                userName:"",
-                userImgUrl:"",
-                profileUrl:"",
-                signOutUrl:"",
-                logoName:"",
-                logoShortName:"",
-            }
-
-
-        } ,
-        methods : {
-            saveData:function(){
-                axios.post("/admin/app_info/update",this._data).then(function(response){
-                    $.alert(response.data) ;
-                })
-            }
-        } ,
-        mounted : function ($vm) {
-            var self = $vm;
-            axios.get("/admin/app_info/get").then(function (response) {
-                var data = response.data.data
-
-                $.extend(self , data)
-
-                /*self.indexUrl   = data.indexUrl;
-                self.appName    = data.appName;
-                self.userName   = data.userName;
-                self.userImgUrl = data.userImgUrl;
-                self.profileUrl = data.profileUrl;
-                self.signOutUrl = data.signOutUrl;
-                self.logoName   = data.logoName;
-                self.logoShortName = data.logoShortName;*/
-
-            })
-        }
-    });
-
-
-
+    app.main({});
 </script>
 </body>

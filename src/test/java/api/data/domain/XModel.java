@@ -13,6 +13,9 @@ import java.util.Date;
 @Form(span = 4 ,ignore = false)
 public class XModel {
 
+    @UIFormItem(span = 12 , label = "输入框")
+    private String inputName ;
+
     private int age ;
 
     @UIFormItem(span = 3)
@@ -32,6 +35,9 @@ public class XModel {
 
     @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N" , span = 12)
     private int isAdmin ;
+
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , span = 12 , label = "选择图标")
+    private String myIcon ;
 
     public int getAge() {
         return age;
@@ -73,11 +79,27 @@ public class XModel {
         this.isAdmin = isAdmin;
     }
 
+
     public int getGender() {
         return gender;
     }
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+    public String getInputName() {
+        return inputName;
+    }
+
+    public void setInputName(String inputName) {
+        this.inputName = inputName;
+    }
+
+    public String getMyIcon() {
+        return myIcon;
+    }
+
+    public void setMyIcon(String myIcon) {
+        this.myIcon = myIcon;
     }
 }
