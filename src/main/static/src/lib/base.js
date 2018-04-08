@@ -56,16 +56,6 @@
             ,'请输入正确的身份证号'
         ]
     }
-
-    function validate(key , verify ) {
-
-
-    }
-
-    function _addFieldError() {
-
-    }
-
     $.extend({
         //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
         alert : function (content , options , type ,callback ) {
@@ -113,9 +103,6 @@
         } ,
         isEmpty :function (str) {
             return isNullOrEmpty(str)
-        } ,
-        validate:function(key , verify ) {
-            return validate(options) ;
         }
     })
 
