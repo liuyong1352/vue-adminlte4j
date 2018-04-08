@@ -17,7 +17,7 @@ public class AppInfo implements Serializable{
     private String userName     ;
     private String userImgUrl   ;
 
-    @UIFormItem(label = "用户profileUrl" )
+    @UIFormItem(label = "用户信息Url" )
     private String profileUrl   ;
 
     @UIFormItem(label = "登出Url")

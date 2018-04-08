@@ -59,7 +59,6 @@ public class MenuUtils {
 
             menus.add(menu) ;
             menu.addChildMenu(new Menu(PREFIX + menuId++ ,"应用信息" ,"/admin/config/app_info.html" ,"fa fa-cog" ,0));
-            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"应用信息(D)" ,"/admin/config/app_info0.html" ,"fa fa-cog" ,0));
             menu.addChildMenu(new Menu(PREFIX + menuId++ ,"菜单管理" ,"/admin/config/menu.html" ,"fa fa-cog" ,1));
 
             menuMap.put(menu.getId() , menu) ;
