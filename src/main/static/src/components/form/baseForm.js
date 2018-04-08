@@ -16,6 +16,11 @@ export const baseForm = {
             form_inline: false
         }
     } ,
+    computed : {
+        form_unique_id : function(){
+            return '$form_' + unique_id()
+        }
+    } ,
     methods:{
         refresh: function(data) {
             var vm = this
@@ -30,6 +35,14 @@ export const baseForm = {
                         layui.use('form' , function(){
                             var form = layui.form
                             form.render()
+                            //监听提交
+                            form.on('submit(' + this.form_unique_id + ')', function(data){
+                                layer.alert(JSON.stringify(data.field), {
+                                    title: '最终的提交信息'
+                                })
+                                self.internal_submit()
+                                return false
+                            })
                         })
                     })
                 })
@@ -73,21 +86,18 @@ export const baseForm = {
         formData: function() {
             var jsonData = {}
             for(var i in this.items){
-                var item = this.items[i]
-                if(item.type == 4 || item.type == 5) {
-                    jsonData[item.key]=this.$refs[item.key][0].get_values()
-                } else {
-                    jsonData[item.key]=$("#" + item.key).val()
-                }
+                var item=this.items[i]
+                jsonData[item.key]=this.$refs[item.key][0].get_value?this.$refs[item.key][0].get_value():
+                    this.$refs[item.key][0].value
             }
             return jsonData
         } ,
-        get_values:function() {
+        get_value:function() {
             return this.formData()
         } ,
         submit: function(url ,callback) {
-            if(!this.validate())
-                return
+            /*if(!this.validate())
+                return*/
 
             axios.post(url,this.formData()).then(function(response){
                 callback(response)
@@ -97,6 +107,17 @@ export const baseForm = {
             this.submit(this.submit_url , function(response){
                 $.alert(response.data)
             })
+        } ,
+        get_verify:function(item) {
+            if(!item.validate)
+                return ""
+            var t=item.validate.type
+            if(t == 1)
+                return "required"
+            else if (t == (1<<1))
+                return "number"
+            else if (t == (1<<2))
+                return "email"
         } ,
         validate: function() {
             var result = true

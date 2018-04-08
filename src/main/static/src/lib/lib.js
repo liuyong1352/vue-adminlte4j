@@ -25,6 +25,9 @@
         return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
     }()
     win.libpath = getPath
+    win.unique_id=function () {
+        return (window.$id = window.$id? (window.$id + 1) : 6)
+    }
 }(window);
 
 

@@ -6,7 +6,6 @@
             :title="item.label"
             :checked="isChecked(item)"
             :disabled="disabled"
-            @change="change"
             lay-skin="primary">
     </div>
 
@@ -22,7 +21,7 @@
 
         },
         methods:{
-            get_values:function() {
+            get_value:function() {
                 var arr = []
                 $('input[name=' + this.name + ']:checked').each(function(){
                     arr.push($(this).val())
@@ -38,10 +37,6 @@
                     }
                 }
                 return item.checked
-            } ,
-            change (event) {
-                const checked = event.target.checked;
-                this.$emit('input', this.get_values());
             }
         } ,
         created () {
@@ -58,7 +53,7 @@
                         if(item.code == data.value)
                             item.checked = data.elem.checked
                     }
-                    self.$emit('input', self.get_values());
+                    self.$emit('input', self.get_value());
                               //console.log(data.elem); //得到checkbox原始DOM对象
                 })
             })

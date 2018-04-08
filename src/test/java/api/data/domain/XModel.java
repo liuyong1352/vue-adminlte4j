@@ -4,7 +4,9 @@ import com.vue.adminlte4j.annotation.DictData;
 import com.vue.adminlte4j.annotation.DictEntry;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.form.FormItemType;
+import com.vue.adminlte4j.model.form.ValidateType;
 import java.util.Date;
 
 /**
@@ -13,13 +15,19 @@ import java.util.Date;
 @Form(span = 4 ,ignore = false)
 public class XModel {
 
-    @UIFormItem(span = 12 , label = "输入框")
+    @UIFormItem(span = 12 , label = "输入框" )
+    @Validate
     private String inputName ;
 
+    @Validate(type = ValidateType.NUMBER)
     private int age ;
 
     @UIFormItem(span = 3)
     private String name ;
+
+    @Validate(type = ValidateType.EMAIL)
+    @UIFormItem(label = "联系方式")
+    private String contact ;
 
 
     @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd hh:mm:ss") //使用fastjson 格式化
@@ -33,6 +41,7 @@ public class XModel {
     private int isAdmin ;
 
     @UIFormItem(type = FormItemType.ICON_SELECTOR , span = 12 , label = "选择图标")
+    @Validate
     private String myIcon ;
 
     public int getAge() {
@@ -89,5 +98,13 @@ public class XModel {
 
     public void setMyIcon(String myIcon) {
         this.myIcon = myIcon;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }

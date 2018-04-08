@@ -1,4 +1,5 @@
 +function ($,window, document) {
+
     /**注册使用event - bus***/
     //window.eventBus = new Vue()
     function getQueryStringJson() {
@@ -61,8 +62,7 @@
     }
 
     $.extend({
-//layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
-
+        //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
         alert : function (content , options , type ,callback ) {
 
             function alert_json(data , _options) {

@@ -5,7 +5,11 @@
 
     <div v-else-if="type == 'input'" class="layui-inline">
         <i data-bv-icon-for="icon" :id="id + '_i'" :class="'form-control-feedback ' + value" @click="popIconWin"></i>
-        <input type="text" :id="id" name="name"  class="layui-input" :value="value" placeholder="点击选图标" @click="popIconWin">
+        <input type="text" :id="id"
+            name="name"  class="layui-input"
+            :value="value" placeholder="点击选图标"
+            :lay-verify="validate"
+            @click="popIconWin">
     </div>
 
 </template>
@@ -17,10 +21,13 @@
             'id':{type:String},
             'value':{type:String},
             'name': {type:String},
-            type: {type:String, default:'input'}
+            type: {type:String, default:'input'} ,
+            validate:{type:String}
         },
         methods : {
-
+            get_value: function() {
+                return this.$el.getElementsByTagName('input')[0].value
+            } ,
             popIconWin : function() {
                var icon_el=this.$attrs.icon_el
                if(this.type=='input')
