@@ -1,4 +1,5 @@
 +function ($,window, document) {
+
     /**注册使用event - bus***/
     //window.eventBus = new Vue()
     function getQueryStringJson() {
@@ -26,43 +27,37 @@
         return (s == undefined || s == null || s == '')
     }
 
-    function validate(options) {
-        var v = $('#' + options.key).val()
-        if(options.validate.type == '1' ) {
-            if(!$.isEmpty(v))
-                return true
-            else {
-                _addFieldError(options)
-            }
+    verify = {
+        required: [
+            /[\S]+/
+            ,'必填项不能为空'
+        ]
+        ,phone: [
+            /^1\d{10}$/
+            ,'请输入正确的手机号'
+        ]
+        ,email: [
+            /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+            ,'邮箱格式不正确'
+        ]
+        ,url: [
+            /(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
+            ,'链接格式不正确'
+        ]
+        ,number: function(value){
+            if(!value || isNaN(value)) return '只能填写数字'
         }
-        $('#' + options.key).bind('input propertychange', function(e) {
-            var validate = $('#'+e.delegateTarget.id).next().data('validate')
-            if(validate.type == '1') {
-                if(!$.isEmpty($('#'+e.delegateTarget.id).val())) {
-                    $('#'+e.delegateTarget.id).parentsUntil(".form-group").last().parent().removeClass('has-error')
-                    $('#'+e.delegateTarget.id).next().hide()
-                } else {
-                    _addFieldError({key:e.delegateTarget.id , validate:validate})
-                }
-            }
-            //进行相关操作
-        })
-        return false
+        ,date: [
+            /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
+            ,'日期格式不正确'
+        ]
+        ,identity: [
+            /(^\d{15}$)|(^\d{17}(x|X|\d)$)/
+            ,'请输入正确的身份证号'
+        ]
     }
-
-    function _addFieldError(options) {
-        $('#' + options.key).parentsUntil(".form-group").last().parent().addClass('has-error')
-        if($('#' + options.key).next().length == 0){
-            $('#' + options.key).parent().append('<span class="help-block"></span>')
-            $('#' + options.key).next().html(options.label + " can not be empty!")
-            $('#' + options.key).next().data('validate' , options.validate)
-        }
-        $('#' + options.key).next().show()
-    }
-
     $.extend({
-//layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
-
+        //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
         alert : function (content , options , type ,callback ) {
 
             function alert_json(data , _options) {
@@ -108,9 +103,6 @@
         } ,
         isEmpty :function (str) {
             return isNullOrEmpty(str)
-        } ,
-        validate:function(options) {
-            return validate(options) ;
         }
     })
 

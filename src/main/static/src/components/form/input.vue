@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'v-input',
   props: {
@@ -45,6 +44,9 @@ export default {
      }
   },
   methods: {
+    get_value:function() {
+        return this.$el.getElementsByTagName('input')[0].value
+    } ,
     handleInput : function(event) {
         var value = event.target.value
         this.$emit('input', value)
