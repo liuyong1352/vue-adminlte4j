@@ -42,7 +42,7 @@
             </template>
         </template>
         <div v-if="submit_url" class="col-sm-12 text-center" style="border-top: solid 1px #d2d6de;padding-top: 10px;">
-            <button class="layui-btn" lay-submit="" :lay-filter="form_unique_id">
+            <button class="layui-btn" @click="internal_submit">
                 <li class="fa fa-save">&nbsp;提交</li>
             </button>
         </div>
