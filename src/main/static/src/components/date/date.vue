@@ -39,6 +39,9 @@ export default {
   },
 
   methods: {
+    get_value: function() {
+            return this.$el.value
+    } ,
     handleInput : function(event) {
         var value = event.target.value
         this.$emit('input', value)

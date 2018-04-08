@@ -13,17 +13,12 @@
 <v-app :data="data" >
     <!-- /.content-wrapper -->
     <v-box title="查询条件">
-
         <v-form ajax_url="/test/form/get" ref="queryForm"></v-form>
         <button @click="requery"> 查询</button>
-
-
-
     </v-box>
     <v-box title="查询条件">
-        <v-table id="tables" :ajax_url="ajax_url" :query="query" ref="table" :operations="operations" ></v-table>
+        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" ></v-table>
     </v-box>
-
 
     <div class="row">
         <div class="col-md-6">

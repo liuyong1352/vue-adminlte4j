@@ -18,7 +18,7 @@
             items : Object
         },
         methods:{
-            get_values:function() {
+            get_value:function() {
                 return  $('input[name=' + this.name + ']:checked').val()
             } ,
             isChecked : function(item) {
