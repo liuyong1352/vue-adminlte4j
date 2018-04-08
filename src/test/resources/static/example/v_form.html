@@ -26,9 +26,16 @@
                 </div>
             </div>
             <div class="layui-form-item">
+
+                <label class="layui-form-label">单选按钮</label>
+                <div class="layui-input-block">
+                    <v-radio :name="name" ref="checkbox_like" :items="items"></v-radio>
+                </div>
+
                 <v-form-item label="图标使用">
                     <v-icon-selector id="icon_a" type="input"></v-icon-selector>
                 </v-form-item>
+
             </div>
 
         </div>
@@ -277,10 +284,11 @@
 
         data : function () {
             return {
+                name : "radio-gender",
                 items : [
-                    {code:'write' ,  label:'写作'  ,checked:false},
-                    {code:'read' ,   label:'阅读',checked:false},
-                    {code:'say' ,    label:'说',checked:true}
+                    {code:'1' ,  label:'男' ,checked:false},
+                    {code:'2' ,   label:'女',checked:false},
+                    {code:'3' ,    label:'中性',checked:true}
                 ] ,
                 c_v : "write"
             }

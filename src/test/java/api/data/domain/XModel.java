@@ -37,6 +37,10 @@ public class XModel {
     @DictData({@DictEntry("写作") ,@DictEntry("阅读"),@DictEntry("听说")})
     private String love ;
 
+    @UIFormItem(type = FormItemType.RADIO)
+    @DictData(value = {@DictEntry(code = "1",value ="男") ,@DictEntry(code = "2", value = "女"),@DictEntry(code = "3",value = "中性")})
+    private int gender ;
+
     @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N" , span = 12)
     private int isAdmin ;
 
@@ -84,6 +88,14 @@ public class XModel {
         this.isAdmin = isAdmin;
     }
 
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
     public String getInputName() {
         return inputName;
     }

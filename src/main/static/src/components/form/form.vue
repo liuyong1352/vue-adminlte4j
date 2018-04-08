@@ -26,6 +26,11 @@
                                     :lay-verify="get_verify(item)"
                                     :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
                         </template>
+                        <template v-else-if="item['type'] === 3 " >
+                             <v-radio :name="item.key" :ref="item.key"
+                                    :items="item.ext.dict" :checkedValue="buildVal(item)">
+                             </v-radio>
+                        </template>
                         <template v-else-if="item['type'] === 5 " >
                             <v-switch :name="item.key" :ref="item.key"
                                     :isOpen="buildVal(item) === 1"></v-switch>

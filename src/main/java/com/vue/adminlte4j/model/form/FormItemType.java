@@ -13,6 +13,11 @@ public enum FormItemType {
     INPUT(0 , "input") ,
 
     /**
+     * 单选按钮
+     */
+    RADIO(3,"radio"),
+
+    /**
      * 复选框
      */
     CHECKBOX(4, "checkbox") ,
