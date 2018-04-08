@@ -1,10 +1,13 @@
 package api.data.controller;
 
 import api.UserInfo;
+import api.data.domain.XModel;
+import api.data.domain.XModelStore;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +20,29 @@ import java.util.Date;
  */
 @Controller
 public class TableController {
+
+
+    @GetMapping("/xmodel/list")
+    @ResponseBody
+    UIModel query_table_data() throws Exception {
+        TableData tableData = new TableData() ;
+        tableData.configDisplayColumn(XModel.class) ;
+
+        tableData.addAll(page());
+        tableData.setTotalSize(count()) ;
+
+        return  UIModel.success().tableData(tableData);
+    }
+
+    private int count() throws Exception{
+        List<XModel> xModels = XModelStore.getAll() ;
+        return xModels.size() ;
+    }
+
+    private List<XModel> page() throws Exception {
+        List<XModel> xModels = XModelStore.getAll() ;
+        return xModels.subList(100 , 200) ;
+    }
 
     @GetMapping("/get_table_data")
     @ResponseBody
