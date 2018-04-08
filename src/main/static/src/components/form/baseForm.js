@@ -77,7 +77,7 @@ export const baseForm = {
             var jsonData = {}
             for(var i in this.items){
                 var item = this.items[i]
-                if(item.type == 4 || item.type == 5) {
+                if(item.type == 3 || item.type == 4 || item.type == 5) {
                     jsonData[item.key]=this.$refs[item.key][0].get_values()
                 } else {
                     jsonData[item.key]=$("#" + item.key).val()

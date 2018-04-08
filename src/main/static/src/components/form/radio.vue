@@ -14,20 +14,16 @@
         name: 'v-radio',
         props: {
             name : String,
-            checked: String,
+            checkedValue: String,
             items : Object
         },
         methods:{
             get_values:function() {
-                var s
-                $('input[name=' + this.name + ']:checked').each(function(){
-                    s = $(this).val()
-                })
-                return s
+                return  $('input[name=' + this.name + ']:checked').val()
             } ,
             isChecked : function(item) {
-                if(this.checked)  {
-                    var c = this.checked
+                if(this.checkedValue)  {
+                    var c = this.checkedValue
                     if(c == item.code)
                     return true
                 }

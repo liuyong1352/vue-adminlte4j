@@ -27,7 +27,7 @@ public class XModel {
     private String love ;
 
     @UIFormItem(type = FormItemType.RADIO)
-    @DictData({@DictEntry(code = "1",value ="男") ,@DictEntry(code = "2", value = "女"),@DictEntry(code = "3",value = "中性")})
+    @DictData(value = {@DictEntry(code = "1",value ="男") ,@DictEntry(code = "2", value = "女"),@DictEntry(code = "3",value = "中性")})
     private int gender ;
 
     @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N" , span = 12)
