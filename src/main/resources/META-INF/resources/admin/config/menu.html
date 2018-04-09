@@ -10,12 +10,12 @@
     <v-app :data="data" >
 
         <v-row>
-            <v-col class="col-sm-3">
+            <v-col span="3">
                 <v-box title="菜单树">
                     <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected" ref="tree"></v-tree>
                 </v-box>
             </v-col>
-            <v-col class="col-sm-9">
+            <v-col span="9">
                 <v-box >
                     <div slot="header" class="btn-group">
                         <button type="button" class="btn btn-default" @click="addRoot">

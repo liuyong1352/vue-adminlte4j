@@ -13,13 +13,16 @@ export default {
       default: ''
     } ,
     span:{
-        type : Number ,
-        default:12
+        type : Number
     }
   } ,
   computed : {
     this_class : function(){
-        return 'col-md-' + this.span
+        if(this['class'])
+            return this['class']
+        if(this.span)
+            return 'col-md-' + this.span
+        return ""
     }
   }
 }
