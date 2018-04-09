@@ -1,5 +1,5 @@
 <template>
-  <div :class="this_class">
+  <div :class="this_class()">
     <slot></slot>
   </div>
 </template>
@@ -16,14 +16,17 @@ export default {
         type : Number
     }
   } ,
-  computed : {
+  methods : {
     this_class : function(){
-        if(this['class'])
-            return this['class']
-        if(this.span)
-            return 'col-md-' + this.span
-        return ""
+            if(this['class'])
+                return this['class']
+            if(this.span)
+                return 'col-md-' + this.span
+            return ''
     }
+  } ,
+  computed : {
+
   }
 }
 </script>
