@@ -2,10 +2,7 @@ package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
-import com.vue.adminlte4j.model.builder.FormModelBuilder;
-import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
-import com.vue.adminlte4j.model.form.FormModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2017/11/23.
  */
-public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormModelBuilder {
+public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode  {
 
     private String id ;
     private String pid ;
@@ -150,8 +147,4 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormMode
         return sb.toString();
     }
 
-
-    @Override public void config(FormModel formModel) {
-        FormItem formItem = new FormItem();
-    }
 }

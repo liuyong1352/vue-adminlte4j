@@ -25,11 +25,10 @@ public class TableController {
     @GetMapping("/xmodel/list")
     @ResponseBody
     UIModel query_table_data() throws Exception {
-        TableData tableData = new TableData() ;
-        tableData.configDisplayColumn(XModel.class) ;
 
-        tableData.addAll(page());
-        tableData.setTotalSize(count()) ;
+        TableData tableData = TableData.newInstance(XModel.class)
+            .addAll(page())
+            .setTotalSize(count()) ;
 
         return  UIModel.success().tableData(tableData);
     }
@@ -41,17 +40,14 @@ public class TableController {
 
     private List<XModel> page() throws Exception {
         List<XModel> xModels = XModelStore.getAll() ;
-        return xModels.subList(100 , 200) ;
+        return xModels.subList(0 , 20) ;
     }
 
     @GetMapping("/get_table_data")
     @ResponseBody
     UIModel get_table_data(@RequestParam(required = false) String name) {
 
-
-
-        TableData tableData = new TableData() ;
-        tableData.configDisplayColumn(UserInfo.class);
+        TableData tableData = TableData.newInstance(UserInfo.class);
 
         tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
         tableData.configDisplayColumn(TableData.createColumn("age" , "年龄") );

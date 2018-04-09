@@ -1,8 +1,13 @@
 package com.vue.adminlte4j.model;
 
-import com.vue.adminlte4j.support.ModelConfigManager;
+import com.vue.adminlte4j.model.builder.FormModelUtils;
+import com.vue.adminlte4j.model.form.ExtInfo;
+import com.vue.adminlte4j.model.form.FormItem;
+import com.vue.adminlte4j.model.form.FormItemType;
+import com.vue.adminlte4j.model.form.FormModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,13 +21,23 @@ public class TableData<T> {
     private boolean isPage  = true;
     private int totalSize  ;
 
-    public TableData<T> configDisplayColumn(Column column) {
-        columns.add(column) ;
-        return this ;
+    public static <T> TableData<T> newInstance(Class<T> tClass) {
+        TableData tableData =  new TableData<T>() ;
+        FormModel model = FormModelUtils.getFormModel(tClass) ;
+        List<FormItem> formItems = model.getFormItems() ;
+        formItems.forEach(item->{
+            Column column = new Column();
+            column.setKey(item.getKey());
+            column.setLabel(item.getLabel());
+            column.setType(item.getType());
+            column.setExtInfo(item.getExt());
+            tableData.columns.add(column) ;
+        });
+        return tableData ;
     }
 
-    public TableData<T> configDisplayColumn(Class type) {
-        this.columns.addAll(ModelConfigManager.getModelConfigColumns(type));
+    public TableData<T> configDisplayColumn(Column column) {
+        columns.add(column) ;
         return this ;
     }
 
@@ -39,8 +54,8 @@ public class TableData<T> {
         return this ;
     }
 
-    public TableData<T> addAll(List<T> datas) {
-        dataItems.addAll(datas) ;
+    public TableData<T> addAll(Collection<? extends T> c) {
+        dataItems.addAll(c) ;
         return this ;
     }
 
@@ -53,7 +68,10 @@ public class TableData<T> {
     }
 
     public static Column createColumn(String key , String lable) {
-        return new Column(key , lable) ;
+        Column column = new Column() ;
+        column.setKey(key);
+        column.setLabel(lable);
+        return column ;
     }
 
     public int getTotalSize() {
@@ -74,15 +92,12 @@ public class TableData<T> {
         return this ;
     }
 
-    public static class Column {
+    public static class Column  {
 
         private String key  ;
         private String label ;
-
-        public Column(String key, String label) {
-            this.key = key;
-            this.label = label;
-        }
+        private int  type = FormItemType.INPUT.getKey();
+        private ExtInfo extInfo ;
 
         public String getKey() {
             return key;
@@ -100,6 +115,20 @@ public class TableData<T> {
             this.label = label;
         }
 
+        public ExtInfo getExtInfo() {
+            return extInfo;
+        }
 
+        public void setExtInfo(ExtInfo extInfo) {
+            this.extInfo = extInfo;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
     }
 }

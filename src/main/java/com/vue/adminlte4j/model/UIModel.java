@@ -150,6 +150,12 @@ public class UIModel extends HashMap implements Map {
         return put(TABLE_DATA , tableData) ;
     }
 
+   /* public TableData tableData(Class cls) {
+        TableData tableData = TableData.newInstance(cls);
+        put(TABLE_DATA , tableData) ;
+        return  tableData ;
+    }*/
+
     /**
      * 存放key=treeData, value为转换后的treeNode结构数据列表
      * @param elements

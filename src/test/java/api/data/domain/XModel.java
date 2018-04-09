@@ -41,7 +41,8 @@ public class XModel {
     @DictData(value = {@DictEntry(code = "1",value ="男") ,@DictEntry(code = "2", value = "女"),@DictEntry(code = "3",value = "中性")})
     private int gender ;
 
-    @UIFormItem(type = FormItemType.SWITCH , placeholder = "Y|N" , span = 12)
+    @UIFormItem(type = FormItemType.SWITCH  , span = 12)
+    @DictData({@DictEntry("是") ,@DictEntry("否")})
     private int isAdmin ;
 
     @UIFormItem(type = FormItemType.ICON_SELECTOR , span = 12 , label = "选择图标")

@@ -16,10 +16,17 @@
         props: {
             name : String,
             text : {type:String ,default:'开|关'} ,
+            items: Object,
             isOpen:Boolean
         },
         methods:{
-            get_values:function() {
+            buildText:function() {
+                if(this.items && this.items.length >= 2 )  {
+                    return this.items[0].label + '|' + this.items[1].label
+                }
+                return this.text
+            } ,
+            get_value:function() {
                 return $('input[name=' + 'isAdmin' + ']:checked').length //0 or 1
             }
         } ,

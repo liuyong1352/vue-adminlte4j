@@ -3,6 +3,7 @@ package com.vue.adminlte4j.model.builder;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
+import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.form.ExtInfo;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
@@ -34,7 +35,7 @@ public class FormModelUtils {
         return getOrCreate(clazz) ;
     }
 
-    private   static FormModel getOrCreate(Class clazz) {
+    private static FormModel getOrCreate(Class clazz) {
         FormModel formModel = formModelCache.get(clazz) ;
         if(formModel == null ) {
             formModel = newFormModel(clazz) ;
@@ -42,6 +43,13 @@ public class FormModelUtils {
         }
         return formModel ;
     }
+
+    public static FormModel getQueryModel(Class clazz) {
+        FormModel formModel = new FormModel() ;
+        return formModel ;
+    }
+
+
 
     private static FormModel newFormModel(Class cType) {
 

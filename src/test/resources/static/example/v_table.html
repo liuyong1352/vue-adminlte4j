@@ -14,7 +14,12 @@
     <!-- /.content-wrapper -->
     <v-box title="查询条件">
         <v-form ajax_url="/test/form/get" ref="queryForm"></v-form>
-        <button @click="requery"> 查询</button>
+        <v-row>
+            <v-col>
+                <button @click="requery"> 查询</button>
+            </v-col>
+        </v-row>
+
     </v-box>
     <v-box title="查询条件">
         <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" ></v-table>
