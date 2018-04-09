@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by bjliuyong on 2017/11/23.
  */
-public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormModelBuilder {
+public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode  {
 
     private String id ;
     private String pid ;
@@ -150,8 +150,4 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode ,FormMode
         return sb.toString();
     }
 
-
-    @Override public void config(FormModel formModel) {
-        FormItem formItem = new FormItem();
-    }
 }

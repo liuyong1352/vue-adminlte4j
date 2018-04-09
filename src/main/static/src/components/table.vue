@@ -120,7 +120,7 @@ export default {
     } ,
     refresh : function(queryObj) {
         if(queryObj&&queryObj._isVue)
-            this.query = queryObj.get_values()
+            this.query = queryObj.get_value()
         this.fetchData()
     } ,
     row_selected: function(row,index) {

@@ -34,7 +34,7 @@ public class FormModelUtils {
         return getOrCreate(clazz) ;
     }
 
-    private   static FormModel getOrCreate(Class clazz) {
+    private static FormModel getOrCreate(Class clazz) {
         FormModel formModel = formModelCache.get(clazz) ;
         if(formModel == null ) {
             formModel = newFormModel(clazz) ;
@@ -42,6 +42,13 @@ public class FormModelUtils {
         }
         return formModel ;
     }
+
+    public static FormModel getQueryModel(Class clazz) {
+        FormModel formModel = new FormModel() ;
+        return formModel ;
+    }
+
+
 
     private static FormModel newFormModel(Class cType) {
 

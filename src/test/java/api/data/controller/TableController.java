@@ -41,7 +41,7 @@ public class TableController {
 
     private List<XModel> page() throws Exception {
         List<XModel> xModels = XModelStore.getAll() ;
-        return xModels.subList(100 , 200) ;
+        return xModels.subList(0 , 20) ;
     }
 
     @GetMapping("/get_table_data")
