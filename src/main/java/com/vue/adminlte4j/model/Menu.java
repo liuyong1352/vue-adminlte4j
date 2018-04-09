@@ -2,10 +2,7 @@ package com.vue.adminlte4j.model;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
-import com.vue.adminlte4j.model.builder.FormModelBuilder;
-import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
-import com.vue.adminlte4j.model.form.FormModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
