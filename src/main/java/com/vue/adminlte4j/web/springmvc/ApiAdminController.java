@@ -98,9 +98,7 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/menu/list")
     @ResponseBody
     public UIModel listMenu() throws Exception {
-        TableData<Menu> tableData = new TableData<>() ;
-
-        tableData.configDisplayColumn(Menu.class)
+        TableData<Menu> tableData = TableData.newInstance(Menu.class)
             .removeDisplayColumn("children")
             .setPage(false)
             .addAll(_listMenu());

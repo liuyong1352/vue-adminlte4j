@@ -32,7 +32,7 @@
                              </v-radio>
                         </template>
                         <template v-else-if="item['type'] === 5 " >
-                            <v-switch :name="item.key" :ref="item.key"
+                            <v-switch :name="item.key" :ref="item.key" :items="item.ext.dict"
                                     :isOpen="buildVal(item) === 1"></v-switch>
                         </template>
                         <template v-else-if="item['type'] === 10 " >

@@ -3,6 +3,7 @@ package com.vue.adminlte4j.model.builder;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
+import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.form.ExtInfo;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;

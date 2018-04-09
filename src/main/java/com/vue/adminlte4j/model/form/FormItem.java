@@ -47,13 +47,6 @@ public class FormItem {
             this.placeholder =placeholder ;
     }
 
-    public void configDate(UIDate uiDate) {
-        ext = new ExtInfo() ;
-
-
-        type = FormItemType.DATE.getKey() ;
-    }
-
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {
         if(validate == null)
             return;

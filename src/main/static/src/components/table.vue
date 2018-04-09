@@ -15,9 +15,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item , index) in dataItems" @click="row_selected(item , index)" v-bind:class="{info: index === sr_index}">
-                        <td v-for="_col in columns">{{item[_col['key']]}}</td>
+                        <td v-for="_col in columns" v-html="build_val(item , _col)"></td>
                         <td v-if="operations">
-                            <a :class="get_op_class(operation.class)"  v-for="(operation,  index)  in operations" href="javascript:void(0)" @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
+                            <a :class="get_op_class(operation.class)"  v-for="(operation,  index)  in operations"
+                                href="javascript:void(0)"
+                                @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
                                 <i v-if="operation.icon" :class="operation.icon"></i><span>{{operation['name']}}</span>
                             </a>
                         </td>
@@ -27,7 +29,6 @@
         </div>
     </div>
     <template v-if="should_page()">
-
         <div class="row">
                 <div class="col-sm-5">
                     <span class="pull-left">共{{totalSize}}条</span>
@@ -58,8 +59,6 @@ export default {
     ajax_url: String ,
     send_req : {type : Number , default : 0 } ,
     operations: Array,
-
-
   } ,
   data: function () {
     return {
@@ -164,6 +163,29 @@ export default {
         cls = cls || 'btn-default'
         return 'btn btn-xs ' + cls
 
+    } ,
+    build_val(item , col) {
+        if(col.type >= 3 && col.type <= 6  ){
+            var r = []
+            var isString = (typeof  item[col.key]  == 'string')
+            var codes = []
+            if(isString){
+                codes =item[col.key].split(',')
+            } else {
+                codes.push(item[col.key])
+            }
+            for(var i in codes) {
+                var c=codes[i]
+                for(var j in col.extInfo.dict){
+                    if(col.extInfo.dict[j].code==c)
+                        r.push(col.extInfo.dict[j].label)
+                }
+            }
+            return r.join(" ")
+        } else if(col.type== 10) {
+            return '<i class="' + item[col.key] + '"></i>'
+        }
+        return item[col.key]
     }
   },
   mounted : function() {
