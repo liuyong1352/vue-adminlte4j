@@ -1,5 +1,5 @@
 <template>
-  <div :class="this['class']">
+  <div :class="this_class">
     <slot></slot>
   </div>
 </template>
@@ -11,11 +11,16 @@ export default {
     'class': {
       type: String,
       default: ''
+    } ,
+    span:{
+        type : Number ,
+        default:12
     }
-
-  },
-  created () {
-    console.log('a')
+  } ,
+  computed : {
+    this_class : function(){
+        return 'col-md-' + this.span
+    }
   }
 }
 </script>
