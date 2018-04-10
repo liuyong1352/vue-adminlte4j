@@ -1,8 +1,8 @@
 <template>
-    <form :class="form_inline?'form-inline layui-form layui-form-pane':'layui-form layui-form-pane'">
+    <form :class="form_inline?'form-inline layui-form':'layui-form'">
         <slot></slot>
         <template v-for="row in row_items">
-            <div class="layui-form-item">
+            <div class="layui-col-space10 layui-form-item">
             <template v-for="item in row">
                <div :class="get_class(item)">
                    <label  class="layui-form-label">{{item['label']}}</label>
