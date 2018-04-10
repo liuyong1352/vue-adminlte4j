@@ -12,6 +12,12 @@ import com.vue.adminlte4j.model.form.DateType;
 public class XModelQuery  {
 
     private String name ;
+
+    private int age ;
+
+    @UIFormItem(label = "-")
+    private int maxAge ;
+
     @UIFormItem(span = 4)
     private String love ;
 
@@ -41,5 +47,22 @@ public class XModelQuery  {
 
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+    public int getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
     }
 }

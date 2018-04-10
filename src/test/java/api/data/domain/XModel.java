@@ -23,7 +23,7 @@ public class XModel {
     @Validate(type = ValidateType.NUMBER)
     private int age ;
 
-    @UIFormItem(span = 3)
+    @UIFormItem(span = 3 ,label = "姓名")
     private String name ;
 
     @Validate(type = ValidateType.EMAIL)

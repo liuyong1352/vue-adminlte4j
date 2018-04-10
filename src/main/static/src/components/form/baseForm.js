@@ -1,10 +1,4 @@
-import VInput       from '../form/input.vue'
-import VDate        from '../date/date.vue'
-import VCheckBox    from './check-box.vue'
-import VSwitch      from './switch.vue'
-import VRadio       from './radio.vue'
-import IconSelector  from '../ui-element/button/icon-selector-btn.vue'
-
+import BaseFormItem   from './base-form-item.vue'
 export const baseForm = {
     props: {
         ajax_url : String,
@@ -13,6 +7,7 @@ export const baseForm = {
     data : function() {
         return {
             items:[] ,
+            row_items:[],
             data : {},
             form_inline: false ,
             verify : {
@@ -59,6 +54,20 @@ export const baseForm = {
                 axios.get(this.ajax_url , {params:data}).then(function (response) {
                     var formJson = response.data.FormModel.formItems
                     self.items = formJson
+                    var row_items=[]
+                    var ts=0 , j=0
+                    row_items.push([])
+                    for(var i in self.items) {
+                        var item = self.items[i]
+                        ts+=item.span
+                        if(ts>12) {
+                            row_items.push([])
+                            j++
+                            ts=item.span
+                        }
+                        row_items[j].push(item)
+                    }
+                    self.row_items = row_items
                     self.data = response.data.data||{}
                     self.form_inline=response.data.FormModel.inline
                     vm.$nextTick(function () {
@@ -103,9 +112,9 @@ export const baseForm = {
         },
         get_class : function(item){
             if(item.hidden)
-                return 'hidden col-md-12'
+                return 'hidden layui-col-lg12'
             else
-                return item.span?('col-md-'+item.span):''
+                return item.span?('layui-col-lg'+item.span):''
         } ,
         get_wrapper_class:function (item) {
             return 'layui-input-block'
@@ -199,13 +208,8 @@ export const baseForm = {
     },
     mounted : function() {
         this.refresh()
-    } ,
-    components: {
-        'v-icon-selector': IconSelector,
-        'v-input': VInput,
-        'v-checkbox': VCheckBox,
-        'v-switch': VSwitch,
-        'v-date': VDate,
-        'v-radio' : VRadio
+    },
+    components : {
+        'v-base-form-item': BaseFormItem,
     }
 }
