@@ -1,7 +1,7 @@
 package com.vue.adminlte4j.model.form;
 
-import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
+import java.util.List;
 
 /**
  * Created by bjliuyong on 2018/3/7.
@@ -18,7 +18,18 @@ public class FormItem {
     private Validate validate ;
     private ExtInfo ext;
 
-    public void config(UIFormItem uiFormItem) {
+    public void merge(FormItem other) {
+        if(other == null)
+            return;
+        this.type           =   other.type       ;
+        this.label          =   other.label      ;
+        this.defVal         =   other.defVal     ;
+        this.placeholder    =   other.placeholder;
+        this.ext            =   other.ext        ;
+        this.validate       =   other.validate   ;
+    }
+
+    public void config(UIFormItem uiFormItem ) {
 
         if(uiFormItem == null)
             return;

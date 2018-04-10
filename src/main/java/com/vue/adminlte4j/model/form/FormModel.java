@@ -40,6 +40,14 @@ public class FormModel  {
         return this ;
     }
 
+    public FormItem get(String key) {
+        for (FormItem formItem : formItems) {
+            if(formItem.getKey().equals(key))
+                return  formItem ;
+        }
+        return  null ;
+    }
+
     public FormModel clone() {
         FormModel formModel = new FormModel() ;
 

@@ -1,0 +1,45 @@
+package api.data.domain;
+
+import com.vue.adminlte4j.annotation.Form;
+import com.vue.adminlte4j.annotation.UIDate;
+import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.model.form.DateType;
+
+/**
+ * Created by bjliuyong on 2018/4/9.
+ */
+@Form(span = 3 , ignore = false , ref = XModel.class)
+public class XModelQuery  {
+
+    private String name ;
+    @UIFormItem(span = 4)
+    private String love ;
+
+    @UIFormItem
+    @UIDate(type = DateType.DATE , range = true)
+    private String birthDay ;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLove() {
+        return love;
+    }
+
+    public void setLove(String love) {
+        this.love = love;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+}

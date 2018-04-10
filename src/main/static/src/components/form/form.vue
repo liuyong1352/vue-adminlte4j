@@ -16,8 +16,8 @@
                         <template v-else-if="item['type'] === 12 " >
                             <v-date  :id="item.key" :type="get_date_type_val(item,'type')" :ref="item.key"
                                  :lay-verify="get_verify(item)"
-                                 class="layui-input"
                                  :format="get_ext_val(item,'format')"
+                                 :range="get_ext_val(item,'range')"
                                  :value="buildVal(item)"
                                  :placeholder="item.placeholder" ></v-date>
                         </template>

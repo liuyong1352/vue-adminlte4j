@@ -2,10 +2,8 @@ package api.data.controller;
 
 import api.data.domain.XModel;
 import api.data.domain.XModelStore;
-import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.model.UIModel;
 import java.io.IOException;
-import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +23,8 @@ public class FormController  {
         XModel xModel = XModelStore.findOne() ;
         return  UIModel.success().formData(xModel , XModel.class) ;
     }
+
+
 
     @PostMapping("/test/form/update")
     @ResponseBody

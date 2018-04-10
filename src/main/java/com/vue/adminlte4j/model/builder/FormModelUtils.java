@@ -12,6 +12,8 @@ import com.vue.adminlte4j.util.AnnotationUtils;
 import com.vue.adminlte4j.util.ReflectUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +55,19 @@ public class FormModelUtils {
 
     private static FormModel newFormModel(Class cType) {
 
-        FormModel formModel = build(cType) ;
+        FormModel formModel = new FormModel() ;
+        Form form = (Form) cType.getAnnotation(Form.class) ;
+        FormModel ref = null ;
+        if(form != null ) {
+            if(!form.ref().getName().equals("java.lang.Void")) {
+                ref = getFormModel(form.ref());
+            }
+            formModel.setSpan(form.span());
+            formModel.setHidden(form.hidden());
+            formModel.setIgnore(form.ignore());
+            formModel.setInline(form.inline());
+        }
+
         List<Field> fieldList = ReflectUtils.findAllField(cType);
 
         /*Collections.sort(fieldList , (f1, f2)->{
@@ -69,32 +83,22 @@ public class FormModelUtils {
 
         for(int i = 0 ; i < fieldList.size() ; i++) {
             Field field = fieldList.get(i) ;
-            if(isConfigurable(field))
-                configFormItem(field ,formModel) ;
+            if(isConfigurable(field)) {
+               configFormItem(field, formModel ,ref );
+            }
         }
         return  formModel ;
     }
 
-    private static FormModel build( Class cType) {
-        FormModel formModel = new FormModel() ;
-        Form form = (Form) cType.getAnnotation(Form.class) ;
-        if(form != null ) {
-            formModel.setSpan(form.span());
-            formModel.setHidden(form.hidden());
-            formModel.setIgnore(form.ignore());
-            formModel.setInline(form.inline());
-        }
-        return formModel ;
-    }
 
-    private static void configFormItem(Field field ,FormModel formModel ) {
+    private static FormItem configFormItem(Field field ,FormModel formModel ,FormModel ref) {
 
         if(formModel.isIgnore() && !AnnotationUtils.hasAnnotation(field,UIFormItem.class)) {
-            return;
+            return null ;
         }
         UIFormItem uiFormItem = AnnotationUtils.findAnnotation(field , UIFormItem.class) ;
         if( uiFormItem!= null && uiFormItem.ignore())
-            return;
+            return null;
 
         FormItem formItem = new FormItem() ;
         formItem.setLabel(field.getName());
@@ -106,12 +110,15 @@ public class FormModelUtils {
             formItem.setType(FormItemType.DATE.getKey());
             formItem.setPlaceholder("yyyy-MM-dd");
         }
-
-        formItem.config(uiFormItem );
+        formItem.merge(ref != null ? ref.get(formItem.getKey()) : null) ;
+        formItem.config(uiFormItem  );
         formItem.configValidate(AnnotationUtils.findAnnotation(field , Validate.class));
-        formItem.setExt(ExtInfo.config(formItem.getType() , field));
+        ExtInfo extInfo = ExtInfo.config(formItem.getType() , field) ;
+        if(extInfo != null ) {
+            formItem.setExt(extInfo);
+        }
         formModel.addFormItem(formItem) ;
-
+        return formItem ;
     }
 
     /**
