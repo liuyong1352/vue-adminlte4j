@@ -13,17 +13,14 @@
 <v-app :data="data" >
 
     <v-box title="查询条件">
+        <v-row>
+            <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
+            <v-col span="2">
+                <button class="layui-btn" @click="requery"><i class="fa fa-search"></i> 查询</button>
+            </v-col>
+        </v-row>
 
-        <v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form>
-
-        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" >
-            <div slot="toolbar" >
-                <button slot="inline"  class="layui-btn pull-right" @click="requery">
-                    <i class="fa fa-search"></i>查询</button>
-            </div>
-        </v-table>
-
-
+        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" ></v-table>
     </v-box>
 
     <div class="row">

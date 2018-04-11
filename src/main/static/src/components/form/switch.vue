@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="wrap_class">
         <input type="checkbox"
             :name="name"
             value="true"
@@ -17,6 +17,7 @@
             name : String,
             text : {type:String ,default:'开|关'} ,
             items: Object,
+            wrap_class:{type:String},
             isOpen:Boolean
         },
         methods:{
