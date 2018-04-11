@@ -1,5 +1,5 @@
 <template>
-    <div :class="wrapClasses">
+    <div  :class="wrapClasses">
         <input :id="vid" :type="type" :class="inputClasses"
             ref="input"
             :placeholder="placeholder"

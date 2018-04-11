@@ -128,8 +128,8 @@ export const baseForm = {
             return jsonData
         } ,
         get_item_value: function(key) {
-            return this.$refs[key][0].get_value?this.$refs[key][0].get_value():
-                this.$refs[key][0].value
+            return this.$refs[key][0].get_value()
+
         } ,
         get_value:function() {
             return this.formData()

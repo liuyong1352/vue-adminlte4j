@@ -6,7 +6,7 @@
             <template v-for="item in row">
                <div :class="get_class(item)">
                    <label  class="layui-form-label">{{item['label']}}</label>
-                   <v-base-form-item :inline="row.length != 1" :item="item" :data="data"></v-base-form-item>
+                   <v-base-form-item :inline="row.length != 1" :item="item" :ref="item.key" :data="data"></v-base-form-item>
                </div>
             </template>
             </div>

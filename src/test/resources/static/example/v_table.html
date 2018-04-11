@@ -14,7 +14,10 @@
 
     <v-box title="查询条件">
         <v-row>
-            <v-form ajax_url="/xmodel/get_query" ref="queryForm"></v-form><button class="layui-btn" @click="requery">查询</button>
+            <v-col>
+                <v-form ajax_url="/xmodel/get_query" ref="queryForm"></v-form><button class="layui-btn" @click="requery">查询</button>
+            </v-col>
+
         </v-row>
 
 
