@@ -8,17 +8,16 @@ import com.vue.adminlte4j.model.form.DateType;
 /**
  * Created by bjliuyong on 2018/4/9.
  */
-@Form(span = 3 , ignore = false , ref = XModel.class)
+@Form(inline = true , span = 2 , ignore = false , ref = XModel.class)
 public class XModelQuery  {
 
     private String name ;
 
     private int age ;
 
-    @UIFormItem(label = "-")
+    @UIFormItem(label = "")
     private int maxAge ;
 
-    @UIFormItem(span = 4)
     private String love ;
 
     @UIFormItem

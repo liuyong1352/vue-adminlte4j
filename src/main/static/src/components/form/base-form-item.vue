@@ -97,8 +97,8 @@ export default {
                  return "email"
         } ,
         get_wrapper_class:function () {
-            //return this.inline?'layui-input-inline':'layui-input-block'
-            return 'layui-input-block'
+            return this.inline?'layui-input-inline':'layui-input-block'
+            //return 'layui-input-block'
         }
     },
     computed : {

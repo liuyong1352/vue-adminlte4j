@@ -1,6 +1,8 @@
 <template>
-<div>
     <div class="row table-responsive no-padding">
+        <div v-if="$slots.toolbar"class="col-sm-12 pull-right" style="padding-bottom: 5px;">
+            <slot name="toolbar"></slot>
+        </div>
         <div class="col-sm-12">
             <table id="v-table1" class="table table-bordered table-striped table-hover">
                 <thead style="background: #78d5d69e;">
@@ -27,25 +29,24 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <template v-if="should_page()">
-        <div class="row">
-                <div class="col-sm-5">
-                    <span class="pull-left">共{{totalSize}}条</span>
-                </div>
-                <div class="col-sm-7">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                       <li v-if="current_page > 1"><a href="#" @click="change_page(pre_page)">«</a></li>
-                       <template v-for="item in page_arr">
-                            <li><a href="#" @click="change_page(item)">{{item}}</a></li>
-                       </template>
-                       <li v-if="current_page < total_page"><a href="#" @click="change_page(next_page)" >»</a></li>
-                    </ul>
-                </div>
-        </div>
-    </template>
+         <template v-if="should_page()">
 
-</div>
+                    <div class="col-sm-5">
+                        <span class="pull-left">共{{totalSize}}条</span>
+                    </div>
+                    <div class="col-sm-7">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                           <li v-if="current_page > 1"><a href="#" @click="change_page(pre_page)">«</a></li>
+                           <template v-for="item in page_arr">
+                                <li><a href="#" @click="change_page(item)">{{item}}</a></li>
+                           </template>
+                           <li v-if="current_page < total_page"><a href="#" @click="change_page(next_page)" >»</a></li>
+                        </ul>
+                    </div>
+
+            </template>
+    </div>
+
 </template>
 <script>
 
