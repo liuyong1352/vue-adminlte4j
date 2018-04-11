@@ -3,11 +3,11 @@
         <template v-if="item['type'] === 0 " >
             <input type="text" class="layui-input"
                 :lay-verify="get_verify(item)"
-                :id="item.key" :value="buildVal(item)"
+                :value="buildVal(item)"
                 :placeholder="item.placeholder">
         </template>
         <template v-else-if="item['type'] === 12 " >
-            <v-date  :id="item.key" :type="get_date_type_val(item,'type')"
+            <v-date  :type="get_date_type_val(item,'type')"
                  :lay-verify="get_verify(item)"
                  :format="get_ext_val(item,'format')"
                  :range="get_ext_val(item,'range')"
@@ -29,7 +29,7 @@
                     :isOpen="buildVal(item) === 1"></v-switch>
         </template>
         <template v-else-if="item['type'] === 10 " >
-            <v-icon-selector :id="item.key"
+            <v-icon-selector
                 :validate="get_verify(item)"
                 :name="item['key']"
                 :value="buildVal(item)" type="input"></v-icon-selector>
