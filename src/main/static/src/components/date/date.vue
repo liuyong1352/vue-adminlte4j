@@ -7,26 +7,26 @@
 </template>
 
 <script>
+import {baseInput}  from '../baseInput'
 export default {
+  mixins: [baseInput],
   name: 'v-date',
-  props: {
-    value: String,
-    placeholder: String,
-    type: {
+    props : {
+        value: String,
+        type: {
             type: String,
             default: 'datetime'
+        },
+        range: {
+            type:Boolean ,
+            default:false
+        } ,
+        format: String,
+        class: {
+            type:String,
+            default:''
+        }
     },
-    range: {
-        type:Boolean ,
-        default:false
-    } ,
-    format: String,
-    class: {
-        type:String,
-        default:''
-    }
-
-  } ,
   data() {
       return {
           currentValue : this.value
