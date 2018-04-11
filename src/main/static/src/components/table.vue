@@ -114,7 +114,8 @@ export default {
     getParam: function() {
         var s = ''
         for(var key in this.query)
-            s += ('&' + key + '=' + this.query[key])
+            if(this.query[key] && this.query[key].length>0)
+                s += ('&' + key + '=' + this.query[key])
         return s
     } ,
     refresh : function(queryObj) {
