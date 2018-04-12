@@ -30,7 +30,7 @@ export default {
       return {
           currentValue : this.value
       }
-  }
+  } ,
   methods: {
     setCurrentValue(value) {
        this.currentValue = value

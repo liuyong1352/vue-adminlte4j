@@ -37,6 +37,12 @@
                 </v-form-item>
 
             </div>
+
+            <div class="layui-form-item" >
+                <label class="layui-form-label">验证日期</label>
+                <v-date ref="input_date" inline="true" ></v-date>
+            </div>
+
             <div class="layui-form-item">
                 <button @click="queryValues">获取值</button>
                 {{all_values}}
@@ -290,6 +296,7 @@
             queryValues() {
                 this.all_values = this.$refs.input_check_box.get_value()
                 this.all_values += " "  + this.$refs.radio_input.get_value()
+                this.all_values += " "  + this.$refs.input_date.get_value()
             }
         } ,
         mounted : function () {}
