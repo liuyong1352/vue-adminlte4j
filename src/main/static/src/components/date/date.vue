@@ -1,6 +1,6 @@
 <template>
     <div :class="wrapClasses">
-        <input  :id="eid"
+        <input  :id="dynName"
                     :placeholder="placeholder"
                     :value="value"
                     ref="input"
@@ -30,20 +30,14 @@ export default {
       return {
           currentValue : this.value
       }
-  } ,
-  computed: {
-    eid : function() {
-        return this.$attrs.id || "date0"
-    }
-  },
-
+  }
   methods: {
     setCurrentValue(value) {
        this.currentValue = value
     }
   } ,
   mounted : function() {
-    var config={elem: '#' + this.eid ,type: this.type }
+    var config={elem: '#' + this.dynName ,type: this.type }
     if(this.range)
         config.range=this.range
     if(this.format)
