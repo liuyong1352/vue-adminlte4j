@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ATL - LayOut </title>
-    <!-- Tell the browser to be responsive to screen width -->
+    <title>表单使用演示 </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 
@@ -25,7 +24,7 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">复选框</label>
-                <v-checkbox :items="items"  v-model="input_check_box" ref="input_check_box"></v-checkbox>
+                <v-checkbox :items="items" v-model="input_check_box" ref="input_check_box"></v-checkbox>
                 bind:{{input_check_box}}
             </div>
             <div class="layui-form-item">
@@ -34,7 +33,7 @@
                 <v-radio  ref="radio_input" :items="items"></v-radio>
 
                 <v-form-item label="图标使用">
-                    <v-icon-selector id="icon_a" type="input"></v-icon-selector>
+                    <v-icon-selector ></v-icon-selector>
                 </v-form-item>
 
             </div>
@@ -51,12 +50,6 @@
             <div class="layui-card-header">表单组合</div>
             <div class="layui-card-body" style="padding: 15px;">
                 <form class="layui-form" action="" lay-filter="component-form-group">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">输入框</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                        </div>
-                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">验证必填项</label>
                         <div class="layui-input-block">
