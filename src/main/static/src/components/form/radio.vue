@@ -28,15 +28,12 @@ export default {
             return item.checked
         }
     } ,
-        mounted () {
-            var self = this
-            layui.use('form' , function(){
-                var form = layui.form
-                form.on('radio('+ self.dynName +')', function(data){
-
-                })
-            })
-
-        }
+    mounted () {
+        var self = this
+        layui.use('form' , function(){
+            var form = layui.form
+            form.on('radio('+ self.dynName +')', function(data){})
+        })
     }
+}
 </script>
