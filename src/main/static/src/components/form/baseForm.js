@@ -110,12 +110,6 @@ export const baseForm = {
             }
             return 'datetime'
         },
-        get_class : function(item){
-            if(item.hidden)
-                return 'hidden layui-col-lg12'
-            else
-                return item.span?('layui-col-lg'+item.span):''
-        } ,
         get_wrapper_class:function (item) {
             return 'layui-input-block'
         } ,

@@ -4,45 +4,40 @@
     </button>
 
     <div v-else-if="type == 'input'" class="layui-inline">
-        <i data-bv-icon-for="icon" :id="id + '_i'" :class="'form-control-feedback ' + value" @click="popIconWin"></i>
-        <input type="text" :id="id"
-            name="name"  class="layui-input"
-            :value="value" placeholder="点击选图标"
-            :lay-verify="validate"
+        <i data-bv-icon-for="icon" :id="name + '_i'" :class="'form-control-feedback ' + value" @click="popIconWin"></i>
+        <input type="text" :id="name"
+            :name="name"  class="layui-input"
+            :value="value"
+            ref="input"
+            placeholder="点击选图标"
+            :lay-verify="verify"
             @click="popIconWin">
     </div>
-
 </template>
 
 <script>
-    export default {
-        name: 'v-icon-selector',
-        props: {
-            'id':{type:String},
-            'value':{type:String},
-            'name': {type:String},
-            type: {type:String, default:'input'} ,
-            validate:{type:String}
-        },
-        methods : {
-            get_value: function() {
-                return this.$el.getElementsByTagName('input')[0].value
-            } ,
-            popIconWin : function() {
-               var icon_el=this.$attrs.icon_el
-               if(this.type=='input')
-                    icon_el = '#' + this.id + ' #' + this.id + '_i'
-               if(!icon_el)
-                    icon_el='#icon_i #icon'
-               modals.openWin({
-                    winId:"iconWin",
-                    title:'图标选择器（双击选择）',
-                    _hidden_data: icon_el,
-                    width:'1000px',
-                    url:"/admin/config/icon_selector.html"
-               })
-            }
+import {baseInput}  from '../../baseInput'
+export default {
+    mixins: [baseInput],
+    name: 'v-icon-selector',
+    props: {
+        type: {type:String, default:'input'}
+    },
+    methods : {
+        popIconWin : function() {
+           var icon_el=this.$attrs.icon_el
+           if(this.type=='input')
+                icon_el = '#' + this.name + ' #' + this.name + '_i'
+           if(!icon_el)
+                icon_el='#icon_i #icon'
+           modals.openWin({
+                winId:"iconWin",
+                title:'图标选择器（双击选择）',
+                _hidden_data: icon_el,
+                width:'1000px',
+                url:"/admin/config/icon_selector.html"
+           })
         }
-
     }
+}
 </script>

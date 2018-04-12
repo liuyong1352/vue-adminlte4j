@@ -12,25 +12,24 @@
 
 <v-app id="app" :data="data" >
     <v-box title="动态自动生成">
-        <v-form ajax_url="/test/form/get" submit_url="/test/form/update">
-        </v-form>
+        <v-form ajax_url="/test/form/get" submit_url="/test/form/update"></v-form>
     </v-box>
 
     <v-box title="静态生成">
         <p>c_v:{{c_v}}</p>
         <div class="layui-form">
             <div class="layui-form-item">
+                <label class="layui-form-label">输入框</label>
+                <v-input  placeholder="请输入姓名"></v-input>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">单行输入框</label>
-                <div class="layui-input-block">
-                    <v-check ref="checkbox_like" :items="items" name="c_v" v-model="c_v"></v-check>
-                </div>
+                <v-check ref="checkbox_like" :items="items" name="c_v" v-model="c_v"></v-check>
             </div>
             <div class="layui-form-item">
 
                 <label class="layui-form-label">单选按钮</label>
-                <div class="layui-input-block">
-                    <v-radio :name="name" ref="checkbox_like" :items="items"></v-radio>
-                </div>
+                <v-radio :name="name" ref="checkbox_like" :items="items"></v-radio>
 
                 <v-form-item label="图标使用">
                     <v-icon-selector id="icon_a" type="input"></v-icon-selector>

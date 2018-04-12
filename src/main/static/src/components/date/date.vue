@@ -1,9 +1,13 @@
 <template>
-    <input  :id="eid"
-                :placeholder="placeholder"
-                :value="value"
-                class="layui-input"
-                v-on:input="handleInput">
+    <div :class="wrapClasses">
+        <input  :id="eid"
+                    :placeholder="placeholder"
+                    :value="value"
+                    ref="input"
+                    :lay-verify="verify"
+                    class="layui-input"
+                    v-on:input="handleInput">
+    </div>
 </template>
 
 <script>
@@ -12,7 +16,6 @@ export default {
   mixins: [baseInput],
   name: 'v-date',
     props : {
-        value: String,
         type: {
             type: String,
             default: 'datetime'
@@ -21,11 +24,7 @@ export default {
             type:Boolean ,
             default:false
         } ,
-        format: String,
-        class: {
-            type:String,
-            default:''
-        }
+        format: String
     },
   data() {
       return {

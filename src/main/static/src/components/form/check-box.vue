@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :id="id" :class="wrapClasses">
         <input type="checkbox" :lay-filter="name" v-for="item in items"
             :name="name"
             :value="item.code"
@@ -12,14 +12,14 @@
 </template>
 
 <script>
-    export default {
-        name: 'v-checkbox',
-        props: {
-            name : String,
-            checkedValues:String,
-            items : Object
-
-        },
+import {baseInput}  from '../baseInput'
+export default {
+    mixins: [baseInput],
+    name: 'v-checkbox',
+    props: {
+        checkedValues:String,
+        items : Object
+    },
         methods:{
             get_value:function() {
                 var arr = []
@@ -39,10 +39,6 @@
                 return item.checked
             }
         } ,
-        created () {
-
-        } ,
-
         mounted () {
             var self = this
             layui.use('form' , function(){

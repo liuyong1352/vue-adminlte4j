@@ -1,26 +1,26 @@
 <template>
-    <div :class="get_wrapper_class()">
+    <div :class="get_class(item)">
+        <label  class="layui-form-label">{{item['label']}}</label>
         <template v-if="item['type'] === 0 " >
-            <input type="text" class="layui-input"
-                :lay-verify="get_verify(item)"
+            <v-input :type="text"
+                :verify="get_verify(item)"
                 :value="buildVal(item)"
-                :placeholder="item.placeholder">
+                :placeholder="item.placeholder"></v-input>
         </template>
         <template v-else-if="item['type'] === 12 " >
-            <v-date  :type="get_date_type_val(item,'type')"
-                 :lay-verify="get_verify(item)"
+            <v-date  :type="get_date_type_val(item,'type')" :wrap_class="get_wrapper_class()"
+                 :verify="get_verify(item)"
                  :format="get_ext_val(item,'format')"
                  :range="get_ext_val(item,'range')"
                  :value="buildVal(item)"
                  :placeholder="item.placeholder" ></v-date>
         </template>
         <template v-else-if="item['type'] === 4 " >
-            <v-checkbox :name="item.key"
-                    :lay-verify="get_verify(item)"
+            <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
                     :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
         </template>
         <template v-else-if="item['type'] === 3 " >
-             <v-radio :name="item.key" :ref="item.key"
+             <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
                     :items="item.ext.dict" :checkedValue="buildVal(item)">
              </v-radio>
         </template>
@@ -54,6 +54,13 @@ export default {
         data:{type:Object}
     } ,
     methods :{
+        get_class : function(item){
+            var cls = item.hidden?'hidden':''
+            if(this.inline)
+                return cls + ' layui-inline'
+            else
+                return cls + ' layui-col-lg'+item.span
+        } ,
         buildVal: function(item) {
             var val = this.data[item.key]
             if(0 == val) {
@@ -62,8 +69,6 @@ export default {
             return val || item.defVal
         } ,
         get_value(){
-            if(this.item.type == 0 )
-                return $(this.$el).find("input").val()
             return this.$children[0].get_value()
         } ,
         get_ext_val:function(item , key, defVal){

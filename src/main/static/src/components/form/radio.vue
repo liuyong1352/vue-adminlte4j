@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="wrapClasses">
         <input type="radio" :lay-filter="name" v-for="item in items"
             :name="name"
             :value="item.code"
@@ -10,10 +10,11 @@
 </template>
 
 <script>
-    export default {
-        name: 'v-radio',
+import {baseInput}  from '../baseInput'
+export default {
+    mixins: [baseInput],
+    name: 'v-radio',
         props: {
-            name : String,
             checkedValue: String,
             items : Object
         },
