@@ -2,11 +2,10 @@
     <button v-if="type == 'btn'" type="button" @click="popIconWin" class="btn btn-primary" data-btn-type="selectIcon">
             <i class="fa fa-hand-pointer-o">&nbsp;选择图标</i>
     </button>
-
     <div v-else-if="type == 'input'" class="layui-inline">
-        <i data-bv-icon-for="icon" :id="name + '_i'" :class="'form-control-feedback ' + value" @click="popIconWin"></i>
-        <input type="text" :id="name"
-            :name="name"  class="layui-input"
+        <i data-bv-icon-for="icon" :id="dynName + '_i'" :class="'form-control-feedback ' + value" @click="popIconWin"></i>
+        <input type="text" :id="dynName"
+            :name="dynName" class="layui-input"
             :value="value"
             ref="input"
             placeholder="点击选图标"
@@ -14,7 +13,6 @@
             @click="popIconWin">
     </div>
 </template>
-
 <script>
 import {baseInput}  from '../../baseInput'
 export default {
@@ -27,7 +25,7 @@ export default {
         popIconWin : function() {
            var icon_el=this.$attrs.icon_el
            if(this.type=='input')
-                icon_el = '#' + this.name + ' #' + this.name + '_i'
+                icon_el = '#' + this.dynName + ' #' + this.dynName + '_i'
            if(!icon_el)
                 icon_el='#icon_i #icon'
            modals.openWin({
