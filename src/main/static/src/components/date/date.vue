@@ -38,16 +38,6 @@ export default {
   },
 
   methods: {
-    get_value: function() {
-            return this.$el.value
-    } ,
-    handleInput : function(event) {
-        var value = event.target.value
-        this.$emit('input', value)
-        this.setCurrentValue(value)
-        //this.$emit('on-change', event)
-        //this.$refs.input.value = value
-    },
     setCurrentValue(value) {
        this.currentValue = value
     }

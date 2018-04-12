@@ -16,27 +16,32 @@
     </v-box>
 
     <v-box title="静态生成">
-        <p>c_v:{{c_v}}</p>
+
         <div class="layui-form">
             <div class="layui-form-item">
                 <label class="layui-form-label">输入框</label>
-                <v-input  placeholder="请输入姓名"></v-input>
+                <v-input  placeholder="请输入姓名" v-model="input_name"></v-input>
+                bind:{{input_name}}
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">单行输入框</label>
-                <v-check ref="checkbox_like" :items="items" name="c_v" v-model="c_v"></v-check>
+                <label class="layui-form-label">复选框</label>
+                <v-checkbox :items="items"  v-model="input_check_box" ref="input_check_box"></v-checkbox>
+                bind:{{input_check_box}}
             </div>
             <div class="layui-form-item">
 
                 <label class="layui-form-label">单选按钮</label>
-                <v-radio :name="name" ref="checkbox_like" :items="items"></v-radio>
+                <v-radio  ref="radio_input" :items="items"></v-radio>
 
                 <v-form-item label="图标使用">
                     <v-icon-selector id="icon_a" type="input"></v-icon-selector>
                 </v-form-item>
 
             </div>
-
+            <div class="layui-form-item">
+                <button @click="queryValues">获取值</button>
+                {{all_values}}
+            </div>
         </div>
         <!--<v-lform ajax_url="/test/form/get" ></v-lform>-->
     </v-box>
@@ -172,12 +177,6 @@
                                     <option value="12">tree</option>
                                     <option value="13">layedit</option>
                                     <option value="14">nav</option>
-                                    <option value="15">tab</option>
-                                    <option value="16">table</option>
-                                    <option value="17">select</option>
-                                    <option value="18">checkbox</option>
-                                    <option value="19">switch</option>
-                                    <option value="20">radio</option>
                                 </select><div class="layui-form-select"><div class="layui-select-title"><input type="text" placeholder="直接选择或搜索选择" value="" class="layui-input"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">直接选择或搜索选择</dd><dd lay-value="1" class="">layer</dd><dd lay-value="2" class="">form</dd><dd lay-value="3" class="">layim</dd><dd lay-value="4" class="">element</dd><dd lay-value="5" class="">laytpl</dd><dd lay-value="6" class="">upload</dd><dd lay-value="7" class="">laydate</dd><dd lay-value="8" class="">laypage</dd><dd lay-value="9" class="">flow</dd><dd lay-value="10" class="">util</dd><dd lay-value="11" class="">code</dd><dd lay-value="12" class="">tree</dd><dd lay-value="13" class="">layedit</dd><dd lay-value="14" class="">nav</dd><dd lay-value="15" class="">tab</dd><dd lay-value="16" class="">table</dd><dd lay-value="17" class="">select</dd><dd lay-value="18" class="">checkbox</dd><dd lay-value="19" class="">switch</dd><dd lay-value="20" class="">radio</dd></dl></div>
                             </div>
                         </div>
@@ -289,11 +288,16 @@
                     {code:'2' ,   label:'女',checked:false},
                     {code:'3' ,    label:'中性',checked:true}
                 ] ,
-                c_v : "write"
+                input_name : "默认值0  ",
+                input_check_box : "1" ,
+                all_values : ""
             }
         } ,
         methods : {
-
+            queryValues() {
+                this.all_values = this.$refs.input_check_box.get_value()
+                this.all_values += " "  + this.$refs.radio_input.get_value()
+            }
         } ,
         mounted : function () {}
     })

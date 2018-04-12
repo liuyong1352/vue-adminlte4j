@@ -11,12 +11,12 @@
 
 <script>
 import {baseInput}  from '../baseInput'
+import {baseDict}  from '../baseDict'
 export default {
-    mixins: [baseInput],
+    mixins: [baseInput ,baseDict],
     name: 'v-switch',
     props: {
         text : {type:String ,default:'开|关'} ,
-        items: Object,
         isOpen:Boolean
     },
     methods:{

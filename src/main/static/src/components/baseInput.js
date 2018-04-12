@@ -7,9 +7,24 @@ export const baseInput = {
         wrap_class:String ,
         verify:String
     } ,
+    created(){
+
+    } ,
+    data() {
+
+    } ,
     methods: {
+        set_value(val){
+            this.value=val
+            this.$refs.input.value=this.value
+        } ,
         get_value(){
             return this.$refs.input.value
+        } ,
+        handleInput(event) {
+            var value = event.target.value
+            this.$emit('input', value)
+            this.value = value
         }
     } ,
     computed: {
@@ -17,6 +32,9 @@ export const baseInput = {
             if(this.wrap_class)
                 return this.wrap_class
             return this.inline? 'layui-input-inline':'layui-input-block'
+        }  ,
+        dynName() {
+            return (this.name || '_input_' + unique_id())
         }
     },
     mounted () {
