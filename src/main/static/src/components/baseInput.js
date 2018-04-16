@@ -3,12 +3,12 @@ export const baseInput = {
         name:String ,
         value: String,
         inline:{type:Boolean , default:false} ,
-        placeholder: {String , default:'enter...'} ,
+        placeholder: String ,
         wrap_class:String ,
         verify:String
     } ,
     created(){
-
+        this.placeholder = this.placeholder || 'Enter ... '
     } ,
     data() {
 

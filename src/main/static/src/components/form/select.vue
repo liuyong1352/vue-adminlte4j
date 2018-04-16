@@ -17,6 +17,9 @@ import {baseDict}  from '../baseDict'
 export default {
     mixins: [baseInput ,baseDict],
     name: 'v-select' ,
+    created() {
+        this.placeholder = this.placeholder || '请选择'
+    } ,
     methods:{
         get_value:function() {
             return $(this.$el).find('select').val()
