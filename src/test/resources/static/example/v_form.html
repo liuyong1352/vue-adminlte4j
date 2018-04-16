@@ -17,30 +17,28 @@
     <v-box title="静态生成">
 
         <div class="layui-form">
-            <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
+            <v-form-item label="输入框">
                 <v-input  placeholder="请输入姓名" v-model="input_name"></v-input>
                 bind:{{input_name}}
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
+            </v-form-item>
+
+            <v-form-item label="复选框">
                 <v-checkbox :items="items" v-model="input_check_box" ref="input_check_box"></v-checkbox>
                 bind:{{input_check_box}}
-            </div>
+            </v-form-item>
             <v-form-item label="图标使用">
                 <v-icon-selector ></v-icon-selector>
             </v-form-item>
 
-            <div class="layui-form-item" >
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证日期</label>
+            <v-form-item>
+                <v-form-item inline="true" label="验证日期">
                     <v-date ref="input_date" inline="true" ></v-date>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">单选按钮</label>
+                </v-form-item>
+                <v-form-item inline="true" label="单选按钮">
                     <v-radio  ref="radio_input" :items="items"></v-radio>
-                </div>
-            </div>
+                </v-form-item >
+            </v-form-item>
+
 
             <div class="layui-form-item">
                 <button @click="queryValues">获取值</button>

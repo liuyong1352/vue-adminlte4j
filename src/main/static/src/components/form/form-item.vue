@@ -1,9 +1,7 @@
 <template>
-    <div class="layui-form-item">
+    <div :class="inline?'layui-inline':'layui-form-item'">
         <label v-if="label" class="layui-form-label">{{label}}</label>
-        <div v-if="$slot" class="layui-input-block">
-          <slot></slot>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
@@ -13,7 +11,7 @@ export default {
     props: {
       span : {type : Number  , default : 12} ,
       label : {type : String } ,
-      data: String
+      inline:{type:Boolean , default:false}
     } ,
     computed : {
       col_size : function() {
