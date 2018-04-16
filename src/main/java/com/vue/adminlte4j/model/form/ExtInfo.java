@@ -27,7 +27,8 @@ public class ExtInfo extends HashMap<String,Object> {
             extInfo = ExtInfo.configDate(field);
         } else if(formItemType == FormItemType.CHECKBOX.getKey() ||
                  formItemType == FormItemType.RADIO.getKey() ||
-                 formItemType == FormItemType.SWITCH.getKey()   ) {
+                 formItemType == FormItemType.SWITCH.getKey() ||
+                 formItemType == FormItemType.SELECT.getKey()) {
             extInfo = ExtInfo.configDict(field);
         }
         return  extInfo ;
@@ -50,7 +51,7 @@ public class ExtInfo extends HashMap<String,Object> {
             return null;
         ExtInfo extInfo = new ExtInfo() ;
         DictEntry[] dictEntries = dictData.value();
-        int autoCode = 0 ;
+        int autoCode = 1 ; //from 1
         List<Dict> dicts = new ArrayList<>();
         for(DictEntry dictEntry : dictEntries) {
             String code = dictEntry.code() ;

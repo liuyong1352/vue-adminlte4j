@@ -46,6 +46,10 @@ public class XModel {
     @DictData({@DictEntry("是") ,@DictEntry("否")})
     private int isAdmin ;
 
+    @UIFormItem(type = FormItemType.SELECT , label = "学历" )
+    @DictData({@DictEntry(value = "小学") ,@DictEntry("初中") ,@DictEntry("高中"),@DictEntry("本科")})
+    private int educatoin;
+
     @UIFormItem(type = FormItemType.ICON_SELECTOR , span = 12 , label = "选择图标")
     @Validate
     private String myIcon ;
@@ -120,5 +124,13 @@ public class XModel {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public int getEducatoin() {
+        return educatoin;
+    }
+
+    public void setEducatoin(int educatoin) {
+        this.educatoin = educatoin;
     }
 }

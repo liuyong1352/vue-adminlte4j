@@ -1,7 +1,12 @@
 <template>
     <div :class="wrapClasses">
         <select :name="dynName" lay-verify="" lay-search>
-             <option v-for="item in items" :value="item.code" selected="isChecked(item)">{{item.label}}</option>
+             <option value="" selected v-text="this.placeholder?this.placeholder:'请选择'"></option>
+             <template v-for="item in items">
+                <option v-if="isChecked(item)" :value="item.code" v-text="item.label" selected></option>
+                <option v-else :value="item.code" v-text="item.label"></option>
+             </template>
+
         </select>
     </div>
 </template>
@@ -11,23 +16,11 @@ import {baseInput}  from '../baseInput'
 import {baseDict}  from '../baseDict'
 export default {
     mixins: [baseInput ,baseDict],
-    name: 'v-select',
-    props: {
-        checkedValue: String
-    },
+    name: 'v-select' ,
     methods:{
-        isChecked : function(item) {
-            if(this.checkedValue)  {
-                var c = this.checkedValue
-                if(c == item.code)
-                return true
-            }
-            return item.checked
+        get_value:function() {
+            return $(this.$el).find('select').val()
         }
-    } ,
-    mounted () {
-        var self = this
-        layui.use('form' , function(){})
     }
 }
 </script>

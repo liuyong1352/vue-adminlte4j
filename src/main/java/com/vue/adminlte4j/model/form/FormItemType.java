@@ -4,6 +4,7 @@ package com.vue.adminlte4j.model.form;
  * Created by bjliuyong on 2018/3/7.
  */
 public enum FormItemType {
+
     DEFAULT(-1, null) ,
 
 
@@ -15,12 +16,12 @@ public enum FormItemType {
     /**
      * 单选按钮
      */
-    RADIO(3,"radio"),
+    RADIO(3,"radio" ),
 
     /**
      * 复选框
      */
-    CHECKBOX(4, "checkbox") ,
+    CHECKBOX(4, "checkbox" ) ,
 
     /**
      * 开关
@@ -30,7 +31,7 @@ public enum FormItemType {
     /**
      * select
      */
-    SELECT(6 , "select") ,
+    SELECT(6 , "select" ) ,
 
     /**
      * 图标选择器
@@ -38,11 +39,12 @@ public enum FormItemType {
     ICON_SELECTOR(10 , "") ,
 
     /**
-     * 日期类的
+     * 日期时间
      */
     DATE(12 )
 
     ;
+
 
     FormItemType(int key) {
         this.key = key;
@@ -53,8 +55,15 @@ public enum FormItemType {
         this.text = text;
     }
 
+    FormItemType(int key, String text ,int prop) {
+        this.key = key;
+        this.text = text;
+        this.prop = prop;
+    }
+
     private int key ;
     private String text ;
+    private int prop ;
 
     public int getKey() {
         return key;
@@ -70,5 +79,13 @@ public enum FormItemType {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getProp() {
+        return prop;
+    }
+
+    public void setProp(int prop) {
+        this.prop = prop;
     }
 }

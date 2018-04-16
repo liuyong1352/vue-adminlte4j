@@ -1,6 +1,5 @@
 package com.vue.adminlte4j.model.builder;
 
-import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormModel;
 /**
  * Created by bjliuyong on 2018/3/8.

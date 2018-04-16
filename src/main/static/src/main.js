@@ -1,3 +1,7 @@
+const requireComponent = require.context(
+    '.', true, /\.vue$/
+    //找到components文件夹下以.vue命名的文件
+)
 import VButton       from './components/button.vue'
 import VIconSelector from './components/ui-element/button/icon-selector-btn.vue'
 import VTreeView     from './components/ui-element/tree-view.vue'

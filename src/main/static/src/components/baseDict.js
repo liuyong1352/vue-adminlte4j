@@ -12,7 +12,7 @@ export const baseDict = {
             return arr.join(',')
         } ,
         isChecked : function(item) {
-            if(this.value)  {
+            if(this.value != undefined)  {
                 if(typeof this.value != 'string')
                     return this.value == item.code
                 var arr = this.value.split(',')

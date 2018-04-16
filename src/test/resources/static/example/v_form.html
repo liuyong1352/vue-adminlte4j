@@ -41,7 +41,7 @@
 
             <v-form-item>
                 <v-form-item inline="true" label="下拉框">
-                    <v-select ref="select_input" :items="items"></v-select>
+                    <v-select ref="select_input" :items="items" placeholder="请选择"></v-select>
                 </v-form-item>
             </v-form-item>
 
@@ -300,6 +300,7 @@
                 this.all_values = this.$refs.input_check_box.get_value()
                 this.all_values += " "  + this.$refs.radio_input.get_value()
                 this.all_values += " "  + this.$refs.input_date.get_value()
+                this.all_values += " "  + this.$refs.select_input.get_value()
             }
         } ,
         mounted : function () {}

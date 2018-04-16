@@ -7,6 +7,29 @@
                 :value="buildVal(item)"
                 :placeholder="item.placeholder"></v-input>
         </template>
+        <template v-else-if="item['type'] === 3 " >
+            <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
+                   :items="item.ext.dict" :value="buildVal(item)">
+            </v-radio>
+        </template>
+        <template v-else-if="item['type'] === 4 " >
+            <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
+                    :items="item.ext.dict" :value="buildVal(item)"></v-checkbox>
+        </template>
+        <template v-else-if="item['type'] === 5 " >
+            <v-switch :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
+                    :value="buildVal(item)" ></v-switch>
+        </template>
+        <template v-else-if="item['type'] === 6 " >
+            <v-select :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
+                :value="buildVal(item)" :placeholder="item.placeholder"></v-select>
+        </template>
+        <template v-else-if="item['type'] === 10 " >
+            <v-icon-selector
+                :validate="get_verify(item)"
+                :name="item['key']"
+                :value="buildVal(item)" type="input"></v-icon-selector>
+        </template>
         <template v-else-if="item['type'] === 12 " >
             <v-date  :type="get_date_type_val(item,'type')" :wrap_class="get_wrapper_class()"
                  :verify="get_verify(item)"
@@ -14,25 +37,6 @@
                  :range="get_ext_val(item,'range')"
                  :value="buildVal(item)"
                  :placeholder="item.placeholder" ></v-date>
-        </template>
-        <template v-else-if="item['type'] === 4 " >
-            <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
-                    :items="item.ext.dict" :value="buildVal(item)"></v-checkbox>
-        </template>
-        <template v-else-if="item['type'] === 3 " >
-             <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
-                    :items="item.ext.dict" :value="buildVal(item)">
-             </v-radio>
-        </template>
-        <template v-else-if="item['type'] === 5 " >
-            <v-switch :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
-                    :value="buildVal(item)"></v-switch>
-        </template>
-        <template v-else-if="item['type'] === 10 " >
-            <v-icon-selector
-                :validate="get_verify(item)"
-                :name="item['key']"
-                :value="buildVal(item)" type="input"></v-icon-selector>
         </template>
     </div>
 </template>

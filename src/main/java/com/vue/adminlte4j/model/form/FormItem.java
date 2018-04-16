@@ -43,19 +43,19 @@ public class FormItem {
 
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
-            this.key =key ;
+            this.key = key ;
         
         String label = uiFormItem.label() ; 
         if(label != null && !label.isEmpty()) 
-            this.label =label ;
+            this.label = label ;
 
         String defVal = uiFormItem.defVal() ;
         if(defVal != null && !defVal.isEmpty())
-            this.defVal =defVal ;
+            this.defVal = defVal ;
 
         String placeholder = uiFormItem.placeholder() ;
         if(placeholder != null && !placeholder.isEmpty())
-            this.placeholder =placeholder ;
+            this.placeholder = placeholder ;
     }
 
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {

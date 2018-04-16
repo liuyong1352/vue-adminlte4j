@@ -3,7 +3,7 @@ export const baseInput = {
         name:String ,
         value: String,
         inline:{type:Boolean , default:false} ,
-        placeholder: String ,
+        placeholder: {String , default:'enter...'} ,
         wrap_class:String ,
         verify:String
     } ,
