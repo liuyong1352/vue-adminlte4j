@@ -10,6 +10,18 @@ export const baseDict = {
                     arr.push(this.$refs.input[i].value)
             }
             return arr.join(',')
+        } ,
+        isChecked : function(item) {
+            if(this.value)  {
+                if(typeof this.value != 'string')
+                    return this.value == item.code
+                var arr = this.value.split(',')
+                for(var i in arr ){
+                    if(arr[i] == item.code)
+                        return true
+                }
+            }
+            return item.checked
         }
     }
 }

@@ -38,8 +38,6 @@ export const baseInput = {
         }
     },
     mounted () {
-        layui.use('form' , function(){
-
-        })
+        layui.use('form' , function(){})
     }
 }

@@ -7,8 +7,7 @@
             :title="item.label"
             :checked="isChecked(item)"
             :disabled="disabled"
-            lay-skin="primary"
-            >
+            lay-skin="primary">
     </div>
 </template>
 <script>
@@ -18,21 +17,6 @@ import {baseDict}  from '../baseDict'
 export default {
     mixins: [baseInput ,baseDict],
     name: 'v-checkbox',
-    props: {
-        checkedValues:String
-    },
-    methods:{
-        isChecked : function(item) {
-            if(this.checkedValues)  {
-                var arr = this.checkedValues.split(',')
-                for(var i in arr ){
-                    if(arr[i] == item.code)
-                        return true
-                }
-            }
-            return item.checked
-        }
-    } ,
     mounted () {
         var self = this
         layui.use('form' , function(){

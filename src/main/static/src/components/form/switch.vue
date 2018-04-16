@@ -2,9 +2,10 @@
     <div :class="wrapClasses">
         <input type="checkbox"
             :name="name"
-            value="true"
-            :checked="isOpen"
-            :lay-text="text"
+            :value="cvalue"
+            ref="input"
+            :checked="is_open"
+            :lay-text="ctext"
             lay-skin="switch">
     </div>
 </template>
@@ -16,19 +17,31 @@ export default {
     mixins: [baseInput ,baseDict],
     name: 'v-switch',
     props: {
-        text : {type:String ,default:'开|关'} ,
-        isOpen:Boolean
+        text : {type:String ,default:'开|关'}
     },
     methods:{
-        buildText:function() {
-            if(this.items && this.items.length >= 2 )  {
-                return this.items[0].label + '|' + this.items[1].label
-            }
-            return this.text
-        } ,
         get_value:function() {
-            return $('input[name=' + this.name + ']:checked').length //0 or 1
+            if(this.$refs.input.checked)
+                return this.cvalue.split('|')[0]
+            else
+                return this.cvalue.split('|')[1]
+        }
+    } ,
+    computed: {
+        ctext(){
+            if(this.items && this.items.length >= 2 )
+                return this.items[0].label + '|' + this.items[1].label
+            return this.text
+        },
+        cvalue() {
+            if(this.items && this.items.length >= 2 )
+                return this.items[0].code + '|' + this.items[1].code
+            return 'true|false'
+        } ,
+        is_open() {
+            return this.value == this.cvalue.split('|')[0]
         }
     }
+
 }
 </script>

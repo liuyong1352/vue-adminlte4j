@@ -17,16 +17,16 @@
         </template>
         <template v-else-if="item['type'] === 4 " >
             <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
-                    :items="item.ext.dict" :checkedValues="buildVal(item)"></v-checkbox>
+                    :items="item.ext.dict" :value="buildVal(item)"></v-checkbox>
         </template>
         <template v-else-if="item['type'] === 3 " >
              <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
-                    :items="item.ext.dict" :checkedValue="buildVal(item)">
+                    :items="item.ext.dict" :value="buildVal(item)">
              </v-radio>
         </template>
         <template v-else-if="item['type'] === 5 " >
             <v-switch :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
-                    :isOpen="buildVal(item) === 1"></v-switch>
+                    :value="buildVal(item)"></v-switch>
         </template>
         <template v-else-if="item['type'] === 10 " >
             <v-icon-selector

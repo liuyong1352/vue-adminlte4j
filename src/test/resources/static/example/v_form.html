@@ -39,6 +39,12 @@
                 </v-form-item >
             </v-form-item>
 
+            <v-form-item>
+                <v-form-item inline="true" label="下拉框">
+                    <v-select ref="select_input" :items="items"></v-select>
+                </v-form-item>
+            </v-form-item>
+
 
             <div class="layui-form-item">
                 <button @click="queryValues">获取值</button>

@@ -27,6 +27,7 @@ import VDate         from  './components/date/date.vue'
 import VModal        from  './components/ui-element/modal.vue'
 import VTags         from  './components/tags.vue'
 import VRadio        from  './components/form/radio.vue'
+import VSelect       from  './components/form/select.vue'
 // import { MessageBox } from 'element-ui'
 
 
@@ -59,5 +60,6 @@ Vue.component('v-date'              , VDate)
 Vue.component('v-modal'             , VModal)
 Vue.component('v-tree'              , VTreeView)
 Vue.component('v-radio'             , VRadio)
+Vue.component('v-select'            , VSelect)
 
 
