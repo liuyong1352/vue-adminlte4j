@@ -22,7 +22,7 @@ public @interface UIFormItem {
      * 表单项类型
      * @return
      */
-    FormItemType type() default FormItemType.DEFAULT;
+    int type() default FormItemType.DEFAULT;
     String defVal() default "" ;
     String placeholder() default "" ;
 

@@ -1,7 +1,7 @@
 <template>
     <div :class="get_class(item)">
         <label  class="layui-form-label">{{item['label']}}</label>
-        <template v-if="item['type'] === 0 " >
+        <template v-if="item.type === 1 " >
             <v-input :type="text"
                 :verify="get_verify(item)"
                 :value="buildVal(item)"

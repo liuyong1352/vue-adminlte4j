@@ -96,7 +96,7 @@ public class TableData<T> {
 
         private String key  ;
         private String label ;
-        private int  type = FormItemType.INPUT.getKey();
+        private int  type = FormItemType.INPUT;
         private ExtInfo extInfo ;
 
         public String getKey() {

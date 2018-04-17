@@ -3,7 +3,6 @@ package com.vue.adminlte4j.model.builder;
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
-import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.form.ExtInfo;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormItemType;
@@ -12,8 +11,6 @@ import com.vue.adminlte4j.util.AnnotationUtils;
 import com.vue.adminlte4j.util.ReflectUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +103,7 @@ public class FormModelUtils {
         formItem.setSpan(formModel.getSpan());
 
         if(ReflectUtils.isDateOrTime(field.getType())) {
-            formItem.setType(FormItemType.DATE.getKey());
+            formItem.setType(FormItemType.DATE);
             formItem.setPlaceholder("yyyy-MM-dd");
         }
         formItem.merge(ref != null ? ref.get(formItem.getKey()) : null) ;

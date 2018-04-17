@@ -1,91 +1,29 @@
 package com.vue.adminlte4j.model.form;
 
 /**
- * Created by bjliuyong on 2018/3/7.
+ * Created by bjliuyong on 2018/4/17.
  */
-public enum FormItemType {
+public final class FormItemType {
 
-    DEFAULT(-1, null) ,
-
-
-    /**
-     * 普通输入
-     */
-    INPUT(0 , "input") ,
-
-    /**
-     * 单选按钮
-     */
-    RADIO(3,"radio" ),
+    public static final int DEFAULT         = 0;
+    public static final int INPUT           = 1;
+    public static final int RADIO           = 3;
+    public static final int CHECKBOX        = 4;
+    public static final int SWITCH          = 5;
+    public static final int SELECT          = 6;
+    public static final int ICON_SELECTOR   = 10;
+    public static final int DATE            = 12;
 
     /**
-     * 复选框
+     * 判断是否需要配置字典拓展
+     * @param type
+     * @return
      */
-    CHECKBOX(4, "checkbox" ) ,
-
-    /**
-     * 开关
-     */
-    SWITCH(5 , "switch") ,
-
-    /**
-     * select
-     */
-    SELECT(6 , "select" ) ,
-
-    /**
-     * 图标选择器
-     */
-    ICON_SELECTOR(10 , "") ,
-
-    /**
-     * 日期时间
-     */
-    DATE(12 )
-
-    ;
-
-
-    FormItemType(int key) {
-        this.key = key;
+    public static boolean hasDict(int type) {
+        return type == FormItemType.CHECKBOX ||
+            type ==    FormItemType.RADIO ||
+            type ==    FormItemType.SWITCH ||
+            type ==    FormItemType.SELECT ;
     }
 
-    FormItemType(int key, String text) {
-        this.key = key;
-        this.text = text;
-    }
-
-    FormItemType(int key, String text ,int prop) {
-        this.key = key;
-        this.text = text;
-        this.prop = prop;
-    }
-
-    private int key ;
-    private String text ;
-    private int prop ;
-
-    public int getKey() {
-        return key;
-    }
-
-    public void setKey(int key) {
-        this.key = key;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getProp() {
-        return prop;
-    }
-
-    public void setProp(int prop) {
-        this.prop = prop;
-    }
 }

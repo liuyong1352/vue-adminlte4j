@@ -23,12 +23,9 @@ public class ExtInfo extends HashMap<String,Object> {
 
     public static ExtInfo config(int formItemType, Field field ) {
         ExtInfo extInfo = null ;
-        if(formItemType == FormItemType.DATE.getKey()) {
+        if(formItemType == FormItemType.DATE) {
             extInfo = ExtInfo.configDate(field);
-        } else if(formItemType == FormItemType.CHECKBOX.getKey() ||
-                 formItemType == FormItemType.RADIO.getKey() ||
-                 formItemType == FormItemType.SWITCH.getKey() ||
-                 formItemType == FormItemType.SELECT.getKey()) {
+        } else if(FormItemType.hasDict(formItemType)) {
             extInfo = ExtInfo.configDict(field);
         }
         return  extInfo ;

@@ -12,7 +12,7 @@ public class FormItem {
     private String key   ;
     private String defVal ;
     private String placeholder ;
-    private int    type = FormItemType.INPUT.getKey();
+    private int    type = FormItemType.INPUT;
     private int     span = 12;
     private boolean hidden ;
     private Validate validate ;
@@ -35,7 +35,7 @@ public class FormItem {
             return;
 
         if(uiFormItem.type() != FormItemType.DEFAULT )
-            this.type =  uiFormItem.type().getKey() ;
+            this.type =  uiFormItem.type() ;
 
         this.hidden = uiFormItem.hidden() ;
         if(uiFormItem.span() != 0)

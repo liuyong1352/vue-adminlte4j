@@ -3,7 +3,6 @@ package api.data.domain;
 import com.vue.adminlte4j.annotation.DictData;
 import com.vue.adminlte4j.annotation.DictEntry;
 import com.vue.adminlte4j.annotation.Form;
-import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
 import com.vue.adminlte4j.model.form.FormItemType;
