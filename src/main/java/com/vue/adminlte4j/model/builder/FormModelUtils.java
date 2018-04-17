@@ -97,11 +97,7 @@ public class FormModelUtils {
         if( uiFormItem!= null && uiFormItem.ignore())
             return null;
 
-        FormItem formItem = new FormItem() ;
-        formItem.setLabel(field.getName());
-        formItem.setKey(field.getName());
-        formItem.setSpan(formModel.getSpan());
-
+        FormItem formItem = formModel.createFormItem(field.getName());
         if(ReflectUtils.isDateOrTime(field.getType())) {
             formItem.setType(FormItemType.DATE);
             formItem.setPlaceholder("yyyy-MM-dd");
@@ -113,7 +109,7 @@ public class FormModelUtils {
         if(extInfo != null ) {
             formItem.setExt(extInfo);
         }
-        formModel.addFormItem(formItem) ;
+
         return formItem ;
     }
 

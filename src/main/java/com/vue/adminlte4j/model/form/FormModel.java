@@ -21,7 +21,7 @@ public class FormModel  {
     /**
      * 在没有配置UIFormItem, ignore采用此处全局配置
      */
-    private boolean ignore = true ;
+    private boolean ignore = false ;
 
     /**
      * 表单类型是否为inline
@@ -35,9 +35,14 @@ public class FormModel  {
         return formItems;
     }
 
-    public FormModel addFormItem(FormItem formItem) {
+    public FormItem createFormItem(String key) {
+        FormItem formItem = new FormItem() ;
+        formItem.setKey(key);
+        formItem.setLabel(key);
+        formItem.setSpan(span);
+        formItem.setHidden(hidden);
         formItems.add(formItem) ;
-        return this ;
+        return formItem ;
     }
 
     public FormItem get(String key) {
