@@ -20,7 +20,7 @@
             </v-col>
         </v-row>
 
-        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" ></v-table>
+        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" :render="render" ></v-table>
     </v-box>
 
     <div class="row">
@@ -95,7 +95,12 @@
 
                         }
                     }
-                ]
+                ] ,
+                render:{
+                    myIcon: function(row , $table) {
+                        return '<i class="' + row.myIcon + '"></i>'
+                    }
+                }
             }
         } ,
         methods : {

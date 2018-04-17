@@ -7,12 +7,8 @@
             <table id="v-table1" class="table table-bordered table-striped table-hover">
                 <thead style="background: #78d5d69e;">
                     <tr>
-                        <th v-for="col in columns">
-                            {{col['label']}}
-                        </th>
-                        <th v-if="operations">
-                            操作
-                        </th>
+                        <th v-for="col in columns"  v-html="col.label"></th>
+                        <th v-if="operations">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +56,7 @@ export default {
     ajax_url: String ,
     send_req : {type : Number , default : 0 } ,
     operations: Array,
+    render:Object
   } ,
   data: function () {
     return {
@@ -167,6 +164,9 @@ export default {
 
     } ,
     build_val(item , col) {
+        if(this.render && this.render[col.key]) {
+            return this.render[col.key](item , this)
+        }
         if(col.type >= 3 && col.type <= 6  ){
             var r = []
             var isString = (typeof  item[col.key]  == 'string')
@@ -189,8 +189,6 @@ export default {
         }
         return item[col.key]
     }
-  },
-  mounted : function() {
   }
 }
 </script>
