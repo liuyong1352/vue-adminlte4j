@@ -8,7 +8,7 @@ export const baseInput = {
         verify:String
     },
     data() {
-
+        return {}
     } ,
     methods: {
         set_value(val){

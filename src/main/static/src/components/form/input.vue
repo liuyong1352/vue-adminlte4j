@@ -1,6 +1,7 @@
 <template>
     <div :class="wrapClasses">
         <input :type="type" class="layui-input"
+            :name="dynName"
             ref="input"
             :lay-verify="verify"
             :placeholder="placeholder"
@@ -25,10 +26,6 @@ export default {
         currentValue : this.value
     }
   } ,
-
-  watch: {
-
-  },
   methods: {
 
     setCurrentValue(value) {

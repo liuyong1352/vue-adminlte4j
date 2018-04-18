@@ -8,26 +8,25 @@
                 :placeholder="item.placeholder" :wrap_class="get_wrapper_class()"></v-input>
         </template>
         <template v-else-if="item['type'] === 3 " >
-            <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
+            <v-radio  :ref="item.key" :wrap_class="get_wrapper_class()"
                    :items="item.ext.dict" :value="value">
             </v-radio>
         </template>
         <template v-else-if="item['type'] === 4 " >
-            <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
+            <v-checkbox  :wrap_class="get_wrapper_class()"
                     :items="item.ext.dict" :value="value"></v-checkbox>
         </template>
         <template v-else-if="item['type'] === 5 " >
-            <v-switch :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
+            <v-switch  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
                     :value="value" ></v-switch>
         </template>
         <template v-else-if="item['type'] === 6 " >
-            <v-select :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
+            <v-select  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
                 :value="value" :placeholder="item.placeholder"></v-select>
         </template>
         <template v-else-if="item['type'] === 10 " >
             <v-icon-selector
                 :validate="get_verify(item)"
-                :name="item['key']"
                 :value="value" type="input"></v-icon-selector>
         </template>
         <template v-else-if="item['type'] === 12 " >

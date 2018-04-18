@@ -12,14 +12,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item , index) in dataItems" @click="row_selected(item , index)" v-bind:class="{info: index === sr_index}">
-                        <td v-for="_col in columns" >
-                            <span v-html="build_val(item, _col)"></span>
+                    <tr v-for="(row , index) in dataItems" @click="row_selected(row , index)" v-bind:class="{info: index === sr_index}">
+                        <td  v-for="_col in columns" >
+                            <v-base-form-item v-if="sr_index == index"  inline="true" ref="_col.key"
+                                :item="_col"  :value="row[_col.key]"
+                                :dis_label="false"></v-base-form-item>
+                            <span v-else v-html="build_val(row , _col)"></span>
                         </td>
                         <td v-if="operations">
-                            <a :class="get_op_class(operation.class)"  v-for="(operation,  index)  in operations"
+                            <a :class="get_op_class(operation.class)"  v-for="operation in operations"
                                 href="javascript:void(0)"
-                                @click="proxy_method(operation , item)" style="padding-right: 6px;margin-right:4px" >
+                                @click="proxy_method(operation , row , index)" style="padding-right: 6px;margin-right:4px" >
                                 <i v-if="operation.icon" :class="operation.icon"></i><span>{{operation['name']}}</span>
                             </a>
                         </td>
@@ -56,11 +59,11 @@ export default {
         default: {}
     },
     ajax_url: String ,
-    send_req : {type : Number , default : 0 } ,
     operations: Array,
+    edit_row:{type:Number ,default:-1} ,
     render:Object
   } ,
-  data: function () {
+  data() {
     return {
       columns: [],
       current_page : 1 ,
@@ -72,14 +75,6 @@ export default {
       dataItems: []
     }
   },
-  watch: {
-    ajax_url : function(val , oldVal) {
-        this.fetchData()
-    } ,
-    send_req : function(val , oldVal) {
-        this.fetchData()
-    }
-  } ,
   created : function() {
     if(this.ajax_url != undefined && this.ajax_url != "") {
         this.fetchData()
@@ -109,8 +104,23 @@ export default {
     },
 
   } ,
+  updated() {
+          this.$nextTick(function () {
+              layui.use('form' , function(){
+                          var form = layui.form
+                          form.render()
+              })
+          })
 
-  methods : {
+  },
+
+    methods : {
+        set_edit:function(index, flag){
+            if(flag)
+                this.edit_row = index
+            else
+                this.edit_row = -1
+        },
     getParam: function() {
         var s = ''
         for(var key in this.query)
@@ -145,10 +155,11 @@ export default {
             self.dataItems = response.data.tableData.dataItems
             self.totalSize = response.data.tableData.totalSize
             self.computer_total_page()
+
         })
     } ,
-    proxy_method: function(operation , param) {
-        operation.method(param , this)
+    proxy_method: function(operation , param , index) {
+        operation.method(param , this ,index)
     } ,
     change_page: function(p) {
         this.current_page = p

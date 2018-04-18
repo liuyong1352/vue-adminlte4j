@@ -1,7 +1,7 @@
 <template>
     <div :class="wrapClasses">
         <input type="checkbox"
-            :name="name"
+            :name="dynName"
             :value="cvalue"
             ref="input"
             :checked="is_open"
