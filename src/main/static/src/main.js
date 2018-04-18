@@ -12,7 +12,7 @@ import VContent      from './components/content.vue'
 import VBox          from './components/box.vue'
 import VSelect2      from './components/select2.vue'
 import VFooter       from './components/v-footer.vue'
-import VTable        from './components/table.vue'
+import VTable        from './components/table/table.vue'
 import VAlert        from './components/alert.vue'
 import VRow          from './grid/Row.vue'
 import VCallout      from './components/callout.vue'
@@ -33,7 +33,6 @@ import VTags         from  './components/tags.vue'
 import VRadio        from  './components/form/radio.vue'
 import VSelect       from  './components/form/select.vue'
 // import { MessageBox } from 'element-ui'
-
 
 Vue.component('v-tags'              , VTags)
 Vue.component('v-folder'            , VFolder)

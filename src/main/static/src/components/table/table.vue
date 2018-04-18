@@ -3,7 +3,7 @@
         <div v-if="$slots.toolbar"class="col-sm-12 pull-right" style="padding-bottom: 5px;">
             <slot name="toolbar"></slot>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12 layui-form">
             <table id="v-table1" class="table table-bordered table-striped table-hover">
                 <thead style="background: #78d5d69e;">
                     <tr>
@@ -13,7 +13,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item , index) in dataItems" @click="row_selected(item , index)" v-bind:class="{info: index === sr_index}">
-                        <td v-for="_col in columns" v-html="build_val(item , _col)"></td>
+                        <td v-for="_col in columns" >
+                            <span v-html="build_val(item, _col)"></span>
+                        </td>
                         <td v-if="operations">
                             <a :class="get_op_class(operation.class)"  v-for="(operation,  index)  in operations"
                                 href="javascript:void(0)"
@@ -45,7 +47,7 @@
 
 </template>
 <script>
-
+import BaseFormItem   from '../form/base-form-item.vue'
 export default {
   name: 'dataTable',
   props: {
@@ -178,9 +180,9 @@ export default {
             }
             for(var i in codes) {
                 var c=codes[i]
-                for(var j in col.extInfo.dict){
-                    if(col.extInfo.dict[j].code==c)
-                        r.push(col.extInfo.dict[j].label)
+                for(var j in col.ext.dict){
+                    if(col.ext.dict[j].code==c)
+                        r.push(col.ext.dict[j].label)
                 }
             }
             return r.join(" ")
@@ -189,6 +191,9 @@ export default {
         }
         return item[col.key]
     }
+  },
+  components : {
+          'v-base-form-item': BaseFormItem,
   }
 }
 </script>

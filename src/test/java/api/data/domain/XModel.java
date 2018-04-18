@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by bjliuyong on 2018/3/30.
  */
-@Form(span = 3 ,ignore = false)
+@Form(span = 3 ,ignore = false , hidden = false)
 public class XModel {
 
     @UIFormItem(span = 12 , label = "输入框" )

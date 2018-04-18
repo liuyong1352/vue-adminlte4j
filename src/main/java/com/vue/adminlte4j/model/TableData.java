@@ -30,7 +30,7 @@ public class TableData<T> {
             column.setKey(item.getKey());
             column.setLabel(item.getLabel());
             column.setType(item.getType());
-            column.setExtInfo(item.getExt());
+            column.setExt(item.getExt());
             tableData.columns.add(column) ;
         });
         return tableData ;
@@ -97,7 +97,7 @@ public class TableData<T> {
         private String key  ;
         private String label ;
         private int  type = FormItemType.INPUT;
-        private ExtInfo extInfo ;
+        private ExtInfo ext ;
 
         public String getKey() {
             return key;
@@ -115,13 +115,7 @@ public class TableData<T> {
             this.label = label;
         }
 
-        public ExtInfo getExtInfo() {
-            return extInfo;
-        }
 
-        public void setExtInfo(ExtInfo extInfo) {
-            this.extInfo = extInfo;
-        }
 
         public int getType() {
             return type;
@@ -129,6 +123,14 @@ public class TableData<T> {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public ExtInfo getExt() {
+            return ext;
+        }
+
+        public void setExt(ExtInfo ext) {
+            this.ext = ext;
         }
     }
 }

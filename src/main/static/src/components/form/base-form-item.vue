@@ -1,41 +1,41 @@
 <template>
     <div :class="get_class(item)">
-        <label  class="layui-form-label">{{item['label']}}</label>
+        <label v-if="dis_label"  class="layui-form-label">{{item['label']}}</label>
         <template v-if="item.type === 1 " >
             <v-input :type="text"
                 :verify="get_verify(item)"
-                :value="buildVal(item)"
-                :placeholder="item.placeholder"></v-input>
+                :value="value"
+                :placeholder="item.placeholder" :wrap_class="get_wrapper_class()"></v-input>
         </template>
         <template v-else-if="item['type'] === 3 " >
             <v-radio :name="item.key" :ref="item.key" :wrap_class="get_wrapper_class()"
-                   :items="item.ext.dict" :value="buildVal(item)">
+                   :items="item.ext.dict" :value="value">
             </v-radio>
         </template>
         <template v-else-if="item['type'] === 4 " >
             <v-checkbox :name="item.key" :wrap_class="get_wrapper_class()"
-                    :items="item.ext.dict" :value="buildVal(item)"></v-checkbox>
+                    :items="item.ext.dict" :value="value"></v-checkbox>
         </template>
         <template v-else-if="item['type'] === 5 " >
             <v-switch :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
-                    :value="buildVal(item)" ></v-switch>
+                    :value="value" ></v-switch>
         </template>
         <template v-else-if="item['type'] === 6 " >
             <v-select :name="item.key"  :items="item.ext.dict" :wrap_class="get_wrapper_class()"
-                :value="buildVal(item)" :placeholder="item.placeholder"></v-select>
+                :value="value" :placeholder="item.placeholder"></v-select>
         </template>
         <template v-else-if="item['type'] === 10 " >
             <v-icon-selector
                 :validate="get_verify(item)"
                 :name="item['key']"
-                :value="buildVal(item)" type="input"></v-icon-selector>
+                :value="value" type="input"></v-icon-selector>
         </template>
         <template v-else-if="item['type'] === 12 " >
             <v-date  :type="get_date_type_val(item,'type')" :wrap_class="get_wrapper_class()"
                  :verify="get_verify(item)"
                  :format="get_ext_val(item,'format')"
                  :range="get_ext_val(item,'range')"
-                 :value="buildVal(item)"
+                 :value="value"
                  :placeholder="item.placeholder" ></v-date>
         </template>
     </div>
@@ -55,7 +55,8 @@ export default {
     props: {
         item:{type:Object} ,
         inline:{type:Boolean} ,
-        data:{type:Object}
+        value:{type:Object} ,
+        dis_label: {type :Boolean ,default:true}
     } ,
     methods :{
         get_class : function(item){
@@ -64,13 +65,6 @@ export default {
                 return cls + ' layui-inline'
             else
                 return cls + ' layui-col-lg'+item.span
-        } ,
-        buildVal: function(item) {
-            var val = this.data[item.key]
-            if(0 == val) {
-                return val
-            }
-            return val || item.defVal
         } ,
         get_value(){
             return this.$children[0].get_value()
@@ -110,13 +104,6 @@ export default {
             //return 'layui-input-block'
         }
     },
-    computed : {
-
-    } ,
-    mounted : function() {
-        console.log("form + mounted!!")
-    }
-    ,
     components: {
           'v-icon-selector': IconSelector,
           'v-input': VInput,
