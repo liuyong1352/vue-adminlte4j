@@ -1,9 +1,7 @@
 package com.vue.adminlte4j.model;
 
-import com.vue.adminlte4j.model.builder.FormModelBuilder;
 import com.vue.adminlte4j.model.builder.FormModelUtils;
 import com.vue.adminlte4j.model.builder.TreeNodeBuilder;
-import com.vue.adminlte4j.model.form.FormModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
