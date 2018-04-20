@@ -14,7 +14,7 @@
                 <tbody>
                     <tr v-for="(row , index) in dataItems" @click="row_selected(row , index)" v-bind:class="{info: index === sr_index}">
                         <td  v-for="_col in columns" >
-                            <v-base-form-item v-if="sr_index == index"  inline="true" ref="_col.key"
+                            <v-base-form-item v-if="editable&&(sr_index == index)"  inline="true" :ref="_col.key"
                                 :item="_col"  :value="row[_col.key]"
                                 :dis_label="false"></v-base-form-item>
                             <span v-else v-html="build_val(row , _col)"></span>
@@ -52,159 +52,157 @@
 <script>
 import BaseFormItem   from '../form/base-form-item.vue'
 export default {
-  name: 'dataTable',
-  props: {
-    data : Object ,
-    query: {type : Object ,
-        default: {}
-    },
-    ajax_url: String ,
-    operations: Array,
-    edit_row:{type:Number ,default:-1} ,
-    render:Object
-  } ,
-  data() {
-    return {
-      columns: [],
-      current_page : 1 ,
-      sr_index:-1 ,
-      totalSize : 0 ,
-      page_size : 10 ,
-      isPage : true ,
-      total_page : 0 ,
-      dataItems: []
-    }
-  },
-  created : function() {
-    if(this.ajax_url != undefined && this.ajax_url != "") {
-        this.fetchData()
-    } else if( this.data != undefined )  {
-        this.columns    = this.data.columns
-        this.dataItems  = this.data.dataItems
-    }
-    this.computer_total_page()
-  } ,
-  computed: {
-    page_arr : function() {
-        var p_arr = []
-        var c = this.current_page
-
-        while( c * this.page_size <= this.totalSize ) {
-            p_arr.push(c++)
-            if(p_arr.length >= 5)
-                break
+    name: 'dataTable',
+    props: {
+        data : Object ,
+        query: {type : Object ,
+            default: {}
+        },
+        ajax_url: String ,
+        operations: Array,
+        render:Object ,
+        editable:{type:Boolean ,default:false}
+    } ,
+    data() {
+        return {
+          columns: [],
+          current_page : 1 ,
+          sr_index:-1 ,
+          totalSize : 0 ,
+          page_size : 10 ,
+          isPage : true ,
+          total_page : 0 ,
+          dataItems: []
         }
-        return p_arr
-    } ,
-    pre_page : function() {
-        return this.current_page - 1
-    } ,
-    next_page : function() {
-        return this.current_page + 1
     },
+    created() {
+        if(this.ajax_url != undefined && this.ajax_url != "") {
+            this.fetchData()
+        } else if( this.data != undefined )  {
+            this.columns    = this.data.columns
+            this.dataItems  = this.data.dataItems
+        }
+        this.computer_total_page()
+    } ,
+    computed: {
+        page_arr : function() {
+            var p_arr = []
+            var c = this.current_page
 
-  } ,
-  updated() {
-          this.$nextTick(function () {
-              layui.use('form' , function(){
-                          var form = layui.form
-                          form.render()
-              })
-          })
+            while( c * this.page_size <= this.totalSize ) {
+                p_arr.push(c++)
+                if(p_arr.length >= 5)
+                    break
+            }
+            return p_arr
+        } ,
+        pre_page : function() {
+            return this.current_page - 1
+        } ,
+        next_page : function() {
+            return this.current_page + 1
+        },
+    } ,
+    updated() {
+        this.$nextTick(function () {
+            layui.use('form' , function(){
+                var form = layui.form
+                form.render()
+            })
+        })
 
-  },
+    },
 
     methods : {
-        set_edit:function(index, flag){
-            if(flag)
-                this.edit_row = index
-            else
-                this.edit_row = -1
-        },
-    getParam: function() {
-        var s = ''
-        for(var key in this.query)
-            if(this.query[key] && this.query[key].length>0)
-                s += ('&' + key + '=' + this.query[key])
-        return s
-    } ,
-    refresh : function(queryObj) {
-        if(queryObj&&queryObj._isVue)
-            this.query = queryObj.get_value()
-        this.fetchData()
-    } ,
-    row_selected: function(row,index) {
-        console.log(row)
-        this.sr_index=index
-    } ,
-    fetchData: function () {
-        var self = this
+        getParam: function() {
+            var s = ''
+            for(var key in this.query)
+                if(this.query[key] && this.query[key].length>0)
+                    s += ('&' + key + '=' + this.query[key])
+            return s
+        } ,
+        refresh : function(queryObj) {
+            if(queryObj&&queryObj._isVue)
+                this.query = queryObj.get_value()
+            this.fetchData()
+        } ,
+        row_selected: function(row,index) {
+            console.log(row)
+            this.sr_index=index
+        } ,
+        fetchData: function () {
+            var self = this
 
-        var url = this.ajax_url
-        var i = this.ajax_url.indexOf('?')
-        var c = 'currentPage=' + this.current_page
-        if(this.ajax_url.indexOf('?') < 0 ) {
-            url += '?'
-        } else {
-            url += '&'
-        }
-        url += c + this.getParam()
-
-        axios.get(url).then(function (response){
-            self.columns   = response.data.tableData.columns
-            self.dataItems = response.data.tableData.dataItems
-            self.totalSize = response.data.tableData.totalSize
-            self.computer_total_page()
-
-        })
-    } ,
-    proxy_method: function(operation , param , index) {
-        operation.method(param , this ,index)
-    } ,
-    change_page: function(p) {
-        this.current_page = p
-        this.fetchData()
-    } ,
-    computer_total_page : function () {
-        this.total_page = this.totalSize / this.page_size + ((this.totalSize % this.page_size) == 0? 0 : 1)
-    } ,
-    should_page : function() {
-        return this.isPage && this.totalSize > 0
-    },
-    get_op_class: function (cls) {
-        cls = cls || 'btn-default'
-        return 'btn btn-xs ' + cls
-
-    } ,
-    build_val(item , col) {
-        if(this.render && this.render[col.key]) {
-            return this.render[col.key](item , this)
-        }
-        if(col.type >= 3 && col.type <= 6  ){
-            var r = []
-            var isString = (typeof  item[col.key]  == 'string')
-            var codes = []
-            if(isString){
-                codes =item[col.key].split(',')
+            var url = this.ajax_url
+            var i = this.ajax_url.indexOf('?')
+            var c = 'currentPage=' + this.current_page
+            if(this.ajax_url.indexOf('?') < 0 ) {
+                url += '?'
             } else {
-                codes.push(item[col.key])
+                url += '&'
             }
-            for(var i in codes) {
-                var c=codes[i]
-                for(var j in col.ext.dict){
-                    if(col.ext.dict[j].code==c)
-                        r.push(col.ext.dict[j].label)
+            url += c + this.getParam()
+
+            axios.get(url).then(function (response){
+                self.columns   = response.data.tableData.columns
+                self.dataItems = response.data.tableData.dataItems
+                self.totalSize = response.data.tableData.totalSize
+                self.computer_total_page()
+
+            })
+        } ,
+        proxy_method: function(operation , param , index) {
+            operation.method(param , this ,index)
+        } ,
+        change_page: function(p) {
+            this.current_page = p
+            this.fetchData()
+        } ,
+        computer_total_page : function () {
+            this.total_page = this.totalSize / this.page_size + ((this.totalSize % this.page_size) == 0? 0 : 1)
+        } ,
+        should_page : function() {
+            return this.isPage && this.totalSize > 0
+        },
+        get_op_class: function (cls) {
+            cls = cls || 'btn-default'
+            return 'btn btn-xs ' + cls
+
+        } ,
+        change_row:function(row){
+            for(var k in row) {
+                row[k] = this.$refs[k][0].get_value()
+            }
+        },
+        build_val(item , col) {
+            if(this.render && this.render[col.key]) {
+                return this.render[col.key](item , this)
+            }
+            if(col.type >= 3 && col.type <= 6  ){
+                var r = []
+                var isString = (typeof  item[col.key]  == 'string')
+                var codes = []
+                if(isString){
+                    codes =item[col.key].split(',')
+                } else {
+                    codes.push(item[col.key])
                 }
+                for(var i in codes) {
+                    var c=codes[i]
+                    for(var j in col.ext.dict){
+                        if(col.ext.dict[j].code==c)
+                            r.push(col.ext.dict[j].label)
+                    }
+                }
+                return r.join(" ")
+            } else if(col.type== 10) {
+                return '<i class="' + item[col.key] + '"></i>'
             }
-            return r.join(" ")
-        } else if(col.type== 10) {
-            return '<i class="' + item[col.key] + '"></i>'
+            return item[col.key]
         }
-        return item[col.key]
+    },
+    components : {
+            'v-base-form-item': BaseFormItem,
     }
-  },
-  components : {
-          'v-base-form-item': BaseFormItem,
-  }
 }
 </script>

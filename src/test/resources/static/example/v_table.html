@@ -18,8 +18,10 @@
             </v-col>
         </v-row>
 
-        <v-table ajax_url="/xmodel/list"  ref="table" :operations="operations" :render="render" ></v-table>
-
+        <v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
+    </v-box>
+    <v-box title="可编辑表格">
+        <v-table ajax_url="/xmodel/list"  ref="table2" :operations="operations" :render="render" editable="true"></v-table>
     </v-box>
 
 </v-app>
@@ -38,10 +40,10 @@
                         }
                     } ,
                     {
-                        name : '删除'  ,
+                        name : '修改'  ,
                         class:'btn-info',
                         method : function(row ,$table , row_number) {
-
+                            $table.change_row(row)
                         }
                     }
                 ] ,
@@ -54,7 +56,8 @@
         } ,
         methods : {
             requery : function () {
-                this.$refs.table.refresh(this.$refs.queryForm)
+                this.$refs.table1.refresh(this.$refs.queryForm)
+                this.$refs.table2.refresh(this.$refs.queryForm)
             }
         }
     })

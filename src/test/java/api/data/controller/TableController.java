@@ -53,42 +53,6 @@ public class TableController {
         return xModels.subList(0 , xModels.size() >= 20? 20 : xModels.size()) ;
     }
 
-    @GetMapping("/get_table_data")
-    @ResponseBody
-    UIModel get_table_data(@RequestParam(required = false) String name) {
 
-        TableData tableData = TableData.newInstance(UserInfo.class);
-
-        tableData.configDisplayColumn(TableData.createColumn("name" , "姓名") );
-        tableData.configDisplayColumn(TableData.createColumn("age" , "年龄") );
-        //tableData.configDisplayColumn(TableData.createColumn("birthDay" , "生日") );
-
-        tableData.addAll(queryList(name));
-        tableData.setTotalSize(50);
-
-        return UIModel.success().tableData(tableData);
-    }
-
-    private List<UserInfo> queryList(String name) {
-
-        List<UserInfo> list = new ArrayList<>() ;
-
-        for(int i = 0 ; i < 10 ; i++ ) {
-            UserInfo userInfo = new UserInfo() ;
-            userInfo.setName("u" + i);
-
-            if(name!= null && !name.isEmpty()) {
-                if(!userInfo.getName().startsWith(name))
-                    continue;
-            }
-
-            userInfo.setAge(20 + i);
-            userInfo.setBirthDay(new Date());
-            userInfo.setSex(i%2);
-            list.add(userInfo);
-        }
-
-        return  list ;
-    }
 
 }

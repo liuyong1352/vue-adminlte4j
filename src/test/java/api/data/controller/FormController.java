@@ -26,10 +26,17 @@ public class FormController  {
 
 
 
-    @PostMapping("/test/form/update")
+    @PostMapping("/test/form/add")
     @ResponseBody
-    public UIModel update(@RequestBody XModel xModel) throws IOException {
+    public UIModel add(@RequestBody XModel xModel) throws Exception {
         XModelStore.add(xModel);
         return  UIModel.success().setMsg("保存成功") ;
+    }
+
+    @PostMapping("/test/form/update")
+    @ResponseBody
+    public UIModel update(@RequestBody XModel xModel) throws Exception {
+        XModelStore.update(xModel);
+        return  UIModel.success().setMsg("修改成功") ;
     }
 }

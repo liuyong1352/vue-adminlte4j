@@ -15,6 +15,12 @@ import java.util.Date;
 @Form(span = 3 ,ignore = false , hidden = false)
 public class XModel {
 
+    /**
+     * Id
+     */
+    @UIFormItem(hidden = true)
+    private int id;
+
     @UIFormItem(span = 12 , label = "输入框" )
     @Validate
     private String inputName ;
@@ -131,5 +137,13 @@ public class XModel {
 
     public void setEducatoin(int educatoin) {
         this.educatoin = educatoin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

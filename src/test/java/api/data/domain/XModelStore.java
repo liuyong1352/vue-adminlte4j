@@ -26,8 +26,21 @@ public class XModelStore implements BaseStore {
     }
 
     public static synchronized void add(XModel xModel) throws IOException {
+        xModel.setId(xModels.size() + 1);
         xModels.add(xModel) ;
         xModelStore.writeObject(xModels , XModel_FILE);
+    }
+
+    public static synchronized void  update(XModel xModel) throws Exception {
+        int i = 0 ;
+        for(XModel m : xModels ) {
+            if(m.getId() == xModel.getId()) {
+                xModels.set(i , xModel) ;
+                xModelStore.writeObject(xModels , XModel_FILE);
+                return;
+            }
+            i++ ;
+        }
     }
 
     public static synchronized List<XModel> getAll() throws Exception {
