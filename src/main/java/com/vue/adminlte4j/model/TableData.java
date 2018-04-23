@@ -1,136 +1,59 @@
 package com.vue.adminlte4j.model;
 
-import com.vue.adminlte4j.model.builder.FormModelUtils;
-import com.vue.adminlte4j.model.form.ExtInfo;
 import com.vue.adminlte4j.model.form.FormItem;
-import com.vue.adminlte4j.model.form.FormItemType;
-import com.vue.adminlte4j.model.form.FormModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by bjliuyong on 2017/12/13.
  */
-public class TableData<T> {
+public class TableData {
 
-    private List<Column> columns = new ArrayList<>();
-    private List<Object> dataItems = new ArrayList<>();
+    private List<Object> dataItems  ;
+    private List<FormItem> formItems ;
 
     private boolean isPage  = true;
     private int totalSize  ;
-
-    public static <T> TableData<T> newInstance(Class<T> tClass) {
-        TableData tableData =  new TableData<T>() ;
-        FormModel model = FormModelUtils.getFormModel(tClass) ;
-        List<FormItem> formItems = model.getFormItems() ;
-        formItems.forEach(item->{
-            Column column = new Column();
-            column.setKey(item.getKey());
-            column.setLabel(item.getLabel());
-            column.setType(item.getType());
-            column.setExt(item.getExt());
-            tableData.columns.add(column) ;
-        });
-        return tableData ;
-    }
-
-    public TableData<T> configDisplayColumn(Column column) {
-        columns.add(column) ;
-        return this ;
-    }
-
-    public TableData<T> removeDisplayColumn(String key) {
-        for(int i = 0 ; i < columns.size() ; i++) {
-            if(columns.get(i).getKey().equals(key))
-                columns.remove(i) ;
-        }
-        return this ;
-    }
-
-    public TableData<T> addData(T data) {
-        dataItems.add(data);
-        return this ;
-    }
-
-    public TableData<T> addAll(Collection<? extends T> c) {
-        dataItems.addAll(c) ;
-        return this ;
-    }
-
-    public List<Column>  getColumns() {
-        return columns;
-    }
 
     public List<Object> getDataItems() {
         return dataItems;
     }
 
-    public static Column createColumn(String key , String lable) {
-        Column column = new Column() ;
-        column.setKey(key);
-        column.setLabel(lable);
-        return column ;
+    public void setDataItems(List<Object> dataItems) {
+        this.dataItems = dataItems;
     }
 
-    public int getTotalSize() {
-        return totalSize;
+    public List<FormItem> getFormItems() {
+        return formItems;
     }
 
-    public TableData<T> setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
-        return this ;
+    public void setFormItems(List<FormItem> formItems) {
+        this.formItems = formItems;
     }
 
     public boolean isPage() {
         return isPage;
     }
 
-    public TableData<T> setPage(boolean page) {
+    public void setPage(boolean page) {
         isPage = page;
-        return this ;
     }
 
-    public static class Column  {
+    public int getTotalSize() {
+        return totalSize;
+    }
 
-        private String key  ;
-        private String label ;
-        private int  type = FormItemType.INPUT;
-        private ExtInfo ext ;
+    public void setTotalSize(int totalSize) {
+        this.totalSize = totalSize;
+    }
 
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public ExtInfo getExt() {
-            return ext;
-        }
-
-        public void setExt(ExtInfo ext) {
-            this.ext = ext;
-        }
+    @Override public String toString() {
+        final StringBuilder sb = new StringBuilder("TableData{");
+        sb.append("dataItems=").append(dataItems);
+        sb.append(", formItems=").append(formItems);
+        sb.append(", isPage=").append(isPage);
+        sb.append(", totalSize=").append(totalSize);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -53,10 +53,10 @@ public class FormModel  {
         return  null ;
     }
 
-    public FormModel clone() {
-        FormModel formModel = new FormModel() ;
-
-        return formModel ;
+    public List<FormItem> cloneFormItems() {
+        List<FormItem> ret = new ArrayList<>() ;
+        this.formItems.forEach( item-> ret.add(item.clone()));
+        return ret ;
     }
 
     public int getSpan() {

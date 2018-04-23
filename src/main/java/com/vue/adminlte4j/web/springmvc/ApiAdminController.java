@@ -4,6 +4,7 @@ import com.vue.adminlte4j.model.AppInfo;
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
+import com.vue.adminlte4j.model.builder.TableBuilder;
 import com.vue.adminlte4j.util.MenuUtils;
 import com.vue.adminlte4j.util.Utils;
 import com.vue.adminlte4j.web.config.AdminApiConfig;
@@ -98,10 +99,11 @@ public class ApiAdminController implements AdminApiConfig {
     @GetMapping("/admin/menu/list")
     @ResponseBody
     public UIModel listMenu() throws Exception {
-        TableData<Menu> tableData = TableData.newInstance(Menu.class)
-            .removeDisplayColumn("children")
-            .setPage(false)
-            .addAll(_listMenu());
+        TableData tableData = TableBuilder.newBuilder(Menu.class)
+            .ignoreColumn("children")
+            .isPage(false)
+            .data(_listMenu())
+            .build();
 
         return UIModel.success().tableData(tableData);
     }

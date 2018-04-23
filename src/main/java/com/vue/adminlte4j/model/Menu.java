@@ -31,6 +31,7 @@ public class Menu implements Comparable<Menu> ,Serializable ,ITreeNode  {
      * 排序字段 ,倒序排列
      */
     private int order ;
+
     private List<Menu> children ;
 
     public Menu(){

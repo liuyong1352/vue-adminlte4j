@@ -36,7 +36,7 @@
                     {
                         name : '编辑' ,
                         method : function(row , $table ) {
-                            row.edit = row.edit ? false : true
+
                         }
                     } ,
                     {
@@ -44,6 +44,9 @@
                         class:'btn-info',
                         method : function(row ,$table , row_number) {
                             $table.change_row(row)
+                            axios.post('/test/form/update' , row).then(function(response){
+                                $.alert(response.data)
+                            })
                         }
                     }
                 ] ,

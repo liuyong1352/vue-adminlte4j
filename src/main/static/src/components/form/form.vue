@@ -34,10 +34,13 @@
 </template>
 
 <script>
+import BaseFormItem   from './base-form-item.vue'
 import {baseForm}  from './baseForm'
-
 export default {
-  mixins: [baseForm],
-  name: 'v-form',
+    mixins: [baseForm ],
+    name: 'v-form',
+    components : {
+        'v-base-form-item': BaseFormItem,
+    }
 }
 </script>

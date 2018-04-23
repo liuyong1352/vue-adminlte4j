@@ -8,15 +8,15 @@ import java.util.List;
  */
 public class FormItem {
 
-    private String label ;
-    private String key   ;
-    private String defVal ;
-    private String placeholder ;
-    private int    type = FormItemType.INPUT;
-    private int     span = 12;
-    private boolean hidden ;
-    private Validate validate ;
-    private ExtInfo ext;
+    private String      label ;
+    private String      key   ;
+    private String      defVal ;
+    private String      placeholder ;
+    private int         type = FormItemType.INPUT;
+    private int         span = 12;
+    private boolean     hidden ;
+    private Validate    validate ;
+    private ExtInfo     ext;
 
     public void merge(FormItem other) {
         if(other == null)
@@ -67,12 +67,15 @@ public class FormItem {
 
     public FormItem clone() {
         FormItem clone = new FormItem() ;
-        clone.key           = key               ;
-        clone.label         = label             ;
-        clone.defVal        = defVal            ;
-        clone.placeholder   = placeholder       ;
-        clone.type          = type              ;
-        clone.validate      = validate          ;
+        clone.label         = label         ;
+        clone.key           = key           ;
+        clone.defVal        = defVal        ;
+        clone.placeholder   = placeholder   ;
+        clone.type          = type          ;
+        clone.span          = span          ;
+        clone.hidden        = hidden        ;
+        clone.validate      = validate      ;
+        clone.ext           = ext           ;
         return clone ;
     }
 

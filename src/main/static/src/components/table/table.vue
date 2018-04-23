@@ -7,17 +7,17 @@
             <table id="v-table1" class="table table-bordered table-striped table-hover">
                 <thead style="background: #78d5d69e;">
                     <tr>
-                        <th v-for="col in columns"  v-html="col.label"></th>
+                        <th v-for="col in columns" v-bind:class="{ hidden: col.hidden }" v-html="col.label"></th>
                         <th v-if="operations">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(row , index) in dataItems" @click="row_selected(row , index)" v-bind:class="{info: index === sr_index}">
-                        <td  v-for="_col in columns" >
-                            <v-base-form-item v-if="editable&&(sr_index == index)"  inline="true" :ref="_col.key"
-                                :item="_col"  :value="row[_col.key]"
+                        <td  v-for="col in columns" v-bind:class="{ hidden: col.hidden }" >
+                            <v-base-form-item v-if="editable&&(sr_index == index)"  inline="true" :ref="col.key"
+                                :item="col"  :value="row[col.key]"
                                 :dis_label="false"></v-base-form-item>
-                            <span v-else v-html="build_val(row , _col)"></span>
+                            <span v-else v-html="build_val(row , col)"></span>
                         </td>
                         <td v-if="operations">
                             <a :class="get_op_class(operation.class)"  v-for="operation in operations"
@@ -51,7 +51,9 @@
 </template>
 <script>
 import BaseFormItem   from '../form/base-form-item.vue'
+import {baseValidate}   from '../baseValidate'
 export default {
+    mixins: [baseValidate],
     name: 'dataTable',
     props: {
         data : Object ,
@@ -144,7 +146,7 @@ export default {
             url += c + this.getParam()
 
             axios.get(url).then(function (response){
-                self.columns   = response.data.tableData.columns
+                self.columns   = response.data.tableData.formItems
                 self.dataItems = response.data.tableData.dataItems
                 self.totalSize = response.data.tableData.totalSize
                 self.computer_total_page()
