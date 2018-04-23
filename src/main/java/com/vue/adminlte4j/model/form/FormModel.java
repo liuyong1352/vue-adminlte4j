@@ -36,9 +36,7 @@ public class FormModel  {
     }
 
     public FormItem createFormItem(String key) {
-        FormItem formItem = new FormItem() ;
-        formItem.setKey(key);
-        formItem.setLabel(key);
+        FormItem formItem = new FormItem(key ,key) ;
         formItem.setSpan(span);
         formItem.setHidden(hidden);
         formItems.add(formItem) ;
@@ -51,12 +49,6 @@ public class FormModel  {
                 return  formItem ;
         }
         return  null ;
-    }
-
-    public List<FormItem> cloneFormItems() {
-        List<FormItem> ret = new ArrayList<>() ;
-        this.formItems.forEach( item-> ret.add(item.clone()));
-        return ret ;
     }
 
     public int getSpan() {

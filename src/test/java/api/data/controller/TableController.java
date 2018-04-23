@@ -6,6 +6,8 @@ import api.data.domain.XModelStore;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.model.builder.TableBuilder;
+import com.vue.adminlte4j.model.form.FormItem;
+import com.vue.adminlte4j.model.form.Validate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ public class TableController {
         TableBuilder builder = TableBuilder.newBuilder(XModel.class)
             .data(page(xModelQuery))
             .isPage(true)
+            //.addColunm(new FormItem("d" , "count"))
             .totalSize(count()).hiddenColumn("myIcon") ;
         return  UIModel.success().tableData(builder.build());
     }

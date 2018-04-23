@@ -97,6 +97,13 @@ public class TableBuilder {
         return this ;
     }
 
+    public TableBuilder addColunm(FormItem formItem) {
+        if(target.getFormItems() == null )
+            target.setFormItems(new ArrayList<>());
+        target.getFormItems().add(formItem) ;
+        return  this  ;
+    }
+
     public TableBuilder data(List datas) {
         target.setDataItems(datas);
         return this ;
@@ -117,6 +124,9 @@ public class TableBuilder {
                 clone.setHidden(configKeys.get(key));
             }
             ret.add(clone) ;
+        }
+        if(target.getFormItems() != null) {
+            ret.addAll(target.getFormItems()) ;
         }
         target.setFormItems(ret);
         return target ;

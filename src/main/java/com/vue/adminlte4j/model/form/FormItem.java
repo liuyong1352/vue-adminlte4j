@@ -18,6 +18,11 @@ public class FormItem {
     private Validate    validate ;
     private ExtInfo     ext;
 
+    public FormItem(String key , String label) {
+        this.key = key ;
+        this.label = label ;
+    }
+
     public void merge(FormItem other) {
         if(other == null)
             return;
@@ -66,9 +71,7 @@ public class FormItem {
     }
 
     public FormItem clone() {
-        FormItem clone = new FormItem() ;
-        clone.label         = label         ;
-        clone.key           = key           ;
+        FormItem clone = new FormItem(key ,label) ;
         clone.defVal        = defVal        ;
         clone.placeholder   = placeholder   ;
         clone.type          = type          ;
@@ -83,71 +86,80 @@ public class FormItem {
         return label;
     }
 
-    public void setLabel(String label) {
+    public FormItem setLabel(String label) {
         this.label = label;
+        return this ;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public FormItem setKey(String key) {
         this.key = key;
+        return this ;
     }
 
     public String getDefVal() {
         return defVal;
     }
 
-    public void setDefVal(String defVal) {
+    public FormItem setDefVal(String defVal) {
         this.defVal = defVal;
+        return this ;
     }
 
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public FormItem setType(int type) {
         this.type = type;
+        return this ;
     }
 
     public String getPlaceholder() {
         return placeholder;
     }
 
-    public void setPlaceholder(String placeholder) {
+    public FormItem setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
+        return this ;
     }
 
     public boolean isHidden() {
         return hidden;
     }
 
-    public void setHidden(boolean hidden) {
+    public FormItem setHidden(boolean hidden) {
         this.hidden = hidden;
+        return this ;
     }
 
     public Validate getValidate() {
         return validate;
     }
 
-    public void setValidate(Validate validate) {
+    public FormItem setValidate(Validate validate) {
         this.validate = validate;
+        return this ;
     }
 
     public int getSpan() {
         return span;
     }
 
-    public void setSpan(int span) {
+    public FormItem setSpan(int span) {
         this.span = span;
+        return this ;
     }
 
     public ExtInfo getExt() {
         return ext;
     }
 
-    public void setExt(ExtInfo ext) {
+    public FormItem setExt(ExtInfo ext) {
         this.ext = ext;
+        return this ;
     }
 }
