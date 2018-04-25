@@ -32,6 +32,8 @@ import VModal        from  './components/ui-element/modal.vue'
 import VTags         from  './components/tags.vue'
 import VRadio        from  './components/form/radio.vue'
 import VSelect       from  './components/form/select.vue'
+import VTab          from  './components/tabs/tabs.vue'
+import VTabPane      from  './components/tabs/tab-pane.vue'
 // import { MessageBox } from 'element-ui'
 
 Vue.component('v-tags'              , VTags)
@@ -64,5 +66,7 @@ Vue.component('v-modal'             , VModal)
 Vue.component('v-tree'              , VTreeView)
 Vue.component('v-radio'             , VRadio)
 Vue.component('v-select'            , VSelect)
+Vue.component('v-tab'               , VTab)
+Vue.component('v-tab-pane'          , VTabPane)
 
 

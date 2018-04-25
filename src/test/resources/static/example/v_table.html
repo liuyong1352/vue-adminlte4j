@@ -9,21 +9,39 @@
 
 <body>
 <v-app :data="data" >
+    <v-tab>
+        <v-tab-pane label="查询条件-表格">
+            <v-row>
+                <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
+                <v-col span="2">
+                    <button class="layui-btn" @click="requery"><i class="fa fa-search"></i> 查询</button>
+                </v-col>
+            </v-row>
 
-    <v-box title="查询条件">
-        <v-row>
-            <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
-            <v-col span="2">
-                <button class="layui-btn" @click="requery"><i class="fa fa-search"></i> 查询</button>
-            </v-col>
-        </v-row>
+            <v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
+        </v-tab-pane>
+        <v-tab-pane label="添加">
+            <v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
+        </v-tab-pane>
+        <v-tab-pane label="html">
+            <p>带查询表单的表格示例代码</p>
+            <pre v-text="code" ></pre>
+        </v-tab-pane>
 
-        <v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
-    </v-box>
-    <v-box title="可编辑表格">
-        <v-table ajax_url="/xmodel/list"  ref="table2" :operations="operations" :render="render" editable="true"></v-table>
-    </v-box>
 
+    </v-tab>
+    <v-tab>
+        <v-tab-pane label="可编辑表格">
+            <v-table ajax_url="/xmodel/list"  ref="table2" :operations="operations" :render="render" editable="true"></v-table>
+        </v-tab-pane>
+        <v-tab-pane label="html">
+            <p>带查询表单的表格示例代码</p>
+            <pre v-text="code" >
+
+            </pre>
+        </v-tab-pane>
+
+    </v-tab>
 </v-app>
 <script src="/lib/lib.js"></script>
 <script>
@@ -54,7 +72,18 @@
                     myIcon: function(row , $table) {
                         return '<i class="' + row.myIcon + '"></i>'
                     }
-                }
+                } ,
+                code :
+`<v-row>
+    <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
+    <v-col span="2">
+        <button class="layui-btn" @click="requery"><i class="fa fa-search"></i> 查询</button>
+    </v-col>
+</v-row>
+<v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
+`,
+                code2:
+``
             }
         } ,
         methods : {

@@ -31,7 +31,6 @@
             </table>
         </div>
          <template v-if="should_page()">
-
                     <div class="col-sm-5">
                         <span class="pull-left">共{{totalSize}}条</span>
                     </div>
@@ -45,7 +44,7 @@
                         </ul>
                     </div>
 
-            </template>
+         </template>
     </div>
 
 </template>
@@ -161,7 +160,7 @@ export default {
             this.fetchData()
         } ,
         computer_total_page : function () {
-            this.total_page = this.totalSize / this.page_size + ((this.totalSize % this.page_size) == 0? 0 : 1)
+            this.total_page = Math.floor((this.totalSize / this.page_size) + ((this.totalSize % this.page_size) == 0? 0 : 1))
         } ,
         should_page : function() {
             return this.isPage && this.totalSize > 0
