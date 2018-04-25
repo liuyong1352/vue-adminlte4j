@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ATL - ?? </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+
+<body>
+<v-app :data="data">
+    <v-tab>
+        <v-tab-pane label="弹层使用">
+            <v-row>
+                <v-col span="1"><v-button @click="a1(1)">初体验</v-button></v-col>
+                <v-col span="1"><v-button @click="a1(2)">图标与标题</v-button></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+            </v-row>
+        </v-tab-pane>
+        <v-tab-pane label="js1">
+            <span v-text="js1"></span>
+        </v-tab-pane>
+    </v-tab>
+</v-app>
+<script src="/lib/lib.js"></script>
+<script>
+    app.main({
+        data: function () {
+            return {
+                js1:`$.alert("hi!")`
+                ,
+            }
+        },
+        methods: {
+            a1:function(t){
+                if(t == 1)
+                    $.alert("hi!")
+                if(t == 2)
+                    $.alert("hi!" , {title:'使用title' , icon:1})
+            }
+        },
+        mounted: function () {
+        }
+    })
+</script>
+</body>
+</html>

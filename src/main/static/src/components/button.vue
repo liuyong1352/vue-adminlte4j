@@ -1,7 +1,7 @@
 <template>
-    <button :type="btnType" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]">
-                {{name}}
-                <slot></slot>
+    <button :type="btnType" class="btn" :class="[isBlock?'btn-block':'', btnTheme, disabled, flat, size, getAlign]"
+        @click="handleClick">
+        <slot></slot>
     </button>
 </template>
 
@@ -42,6 +42,11 @@
                 default: ''
             }
         },
+        methods: {
+            handleClick(event) {
+                this.$emit('click', event);
+            }
+        } ,
         created () {
 
         },
