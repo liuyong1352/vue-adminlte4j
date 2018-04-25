@@ -25,25 +25,3 @@ vue-adminlte-java 后台界面库
 
 
 
-###使用
-
-[1] 引入webjar , Maven配置
-```
-<dependency>
-    <groupId>com.vue.adminlte4j</groupId>
-    <artifactId>vue-adminlte4j</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
-</dependency>
-```
-[2] 添加controller继承ApiAdminController
-
-[3] 添加页面
-```
-<script src="/lib/lib.js"></script>
-<body>
-<v-app :data="data">
-    
-</v-app>
-</body>
-<script>app.main({})</script>
-```
