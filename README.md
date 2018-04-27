@@ -1,6 +1,11 @@
+###[Quick Starter](../../wiki/Quick-Starter)
+
+
+
+#####工程构建
 依赖环境：node , webpack ； node安装 ， 自行搜索安装最新版本
 
-#####前端基于webpack构建的 ， 所以需要先安装webpack
+前端基于webpack构建的 ， 所以需要先安装webpack
 ```
 npm install --save-dev webpack
 ```
