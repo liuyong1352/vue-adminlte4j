@@ -6,6 +6,7 @@
     <title>ATL - ?? </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/css/code.css" media="all">
 </head>
 
 <body>
@@ -20,9 +21,62 @@
                 <v-col span="2"></v-col>
                 <v-col span="2"></v-col>
             </v-row>
+            <v-row>
+                <v-col span="2"><span v-text="js1"></span>
+                    <br/>
+                    <span v-text="js2"></span></v-col>
+            </v-row>
+        </v-tab-pane>
+
+        <v-tab-pane label="弹层icon">
+            <v-row>
+                <v-col span="1"><v-button @click="icon(0)">icon:0</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(1)">icon:1</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(2)">icon:2</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(3)">icon:3</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(4)">icon:4</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(5)">icon:5</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(6)">icon:6</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(7)">icon:7</v-button></v-col>
+
+            </v-row>
+            <br/>
+            <v-row>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico0" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico1" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico2" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico3" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico4" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico5" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico6" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+                <v-col span="1"><div style="height: 30px"><i class="layui-layer-ico layui-layer-ico7" style="position:absolute ;width: 30px ; height: 30px"></i></div></v-col>
+            </v-row>
+            <br/>
+            <p>以下代码 只需要修改icon:0为其他数就可以进行切换</p>
+            <br/>
+            <v-row>
+                <v-col span="12"><pre class="code" v-text="icon_js0"></pre></v-col>
+            </v-row>
+
+
+        </v-tab-pane>
+    </v-tab>
+
+    <v-tab>
+        <v-tab-pane label="弹层Msg使用">
+            <v-row>
+                <v-col span="1"><v-button @click="icon(1)">初体验</v-button></v-col>
+                <v-col span="1"><v-button @click="icon(2)">图标与标题</v-button></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+                <v-col span="2"></v-col>
+            </v-row>
         </v-tab-pane>
         <v-tab-pane label="js1">
             <span v-text="js1"></span>
+            <br/>
+            <span v-text="js2"></span>
         </v-tab-pane>
     </v-tab>
 </v-app>
@@ -31,8 +85,10 @@
     app.main({
         data: function () {
             return {
-                js1:`$.alert("hi!")`
-                ,
+                js1:`$.alert("hi!")`,
+                js2:`$.alert("hi!" , {title:'使用title' , icon:1})` ,
+                icon_js0:`$.alert("hi",{title:'使用title' , icon:0})`
+
             }
         },
         methods: {
@@ -41,6 +97,12 @@
                     $.alert("hi!")
                 if(t == 2)
                     $.alert("hi!" , {title:'使用title' , icon:1})
+            } ,
+            msg(t) {
+                layer.msg('这是最常用的吧');
+            } ,
+            icon(t) {
+                $.alert("hi!" , {title:'使用title' , icon:t})
             }
         },
         mounted: function () {

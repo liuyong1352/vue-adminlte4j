@@ -6,13 +6,20 @@
     <title>表单使用演示 </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
-
 <body>
 
 <v-app id="app" :data="data" >
     <v-tab>
-        <v-tab-pane label="动态自动生成">
+        <v-tab-pane label="自动生成">
             <v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
+        </v-tab-pane>
+        <v-tab-pane label="自动生成源码">
+            <p><h2>html</h2></p>
+            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s1"></pre>
+            <p><h2>Java</h2></p>
+            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s2"></pre>
+            <p><h2>Model配置</h2></p>
+            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s3"></pre>
         </v-tab-pane>
         <v-tab-pane label="静态编写" >
             <div class="layui-form">
@@ -43,8 +50,6 @@
                         <v-select ref="select_input" :items="items" placeholder="请选择"></v-select>
                     </v-form-item>
                 </v-form-item>
-
-
                 <div class="layui-form-item">
                     <button @click="queryValues">获取值</button>
                     {{all_values}}
@@ -296,7 +301,72 @@
                 ] ,
                 input_name : "默认值0  ",
                 input_check_box : "1" ,
-                all_values : ""
+                all_values : "" ,
+                s1:`
+<v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
+` ,             s2:`@GetMapping("/test/form/get")
+@ResponseBody
+public UIModel get(){
+    //just for test form
+    XModel xModel = XModelStore.findOne() ;
+    return  UIModel.success().formData(xModel , XModel.class) ;
+}
+
+@PostMapping("/test/form/add")
+@ResponseBody
+public UIModel add(@RequestBody XModel xModel) throws Exception {
+    XModelStore.add(xModel);
+    return  UIModel.success().setMsg("保存成功") ;
+}
+`,          s3:`
+@Form(span = 3 ,ignore = false , hidden = false)
+public class XModel {
+
+    /**
+     * Id
+     */
+    @UIFormItem(hidden = true)
+    private int id;
+
+    @UIFormItem(span = 12 , label = "输入框" )
+    @Validate
+    private String inputName ;
+
+    @Validate(type = ValidateType.NUMBER)
+    private int age ;
+
+    @UIFormItem(span = 3 ,label = "姓名")
+    private String name ;
+
+    @Validate(type = ValidateType.EMAIL)
+    @UIFormItem(label = "联系方式")
+    private String contact ;
+
+
+    @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd hh:mm:ss") //使用fastjson 格式化
+    private Date birthDay ;
+
+    @UIFormItem(type = FormItemType.CHECKBOX)
+    @DictData({@DictEntry("写作") ,@DictEntry("阅读"),@DictEntry("听说")})
+    private String love ;
+
+    @UIFormItem(type = FormItemType.RADIO)
+    @DictData(value = {@DictEntry(code = "1",value ="男") ,@DictEntry(code = "2", value = "女"),@DictEntry(code = "3",value = "中性")})
+    private int gender ;
+
+    @UIFormItem(type = FormItemType.SWITCH  , span = 12)
+    @DictData({@DictEntry("是") ,@DictEntry("否")})
+    private int isAdmin ;
+
+    @UIFormItem(type = FormItemType.SELECT , label = "学历" )
+    @DictData({@DictEntry(value = "小学") ,@DictEntry("初中") ,@DictEntry("高中"),@DictEntry("本科")})
+    private int educatoin;
+
+    @UIFormItem(type = FormItemType.ICON_SELECTOR , span = 12 , label = "选择图标")
+    @Validate
+    private String myIcon ;
+}
+`
             }
         } ,
         methods : {
@@ -307,7 +377,9 @@
                 this.all_values += " "  + this.$refs.select_input.get_value()
             }
         } ,
-        mounted : function () {}
+        mounted : function () {
+
+        }
     })
 </script>
 </body>

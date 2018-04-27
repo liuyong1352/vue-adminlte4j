@@ -25,13 +25,14 @@ public class FormController  {
     }
 
 
-
+    /**api-submit-url-add**/
     @PostMapping("/test/form/add")
     @ResponseBody
     public UIModel add(@RequestBody XModel xModel) throws Exception {
         XModelStore.add(xModel);
         return  UIModel.success().setMsg("保存成功") ;
     }
+    /**api-submit-url-add**/
 
     @PostMapping("/test/form/update")
     @ResponseBody
