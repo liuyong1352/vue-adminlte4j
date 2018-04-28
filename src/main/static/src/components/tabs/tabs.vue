@@ -1,7 +1,7 @@
 <template>
     <div class="nav-tabs-custom">
         <ul :class="nav_cls">
-            <li v-for="(pane , index) in panes" :class="{active: active_id==pane.tab_id}" @click="tab_click(pane)">
+            <li v-for="(pane , index) in panes" :id="'li' + pane.tab_id" :class="{active: active_id==pane.tab_id}" @click="tab_click(pane)">
                 <a :href="'#' + pane.tab_id" data-toggle="tab" aria-expanded="true">{{pane.label}}</a>
             </li>
             <li v-if="$slots.header" :class="header_cls">
@@ -32,7 +32,17 @@ export default {
             this.panes.push(pane)
         } ,
         tab_click(pane){
+            this.active_id = pane.tab_id
             this.$emit("on-tab-click", pane)
+        } ,
+        change_tab(index) {
+            if(this.panes.length <= index)
+                console.error("input index too large")
+            $("#" + this.active_id).removeClass("active")
+            $("#li" + this.active_id).removeClass("active")
+            this.active_id = this.panes[index].tab_id
+            $("#" + this.active_id).addClass("active")
+            $("#li" + this.active_id).addClass("active")
         }
 
     } ,

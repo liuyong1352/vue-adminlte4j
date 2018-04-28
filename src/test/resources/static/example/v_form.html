@@ -14,12 +14,12 @@
             <v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
         </v-tab-pane>
         <v-tab-pane label="自动生成源码">
-            <p><h2>html</h2></p>
-            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s1"></pre>
+
+            <pre class="layui-code"  v-text="s1" lay-title="html"></pre>
             <p><h2>Java</h2></p>
-            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s2"></pre>
+            <pre class="layui-code"  v-text="s2"></pre>
             <p><h2>Model配置</h2></p>
-            <pre style="margin-top: 12px;margin-bottom: 10px" v-text="s3"></pre>
+            <pre class="layui-code"  v-text="s3"></pre>
         </v-tab-pane>
         <v-tab-pane label="静态编写" >
             <div class="layui-form">
@@ -342,7 +342,6 @@ public class XModel {
     @UIFormItem(label = "联系方式")
     private String contact ;
 
-
     @com.alibaba.fastjson.annotation.JSONField(format="yyyy-MM-dd hh:mm:ss") //使用fastjson 格式化
     private Date birthDay ;
 
@@ -378,7 +377,9 @@ public class XModel {
             }
         } ,
         mounted : function () {
-
+            layui.use('code', function(){ //加载code模块
+                layui.code(); //引用code方法
+            });
         }
     })
 </script>

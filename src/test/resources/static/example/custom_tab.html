@@ -11,24 +11,23 @@
 
     <v-app id="app" :data="data">
         <v-tab>
-            <v-tab-pane label="Tab1">
+            <v-tab-pane label="Tab0">
                 <b>How to use:</b>
 
                 Tab1
             </v-tab-pane>
-            <v-tab-pane label="Tab2" >
+            <v-tab-pane label="Tab1" >
                 Tab2
             </v-tab-pane>
         </v-tab>
 
-        <v-tab nav_float="right" @on-tab-click="tab_click">
+        <v-tab ref="tab" nav_float="right" @on-tab-click="tab_click">
             <span slot="header">这是title</span>
-            <v-tab-pane label="Tab1">
-                <b>How to use:</b>
-                Tab1
-            </v-tab-pane>
+            <v-tab-pane label="Tab0">Tab0</v-tab-pane>
+            <v-tab-pane label="Tab1"> Tab1</v-tab-pane>
             <v-tab-pane label="Tab2" active="true">
                 Tab2
+                <v-button @click="change_tab(0)">切换tab</v-button>
             </v-tab-pane>
         </v-tab>
 
@@ -42,6 +41,9 @@
             methods : {
                 tab_click($tab) {
                     console.log($tab)
+                } ,
+                change_tab(index) {
+                    this.$refs.tab.change_tab(index)
                 }
             } ,
             mounted : function () {}
