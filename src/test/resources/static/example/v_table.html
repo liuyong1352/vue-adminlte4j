@@ -9,7 +9,7 @@
 
 <body>
 <v-app :data="data" >
-    <v-tab>
+    <v-tab ref="tab">
         <v-tab-pane label="查询条件-表格">
             <v-row>
                 <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
@@ -53,15 +53,15 @@
                 operations : [
                     {
                         name : '编辑' ,
-                        method : function(row , $table ) {
-
+                        method : function(row ) {
+                            this.$root.$refs.tab.change_tab(1)
                         }
                     } ,
                     {
                         name : '修改'  ,
                         class:'btn-info',
-                        method : function(row ,$table , row_number) {
-                            $table.change_row(row)
+                        method : function(row , row_number) {
+                            this.change_row(row)
                             axios.post('/test/form/update' , row).then(function(response){
                                 $.alert(response.data)
                             })

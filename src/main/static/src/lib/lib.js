@@ -226,7 +226,7 @@ app = function (scope) {
                         $('body').data('lte.layout').fixSidebar()
                     }
                     body_el[0].setAttribute('style' , 'display:block')
-                    mounted(this)
+                    mounted.apply(this)
                 }
             })
         }

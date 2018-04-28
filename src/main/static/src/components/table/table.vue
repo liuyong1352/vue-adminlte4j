@@ -153,7 +153,7 @@ export default {
             })
         } ,
         proxy_method: function(operation , param , index) {
-            operation.method(param , this ,index)
+            operation.method.call(this , param , index)
         } ,
         change_page: function(p) {
             this.current_page = p
