@@ -19,11 +19,11 @@ export const baseForm = {
         }
     } ,
     methods:{
-        refresh: function(data) {
+        refresh: function(params) {
             var vm = this
             if(this.ajax_url) {
                 var self=this
-                axios.get(this.ajax_url , {params:data}).then(function (response) {
+                axios.get(this.ajax_url , {params:params}).then(function (response) {
                     var formJson = response.data.FormModel.formItems
                     self.items = formJson
                     var row_items=[]
