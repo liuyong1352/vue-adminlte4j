@@ -1,7 +1,7 @@
 <template>
 <div id="app" class="wrapper">
-    <v-header :data="data['app_info']"></v-header>
-    <v-sidebar :data="data['menu_items']"  ></v-sidebar>
+    <v-header :data="app_info"></v-header>
+    <v-sidebar :data="menu_items"></v-sidebar>
     <v-content>
         <slot></slot>
     </v-content>
@@ -18,19 +18,30 @@ import VContent     from './content.vue'
 import VControlSideBar from './control-sidebar.vue'
 
 export default {
-  name: 'dashboard',
-  props: {
-    data: Object
-  } ,
-  mounted : function() {
-    console.log("dashboard mounted!!")
-  } ,
-  components: {
-      'v-header': VHeader,
-      'v-sidebar': VSideBar ,
-      'v-content': VContent ,
-      'v-control-sidebar': VControlSideBar ,
-      'v-footer': VFooter
-  }
+    name: 'v-dashboard',
+    props: {
+        data: {type:Object , default:{}}
+    } ,
+    data(){
+        return {
+            app_info:{} ,
+            menu_items:[]
+        }
+    } ,
+    created() {
+        var vm=this
+        axios.get('/admin/app_info/get_all').then(function (response) {
+            vm.app_info=response.data.app_info
+            vm.menu_items=response.data.menu_items
+        })
+        console.log("dashboard created!!")
+    } ,
+    components: {
+        'v-header': VHeader,
+        'v-sidebar': VSideBar ,
+        'v-content': VContent ,
+        'v-control-sidebar': VControlSideBar ,
+        'v-footer': VFooter
+    }
 }
 </script>

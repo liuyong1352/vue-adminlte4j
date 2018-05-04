@@ -243,12 +243,12 @@ app = function (scope) {
 
             // Add a response interceptor
             axios.interceptors.response.use(function (response) {
-
-                if(response.data.is_login == false) {
-                    window.location.href = response.data.login_url ;
-                }
-                return response;
+                if(response.data.is_login == false)
+                    window.location.href = response.data.login_url
+                return response
             }, function (error) {
+                if(error.response.status == 401) //401 未授权
+                    window.location.href = (error.response.headers.location || error.response.headers.Location)
                 // Do something with response error
                 return Promise.reject(error);
             });
@@ -266,19 +266,9 @@ app = function (scope) {
             } else {
                 _data =  config.data || {}
             }
-            if(!base_config.is_syn) {
-                axios.get(base_config.api).then(function (response) {
-                    var data = {data : response.data}
-                    $.extend(data , _data)
-                    new_vue(data , config)
-                }).catch(function (error) {
-                    console.log(error);
-                })
-            } else {
-                new_vue(_data , config)
-            }
-
-
+            var data = {data :{}}
+            $.extend(data , _data )
+            new_vue(data , config)
         })
     }
 

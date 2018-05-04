@@ -56,16 +56,16 @@
 <script>
 import util from '../lib/util'
 export default {
-  name: 'dashboard',
+  name: 'v-header',
   props: {
-    data: Object
+    data: {type:Object , default:{}}
   } ,
   mounted : function() {
     console.log("mounted!!")
   } ,
   computed : {
-    index_url : function() {
-        return util.get_val(this.data['indexUrl'] ,  '#' )
+    index_url() {
+        return this.data.indexUrl || '/index.html'
     } ,
     logo_name :  function() {
         return util.get_val(this.data['logoName'] , '' )
