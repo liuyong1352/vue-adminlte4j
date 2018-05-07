@@ -2,6 +2,8 @@ package com.vue.adminlte4j.support.store;
 
 import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.support.store.menu.MenuStore;
+import java.util.ArrayList;
+import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -19,10 +21,10 @@ public class BaseStoreTest {
         menu.setDesc("a%25 %is ,");
         menu.setId("1");
         menu.setOrder(1);
-
-
         menuStore.writeObject(menu , fileName);
         Menu menu1 = menuStore.readObject(fileName ,Menu.class) ;
-        System.out.println(menu1);
+        Assert.assertEquals(menu.getDesc() , menu1.getDesc());
+        //删除测试数据文件
+        menuStore.writeObject(new ArrayList<Menu>(), fileName);
     }
 }
