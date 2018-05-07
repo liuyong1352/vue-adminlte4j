@@ -8,14 +8,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bjliuyong on 2018/3/19.
  */
 public class FileChangeListener extends Thread  {
 
-    private List<FileEntry> fileEntries = new ArrayList<>() ;
+    private Set<FileEntry> fileEntries = new HashSet<>() ;
     private static String projectDir = System.getProperty("user.dir") ;
     private static Path sp , tp ;
 
@@ -69,11 +71,19 @@ public class FileChangeListener extends Thread  {
 
     @Override public void run() {
 
-        for(int i = 0 ; i < fileEntries.size() ;i++) {
-            System.out.println("listen file change" + fileEntries.get(i));
-        }
+        List<FileEntry> copies = new ArrayList<>();
+        copies.addAll(fileEntries) ;
+        copies.forEach(fileEntry-> System.out.println("listen file change" + fileEntry) );
 
-        boolean deal = false ;
+        copies.forEach(o -> {
+            try {
+                if(o.type() == FileEntryType.DIR )
+                    addFileEntries(o);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         boolean isInterrupted = false ;
         while(!isInterrupted) {
             try {
@@ -83,19 +93,13 @@ public class FileChangeListener extends Thread  {
                 e.printStackTrace();
             }
 
-            for(int i = 0 ; i < fileEntries.size() ;i++) {
+            fileEntries.forEach(f -> {
                 try {
-                    if(fileEntries.get(i).type() == FileEntryType.DIR) {
-                        if(deal)
-                            continue;
-                        addFileEntries(fileEntries.get(i)) ;
-                    }
-                    onChange(fileEntries.get(i)) ;
+                    onChange(f);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            deal = true  ;
+            });
         }
 
     }
@@ -104,22 +108,50 @@ public class FileChangeListener extends Thread  {
         if(!fileEntry.srcPath.toFile().exists())
             return;
         Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
-            if(path.toFile().isFile() && path.toString().endsWith(".html")) {
+            /*if(path.toFile().isFile() && path.toString().endsWith(".html")) {
                 Path relativePath = fileEntry.srcPath.relativize(path) ;
                 listenAbsolute(path).toAbsolute(Paths.get(fileEntry.targetPath.toString() , relativePath.toString())) ;
-            }
+            }*/
+
+            Path relativePath = fileEntry.srcPath.relativize(path) ;
+            Path target = Paths.get(fileEntry.targetPath.toString() , relativePath.toString()) ;
+            listenAbsolute(path)
+                .toAbsolute(target)
+                .type(path.toFile().isFile() ? FileEntryType.FILE : FileEntryType.DIR) ;
         });
     }
 
     private void  onChange(FileEntry fileEntry) throws Exception{
         if(!fileEntry.isChange())
             return;
+        if (fileEntry.type() == FileEntryType.DIR) {
+            Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
+                Path relativePath = fileEntry.srcPath.relativize(path) ;
+                Path target = Paths.get(fileEntry.targetPath.toString() , relativePath.toString()) ;
+                if(!target.toFile().exists()) {
+                    try {
+                        Files.copy(path , target, StandardCopyOption.REPLACE_EXISTING);
+                        System.out.println(LocalDateTime.now().toString() + "#####File Copy " + path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    listenAbsolute(path)
+                        .toAbsolute(target)
+                        .type(path.toFile().isFile() ? FileEntryType.FILE : FileEntryType.DIR) ;
 
-        Files.copy(fileEntry.srcPath , fileEntry.targetPath , StandardCopyOption.REPLACE_EXISTING);
-        System.out.println(LocalDateTime.now().toString() + "#####File Copy " + fileEntry);
+                }
+            });
+        } else {
+            if(fileEntry.srcPath.toFile().exists()) {
+                Files.copy(fileEntry.srcPath, fileEntry.targetPath, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println(LocalDateTime.now().toString() + "#####File Copy " + fileEntry);
+            } else {
+                fileEntry.targetPath.toFile().delete() ;
+                System.out.println(LocalDateTime.now().toString() + "#####File Delete " + fileEntry.targetPath);
+            }
+
+        }
     }
-
-
 
     public static void main(String ...args) {
         FileChangeListener fileChangeListener = new FileChangeListener() ;
@@ -198,6 +230,21 @@ public class FileChangeListener extends Thread  {
             sb.append(", type=").append(type);
             sb.append('}');
             return sb.toString();
+        }
+
+        @Override public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof FileEntry))
+                return false;
+
+            FileEntry entry = (FileEntry) o;
+
+            return srcPath.equals(entry.srcPath);
+        }
+
+        @Override public int hashCode() {
+            return srcPath.hashCode();
         }
     }
 
