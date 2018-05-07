@@ -92,8 +92,11 @@ public class FileChangeListener extends Thread  {
                 isInterrupted = true ;
                 e.printStackTrace();
             }
-
-            fileEntries.forEach(f -> {
+            if(copies.size() != fileEntries.size()) {
+                copies.clear();
+                copies.addAll(fileEntries) ;
+            }
+            copies.forEach(f -> {
                 try {
                     onChange(f);
                 } catch (Exception e) {
@@ -108,11 +111,6 @@ public class FileChangeListener extends Thread  {
         if(!fileEntry.srcPath.toFile().exists())
             return;
         Files.walk(fileEntry.srcPath, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
-            /*if(path.toFile().isFile() && path.toString().endsWith(".html")) {
-                Path relativePath = fileEntry.srcPath.relativize(path) ;
-                listenAbsolute(path).toAbsolute(Paths.get(fileEntry.targetPath.toString() , relativePath.toString())) ;
-            }*/
-
             Path relativePath = fileEntry.srcPath.relativize(path) ;
             Path target = Paths.get(fileEntry.targetPath.toString() , relativePath.toString()) ;
             listenAbsolute(path)
