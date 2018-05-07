@@ -1,12 +1,12 @@
 <template>
 <div id="app" class="wrapper">
-    <v-header :data="app_info"></v-header>
+    <v-header :data="app_info" :user_name="user_name" :user_img="user_img"></v-header>
     <v-sidebar :data="menu_items"></v-sidebar>
     <v-content>
         <slot></slot>
     </v-content>
     <v-control-sidebar></v-control-sidebar>
-    <v-footer ></v-footer>
+    <v-footer :copyright="app_info.copyright" :version="app_info.version"></v-footer>
 </div>
 </template>
 
@@ -24,6 +24,8 @@ export default {
     } ,
     data(){
         return {
+            user_name : '' ,
+            user_img:'' ,
             app_info:{} ,
             menu_items:[]
         }
@@ -31,8 +33,11 @@ export default {
     created() {
         var vm=this
         axios.get('/admin/app_info/get_all').then(function (response) {
-            vm.app_info=response.data.app_info
-            vm.menu_items=response.data.menu_items
+            var data=response.data
+            vm.app_info=data.app_info
+            vm.menu_items=data.menu_items
+            vm.user_name=data.user_name
+            vm.user_img=data.user_img
         })
         console.log("dashboard created!!")
     } ,

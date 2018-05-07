@@ -46,6 +46,11 @@ public class UIModel extends HashMap implements Map {
     public static final String MSG          = "msg" ;
 
     /**
+     *  用户名称对应的Key
+     */
+    public static final String USER_NAME    = "user_name" ;
+
+    /**
      * 返回菜单列表
      * @return
      */
@@ -97,6 +102,15 @@ public class UIModel extends HashMap implements Map {
 
     public UIModel setLoginUrl(String loginUrl) {
         return put(LOGIN_URL , loginUrl) ;
+    }
+
+    /**
+     * 设置展示的用户名称
+     * @param userName
+     * @return
+     */
+    public UIModel setUserName(String userName) {
+        return put(USER_NAME , userName) ;
     }
 
     public UIModel setCode(int code) {

@@ -7,41 +7,41 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 <body>
-    <v-app :data="data" >
+<v-app>
 
-        <v-row>
-            <v-col span="3">
-                <v-box title="菜单树">
-                    <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected" ref="tree"></v-tree>
-                </v-box>
-            </v-col>
-            <v-col span="9">
-                <v-box >
-                    <div slot="header" class="btn-group">
-                        <button type="button" class="btn btn-default" @click="addRoot">
-                            <li class="fa fa-plus">&nbsp;新增根菜单</li>
-                        </button>
-                        <button type="button" class="btn btn-default" @click="addChild">
-                            <li class="fa fa-plus">&nbsp;新增下级菜单</li>
-                        </button>
-                        <button type="button" class="btn btn-default" @click="deleteCur">
-                            <li class="fa fa-remove">&nbsp;删除当前菜单</li>
-                        </button>
-                    </div>
-                    <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
+    <v-row>
+        <v-col span="3">
+            <v-box title="菜单树">
+                <v-tree ajax_url="/admin/menu/tree" @on-node-selected="onNodeSelected" ref="tree"></v-tree>
+            </v-box>
+        </v-col>
+        <v-col span="9">
+            <v-box >
+                <div slot="header" class="btn-group">
+                    <button type="button" class="btn btn-default" @click="addRoot">
+                        <li class="fa fa-plus">&nbsp;新增根菜单</li>
+                    </button>
+                    <button type="button" class="btn btn-default" @click="addChild">
+                        <li class="fa fa-plus">&nbsp;新增下级菜单</li>
+                    </button>
+                    <button type="button" class="btn btn-default" @click="deleteCur">
+                        <li class="fa fa-remove">&nbsp;删除当前菜单</li>
+                    </button>
+                </div>
+                <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
 
-                    <div slot="footer" class="text-center">
-                        <button type="button" class="btn btn-primary" @click="upOrder">
-                            <li class="fa fa-long-arrow-up">&nbsp;提序</li>
-                        </button>
-                        <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
-                            <li class="fa fa-save">&nbsp;保存</li>
-                        </button>
-                    </div>
-                </v-box>
-            </v-col>
-        </v-row>
-    </v-app>
+                <div slot="footer" class="text-center">
+                    <button type="button" class="btn btn-primary" @click="upOrder">
+                        <li class="fa fa-long-arrow-up">&nbsp;提序</li>
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
+                        <li class="fa fa-save">&nbsp;保存</li>
+                    </button>
+                </div>
+            </v-box>
+        </v-col>
+    </v-row>
+</v-app>
 </body>
 <script src="/lib/lib.js"></script>
 <script>

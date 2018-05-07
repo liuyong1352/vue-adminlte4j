@@ -31,7 +31,7 @@ public class ApiAdminController implements AdminApiConfig {
             AppInfo appInfo = getAppInfoService().get() ;
             UIModel uiModel = UIModel.success().appInfo(appInfo) ;
             configureMenu(uiModel);
-            appInfo.setUserName(getUserName(request));
+            uiModel.setUserName(getUserName(request));
             MenuUtils.sortTreeData(uiModel.menu());
             return uiModel;
         }) ;
