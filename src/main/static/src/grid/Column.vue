@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'column',
+  name: 'v-col',
   props: {
     'class': {
       type: String,

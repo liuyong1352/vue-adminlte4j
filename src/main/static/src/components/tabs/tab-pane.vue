@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {
+    name:'v-tab-pane',
     props:{
         label : String ,
         active: {type:Boolean, default:false}

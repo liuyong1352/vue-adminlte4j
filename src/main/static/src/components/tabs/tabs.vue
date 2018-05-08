@@ -16,6 +16,7 @@
 
 <script>
 export default {
+    name:'v-tab',
     props:{
         nav_float :{type:String, default:"left"}
     } ,

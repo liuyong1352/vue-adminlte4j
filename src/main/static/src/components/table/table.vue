@@ -53,7 +53,7 @@ import BaseFormItem   from '../form/base-form-item.vue'
 import {baseValidate}   from '../baseValidate'
 export default {
     mixins: [baseValidate],
-    name: 'dataTable',
+    name: 'v-table',
     props: {
         data : Object ,
         query: {type : Object ,

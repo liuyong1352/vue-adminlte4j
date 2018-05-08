@@ -28,7 +28,7 @@
 <script>
 import util from '../lib/util'
 export default {
-  name: 'sidebar-menu',
+  name: 'v-sidebar',
   props: {
     data: Array
   } ,

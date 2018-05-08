@@ -18,7 +18,7 @@ import VContent     from './content.vue'
 import VControlSideBar from './control-sidebar.vue'
 
 export default {
-    name: 'v-dashboard',
+    name: 'v-app',
     props: {
         data: {type:Object , default:{}}
     } ,

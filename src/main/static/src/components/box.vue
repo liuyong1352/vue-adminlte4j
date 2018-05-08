@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'va-box',
+  name: 'v-box',
   props: {
       widgetType:   { type: String, default: 'collapse' },
       title:        { type: String },
