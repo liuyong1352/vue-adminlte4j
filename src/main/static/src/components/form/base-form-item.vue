@@ -7,6 +7,11 @@
                 :value="value"
                 :placeholder="item.placeholder" :wrap_class="get_wrapper_class()"></v-input>
         </template>
+        <template v-else-if="item.type === 2 " >
+            <v-textarea  :verify="get_verify(item)"
+                :value="value"
+                :placeholder="item.placeholder" :wrap_class="get_wrapper_class()"></v-textarea>
+        </template>
         <template v-else-if="item['type'] === 3 " >
             <v-radio  :ref="item.key" :wrap_class="get_wrapper_class()"
                    :items="item.ext.dict" :value="value">

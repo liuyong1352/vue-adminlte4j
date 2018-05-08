@@ -22,9 +22,10 @@ import VText         from  './components/text.vue'
 import VTextarea     from  './components/textarea.vue'
 import VFolder       from  './components/folder.vue'
 import VForm         from  './components/form/form.vue'
-import VLForm        from  './components/form/form-layui.vue'
+
 import VFormItem     from  './components/form/form-item.vue'
 import VInput        from  './components/form/input.vue'
+import VTextArea     from  './components/form/textarea.vue'
 import VCheckBox     from './components/form/check-box.vue'
 import VSwitch       from './components/form/switch.vue'
 import VDate         from  './components/date/date.vue'
@@ -57,9 +58,10 @@ Vue.component('v-select2'           , VSelect2)
 Vue.component('v-footer'            , VFooter)
 Vue.component('v-table'             , VTable)
 Vue.component('v-form'              , VForm)
-Vue.component('v-lform'              , VLForm)
+
 Vue.component('v-form-item'         , VFormItem)
 Vue.component('v-input'             , VInput)
+Vue.component('v-textarea'          , VTextArea)
 Vue.component('v-switch'            , VSwitch)
 Vue.component('v-date'              , VDate)
 Vue.component('v-modal'             , VModal)
