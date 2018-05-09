@@ -8,7 +8,6 @@
 </head>
 <body>
 <v-app>
-
     <v-row>
         <v-col span="3">
             <v-box title="菜单树">
@@ -47,33 +46,6 @@
 <script>
     var selectNodeId ;
     app.main({
-        data :function() {
-            return {
-                test: '' ,
-                operations : [
-                    {
-                        name : '添加' ,
-                        icon:'fa fa-link',
-                        method : function(row , $table) {
-                            $table.$root.form.pid = row.id
-
-                        }
-                    } ,
-                    {
-                        name : '删除' ,
-                        icon:'',
-                        class: 'btn-success',
-                        method : function(row , $table) {
-                            axios.delete("/admin/menu/delete/" + row.id ).then(function(response){
-                                $.alert(response.data)
-                                $table.fetchData()
-                            })
-                        }
-                    }
-                ]
-            }
-
-        } ,
         methods : {
             addRoot : function() {
                 this.$refs.form.data = {}
@@ -87,15 +59,15 @@
                 if($.isNullOrEmpty(selectNodeId) )
                     return
                 var vm = this
-                axios.delete("/admin/menu/delete/" + selectNodeId).then(function(response){
-                    $.alert(response.data)
+                $.delete("/admin/menu/delete/" + selectNodeId).then(function(data){
+                    $.alert(data)
                     vm.$refs.tree.refresh()
                 })
             } ,
             upOrder: function () {
                 var vm = this
-                axios.post("/admin/menu/up/" + selectNodeId).then(function(response){
-                    $.alert(response.data)
+                $.post("/admin/menu/up/" + selectNodeId).then(function(data){
+                    $.alert(data)
                     vm.$refs.tree.refresh()
                 })
             } ,
@@ -104,8 +76,8 @@
                 var url = "/admin/menu/add"
                 if(!$.isNullOrEmpty(this.$refs.form.formData().id))
                     url = "/admin/menu/update"
-                this.$refs.form.submit(url , function (response) {
-                    $.alert(response.data)
+                this.$refs.form.submit(url , function (data) {
+                    $.alert(data)
                     vm.$refs.tree.refresh()
                 })
             },

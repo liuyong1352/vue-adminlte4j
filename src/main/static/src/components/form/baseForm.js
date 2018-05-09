@@ -23,7 +23,7 @@ export const baseForm = {
             var vm = this
             if(this.ajax_url) {
                 var self=this
-                $.get(this.ajax_url , {params:params}).then(function (data) {
+                $.get(this.ajax_url , params).then(function (data) {
                     var formJson = data.FormModel.formItems
                     self.items = formJson
                     var row_items=[]
