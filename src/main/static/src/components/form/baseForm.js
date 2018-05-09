@@ -23,8 +23,8 @@ export const baseForm = {
             var vm = this
             if(this.ajax_url) {
                 var self=this
-                axios.get(this.ajax_url , {params:params}).then(function (response) {
-                    var formJson = response.data.FormModel.formItems
+                $.get(this.ajax_url , {params:params}).then(function (data) {
+                    var formJson = data.FormModel.formItems
                     self.items = formJson
                     var row_items=[]
                     var ts=0 , j=0
@@ -40,17 +40,12 @@ export const baseForm = {
                         row_items[j].push(item)
                     }
                     self.row_items = row_items
-                    self.data = response.data.data||{}
-                    self.form_inline=response.data.FormModel.inline
+                    self.data = data.data||{}
+                    self.form_inline=data.FormModel.inline
                     vm.$nextTick(function () {
                         layui.use('form' , function(){
                             var form = layui.form
                             form.render()
-                            //监听提交
-                            form.on('submit(' + this.form_unique_id + ')', function(data){
-                                self.internal_submit()
-                                return false
-                            })
                         })
                     })
                 })
@@ -103,14 +98,13 @@ export const baseForm = {
         submit: function(url ,callback) {
             if(!this.validate())
                 return
-
-            axios.post(url,this.formData()).then(function(response){
-                callback(response)
+            $.post(url,this.formData()).then(function(data){
+                callback(data)
             })
         } ,
         internal_submit: function(){
-            this.submit(this.submit_url ,function (response) {
-                $.alert(response.data)
+            this.submit(this.submit_url ,function (data) {
+                $.alert(data)
             })
         } ,
         get_verify:function(item) {

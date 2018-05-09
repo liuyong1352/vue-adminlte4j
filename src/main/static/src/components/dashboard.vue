@@ -30,16 +30,15 @@ export default {
             menu_items:[]
         }
     } ,
-    created() {
+    mounted() {
         var vm=this
-        axios.get('/admin/app_info/get_all').then(function (response) {
-            var data=response.data
+        $.get('/admin/app_info/get_all').then(function (data) {
+            //var data=response.data
             vm.app_info=data.app_info
             vm.menu_items=data.menu_items
             vm.user_name=data.user_name
             vm.user_img=data.user_img
         })
-        console.log("dashboard created!!")
     } ,
     components: {
         'v-header': VHeader,

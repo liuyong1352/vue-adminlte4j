@@ -144,12 +144,11 @@ export default {
             }
             url += c + this.getParam()
 
-            axios.get(url).then(function (response){
-                self.columns   = response.data.tableData.formItems
-                self.dataItems = response.data.tableData.dataItems
-                self.totalSize = response.data.tableData.totalSize
+            $.get(url).then(function (data){
+                self.columns   = data.tableData.formItems
+                self.dataItems = data.tableData.dataItems
+                self.totalSize = data.tableData.totalSize
                 self.computer_total_page()
-
             })
         } ,
         proxy_method: function(operation , param , index) {
