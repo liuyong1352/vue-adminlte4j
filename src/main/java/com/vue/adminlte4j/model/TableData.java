@@ -13,6 +13,7 @@ public class TableData {
     private List<FormItem> formItems ;
 
     private boolean isPage  = true;
+    private int pageSize = 20 ;
     private int totalSize  ;
 
     public List<Object> getDataItems() {
@@ -47,6 +48,14 @@ public class TableData {
         this.totalSize = totalSize;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     @Override public String toString() {
         final StringBuilder sb = new StringBuilder("TableData{");
         sb.append("dataItems=").append(dataItems);
@@ -56,4 +65,6 @@ public class TableData {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

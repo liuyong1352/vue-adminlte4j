@@ -4,7 +4,6 @@ import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.form.FormItem;
 import com.vue.adminlte4j.model.form.FormModel;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +48,16 @@ public class TableBuilder {
      */
     public TableBuilder totalSize(int totalSize) {
         target.setTotalSize(totalSize);
+        return this ;
+    }
+
+    /**
+     * 设置页大小
+     * @param pageSize
+     * @return
+     */
+    public TableBuilder pageSize(int pageSize) {
+        target.setPageSize(pageSize);
         return this ;
     }
 

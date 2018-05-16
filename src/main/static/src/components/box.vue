@@ -8,7 +8,7 @@
         <template v-if="$slots.header">
             <slot name="header"></slot>
         </template>
-        <div class="box-tools pull-right">
+        <div  class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" :data-widget="widgetType"><i :class="btnIcon"></i>
                 </button>
         </div>

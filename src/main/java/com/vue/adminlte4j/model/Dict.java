@@ -11,10 +11,10 @@ public class Dict {
     private String label ;
     private int order ;
 
-    public static Dict build(String code , String lable) {
+    public static Dict build(String code , String label) {
         Dict dict = new Dict() ;
         dict.code = code ;
-        dict.label = lable ;
+        dict.label = label ;
         return  dict ;
     }
 

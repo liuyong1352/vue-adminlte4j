@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -24,7 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 public class ApiAdminController implements AdminApiConfig {
 
-    @GetMapping("/admin/app_info/get_all")
+    //@GetMapping("/admin/app_info/get_all")
+    @RequestMapping(value = "/admin/app_info/get_all" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel _getAllApiInfo(HttpServletRequest request) {
         return Utils.call(() -> {
@@ -38,13 +41,15 @@ public class ApiAdminController implements AdminApiConfig {
 
     }
 
-    @GetMapping("/admin/app_info/get")
+    //@GetMapping("/admin/app_info/get")
+    @RequestMapping(value = "/admin/app_info/get" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel _getAppInfo() {
         return Utils.call(() -> UIModel.success().formData(getAppInfoService().get())) ;
     }
 
-    @PostMapping("/admin/app_info/update")
+    //@PostMapping("/admin/app_info/update")
+    @RequestMapping(value = "/admin/app_info/update" , method = RequestMethod.POST)
     @ResponseBody
     public UIModel _updateAppInfo(@RequestBody AppInfo appinfo)  {
         return Utils.call(()->{
@@ -53,38 +58,44 @@ public class ApiAdminController implements AdminApiConfig {
         }) ;
     }
 
-    @PostMapping("/admin/menu/add")
+    //@PostMapping("/admin/menu/add")
+    @RequestMapping(value = "/admin/menu/add" , method = RequestMethod.POST)
     @ResponseBody
     public UIModel addMenu(@RequestBody Menu menu)  {
         return Utils.run(() -> _addMenu(menu));
     }
 
-    @DeleteMapping("/admin/menu/delete/{id}")
+    //@DeleteMapping("/admin/menu/delete/{id}")
+    @RequestMapping(value = "/admin/menu/delete/{id}" , method = RequestMethod.DELETE)
     @ResponseBody
     public UIModel deleteMenu(@PathVariable String id) {
         return Utils.run(()-> _deleteMenu(id)) ;
     }
 
-    @PostMapping("/admin/menu/update")
+    //@PostMapping("/admin/menu/update")
+    @RequestMapping(value = "/admin/menu/update" , method = RequestMethod.POST)
     @ResponseBody
     public UIModel updateMenu(@RequestBody Menu menu) {
         return Utils.run(()-> _updateMenu(menu) , "修改成功！") ;
     }
 
 
-    @PostMapping("/admin/menu/up/{id}")
+    //@PostMapping("/admin/menu/up/{id}")
+    @RequestMapping(value = "/admin/menu/up/{id}" , method = RequestMethod.POST)
     @ResponseBody
     public UIModel upMenuLevel(@PathVariable String id) {
         return Utils.run(()-> _upMenuLevel(id)) ;
     }
 
-    @GetMapping("/admin/menu/get/{id}")
+    //@GetMapping("/admin/menu/get/{id}")
+    @RequestMapping(value = "/admin/menu/get/{id}" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel getMenu(@PathVariable String id) {
         return _getMenu(id) ;
     }
 
-    @GetMapping("/admin/menu/get/")
+    //@GetMapping("/admin/menu/get/")
+    @RequestMapping(value = "/admin/menu/get/" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel _getMenu(String id) {
         Menu menu = null ;
@@ -96,7 +107,8 @@ public class ApiAdminController implements AdminApiConfig {
         return  UIModel.success().formData(menu , Menu.class) ;
     }
 
-    @GetMapping("/admin/menu/list")
+    //@GetMapping("/admin/menu/list")
+    @RequestMapping(value = "/admin/menu/list" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel listMenu() throws Exception {
         TableData tableData = TableBuilder.newBuilder(Menu.class)
@@ -108,7 +120,8 @@ public class ApiAdminController implements AdminApiConfig {
         return UIModel.success().tableData(tableData);
     }
 
-    @GetMapping("/admin/menu/tree")
+    //@GetMapping("/admin/menu/tree")
+    @RequestMapping(value = "/admin/menu/tree" , method = RequestMethod.GET)
     @ResponseBody
     public UIModel treeMenu() throws Exception {
         return UIModel.success().treeData(_listMenu()) ;

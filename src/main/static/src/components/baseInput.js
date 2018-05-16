@@ -5,7 +5,8 @@ export const baseInput = {
         inline:{type:Boolean , default:false} ,
         placeholder: {type:String ,default:'Enter ... '},
         wrap_class:String ,
-        verify:String
+        verify:String ,
+        disabled: {type: Boolean,default: false}
     },
     data() {
         return {}

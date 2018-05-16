@@ -28,6 +28,15 @@ public interface AdminApiConfig {
         return (String)request.getAttribute(USER_NAME);
     }
 
+    /**
+     * config menu
+     * @param uiModel
+     */
+    default void configureMenu(UIModel uiModel) {
+        uiModel.menu(getMenuService().getTreeData()) ;
+        uiModel.menu(MenuUtils.getDevelopMenus());
+    }
+
     default ServiceRegister getServiceRegister(){
         return ServiceRegister.INSTANCE ;
     }
@@ -40,6 +49,10 @@ public interface AdminApiConfig {
         return getServiceRegister().getMenuService() ;
     }
 
+    /**
+     * 获取AppInfo服务实现类
+     * @return
+     */
     default AppInfoService getAppInfoService() {
         return getServiceRegister().getAppInfoService() ;
     }
@@ -78,13 +91,6 @@ public interface AdminApiConfig {
             throw new AdminRuntimeException("您选择的菜单，不能通过界面进行修改操作！") ;
     }
 
-    /**
-     * config menu
-     * @param uiModel
-     */
-    default void configureMenu(UIModel uiModel) {
-        uiModel.menu(getMenuService().getTreeData()) ;
-        uiModel.menu(MenuUtils.getDevelopMenus());
-    }
+
 
 }

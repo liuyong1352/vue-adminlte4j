@@ -123,8 +123,8 @@ export default {
             return s
         } ,
         refresh : function(queryObj) {
-            if(queryObj&&queryObj._isVue)
-                this.query = queryObj.get_value()
+            if(queryObj)
+                this.query = queryObj._isVue?queryObj.get_value() : queryObj
             this.fetchData()
         } ,
         row_selected: function(row,index) {
@@ -147,8 +147,11 @@ export default {
             $.get(url).then(function (data){
                 self.columns   = data.tableData.formItems
                 self.dataItems = data.tableData.dataItems
+                self.isPage    = data.tableData.isPage
+                self.pageSize  = data.tableData.pageSize
                 self.totalSize = data.tableData.totalSize
-                self.computer_total_page()
+                if(self.isPage)
+                    self.computer_total_page()
             })
         } ,
         proxy_method: function(operation , param , index) {

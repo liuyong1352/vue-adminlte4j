@@ -13,9 +13,15 @@ import java.lang.annotation.Target;
 public @interface DictProvider {
 
     /**
-     * 自定项 提供这
+     * 数据字典 ，提供类
      * @return
      */
-    Class provider() ;
+    Class type() ;
+
+    /**
+     * 调用此方法获取数据字典
+     * @return
+     */
+    String method() default "" ;
 
 }

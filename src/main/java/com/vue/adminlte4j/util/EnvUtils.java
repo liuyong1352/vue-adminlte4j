@@ -8,16 +8,20 @@ import java.nio.file.Paths;
  */
 public class EnvUtils {
 
-    public static final boolean isDevelopment  ;
+    public static final boolean isDevelopment = isIsDevelopment() ;
 
-    static {
+    private static boolean isIsDevelopment() {
+
+        String srcDir = System.getProperty(Constants.UI_SRC_DIR) ;
+        if(srcDir != null && !srcDir.isEmpty()) {
+            return true ;
+        }
 
         boolean flag = getJavaResourcesPath().toFile().exists() ;
         if(!flag) {
             flag = getJavaSrcPath().toFile().exists() ;
         }
-
-        isDevelopment = flag ;
+        return flag ;
     }
 
     /**
@@ -25,9 +29,7 @@ public class EnvUtils {
      * @return
      */
     public static Path getJavaResourcesPath() {
-        String userDir = System.getProperty("user.dir") ;
-        Path path = Paths.get(userDir  , "src" , "main" , "resources") ;
-        return  path ;
+        return  Paths.get(getSrcDir()  , "src" , "main" , "resources") ;
     }
 
     /**
@@ -35,9 +37,18 @@ public class EnvUtils {
      * @return
      */
     public static Path getJavaSrcPath() {
-        String userDir = System.getProperty("user.dir") ;
-        Path path = Paths.get(userDir  , "src" , "main" , "java") ;
-        return  path ;
+        return  Paths.get(getSrcDir()  , "src" , "main" , "java") ;
+    }
+
+    /**
+     * 获取src dir
+     * @return
+     */
+    private static String getSrcDir() {
+        String srcDir = System.getProperty(Constants.UI_SRC_DIR) ;
+        if(srcDir == null || srcDir.isEmpty())
+            srcDir = System.getProperty("user.dir") ;
+        return srcDir ;
     }
 
 }

@@ -26,6 +26,37 @@
     function isNullOrEmpty(s) {
         return (s == undefined || s == null || s == '')
     }
+    function ajaxBuilder(url  , method , params ) {
+        var _o=params||{}
+        var _d={}
+        for(var k in _o) {
+            if(params[k].length==0)
+                continue
+            _d[k]=params[k]
+        }
+        this.settings = {url:url , data: _d,
+            dataType: "json" ,
+            type:method ,
+            complete:function (xhr) {
+                if(xhr.status==200 ) {
+                    if( xhr.responseJSON.code == 401)
+                        window.location.href =  xhr.responseJSON.location
+                } else if(xhr.status == 401 ) { //401 未授权
+                    window.location.href =  xhr.getResponseHeader("location")||xhr.getResponseHeader("Location")
+                }
+            }
+        }
+        if(method == 'POST' )  {
+            this.settings.data = JSON.stringify(params || {})
+            this.settings.contentType = 'application/json; charset=utf-8'
+        }
+
+    }
+
+    ajaxBuilder.prototype.then = function(callback) {
+        this.settings.success = callback
+        $.ajax(this.settings)
+    }
 
     $.extend({
         //layer.alert('a',{title:'b' , icon:1} ,function(index){layer.close(index) })
@@ -66,11 +97,6 @@
         msg: function(msg) {
             layer.msg(msg)
         } ,
-
-        layer : function() {
-
-        } ,
-
         getQueryStr : function (key) {
             return getQueryVariable(key)
         } ,
@@ -82,6 +108,15 @@
         } ,
         isEmpty :function (str) {
             return isNullOrEmpty(str)
+        } ,
+        post:function(url , params) {
+            return new ajaxBuilder(url ,"POST", params )
+        } ,
+        get:function(url , params) {
+            return new ajaxBuilder(url , "GET" , params )
+        } ,
+        delete:function(url , params) {
+            return new ajaxBuilder(url , "DELETE" , params )
         }
     })
 

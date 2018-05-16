@@ -12,7 +12,6 @@ for(var index in lib_names) {
 copyLibDir.push({from: __dirname + '/src/lib/lib.js' , to :__dirname + '/dist/lib'})
 copyLibDir.push({from: __dirname + '/src/lib/base.js' , to :__dirname + '/dist/lib'})
 copyLibDir.push({from: __dirname + '/src/lib/plugin' , to :__dirname + '/dist/lib'})
-copyLibDir.push({from: __dirname + '/index.html' , to :__dirname + '/dist/'})
 copyLibDir.push({from: __dirname + '/src/img' , to : __dirname + '/dist/lib/vue-adminlte/dist/img'})
 copyLibDir.push({from: __dirname + '/src/css' , to : __dirname + '/dist/lib/vue-adminlte/dist/css'})
 module.exports = {

@@ -14,4 +14,4 @@ public @interface DictData {
     String name() default "" ;
     DictEntry[] value() default {} ;
 
- }
+}

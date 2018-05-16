@@ -4,12 +4,30 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bjliuyong on 2018/3/7.
  */
 public class ReflectUtils {
+
+    private static Set<Class> supportedType = new HashSet<>();
+
+    static {
+        supportedType.add(Boolean.class) ;
+        supportedType.add(Byte.class) ;
+        supportedType.add(Short.class) ;
+        supportedType.add(Integer.class) ;
+        supportedType.add(Float.class) ;
+        supportedType.add(Double.class) ;
+        supportedType.add(Long.class) ;
+        supportedType.add(String.class) ;
+        supportedType.add(Date.class) ;
+
+    }
 
     public static List<Field> findAllField(Class<?> clazz) {
 
@@ -27,7 +45,7 @@ public class ReflectUtils {
     }
 
     public static boolean isPrimitiveOrString(Class clsType ) {
-        return  clsType.isPrimitive() || clsType.getSimpleName().equals("String") ;
+        return  clsType.isPrimitive() || supportedType.contains(clsType) ;
     }
 
     public static boolean isDateOrTime(Class clsType) {

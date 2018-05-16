@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,7 +51,10 @@ public interface BaseStore {
 
 
     default Path getPathFromClassPath(String fileName) {
-        String configPath = this.getClass().getClassLoader().getResource(WORKSPACE_DIR).getPath();
+        URL url = this.getClass().getClassLoader().getResource(WORKSPACE_DIR);
+        if(url == null)
+            return  null;
+        String configPath = url.getPath() ;
         return Paths.get(configPath , fileName) ;
     }
 
@@ -71,30 +75,33 @@ public interface BaseStore {
     }
 
     default void writeObject(Object data , String fileName) throws IOException {
-        //indexUrl , name first line is head
-        //
-        List<Object> datas = new ArrayList<>() ;
+
+        List<Object> dataList = new ArrayList<>() ;
         if(data instanceof List) {
-            datas.addAll((List)data) ;
+            dataList.addAll((List)data) ;
         } else {
-            datas.add(data) ;
+            dataList.add(data) ;
         }
 
-        if(datas.isEmpty() ){
-            if(Files.deleteIfExists(getStorePath(fileName)))
+        Path storePath = getStorePath(fileName) ;
+        if(storePath == null) {
+            throw new IllegalStateException("can not modify , fileName=>" + fileName) ;
+        }
+        if(dataList.isEmpty() ){
+            if(Files.deleteIfExists(storePath))
                 return;
             else
                 throw new IllegalStateException("can not remove you record , fileName=>" + fileName) ;
         }
 
-        final List<Field> fieldList = getAllField(datas.get(0).getClass());
+        final List<Field> fieldList = getAllField(dataList.get(0).getClass());
 
         if(fieldList.isEmpty())
             return;
 
         final  StringBuilder headerBuilder = new StringBuilder() ;
         final  List<String> lines = new ArrayList<>() ;
-        datas.forEach(e->{
+        dataList.forEach(e->{
             boolean isEmpty = lines.isEmpty() ;
             StringBuilder valueBuilder = new StringBuilder() ;
             for(Field field : fieldList) {
@@ -133,7 +140,7 @@ public interface BaseStore {
     default <T> List<T> readListObject(String fileName , Class<T> requiredType) throws Exception {
 
         Path storePath = getStorePath(fileName) ;
-        if(!storePath.toFile().exists()) {
+        if(storePath == null || !storePath.toFile().exists()) {
             return null ;
         }
 
