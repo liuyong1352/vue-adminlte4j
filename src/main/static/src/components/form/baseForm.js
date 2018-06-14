@@ -102,6 +102,12 @@ export const baseForm = {
                 callback(data)
             })
         } ,
+        reset() {
+            for(var i in this.items){
+                var item = this.items[i]
+                this.$refs[item.key][0].set_value()
+            }
+        },
         internal_submit: function(){
             this.submit(this.submit_url ,function (data) {
                 $.alert(data)

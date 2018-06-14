@@ -70,6 +70,9 @@ export default {
             else
                 return cls + ' layui-col-lg'+item.span
         } ,
+        set_value(val){
+            this.$children[0].set_value(val)
+        } ,
         get_value(){
             return this.$children[0].get_value()
         } ,
