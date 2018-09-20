@@ -11,20 +11,91 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
 <v-app id="app" :data="data" >
-    <!-- /.content-wrapper -->
     <v-row>
-        <v-col :class="'col-md-6'">
-            <v-box title="Box 示例">
-                这是个box
+        <v-col span="3">
+            <v-box title="Expandable" >
+                The body of the box
             </v-box>
         </v-col>
-        <v-col :class="'col-md-6'">
-            <v-box title="Box 示例">
-                这是个box 在右边
+        <v-col span="3">
+            <v-box title="Removable" theme="success" :is_solid="true">
+                The body of the box
             </v-box>
         </v-col>
-
+        <v-col span="3">
+            <v-box title="Collapsable" theme="warning" :is_solid="true">
+                The body of the box
+            </v-box>
+        </v-col>
+        <v-col span="3">
+            <v-box title="Collapsable" theme="danger" :is_solid="true">
+                The body of the box
+            </v-box>
+        </v-col>
     </v-row>
+    <v-row>
+        <v-col span="6">
+            <v-box title="Box 示例" ref="box1">
+                这是个box
+                <v-button >hide</v-button>
+            </v-box>
+        </v-col>
+        <v-col span="6">
+            <v-box title='<i class="fa fa-circle-o"></i><span>Box<span>'>
+                <p>这是个box 在右边</p>
+                <p>这是个box 在右边</p>
+                <p>这是个box 在右边</p>
+                <p>这是个box 在右边</p>
+
+                <div slot="footer">
+                    <p>this is footer</p>
+                </div>
+            </v-box>
+        </v-col>
+    </v-row>
+
+    <v-box tilte="abc">
+        <v-row>
+            <v-col span="4">
+                <div class="input-block">
+                    <div id="_input_211" class="form-select form-selected"  >
+                        <div class="layui-select-title">
+                            <input placeholder="请选择" class="layui-input">
+                            <i class="layui-edge"></i>
+                        </div>
+                        <dl >
+                            <dd class="layui-select-tips">请选择</dd>
+                            <dd class="layui-this">男</dd>
+                            <dd class="">女</dd>
+                            <dd class="">中性</dd>
+                        </dl>
+                    </div>
+                </div>
+
+            </v-col>
+            <v-col span="4">
+                <div class="layui-input-block"><div id="_input_6" class="layui-form-select layui-form-selected"><div class="layui-select-title"><input placeholder="请选择" class="layui-input"> <i class="layui-edge"></i></div> <dl class="layui-anim layui-anim-upbit"><dd class="layui-select-tips">请选择</dd> <dd class="layui-this">
+                    男
+                </dd><dd class="">
+                    女
+                </dd><dd class="">
+                    中性
+                </dd></dl></div></div>
+            </v-col>
+        </v-row>
+
+
+
+
+
+
+
+
+
+
+
+
+    </v-box>
 
 
 
