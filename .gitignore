@@ -24,6 +24,8 @@ nbdist/
 
 
 ### js
+package-lock.json
+node_modules/
 src/main/static/node_modules/
 src/main/static/dist/
 
