@@ -12,7 +12,6 @@ npm install --save-dev webpack
 #####构建前端库文件
 ``` 
 cd src\main\static
-
 npm i 
 npm start
 ```
