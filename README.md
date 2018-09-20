@@ -15,6 +15,7 @@ cd src\main\static
 npm i 
 npm start
 ```
+-Dadmin.src.dir=D:\codeExercise\vue-adminlte4j
 
 运行test 下面ApplicationStarter
 访问地址 http://localhost:8080/index.html
