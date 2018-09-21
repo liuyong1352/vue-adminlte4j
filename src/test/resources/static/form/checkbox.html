@@ -10,6 +10,35 @@
 <body class="hold-transition skin-purple sidebar-mini   ">
 
 <v-app id="app" :data="data">
+    <v-box title="复选框使用">
+        <v-form>
+            <v-form-item label="复选框1">
+                <v-checkbox :items="items"  ref="a1" v-model="bind_value1"></v-checkbox>
+            </v-form-item>
+            <v-form-item label="复选框2">
+                <v-checkbox value='1' :items="items" ref="a2"></v-checkbox>
+            </v-form-item>
+            <v-form-item label="复选框3">
+                <v-checkbox  :items="items" ref="a3"></v-checkbox>
+            </v-form-item>
+
+            <v-form-item label="复选框4">
+                <v-checkbox  :items="items" ref="a4" v-bind:value="bind_value1"></v-checkbox>
+            </v-form-item>
+        </v-form>
+        <v-row>
+            <v-col>
+                <br>
+                <v-button @click="set_value">set_value</v-button>
+                <v-button @click="reset">reset</v-button>
+                <v-button @click="queryValues">all_values</v-button>
+                <br>
+                bind_value1: {{bind_value1}}
+                <br>
+                all_values:{{all_values}}
+            </v-col>
+        </v-row>
+    </v-box>
 
 
 
@@ -18,11 +47,31 @@
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
-
-        methods : {
+        el:"#app" ,
+        data : {
+            items : [
+                {code:'1' ,  label:'男' ,checked:false},
+                {code:'2' ,   label:'女',checked:false},
+                {code:'3' ,    label:'中性',checked:false}
+            ] ,
+            bind_value1: '1,2' ,
+            all_values:''
 
         } ,
-        mounted : function () {}
+        methods : {
+            set_value() {
+                this.$refs.a1.set_value("2,3")
+                this.$refs.a3.set_value( "1,2,3")
+            } ,
+            queryValues() {
+                this.all_values = this.$refs.a1.get_value()
+            } ,
+            reset() {
+                this.$refs.a1.reset()
+                this.$refs.a2.reset()
+                this.$refs.a3.reset()
+            }
+        }
     })
 </script>
 </body>

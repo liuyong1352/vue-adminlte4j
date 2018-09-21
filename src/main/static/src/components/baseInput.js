@@ -9,20 +9,32 @@ export const baseInput = {
         disabled: {type: Boolean,default: false}
     },
     data() {
-        return {}
+        return {
+            v: this.value
+        }
     } ,
     methods: {
-        set_value(val){
-            this.value=val
-            this.$refs.input.value=this.value
+        set_v(v){
+            this.v = v
+            this.$emit('input', this.v)
+        } ,
+        set_value(v){
+            this.set_v(v)
         } ,
         get_value(){
-            return this.$refs.input.value
+            return this.v
+        } ,
+        reset() {
+            this.set_value('')
         } ,
         handleInput(event) {
-            var value = event.target.value
-            this.$emit('input', value)
-            this.value = value
+            var v = event.target.value
+            this.set_value(v)
+        }
+    } ,
+    watch: {
+        value(newV) {
+            this.set_value(newV)
         }
     } ,
     computed: {
@@ -35,7 +47,5 @@ export const baseInput = {
             return (this.name || '_input_' + unique_id())
         }
     },
-    mounted () {
-        layui.use('form' , function(){})
-    }
+
 }

@@ -2,10 +2,9 @@
     <div :class="wrapClasses">
         <input :type="type" class="layui-input"
             :name="dynName"
-            ref="input"
             :lay-verify="verify"
             :placeholder="placeholder"
-            :value="value"
+            :value="v"
             :disabled="disabled"
             v-on:input="handleInput">
     </div>
@@ -22,11 +21,6 @@ export default {
                 default: 'text'
         }
     } ,
-    data() {
 
-    } ,
-    methods: {
-
-    }
 }
 </script>

@@ -1,6 +1,8 @@
+import {baseInput}  from './baseInput'
 export const baseDict = {
+    extends: baseInput ,
     props : {
-        items : []
+        items : Array
     } ,
     methods : {
         get_value:function() {

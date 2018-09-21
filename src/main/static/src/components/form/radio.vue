@@ -1,19 +1,24 @@
 <template>
-    <div :class="wrapClasses">
-        <input type="radio" :lay-filter="dynName" v-for="item in items"
-            :name="dynName"
-            ref="input"
-            :value="item.code"
-            :title="item.label"
-            :checked="isChecked(item)">
+    <div :class="wrapClasses" :data-val="v">
+        <div v-for="item in dict" :class="item.state?'layui-form-radio layui-form-radioed': 'layui-form-radio'"
+             @click="change_state(item)">
+            <i class="layui-anim layui-icon"></i>
+            <div>{{item.label}}</div>
+        </div>
     </div>
 </template>
 
 <script>
-import {baseInput}  from '../baseInput'
-import {baseDict}  from '../baseDict'
-export default {
-    mixins: [baseInput ,baseDict],
-    name: 'v-radio'
-}
+    import {baseDict}  from '../baseDict'
+    export default {
+        mixins: [baseDict],
+        name: 'v-radio' ,
+        methods: {
+            change_state(item) {
+                this.reset_state()
+                item.state = 1
+                this.set_v(item.code)
+            }
+        }
+    }
 </script>
