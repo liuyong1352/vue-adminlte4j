@@ -58,8 +58,9 @@ public class MenuUtils {
             Menu menu = new Menu(PREFIX + menuId++ ,"开发配置" ,"#" ,"fa fa-tv" ,Integer.MAX_VALUE) ;
 
             menus.add(menu) ;
-            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"应用信息" ,"/admin/config/app_info.html" ,"fa fa-cog" ,0));
-            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"菜单管理" ,"/admin/config/menu.html" ,"fa fa-cog" ,1));
+            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"应用信息" ,"/_admin/config/app_info.html" ,"fa fa-cog" ,0));
+            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"菜单管理" ,"/_admin/config/menu.html" ,"fa fa-cog" ,1));
+            menu.addChildMenu(new Menu(PREFIX + menuId++ ,"模型配置" ,"/_admin/config/model.html" ,"fa fa-cog" ,1));
 
             menuMap.put(menu.getId() , menu) ;
             menu.getChildren().forEach(item ->menuMap.put(item.getId() , item));
