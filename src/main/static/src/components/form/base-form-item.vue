@@ -76,6 +76,9 @@ export default {
         get_value(){
             return this.$children[0].get_value()
         } ,
+        reset() {
+            this.$children[0].reset()
+        },
         get_ext_val:function(item , key, defVal){
             if(item.ext)
                 return (item.ext)[key]

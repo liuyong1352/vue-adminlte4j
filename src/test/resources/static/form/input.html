@@ -11,18 +11,73 @@
 
 <v-app id="app" :data="data">
 
+    <v-box title="输入框使用">
+        <v-form-item label="输入框" >
+            <v-input  placeholder="input_name0" ref="a1" v-model="bind_value1" ></v-input>
+        </v-form-item>
 
+        <v-form-item label="输入框" >
+            <v-input  placeholder="input_name0" ref="a5" :value="bind_value1" ></v-input>
+        </v-form-item>
+
+        <v-form-item label="输入框">
+            <v-input  placeholder="input_name1" ref="a2" value="1" ></v-input>
+        </v-form-item>
+
+        <v-form-item inline="true">
+            <v-form-item label="输入框0" inline="true">
+                <v-input  placeholder="input_name1" ref="a3" ></v-input>
+            </v-form-item>
+
+            <v-form-item label="输入框1" inline="true">
+                <v-input  placeholder="input_name1" ref="a4" ></v-input>
+            </v-form-item>
+
+            <v-form-item label="block" >
+                <v-input  placeholder="block" ref="a5" ></v-input>
+            </v-form-item>
+        </v-form-item>
+
+
+        <br>
+        <v-row>
+            <v-col>
+                <v-button @click="set_value">set_value</v-button>
+                <v-button @click="reset">reset</v-button>
+                <v-button @click="queryValues">get_value</v-button>
+
+                <br>
+                bind_value1: {{bind_value1}}
+                <br>
+                all_values:  {{all_values}}
+            </v-col>
+        </v-row>
+    </v-box>
 
 </v-app>
 
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
-
-        methods : {
+        data : {
+            bind_value1: '1,2' ,
+            all_values:''
 
         } ,
-        mounted : function () {}
+        methods : {
+            set_value() {
+                this.$refs.a1.set_value("this is test set_value11")
+                this.$refs.a3.set_value( "this is test set_value33")
+            } ,
+            queryValues() {
+                this.all_values = this.$refs.a1.get_value()
+            } ,
+            reset() {
+                debugger
+                this.$refs.a1.reset()
+                this.$refs.a2.reset()
+            }
+        } ,
     })
 </script>
 </body>

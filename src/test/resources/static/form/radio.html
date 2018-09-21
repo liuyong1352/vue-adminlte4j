@@ -11,16 +11,63 @@
 
 <v-app id="app" :data="data">
 
-
+    <v-box title="单选按钮">
+        <v-form-item >
+            <v-form-item label="单选按钮" inline="true" >
+                <v-radio  ref="a1" :items="items" v-model="bind_value1"></v-radio>
+            </v-form-item>
+            <v-form-item label="单选按钮" inline="true" >
+                <v-radio ref="a2" :items="items" v-model="bind_value2"></v-radio>
+            </v-form-item>
+            <v-form-item label="单选按钮" inline="true" >
+                <v-radio ref="a3" :items="items" value="3"></v-radio>
+            </v-form-item>
+        </v-form-item>
+        <br>
+        <v-row>
+            <v-col>
+                <v-button @click="set_value">set_value</v-button>
+                <v-button @click="reset">reset</v-button>
+                <v-button @click="queryValues">get_value</v-button>
+                <br>
+                <br>
+                bind_value1: {{bind_value1}}<br>
+                bind_value2: {{bind_value2}}<br>
+                all_values:  {{all_values}}<br>
+            </v-col>
+        </v-row>
+    </v-box>
 
 </v-app>
 
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
+        data : {
+            items : [
+                {code:'1' ,  label:'男' },
+                {code:'2' ,   label:'女'},
+                {code:'3' ,    label:'中性'}
+            ],
+            bind_value1: '1' ,
+            bind_value2: 2 ,
+            all_values:''
 
+        } ,
         methods : {
-
+            set_value() {
+                this.$refs.a1.set_value(1)
+                this.$refs.a2.set_value(2)
+                this.$refs.a3.set_value(3)
+            } ,
+            queryValues() {
+                this.all_values = this.$refs.a1.get_value()
+            } ,
+            reset() {
+                this.$refs.a1.reset()
+                this.$refs.a2.reset()
+                this.$refs.a3.reset()
+            }
         } ,
         mounted : function () {}
     })

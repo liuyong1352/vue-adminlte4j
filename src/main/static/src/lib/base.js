@@ -1,7 +1,7 @@
 +function ($,window, document) {
 
     /**注册使用event - bus***/
-    //window.eventBus = new Vue()
+    window.eventBus = new Vue()
     function getQueryStringJson() {
         var pairs = location.search.slice(1).split('&')  //去掉问号
         var result = {};

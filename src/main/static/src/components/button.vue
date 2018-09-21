@@ -1,6 +1,7 @@
 <template>
     <button :type="btnType" :class="classes"
         @click="handleClick">
+        <li v-if="icon" :class="icon">&nbsp;</li>
         <slot></slot>
     </button>
 </template>
@@ -40,7 +41,8 @@
             align: {
                 type: String,
                 default: ''
-            }
+            },
+            icon : String
         },
         methods: {
             handleClick(event) {

@@ -10,7 +10,80 @@
 <body class="hold-transition skin-purple sidebar-mini   ">
 
 <v-app id="app" :data="data">
+    <v-box>
+        <v-form-item label="输入框">
+            <v-input  placeholder="请输入姓名" v-model="input_name0" ></v-input>bind:{{input_name0}}
+            <v-input  placeholder="请输入姓名" v-model="input_name1" ></v-input>bind:{{input_name1}}
+            <v-input  placeholder="请输入姓名" v-model="input_name2" ></v-input>bind:{{input_name2}}
+            <v-input  placeholder="请输入姓名" v-model="input_name3" disabled="true"></v-input>bind:{{input_name3}}
 
+        </v-form-item>
+
+        <v-form-item label="复选框">
+            <v-checkbox :items="items"  ref="input_check_box"></v-checkbox>
+            <v-checkbox :items="items"  ref="input_check_box2"></v-checkbox>
+            <v-checkbox value='1' :items="items" ref="input_check_box3"></v-checkbox>
+            bind:{{input_check_box}} <v-button @click="reset_check_box">reset</v-button>
+        </v-form-item>
+        <v-form-item label="图标使用">
+
+            <v-icon-selector ref="icon0" v-model="icon0"></v-icon-selector>
+            bind:{{icon0}}<v-button @click="reset_icon0">reset</v-button>
+            <v-icon-selector ref="icon1" ></v-icon-selector>iconz:{{iconz}}
+            <v-icon-selector  value="fa fa-link"></v-icon-selector>iconz:{{iconz}}
+        </v-form-item>
+
+        <v-form-item>
+            <v-form-item inline="true" label="验证日期">
+                <v-date ref="input_date" inline="true" value="1531447697000"></v-date>
+            </v-form-item>
+            <v-form-item inline="true" label="单选按钮">
+                <v-radio  ref="radio_input" :items="items"></v-radio>
+            </v-form-item >
+        </v-form-item>
+
+        <v-form-item>
+            <v-form-item  inline="true" label="下拉框" >
+                <v-select ref="select_input" :items="items" value="1" placeholder="请选择"></v-select>
+            </v-form-item>
+            <v-button @click="reset_select_input">Reset</v-button>
+            <v-form-item  inline="true" label="下拉框" >
+                <v-select ref="select_input1" :items="items" placeholder="请选择"></v-select>
+            </v-form-item>
+        </v-form-item>
+
+        <v-form-item>
+            <v-form-item label="文本域">
+                <v-textarea ref="textarea" v-model="input_name0"></v-textarea>
+            </v-form-item>
+        </v-form-item>
+        <v-form-item>
+            <v-form-item inline="true" label="开关">
+                <v-switch ref="switch"  v-model="switch_value"></v-switch>
+                {{switch_value}}
+            </v-form-item>
+
+            <v-form-item inline="true" label="开关">
+                <v-switch ref="switch"  v-model="switch_value" text="ON|OFF"></v-switch>
+                {{switch_value}}
+            </v-form-item>
+
+            <v-form-item inline="true" label="开关">
+                <v-switch ref="switch"  v-model="switch_value2" text="ON|OFF"></v-switch>
+                {{switch_value2}}
+            </v-form-item>
+
+            <v-form-item inline="true" label="开关">
+                <v-switch ref="switch"  v-model="switch_value2" text="ON|OFF" :disable="true"></v-switch>
+                {{switch_value2}}
+            </v-form-item>
+        </v-form-item>
+        <div class="layui-form-item">
+            <button @click="queryValues">获取值</button>
+            {{all_values}}
+        </div>
+        </div>
+    </v-box>
 
 
 </v-app>
@@ -18,11 +91,43 @@
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
-
+        data : {
+            name : "radio-gender",
+            items : [
+                {code:'1' ,  label:'男' ,checked:false},
+                {code:'2' ,   label:'女',checked:false},
+                {code:'3' ,    label:'中性',checked:false}
+            ] ,
+            input_name0 : "默认值0  ",
+            input_name1 : "默认值1  ",
+            input_name2 : "默认值2  ",
+            input_name3 : "默认值3  ",
+            input_check_box : "1" ,
+            icon0 : "fa fa-link" ,
+            iconz: "" ,
+            all_values : "" ,
+            switch_value:true ,
+            switch_value2:false , } ,
         methods : {
-
-        } ,
-        mounted : function () {}
+            queryValues() {
+                this.all_values = this.$refs.input_check_box.get_value()
+                this.all_values += " "  + this.$refs.radio_input.get_value()
+                this.all_values += " "  + this.$refs.input_date.get_value()
+                this.all_values += " "  + this.$refs.select_input.get_value()
+                this.all_values += " textarea:"  + this.$refs.textarea.get_value()
+                this.all_values += " switch:"  + this.$refs.switch.get_value()
+            } ,
+            reset_check_box() {
+                this.$refs.input_check_box.reset()
+            } ,
+            reset_icon0() {
+                debugger
+                this.$refs.icon0.reset()
+            } ,
+            reset_select_input() {
+                this.$refs.select_input.reset()
+            }
+        }
     })
 </script>
 </body>

@@ -23,18 +23,23 @@ export default {
     },
     methods : {
         popIconWin : function() {
-           var icon_el=this.$attrs.icon_el
-           if(this.type=='input')
+            var icon_el=this.$attrs.icon_el
+            if(this.type=='input')
                 icon_el = '#' + this.dynName + ' #' + this.dynName + '_i'
-           if(!icon_el)
+            if(!icon_el)
                 icon_el='#icon_i #icon'
-           modals.openWin({
+            modals.openWin({
                 winId:"iconWin",
                 title:'图标选择器（双击选择）',
                 _hidden_data: icon_el,
                 width:'1000px',
-                url:"/admin/config/icon_selector.html"
-           })
+                url:"/_admin/config/icon_selector.html"
+            })
+            var self=this
+            eventBus.$on('#' + self.dynName + "_icon_selected" , function(v){
+                self.set_value(v)
+
+            })
         }
     }
 }

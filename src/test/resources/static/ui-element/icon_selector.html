@@ -36,12 +36,25 @@
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
-        data: {
-        } ,
-        methods: {
-        } ,
-        mounted : function () {
+        data : {
+            bind_value1: 'fa fa-link' ,
+            bind_value2: 'fa fa-rocket' ,
+            all_values:''
 
+        } ,
+        methods : {
+            set_value() {
+                this.$refs.a1.set_value("fa fa-reply")
+            } ,
+            queryValues() {
+                this.all_values = this.$refs.a1.get_value()
+            } ,
+            reset() {
+                debugger
+                this.$refs.a1.reset()
+                this.$refs.a2.reset()
+                this.$refs.a3.reset()
+            }
         }
     })
 </script>

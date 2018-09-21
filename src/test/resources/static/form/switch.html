@@ -18,11 +18,37 @@
 <script src="/lib/lib.js"></script>
 <script>
     app.main({
-
-        methods : {
+        data : {
+            items : [
+                {code:true ,  label:'true' },
+                {code:false ,   label:'false'}
+            ],
+            items2 : [
+                {code:'a' ,  label:'OPEN' },
+                {code:'b' ,   label:'CLOSE'}
+            ],
+            bind_value1: 1 ,
+            bind_value2: false ,
+            bind_value3: 'a' ,
+            all_values:''
 
         } ,
-        mounted : function () {}
+        methods : {
+            set_value() {
+                this.$refs.a1.set_value(1)
+                this.$refs.a2.set_value(true)
+                this.$refs.a3.set_value('b')
+            } ,
+            queryValues() {
+                this.all_values = this.$refs.a1.get_value()
+            } ,
+            reset() {
+                debugger
+                this.$refs.a1.reset()
+                this.$refs.a2.reset()
+                this.$refs.a3.reset()
+            }
+        }
     })
 </script>
 </body>
