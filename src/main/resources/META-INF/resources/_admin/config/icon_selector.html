@@ -23,7 +23,7 @@
         line-height: 1.4;
         text-align: center;
         border: 1px solid #ddd;
-    }
+    }cd
 
     .bs-glyphicons .glyphicon {
         margin-top: 5px;
@@ -2349,7 +2349,9 @@
                 iconClass=$(this).find("span.glyphicon").eq(0).attr("class");
             }
             modals.hideWin("iconWin");
-            $(iconVal).val(iconClass);
+            debugger
+            eventBus.$emit(iconVal + "_icon_selected", iconClass)
+            //$(iconVal).val(iconClass);
             $(iconTag).removeClass().addClass("form-control-feedback").addClass(iconClass);
         });
         //选中回填的图标

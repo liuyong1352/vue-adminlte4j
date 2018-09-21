@@ -1,32 +1,21 @@
 <template>
-  <div :class="this_class()">
+  <div :class="this_cls">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'v-col',
-  props: {
-    'class': {
-      type: String,
-      default: ''
+    name: 'v-col',
+    props: {
+        span:{
+            type : Number , default:12
+        }
     } ,
-    span:{
-        type : Number
+    computed : {
+        this_cls() {
+            return 'col-md-' + this.span
+        }
     }
-  } ,
-  methods : {
-    this_class : function(){
-            if(this['class'])
-                return this['class']
-            if(this.span)
-                return 'col-md-' + this.span
-            return ''
-    }
-  } ,
-  computed : {
-
-  }
 }
 </script>

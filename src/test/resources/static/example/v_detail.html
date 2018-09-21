@@ -1,0 +1,40 @@
+
+    <v-box>
+        <v-row>
+            <v-col span="3">
+                <dl class="dl-horizontal">
+                    <div class="detail">
+                        <h4>收货人信息</h4>
+                    </div>
+                    <dt>收货人：</dt>
+                    <dd>刘勇</dd>
+                    <dt>地址：</dt>
+                    <dd>河北廊坊市广阳区城区新星里小区-爱民东道街道银河北路新星里小区10号楼一单元402</dd>
+                    <dt>手机号码：</dt>
+                    <dd>137****2583</dd>
+                </dl>
+            </v-col>
+
+            <v-col span="3">
+                <v-detail title="详情" ref="detail" ></v-detail>
+            </v-col>
+
+        </v-row>
+
+    </v-box>
+
+<script>
+
+    new Vue({
+        el:"#app" ,
+        data: {
+        },
+        methods: {},
+        mounted: function () {
+            this.initModel('api.data.domain.XModel' ,'detail' )
+            this.initData('/test/form/get' , null  , function (data) {
+                this.setData('detail' , data.data)
+            })
+        }
+    })
+</script>

@@ -1,0 +1,116 @@
+<v-tab ref="tab0">
+        <v-button slot="header">close</v-button>
+        <v-tab-pane label="Tab0" >
+            <b>How to use:</b>
+            Tab1
+        </v-tab-pane>
+        <v-tab-pane label="Tab1" >
+            Tab2
+            <v-button @click="showTab">切换tab</v-button>
+
+        </v-tab-pane>
+        <v-tab-pane v-if="page1" label="Tab1" active="true" >
+            动态的
+            <v-button @click="change_back(1)">change_back</v-button>
+        </v-tab-pane>
+</v-tab>
+
+<v-tab ref="tab" nav_float="right" @on-tab-click="tab_click">
+    <span slot="header">这是title</span>
+    <v-tab-pane label="Tab0">Tab0</v-tab-pane>
+    <v-tab-pane label="Tab1"> Tab1</v-tab-pane>
+    <v-tab-pane label="Tab2" active="true">
+        Tab2 属性 active="true" 用于选中当前页
+        this.$refs.tab.change_tab(index)
+
+        <v-button @click="change_tab(0)">切换tab</v-button>
+    </v-tab-pane>
+</v-tab>
+
+<v-button @click="add_tab"> add_tab </v-button>
+
+<div class="hidden" id="_temp">
+    <v-row>
+        <v-col span="3">
+            <dl class="dl-horizontal">
+                <div class="detail">
+                    <h4>收货人信息</h4>
+                </div>
+                <dt>收货人：</dt>
+                <dd>刘勇</dd>
+                <dt>地址：</dt>
+                <dd>河北廊坊市广阳区城区新星里小区-爱民东道街道银河北路新星里小区10号楼一单元402</dd>
+                <dt>手机号码：</dt>
+                <dd>137****2583</dd>
+            </dl>
+        </v-col>
+
+        <v-col span="3">
+            <v-detail title="详情" ref="detail" ></v-detail>
+        </v-col>
+
+    </v-row>
+</div>
+
+
+
+<v-tab ref="d_tab" nav_float="right" @on-tab-remove="tab_remove" @on-tab-add="tab_add">
+    <span slot="header">Dynamic Tab</span>
+    <v-tab-pane label="Tab0">First</v-tab-pane>
+</v-tab>
+
+
+<script type="text/html" id="temp">
+    <v-form id="form" ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
+</script>
+
+<script>
+    var  vm = new Vue({
+        el:"#app",
+        data: {
+            page1 : false ,
+            text:1
+        } ,
+        methods : {
+            tab_click($tab) {
+                console.log($tab)
+            } ,
+            tab_remove($tab) {
+                console.log($tab)
+            } ,
+            tab_add($tab) {
+                console.log($tab)
+            } ,
+            change_tab(index) {
+                this.$refs.tab.change_tab(index)
+            } ,
+            showTab() {
+                this.page1=true
+                this.$refs.tab0.change_tab(2)
+
+            } ,
+            change_back() {
+                this.$refs.tab0.change_tab(1)
+            } ,
+            add_tab() {
+                debugger
+                this.text += 1
+                this.$refs.d_tab.addPane({
+                    active:true ,
+                    label:"testPane" ,
+                    params: 1 ,
+                    //el:'#temp'
+                    url:'/example/v_tab_content.html'
+                })
+
+
+            }
+        } ,
+        mounted() {
+            this.initModel('api.data.domain.XModel' ,'detail' )
+            this.initData('/test/form/get' , null  , function (data) {
+                this.setData('detail' , data.data)
+            })
+        }
+    })
+</script>

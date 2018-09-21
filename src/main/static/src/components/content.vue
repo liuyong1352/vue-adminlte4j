@@ -2,13 +2,9 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            {{page_header_inter}}
-            <small>{{page_desc}}</small>
-        </h1>
+        <h1 id="page_header">Welcome</h1>
         <ol class="breadcrumb">
-            <li v-if="menu_lev1"><a href="#"><i class="fa fa-dashboard"></i> {{menu_lev1}}</a></li>
-            <li v-if="menu_lev2" class="active">{{menu_lev2}}</li>
+            <li><i class="fa fa-dashboard"></i> <span id="lib_menu1">home</span></li>
         </ol>
     </section>
     <!-- Main content -->
@@ -20,27 +16,10 @@
 </template>
 
 <script>
-import util from '../lib/util'
 export default {
   name: 'v-content',
   props: {
-    page_header: { type: String, default: '' },
-    page_desc : { type: String, default: '' },
-    data: Object
-  } ,
-  mounted : function() {
-    console.log("content mounted!!")
-  } ,
-  computed : {
-    menu_lev1 : function() {
-        return util.get('menu_lev1')
-    } ,
-    menu_lev2 : function() {
-        return util.get('menu_lev2')
-    } ,
-    page_header_inter : function() {
-        return util.get('menu_lev1')
-    }
+
   }
 }
 </script>

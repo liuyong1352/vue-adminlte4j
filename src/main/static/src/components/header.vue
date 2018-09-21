@@ -67,19 +67,19 @@ export default {
     } ,
     computed : {
         index_url() {
-            return this.data.indexUrl || '/index.html'
+            return '#' + this.data.indexUrl || '/index.html'
         } ,
         logo_name :  function() {
-            return util.get_val(this.data['logoName'] , '' )
+            return this.data['logoName'] || ''
         } ,
         logo_short_name : function() {
-            return util.get_val(this.data['logoShortName'] , '' )
+            return this.data['logoShortName']||''
         } ,
         sign_out_url : function() {
-            return util.get_val(this.data['signOutUrl'] , '#' )
+            return this.data['signOutUrl']||''
         } ,
         profile_url : function() {
-            return util.get_val(this.data['profileUrl'] , '#')
+            return this.data['profileUrl']||''
         }
     }
 }

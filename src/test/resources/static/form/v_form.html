@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>111111 </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
-
-<v-app id="app" :data="data">
 
     <v-tab>
         <v-tab-pane label="自动生成">
@@ -96,7 +84,7 @@
                     <button @click="queryValues">获取值</button>
                     {{all_values}}
                 </div>
-                </div>
+            </div>
             </v-form>
         </v-tab-pane>
     </v-tab>
@@ -104,31 +92,27 @@
     <v-box title="box动态表单">
         <v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
     </v-box>
-
-</v-app>
-
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
-
+    var vue = new Vue({
+        el:"#app" ,
         data : {
-            name : "radio-gender",
-            items : [
-                {code:'1' ,  label:'男' ,checked:false},
-                {code:'2' ,   label:'女',checked:false},
-                {code:'3' ,    label:'中性',checked:false}
-            ] ,
-            input_name0 : "默认值0  ",
-            input_name1 : "默认值1  ",
-            input_name2 : "默认值2  ",
-            input_name3 : "默认值3  ",
-            input_check_box : "1" ,
-            icon0 : "fa fa-link" ,
-            iconz: "" ,
-            all_values : "" ,
-            switch_value:true ,
-            switch_value2:false ,
-            s1:`
+                name : "radio-gender",
+                items : [
+                    {code:'1' ,  label:'男' ,checked:false},
+                    {code:'2' ,   label:'女',checked:false},
+                    {code:'3' ,    label:'中性',checked:false}
+                ] ,
+                input_name0 : "默认值0  ",
+                input_name1 : "默认值1  ",
+                input_name2 : "默认值2  ",
+                input_name3 : "默认值3  ",
+                input_check_box : "1" ,
+                icon0 : "fa fa-link" ,
+                iconz: "" ,
+                all_values : "" ,
+                switch_value:true ,
+                switch_value2:false ,
+                s1:`
 <v-form ajax_url="/test/form/get" submit_url="/test/form/add"></v-form>
 ` ,             s2:`@GetMapping("/test/form/get")
 @ResponseBody
@@ -220,5 +204,3 @@ public class XModel {
         }
     })
 </script>
-</body>
-</html>

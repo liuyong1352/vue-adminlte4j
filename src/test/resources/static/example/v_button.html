@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ATL - LayOut </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-
-<v-app id = "app" :data="data">
-    <v-box title="Buttons">
+<v-box title="Buttons">
         <i slot="icon-title" class="fa fa-edit"></i>
         <p>Various types of buttons. Using the "v-button" . theme="info" can change theme </p>
         <br/>
@@ -24,72 +12,62 @@
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button>Default</v-button></v-col>
-            <v-col span="2"><v-button size="lg">Default</v-button></v-col>
-            <v-col span="2"><v-button size="sm">Default</v-button></v-col>
-            <v-col span="2"><v-button size="xs">Default</v-button></v-col>
-            <v-col span="2"><v-button flat="true">Default</v-button></v-col>
-            <v-col span="2"><v-button disabled="true">Default</v-button></v-col>
+            <v-col span="2"><v-button block="true">Default</v-button></v-col>
+            <v-col span="2"><v-button size="lg" block="true">Default</v-button></v-col>
+            <v-col span="2"><v-button size="sm" block="true">Default</v-button></v-col>
+            <v-col span="2"><v-button size="xs" block="true">Default</v-button></v-col>
+            <v-col span="2"><v-button flat="true"  block="true">Default</v-button></v-col>
+            <v-col span="2"><v-button disabled="true" block="true">Default</v-button></v-col>
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button theme="primary">primary</v-button></v-col>
-            <v-col span="2"><v-button theme="primary" size="lg">primary</v-button></v-col>
-            <v-col span="2"><v-button theme="primary" size="sm">primary</v-button></v-col>
-            <v-col span="2"><v-button theme="primary" size="xs">primary</v-button></v-col>
-            <v-col span="2"><v-button theme="primary" flat="true">primary</v-button></v-col>
-            <v-col span="2"><v-button theme="primary" disabled="true">primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" >primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" size="lg">primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" size="sm">primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" size="xs">primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" flat="true">primary</v-button></v-col>
+            <v-col span="2"><v-button theme="primary" block="true" disabled="true">primary</v-button></v-col>
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button theme="success">success</v-button></v-col>
-            <v-col span="2"><v-button theme="success" size="lg">success</v-button></v-col>
-            <v-col span="2"><v-button theme="success" size="sm">success</v-button></v-col>
-            <v-col span="2"><v-button theme="success" size="xs">success</v-button></v-col>
-            <v-col span="2"><v-button theme="success" flat="true">success</v-button></v-col>
-            <v-col span="2"><v-button theme="success" disabled="true">success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" >success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" size="lg">success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" size="sm">success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" size="xs">success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" flat="true">success</v-button></v-col>
+            <v-col span="2"><v-button theme="success" block="true" disabled="true">success</v-button></v-col>
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button theme="info">info</v-button></v-col>
-            <v-col span="2"><v-button theme="info" size="lg">info</v-button></v-col>
-            <v-col span="2"><v-button theme="info" size="sm">info</v-button></v-col>
-            <v-col span="2"><v-button theme="info" size="xs">info</v-button></v-col>
-            <v-col span="2"><v-button theme="info" flat="true">info</v-button></v-col>
-            <v-col span="2"><v-button theme="info" disabled="true">info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" >info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" size="lg">info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" size="sm">info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" size="xs">info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" flat="true">info</v-button></v-col>
+            <v-col span="2"><v-button theme="info" block="true" disabled="true">info</v-button></v-col>
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button theme="danger">danger</v-button></v-col>
-            <v-col span="2"><v-button theme="danger" size="lg">danger</v-button></v-col>
-            <v-col span="2"><v-button theme="danger" size="sm">danger</v-button></v-col>
-            <v-col span="2"><v-button theme="danger" size="xs">danger</v-button></v-col>
-            <v-col span="2"><v-button theme="danger" flat="true">danger</v-button></v-col>
-            <v-col span="2"><v-button theme="danger" disabled="true">danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" >danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" size="lg">danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" size="sm">danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" size="xs">danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" flat="true">danger</v-button></v-col>
+            <v-col span="2"><v-button theme="danger" block="true" disabled="true">danger</v-button></v-col>
         </v-row>
         <br/>
         <v-row>
-            <v-col span="2"><v-button theme="warning">warning</v-button></v-col>
-            <v-col span="2"><v-button theme="warning" size="lg">warning</v-button></v-col>
-            <v-col span="2"><v-button theme="warning" size="sm">warning</v-button></v-col>
-            <v-col span="2"><v-button theme="warning" size="xs">warning</v-button></v-col>
-            <v-col span="2"><v-button theme="warning" flat="true">warning</v-button></v-col>
-            <v-col span="2"><v-button theme="warning" disabled="true">warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" >warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" size="lg">warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" size="sm">warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" size="xs">warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" flat="true">warning</v-button></v-col>
+            <v-col span="2"><v-button theme="warning" block="true" disabled="true">warning</v-button></v-col>
         </v-row>
     </v-box>
-
-</v-app>
-</body>
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
-        data : function () {
-            return {
-            }
-        } ,
-        methods : {
-        } ,
-        mounted : function () {}
+    new Vue({
+        el:"#app" ,
+        data :{ }
     })
 </script>
-</html>

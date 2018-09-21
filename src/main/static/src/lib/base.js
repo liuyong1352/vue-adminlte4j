@@ -1,3 +1,74 @@
+(function($){
+    //首先备份下jquery的ajax方法
+    var _ajax=$.ajax;
+
+    //重写jquery的ajax方法
+    $.ajax=function(opt){
+        var method = opt.type
+        if(method && (method == 'POST' || method == 'DELETE')) {
+            if(!opt.contentType) {
+                opt.contentType = 'application/json; charset=utf-8'
+            }
+            if(opt.contentType.startsWith('application/json')) {
+                opt.data = JSON.stringify(opt.data || {})
+            }
+        }
+        var noop = function() {}
+        var onError=function(xhr, textStatus){
+            if(xhr.status == 401 ) { //401 未授权
+                var l = xhr.getResponseHeader("location")||xhr.getResponseHeader("Location")
+                if(l == null ) {
+                    $.load_page(null , xhr.responseText)
+                } else {
+                    var ds = decodeURIComponent(l)
+                    var origin = window.location.origin
+                    var i = ds.indexOf(origin)
+                    var sp = ds.substr(0 , i)
+                    //var ss = ds.substring(i)
+                    //var tail = ss.substr(origin.length)
+
+                    var loginUrl = sp + encodeURIComponent(window.location.href)
+                    window.location.href = loginUrl
+                }
+            } else {
+                message.error("网络异常，请联系管理员！" , 5000 )
+            }
+        }
+        var onComplete=function (xhr, textStatus) {
+            if(xhr.status==200 ) {
+                if(xhr.responseJSON && xhr.responseJSON.code == 401)
+                    window.location.href =  xhr.responseJSON.location
+            }
+        }
+        //备份opt中error和success方法
+        var fn = {
+            error:opt.error || onError,
+            success:opt.success || noop,
+            complete:opt.complete || noop
+        }
+        //扩展增强处理
+        var _opt = $.extend(opt,{
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                //错误方法增强处理
+                fn.error(XMLHttpRequest, textStatus, errorThrown);
+            },
+            success:function(data, textStatus){
+                //成功回调方法增强处理
+                fn.success(data, textStatus);
+            },
+            beforeSend:function(xhr){
+                //提交前回调方法
+                //console.log( "hre1"+ xhr )
+            },
+            complete:function(xhr, textStatus){
+                fn.complete(xhr, textStatus)
+            }
+        });
+        return _ajax(_opt);
+    };
+
+})(jQuery);
+
 +function ($,window, document) {
 
     /**注册使用event - bus***/
@@ -9,6 +80,19 @@
             pair = pair.split('=');
             result[pair[0]] = decodeURIComponent(pair[1] || '');
         })
+
+        var hash = window.location.hash
+        if(hash && hash.length > 0) {
+            var hq_arr = hash.split('?')
+            if(hq_arr.length > 1) {
+                pairs = hq_arr[1].split('&')
+                for(var i = 0 ; i < pairs.length  ; i++ ) {
+                    var pair = pairs[i].split('=');
+                    result[pair[0]] = decodeURIComponent(pair[1] || '')
+                }
+            }
+        }
+
         return result
     }
 
@@ -20,41 +104,82 @@
                 return decodeURIComponent(pair[1]);
             }
         }
+
+        var hash = window.location.hash
+        if(hash && hash.length > 0) {
+            var hq_arr = hash.split('?')
+            if(hq_arr.length > 1) {
+                pairs = hq_arr[1].split('&')
+                for(var i = 0 ; i < pairs.length  ; i++ ) {
+                    var pair = pairs[i].split('=');
+                    if (pair[0] == key) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+            }
+        }
         console.log('Query variable %s not found', key);
     }
 
     function isNullOrEmpty(s) {
         return (s == undefined || s == null || s == '')
     }
-    function ajaxBuilder(url  , method , params ) {
-        var _o=params||{}
-        var _d={}
-        for(var k in _o) {
-            if(params[k].length==0)
-                continue
-            _d[k]=params[k]
-        }
-        this.settings = {url:url , data: _d,
-            dataType: "json" ,
-            type:method ,
-            complete:function (xhr) {
-                if(xhr.status==200 ) {
-                    if( xhr.responseJSON.code == 401)
-                        window.location.href =  xhr.responseJSON.location
-                } else if(xhr.status == 401 ) { //401 未授权
-                    window.location.href =  xhr.getResponseHeader("location")||xhr.getResponseHeader("Location")
-                }
-            }
-        }
-        if(method == 'POST' )  {
-            this.settings.data = JSON.stringify(params || {})
-            this.settings.contentType = 'application/json; charset=utf-8'
-        }
 
+    function prefixFill(num, length){
+        var str = '';
+        num = String(num);
+        length = length || 2;
+        for(var i = num.length; i < length; i++){
+            str += '0';
+        }
+        return str + num;
+    };
+
+    function filterArray(arr) {
+        var a = []
+        for(var i in arr) {
+            var o = arr[i]
+            a.push(filterObj(o))
+        }
+        return a
     }
 
-    ajaxBuilder.prototype.then = function(callback) {
-        this.settings.success = callback
+    function filterObj(obj) {
+        if(obj == undefined || obj == null )
+            return obj
+        if(typeof obj == 'string' || $.isNumeric(obj) || $.isBoolean(obj))
+            return obj
+
+        if($.isArray(obj))
+            return filterArray(obj)
+        var _d={}
+        for(var k in obj) {
+            var v = obj[k]
+            if(v == undefined || v == null || v.length==0)
+                continue
+            _d[k] = filterObj(v)
+        }
+        return _d ;
+    }
+
+    function ajaxBuilder(url  , method , params ) {
+        var _d = filterObj(params)
+        this.settings = {url:url , data: _d,
+            dataType: "json" ,
+            type:method
+        }
+    }
+
+    ajaxBuilder.prototype.dataType=function(dataType) {
+        this.settings.dataType = dataType
+    }
+
+    ajaxBuilder.prototype.contentType=function(contentType) {
+        this.settings.contentType = contentType
+    }
+
+    ajaxBuilder.prototype.then = function(fn) {
+        this.settings.success = fn
         $.ajax(this.settings)
     }
 
@@ -97,6 +222,9 @@
         msg: function(msg) {
             layer.msg(msg)
         } ,
+        isBoolean: function (o) {
+            return (typeof o) === 'boolean'
+        } ,
         getQueryStr : function (key) {
             return getQueryVariable(key)
         } ,
@@ -117,6 +245,45 @@
         } ,
         delete:function(url , params) {
             return new ajaxBuilder(url , "DELETE" , params )
+        } ,
+        load_page:function(url , html) {
+            //$(document).off('click' ,'#_layout')
+            var screen_content = $("#app")
+            $("#app").children().remove()
+            if(url)
+                screen_content.load(url)
+            else
+                screen_content.html(html)
+        } ,
+        getTabPaneParentId(id) {
+            var p = $("#" + id ).parent()
+            var pid = p.attr('id')
+            p.html($('#' + id).html())
+            //$("#" + id).attr("id" , newId)
+            return pid
+        } ,
+        toDateString:function (d , format) {
+            d = d || new Date()
+            if($.isNumeric(d))
+                d = Number(d)
+            var date = new Date(d)
+            ,ymd = [
+                prefixFill(date.getFullYear(), 4)
+                ,prefixFill(date.getMonth() + 1)
+                ,prefixFill(date.getDate())
+            ]
+            ,hms = [
+                prefixFill(date.getHours())
+                ,prefixFill(date.getMinutes())
+                ,prefixFill(date.getSeconds())
+            ]
+            format = format || 'yyyy-MM-dd HH:mm:ss'
+            return format.replace(/yyyy/g, ymd[0])
+                .replace(/MM/g, ymd[1])
+                .replace(/dd/g, ymd[2])
+                .replace(/HH/g, hms[0])
+                .replace(/mm/g, hms[1])
+                .replace(/ss/g, hms[2])
         }
     })
 
@@ -125,7 +292,119 @@
      */
     layui.use(['layer'] , function () {
         window.layer= layui.layer
+        window.alert = window.alert || {
+            info(text) {
+                layer.alert(text , {icon: 1})
+            }
+
+        }
+
+        function lay_msg(text ,duration ,icon,fn) {
+            if($.isPlainObject(text)) {
+                layer.msg(text.msg, {icon: text.code || 2,time: duration||3000 }, fn)
+            } else {
+                layer.msg(text, {icon: icon||1,time: duration||3000 }, fn)
+            }
+        }
+        window.message = window.message ||
+            {
+                msg(text , duration, fn) {
+                    lay_msg(text, duration, fn)
+                } ,
+                info(text , duration ,fn) {
+                    lay_msg(text , duration  , 1 ,fn)
+                } ,
+                success(text , duration ,fn) {
+                    lay_msg(text , duration  , 1 ,fn)
+                } ,
+                error(text , duration, fn) {
+                    lay_msg(text , duration  , 2 ,fn)
+                } ,
+                warn(text , duration, fn) {
+                    lay_msg(text , duration  , 7 ,fn)
+                }
+            }
     })
+
+    /**
+     * 注册全局id获取器
+     * @returns {number}
+     */
+    window.unique_id= function () {
+        return (window.$id = window.$id? (window.$id + 1) : 6)
+    }
+
+    Vue.prototype.ajax = function (url  , method, params , opt ,fn) {
+        var req = new ajaxBuilder(url , method , params )
+        var self = this
+        req.then(function (data) {
+            fn.call(self ,data)
+        })
+    }
+
+    Vue.prototype.ajaxGet = function(url , params , fn) {
+        this.ajax(url , 'GET' , params , {} , fn)
+    }
+    
+    Vue.prototype.ajaxPost = function (url , params , fn) {
+        this.ajax(url , 'POST' , params , {} , fn)
+    }
+
+    Vue.prototype.ajaxDelete = function (url , params , fn) {
+        this.ajax(url , 'DELETE' , params , {} , fn)
+    }
+
+    Vue.prototype.setModel = function(ref , model) {
+        var deep_clone = {}
+        $.extend(true , deep_clone , model)
+        this.$refs[ref].set_formModel(deep_clone)
+    }
+
+    Vue.prototype.showItem = function(ref , key) {
+        this.$refs[ref].show_item(key)
+    }
+
+    Vue.prototype.hideItem = function(ref , key) {
+        this.$refs[ref].hide_item(key)
+    }
+
+    Vue.prototype.setData = function (ref , data) {
+        this.$refs[ref].set_value(data)
+    }
+
+    Vue.prototype.refresh = function(ref , params) {
+        this.$refs[ref].refresh(params)
+    }
+
+    /**
+     * 加载模型， 初始化vue实例
+     * @param vue
+     * @param models
+     */
+    Vue.prototype.initModel=function (models , refOrFn) {
+        this.ajaxGet('/admin/model/lookup' , {model:models} ,function (data) {
+            if($.isFunction(refOrFn)) {
+                refOrFn.call(this , data)
+            } else {
+                this.setModel(refOrFn , data[models])
+            }
+        })
+
+    }
+
+    Vue.prototype.initData = function (url , param , refOrFn) {
+        this.ajaxGet(url , param ,function(data){
+            if($.isFunction(refOrFn)) {
+                refOrFn.call(this , data)
+            } else {
+                this.setData(refOrFn ,data.data )
+            }
+        })
+    }
+
+    Vue.prototype.validate = function (ref) {
+        return this.$refs[ref].validate()
+    }
 
     /**
      * 公用信息提示modal
@@ -155,8 +434,7 @@
      * </div>
      */
 
-    window.modals = window.modals||{};
-
+    window.modals = window.modals||{}
     function _modal_structure(config, ok, cancel) {
         // <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         var modal = document.createElement('DIV');
@@ -479,6 +757,7 @@
         //});
     }
 }(jQuery ,window, document)
+
 
 
 

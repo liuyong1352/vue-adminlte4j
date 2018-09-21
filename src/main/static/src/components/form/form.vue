@@ -1,5 +1,5 @@
 <template>
-    <div class="layui-form">
+    <div class="layui-form" :lay-filter="dynName">
         <slot></slot>
         <template v-if="form_inline">
             <template v-for="(row , index) in row_items">
@@ -26,6 +26,9 @@
             style="border-top: solid 1px #d2d6de;padding-top: 8px; margin-bottom:2px">
             <button class="layui-btn" @click="internal_submit">
                 <li class="fa fa-save">&nbsp;提交</li>
+            </button>
+            <button v-if="has_reset =='true'" class="layui-btn layui-btn-primary" @click="reset">
+                           <li class="fa fa-reply">&nbsp;重置</li>
             </button>
         </div>
         <template v-if="$slots.footer">

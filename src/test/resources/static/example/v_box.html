@@ -1,91 +1,75 @@
-    <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ATL - Box </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<v-row>
+    <v-col span="3">
+        <v-box title="Expandable" >
+            The body of the box
+        </v-box>
+    </v-col>
+    <v-col span="3">
+        <v-box title="Removable" theme="success" :is_solid="true">
+            The body of the box
+        </v-box>
+    </v-col>
+    <v-col span="3">
+        <v-box title="Collapsable" theme="warning" :is_solid="true">
+            The body of the box
+        </v-box>
+    </v-col>
+    <v-col span="3">
+        <v-box title="Collapsable" theme="danger" :is_solid="true">
+            The body of the box
+        </v-box>
+    </v-col>
+</v-row>
+<v-row>
+    <v-col span="6">
+        <v-box title="Box 示例" ref="box1">
+            这是个box
+            <v-button >hide</v-button>
+        </v-box>
+    </v-col>
+    <v-col span="6">
+        <v-box title='<i class="fa fa-circle-o"></i><span>Box<span>'>
+            <p>这是个box 在右边</p>
+            <p>这是个box 在右边</p>
+            <p>这是个box 在右边</p>
+            <p>这是个box 在右边</p>
 
-</head>
+            <div slot="footer">
+                <p>this is footer</p>
+            </div>
+        </v-box>
+    </v-col>
+</v-row>
 
-<body class="hold-transition skin-blue sidebar-mini">
-<v-app id="app" :data="data" >
+<v-box tilte="abc">
     <v-row>
-        <v-col span="3">
-            <v-box title="Expandable" >
-                The body of the box
-            </v-box>
-        </v-col>
-        <v-col span="3">
-            <v-box title="Removable" theme="success" :is_solid="true">
-                The body of the box
-            </v-box>
-        </v-col>
-        <v-col span="3">
-            <v-box title="Collapsable" theme="warning" :is_solid="true">
-                The body of the box
-            </v-box>
-        </v-col>
-        <v-col span="3">
-            <v-box title="Collapsable" theme="danger" :is_solid="true">
-                The body of the box
-            </v-box>
-        </v-col>
-    </v-row>
-    <v-row>
-        <v-col span="6">
-            <v-box title="Box 示例" ref="box1">
-                这是个box
-                <v-button >hide</v-button>
-            </v-box>
-        </v-col>
-        <v-col span="6">
-            <v-box title='<i class="fa fa-circle-o"></i><span>Box<span>'>
-                <p>这是个box 在右边</p>
-                <p>这是个box 在右边</p>
-                <p>这是个box 在右边</p>
-                <p>这是个box 在右边</p>
-
-                <div slot="footer">
-                    <p>this is footer</p>
-                </div>
-            </v-box>
-        </v-col>
-    </v-row>
-
-    <v-box tilte="abc">
-        <v-row>
-            <v-col span="4">
-                <div class="input-block">
-                    <div id="_input_211" class="form-select form-selected"  >
-                        <div class="layui-select-title">
-                            <input placeholder="请选择" class="layui-input">
-                            <i class="layui-edge"></i>
-                        </div>
-                        <dl >
-                            <dd class="layui-select-tips">请选择</dd>
-                            <dd class="layui-this">男</dd>
-                            <dd class="">女</dd>
-                            <dd class="">中性</dd>
-                        </dl>
+        <v-col span="4">
+            <div class="input-block">
+                <div id="_input_211" class="form-select form-selected"  >
+                    <div class="layui-select-title">
+                        <input placeholder="请选择" class="layui-input">
+                        <i class="layui-edge"></i>
                     </div>
+                    <dl >
+                        <dd class="layui-select-tips">请选择</dd>
+                        <dd class="layui-this">男</dd>
+                        <dd class="">女</dd>
+                        <dd class="">中性</dd>
+                    </dl>
                 </div>
+            </div>
 
-            </v-col>
-            <v-col span="4">
-                <div class="layui-input-block"><div id="_input_6" class="layui-form-select layui-form-selected"><div class="layui-select-title"><input placeholder="请选择" class="layui-input"> <i class="layui-edge"></i></div> <dl class="layui-anim layui-anim-upbit"><dd class="layui-select-tips">请选择</dd> <dd class="layui-this">
-                    男
-                </dd><dd class="">
-                    女
-                </dd><dd class="">
-                    中性
-                </dd></dl></div></div>
-            </v-col>
-        </v-row>
-
-
-
+        </v-col>
+        <v-col span="4">
+            <div class="layui-input-block"><div id="_input_6" class="layui-form-select layui-form-selected"><div class="layui-select-title"><input placeholder="请选择" class="layui-input"> <i class="layui-edge"></i></div> <dl class="layui-anim layui-anim-upbit"><dd class="layui-select-tips">请选择</dd> <dd class="layui-this">
+                男
+            </dd><dd class="">
+                女
+            </dd><dd class="">
+                中性
+            </dd></dl></div></div>
+        </v-col>
+    </v-row>
 
 
 
@@ -95,31 +79,21 @@
 
 
 
-    </v-box>
 
 
 
+</v-box>
 
-</v-app>
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
-
-        data : function () {
-            return {
-                query : {name : 'test'} ,
-                ajax_url : '/get_table_data'
-
+    new Vue({
+        el:"#app" ,
+        data :{ } ,
+        methods :{
+            toggle() {
+                //this.$refs.box0.toggle()
             }
         } ,
-        methods : {
-            re_query : function () {
-                console.log('re_query')
-                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
-            }
-        } ,
-        mounted : function () {}
+        mounted(){
+        }
     })
 </script>
-</body>
-</html>

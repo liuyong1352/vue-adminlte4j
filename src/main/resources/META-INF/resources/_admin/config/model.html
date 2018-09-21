@@ -1,0 +1,139 @@
+<v-tab ref="tab">
+    <v-tab-pane label="模型列表">
+        <v-row>
+            <v-col span="8">
+                <v-form ref="form">
+                    <v-form-item>
+                        <v-form-item inline="true" label="模型名">
+                            <v-input v-model="configModel.modelName" placeholder="请输入全英文模型名" verify="required"></v-input>
+                        </v-form-item>
+
+                        <v-form-item inline="true" label="描述">
+                            <v-input v-model="configModel.desc" placeholder="请输入模型描述信息" verify="required"></v-input>
+                        </v-form-item>
+                        <v-form-item inline="true" label="实体类">
+                            <v-switch v-model="configModel.clazz" text="是|否"></v-switch>
+                        </v-form-item>
+                    </v-form-item>
+                </v-form>
+            </v-col>
+            <v-col span="4">
+                <v-button  theme="primary" icon="fa fa-save"  @click="saveModel"  >Save</v-button>
+                <v-button  theme="primary" icon="fa fa-remove"  @click="deleteModel"  >Delete</v-button>
+            </v-col>
+        </v-row>
+
+        <v-table ref="modelList" ajax_url="/admin/model/list"  :operations="operations"></v-table>
+    </v-tab-pane>
+    <v-tab-pane label="模型配置">
+
+        <v-row>
+            <v-col span="4">
+                <v-form-item  label="全路径类名" >
+                    <v-input v-model="configModel.modelName" :disabled="true"></v-input>
+                </v-form-item>
+            </v-col>
+            <v-col span="7">
+                <v-button   theme="primary" icon="fa fa-refresh"    @click="load">Load</v-button>
+                <v-button   theme="primary" icon="fa fa-save"       @click="save" >Save</v-button>
+                <v-button   theme="primary" icon="fa fa-plus"       @click="add_row" >Add</v-button>
+                <v-button   theme="primary" icon="fa fa-remove"     @click="del_row" >DeleteRow</v-button>
+                <v-button   theme="primary" icon="fa fa-setting"    @click="configDetail" >Config</v-button>
+            </v-col>
+
+        </v-row>
+
+        <v-table ref="modelTable" :editable="true" @on-row-selected="row_selected"></v-table>
+    </v-tab-pane>
+</v-tab>
+<v-modal title="Config" ref="configModal" size="lg">
+    <v-form ref="configItemForm" submit_url="/" :submit_before="submit_before"></v-form>
+</v-modal>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            configModel:{
+                modelName: null ,
+                desc:null ,
+                clazz:false
+            } ,
+            sr : -1 ,
+            operations : [
+                {
+                    name : '配置模型'  ,
+                    class:'btn-info',
+                    method : function(row ) {
+                        vm.configModel = row
+                        vm.$refs.tab.change_tab(1)
+                        vm.load()
+                    }
+                }
+
+            ]
+        } ,
+        methods:{
+            load() {
+                this.initData("/admin/model/detail/get" , this.configModel , function (data) {
+                    this.setModel('modelTable' , data.FormModel)
+                    this.setModel('configItemForm' , data.FormModel)
+                    this.setData('modelTable' , data.tableData.dataItems)
+                })
+
+            } ,
+            row_selected(index) {
+                this.$refs.modelTable.edit_row(index)
+                this.sr = index
+            } ,
+            save() {
+                var params = {clsName:this.configModel.modelName }
+                params.configFormItems = this.$refs.modelTable.get_value()
+                this.ajaxPost('/admin/model/detail/update/' + this.configModel.modelName , this.$refs.modelTable.get_value() , function (data) {
+                    message.msg(data)
+                })
+            } ,
+            add_row() {
+                this.$refs.modelTable.add_row({key:"key" , label:"label"})
+            } ,
+            del_row() {
+                if(this.sr >= 0 ) {
+                    this.$refs.modelTable.delete_row(this.sr)
+                    this.sr = -1
+                    this.save()
+                } else {
+                    message.warn("请选择需要删除的行！")
+                }
+            } ,
+            saveModel() {
+                if(!this.validate('form'))
+                    return
+                this.ajaxPost('/admin/model/save'  , this.configModel , function (data) {
+                    message.msg(data)
+                    this.refresh('modelList')
+                })
+            } ,
+            deleteModel() {
+                this.ajaxDelete('/admin/model/delete'  , this.configModel , function (data) {
+                    message.msg(data)
+                    this.refresh('modelList')
+                })
+            } ,
+            configDetail() {
+                var selected_row = this.$refs.modelTable.get_selected_row()
+                if(!selected_row) {
+                    message.warn("Please select row!" , 2000)
+                    return
+                }
+                this.setData('configItemForm' , selected_row)
+                this.$refs.configModal.toggle()
+            } ,
+            submit_before(url , formData) {
+                var selected_row = this.$refs.modelTable.get_selected_row()
+                $.extend(selected_row , formData )
+                this.$refs.configModal.toggle()
+                return false
+            }
+        }
+    })
+</script>

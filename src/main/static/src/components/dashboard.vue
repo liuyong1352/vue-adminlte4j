@@ -1,5 +1,5 @@
 <template>
-<div id="app" class="wrapper">
+<div class="wrapper">
     <v-header :data="app_info" :user_name="user_name" :user_img="user_img"></v-header>
     <v-sidebar :data="menu_items"></v-sidebar>
     <v-content>
@@ -33,7 +33,6 @@ export default {
     mounted() {
         var vm=this
         $.get('/admin/app_info/get_all').then(function (data) {
-            //var data=response.data
             vm.app_info=data.app_info
             vm.menu_items=data.menu_items
             vm.user_name=data.user_name

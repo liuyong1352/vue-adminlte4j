@@ -13,6 +13,11 @@ export const baseInput = {
             v: this.value
         }
     } ,
+    watch: {
+        value(newV) {
+            this.set_value(newV)
+        }
+    } ,
     methods: {
         set_v(v){
             this.v = v
@@ -32,11 +37,6 @@ export const baseInput = {
             this.set_value(v)
         }
     } ,
-    watch: {
-        value(newV) {
-            this.set_value(newV)
-        }
-    } ,
     computed: {
         wrapClasses(){
             if(this.wrap_class)
@@ -46,6 +46,5 @@ export const baseInput = {
         dynName() {
             return (this.name || '_input_' + unique_id())
         }
-    },
-
+    }
 }

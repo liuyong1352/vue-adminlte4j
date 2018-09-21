@@ -7,5 +7,22 @@ requireComponent.keys().forEach(filePath => {
     Vue.component(componentConfig.default.name, componentConfig.default || componentConfig)
 })
 
-/*import VDashboard    from './components/dashboard.vue'
- Vue.component('v-app'               , VDashboard)*/
+import Dialog from './components/ui-element/dialog.vue'
+
+const install = function(Vue, opts = {}) {
+    var vDialog = Vue.component(Dialog.name , Dialog)
+    var dlg = new vDialog().$mount()
+    Vue.prototype.$message= function(msg) {
+        document.getElementById('app').appendChild(dlg.$el);
+        dlg.show()
+    }
+}
+
+install(Vue)
+
+
+
+
+
+
+

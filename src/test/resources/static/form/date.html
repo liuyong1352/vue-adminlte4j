@@ -1,64 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>111111 </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
-
-<v-app id="app" :data="data">
-
-
-    <v-box title="日期控件使用">
-        <v-form>
-            <v-form-item >
-                <v-form-item label="日期-时间" inline="true" >
-                    <v-date ref="a1" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value1"></v-date>
-                </v-form-item>
-                <v-form-item label="日期-时间" inline="true" >
-                    <v-date ref="a2" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value2"></v-date>
-                </v-form-item>
-                <v-form-item label="日期" inline="true" >
-                    <v-date ref="a3" placeholder="yyyy-MM-dd" type="date" v-model="bind_value3"></v-date>
-                </v-form-item>
-                <v-form-item label="年份" inline="true" >
-                    <v-date  placeholder="yyyy" type="year"></v-date>
-                </v-form-item>
-                <v-form-item label="月份" inline="true" >
-                    <v-date  placeholder="mm" type="month"></v-date>
-                </v-form-item>
-                <v-form-item label="时间" inline="true" >
-                    <v-date  placeholder="只提供时、分、秒选择" type="time"></v-date>
-                </v-form-item>
+<v-box title="日期控件使用">
+    <v-form>
+        <v-form-item >
+            <v-form-item label="日期-时间" inline="true" >
+                <v-date ref="a1" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value1"></v-date>
             </v-form-item>
-            <v-form-item label="范围"  >
-                <v-date ref="a4" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value4" :range="true"></v-date>
+            <v-form-item label="日期-时间" inline="true" >
+                <v-date ref="a2" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value2"></v-date>
             </v-form-item>
-        </v-form>
-        <br>
-        <v-row>
-            <v-col>
-                <v-button @click="set_value">set_value</v-button>
-                <v-button @click="reset">reset</v-button>
-                <v-button @click="queryValues">get_value</v-button>
-                <br>
-                <br>
-                bind_value1: {{bind_value1}}<br>
-                bind_value2: {{bind_value2}}<br>
-                bind_value3: {{bind_value3}}<br>
-                bind_value4: {{bind_value4}}<br>
-                all_values:  {{all_values}}<br>
-            </v-col>
-        </v-row>
-    </v-box>
-</v-app>
+            <v-form-item label="日期" inline="true" >
+                <v-date ref="a3" placeholder="yyyy-MM-dd" type="date" v-model="bind_value3"></v-date>
+            </v-form-item>
+            <v-form-item label="年份" inline="true" >
+                <v-date  placeholder="yyyy" type="year"></v-date>
+            </v-form-item>
+            <v-form-item label="月份" inline="true" >
+                <v-date  placeholder="mm" type="month"></v-date>
+            </v-form-item>
+            <v-form-item label="时间" inline="true" >
+                <v-date  placeholder="只提供时、分、秒选择" type="time"></v-date>
+            </v-form-item>
+        </v-form-item>
+        <v-form-item label="范围"  >
+            <v-date ref="a4" placeholder="yyyy-MM-dd hh:mm:ss" v-model="bind_value4" :range="true"></v-date>
+        </v-form-item>
+    </v-form>
+    <br>
+    <v-row>
+        <v-col>
+            <v-button @click="set_value">set_value</v-button>
+            <v-button @click="reset">reset</v-button>
+            <v-button @click="queryValues">get_value</v-button>
+            <br>
+            <br>
+            bind_value1: {{bind_value1}}<br>
+            bind_value2: {{bind_value2}}<br>
+            bind_value3: {{bind_value3}}<br>
+            bind_value4: {{bind_value4}}<br>
+            all_values:  {{all_values}}<br>
+        </v-col>
+    </v-row>
+</v-box>
 
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
+    var vue = new Vue({
+        el:"#app" ,
         data : {
             bind_value1: '2018-09-04 23:23:20' ,
             bind_value2: 1531447697000 ,
@@ -82,5 +67,3 @@
         }
     })
 </script>
-</body>
-</html>

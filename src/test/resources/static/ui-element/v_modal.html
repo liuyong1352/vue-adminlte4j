@@ -1,64 +1,53 @@
-    <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ATL - Modal </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<v-row>
+    <v-col span="6">
+        <v-box title="Modal">
+            <v-button @click="toggle">Toggle</v-button>
+        </v-box>
+    </v-col>
 
-</head>
+    <v-col span="6">
+        <v-box title="Modal">
+            这是个box 在右边
+        </v-box>
+    </v-col>
+</v-row>
 
-<body class="hold-transition skin-blue sidebar-mini">
-<v-app :data="data" >
-    <!-- /.content-wrapper -->
-    <v-row>
-        <v-col :class="'col-md-6'">
-            <v-box title="Modal">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                    Launch Default Modal
-                </button>
-            </v-box>
-        </v-col>
+<v-box title="Modal">
+    <button id="show-modal2" @click="show2">Show Modal2</button>
+</v-box>
 
-        <v-col :class="'col-md-6'">
-            <v-box title="Modal">
-                这是个box 在右边
-            </v-box>
-        </v-col>
+<v-modal title="新增用户" ref="modal">
+    <v-form ref="userForm"  submit_url="/form/add" ajax_url="/form/user/get"
+            :submit_after="submit_after"
+            :submit_before="submit_before">
+    </v-form>
+</v-modal>
 
-    </v-row>
-    <v-modal title="Me" id="modal-default">
-        <v-form>
-            <v-row>
-                <v-form-item label="Name:">
-                    <v-input></v-input>
-                </v-form-item>
-                <v-form-item label="Age:">
-                    <v-input></v-input>
-                </v-form-item>
-            </v-row>
-
-        </v-form>
-        <button slot="footer">Save</button>
-    </v-modal>
-
-
-
-
-</v-app>
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
-
-        data : function () {
-
+new Vue({
+    el:"#app" ,
+    data :{
+        showModal: false
+    } ,
+    methods:{
+        toggle(){
+            debugger
+            this.$refs.modal.toggle()
         } ,
-        methods : {
-
+        submit_after(data) {
+            console.log(data)
+            this.toggle()
+            return false
         } ,
-        mounted : function () {}
-    })
+        submit_before(url , data) {
+            console.log(url)
+            console.log(data)
+            return true
+        } ,
+        show2() {
+            this.$message("hello")
+        }
+
+    }
+})
 </script>
-</body>
-</html>

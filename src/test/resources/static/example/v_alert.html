@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ATL - LayOut </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
-
-<v-app id="app" :data="data">
-
-    <!--具有图标的情况-->
+<!--具有图标的情况-->
      <v-alert>
          <h4 slot="header"><i class="icon fa fa-check"></i> Alert!</h4>
          <p slot="body">Success alert preview. This alert is dismissable.</p>
@@ -32,28 +19,10 @@
             Info alert preview. This alert is dismissable.
         </p>
     </v-alert>
- </v-app>
 
- <script src="/lib/lib.js"></script>
 <script>
-    app.main({
-
-        data : function () {
-            return {
-                query : {name : 'test'} ,
-                ajax_url : '/get_table_data'
-
-            }
-        } ,
-        methods : {
-            re_query : function () {
-                console.log('re_query')
-                this.ajax_url = '/get_table_data?'  + 'name=' + this.query.name
-            }
-        } ,
-        mounted : function () {}
+    new Vue({
+        el:"#app" ,
+        data :{ }
     })
 </script>
- </body>
-
- </html>

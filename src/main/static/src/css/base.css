@@ -5,3 +5,119 @@
  @Site: www.xxx.com
  */
 .layui-form-label , .layui-form-switch{ box-sizing: content-box;  }
+
+.detail {
+    width:160px;
+}
+.detail h4 {
+    height: 24px;
+    color: #333;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    float: right;
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #e6e6e6;
+}
+
+/**selected **/
+.v-form-select dl {
+    display: none;
+    top: 42px;
+    left: 0px;
+    position: absolute;
+    z-index: 999;
+    padding: 5px 0;
+    min-width: 100%;
+    border: 1px solid #d2d2d2;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    box-sizing: border-box;
+}
+.v-form-selected dl {
+    display: block;
+}
+
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    display: table;
+    transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.modal-container {
+    width: 300px;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+.modal-default-button {
+    float: right;
+}
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.5s ease; }
+.fade-enter, .fade-leave-to { opacity: 0; }
+
+/** tree **/
+.tree {
+    cursor: pointer;
+}
+.tree .is-leaf {
+    color: transparent;
+    cursor: default;
+}
+.tree-node-selected {
+    background: #beebff;
+}
+
+.tree-node {
+    line-height: 2.5em;
+    margin: -1px;
+}
+
+.tree-border .tree-node{
+    border: 1px solid #ddd;
+    border-top-left-radius: 0.1em;
+    border-top-right-radius: 0.1em;
+}
+
+.tree-node .glyphicon{
+    font-size: smaller;
+    margin-left: 1em;
+}
+
+
+
+
+
+

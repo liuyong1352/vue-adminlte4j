@@ -1,47 +1,40 @@
 <template>
     <div :class="wrapClasses">
-        <input type="checkbox"
-            :name="dynName"
-            :value="cvalue"
-            ref="input"
-            :checked="is_open"
-            :lay-text="ctext"
-            lay-skin="switch">
+        <div :class="['layui-form-switch' , v == on_v ?'layui-form-onswitch':'']"  @click="switch_state" :data-v="v">
+            <em v-html=" v == on_v?dict[0].label : dict[1].label"></em><i></i>
+        </div>
     </div>
 </template>
 
 <script>
 import {baseInput}  from '../baseInput'
-import {baseDict}  from '../baseDict'
 export default {
-    mixins: [baseInput ,baseDict],
+    mixins: [baseInput],
     name: 'v-switch',
-    props: {
-        text : {type:String ,default:'开|关'}
-    },
-    methods:{
-        get_value:function() {
-            if(this.$refs.input.checked)
-                return this.cvalue.split('|')[0]
-            else
-                return this.cvalue.split('|')[1]
+    props : {
+            items : Array
+    } ,
+    data() {
+        return {
+            on_v:1 ,
+            dict: []
         }
     } ,
-    computed: {
-        ctext(){
-            if(this.items && this.items.length >= 2 )
-                return this.items[0].label + '|' + this.items[1].label
-            return this.text
-        },
-        cvalue() {
-            if(this.items && this.items.length >= 2 )
-                return this.items[0].code + '|' + this.items[1].code
-            return 'true|false'
-        } ,
-        is_open() {
-            return this.value == this.cvalue.split('|')[0]
+    created() {
+        if(this.items){
+            this.dict = this.items
+        } else {
+            this.dict = [{code:1 ,  label:'ON' },
+                         {code:0 ,  label:'OFF' }]
+        }
+        this.on_v=this.dict[0].code
+    } ,
+    methods: {
+        switch_state() {
+            var idx = (this.on_v == this.v)?1:0
+            var v = this.dict[idx].code
+            this.set_value(v)
         }
     }
-
 }
 </script>

@@ -1,54 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>111111 </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
+<v-box title="开关">
+    <v-form-item label="开关">
+        <v-switch ref="a1" v-model="bind_value1"></v-switch>
+    </v-form-item>
 
-<v-app id="app" :data="data">
+    <v-form-item label="开关">
+        <v-switch ref="a2" :items="items" v-model="bind_value2"></v-switch>
+    </v-form-item>
 
-    <v-box title="开关">
-        <v-form-item label="开关">
-            <v-switch ref="a1" v-model="bind_value1"></v-switch>
-        </v-form-item>
+    <v-form-item label="开关3">
+        <v-switch ref="a3" :items="items2" v-model="bind_value3"></v-switch>
+    </v-form-item>
 
-        <v-form-item label="开关">
-            <v-switch ref="a2" :items="items" v-model="bind_value2"></v-switch>
-        </v-form-item>
+    <v-form-item label="开关3">
+        <v-switch ref="a4" :items="items2" v-model="bind_value3"></v-switch>
+    </v-form-item>
 
-        <v-form-item label="开关3">
-            <v-switch ref="a3" :items="items2" v-model="bind_value3"></v-switch>
-        </v-form-item>
+    <br>
+    <v-row>
+        <v-col>
+            <v-button @click="set_value">set_value</v-button>
+            <v-button @click="reset">reset</v-button>
+            <v-button @click="queryValues">get_value</v-button>
+            <br>
+            <br>
+            bind_value1: {{bind_value1}}<br>
+            bind_value2: {{bind_value2}}<br>
+            bind_value3: {{bind_value3}}<br>
+            all_values:  {{all_values}}<br>
+        </v-col>
+    </v-row>
+</v-box>
 
-        <v-form-item label="开关3">
-            <v-switch ref="a4" :items="items2" v-model="bind_value3"></v-switch>
-        </v-form-item>
-
-        <br>
-        <v-row>
-            <v-col>
-                <v-button @click="set_value">set_value</v-button>
-                <v-button @click="reset">reset</v-button>
-                <v-button @click="queryValues">get_value</v-button>
-                <br>
-                <br>
-                bind_value1: {{bind_value1}}<br>
-                bind_value2: {{bind_value2}}<br>
-                bind_value3: {{bind_value3}}<br>
-                all_values:  {{all_values}}<br>
-            </v-col>
-        </v-row>
-    </v-box>
-
-</v-app>
-
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
+new Vue({
+        el:"#app" ,
         data : {
             items : [
                 {code:true ,  label:'true' },
@@ -82,5 +67,3 @@
         }
     })
 </script>
-</body>
-</html>

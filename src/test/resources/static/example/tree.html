@@ -1,0 +1,36 @@
+<v-row>
+    <v-col span="2">
+        <v-box title="vtree">
+            <v-tree :data="tree"></v-tree>
+        </v-box>
+
+    </v-col>
+
+    <v-col span="2">
+        <v-box title="vtree">
+            <v-tree ajax_url="/admin/menu/_list" @on-node-selected="onNodeSelected"></v-tree>
+        </v-box>
+
+    </v-col>
+</v-row>
+<script>
+    new Vue({
+        el:"#app" ,
+        data :{
+            tree : [{id:1 , text:'一级 1'} ,
+                {id:2 ,pid:1, text:'一级 1-2'} ,
+                {id:4 ,pid:0, text:'一级 1-4'} ,
+                {id:5 ,pid:0, text:'一级 1-5'} ,
+                {id:6 ,pid:0, text:'一级 1-6'} ,
+                {id:7 ,pid:1, text:'一级 1-7'} ,
+                {id:8 ,pid:7, text:'一级 1-7-8'} ,
+                {id:3 , pid:0 ,text:'一级 13'}
+            ]
+        } ,
+        methods : {
+            onNodeSelected: function (node) {
+                console.log(node)
+            }
+        }
+    })
+</script>

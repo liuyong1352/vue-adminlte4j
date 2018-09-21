@@ -1,52 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>111111 </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
+<v-box title="复选框使用">
+    <v-form>
+        <v-form-item label="复选框1">
+            <v-checkbox :items="items"  ref="a1" v-model="bind_value1"></v-checkbox>
+        </v-form-item>
+        <v-form-item label="复选框2">
+            <v-checkbox value='1' :items="items" ref="a2"></v-checkbox>
+        </v-form-item>
+        <v-form-item label="复选框3">
+            <v-checkbox  :items="items" ref="a3"></v-checkbox>
+        </v-form-item>
 
-<v-app id="app" :data="data">
-    <v-box title="复选框使用">
-        <v-form>
-            <v-form-item label="复选框1">
-                <v-checkbox :items="items"  ref="a1" v-model="bind_value1"></v-checkbox>
-            </v-form-item>
-            <v-form-item label="复选框2">
-                <v-checkbox value='1' :items="items" ref="a2"></v-checkbox>
-            </v-form-item>
-            <v-form-item label="复选框3">
-                <v-checkbox  :items="items" ref="a3"></v-checkbox>
-            </v-form-item>
+        <v-form-item label="复选框4">
+            <v-checkbox  :items="items" ref="a4" v-bind:value="bind_value1"></v-checkbox>
+        </v-form-item>
+    </v-form>
+    <v-row>
+        <v-col>
+            <br>
+            <v-button @click="set_value">set_value</v-button>
+            <v-button @click="reset">reset</v-button>
+            <v-button @click="queryValues">all_values</v-button>
+            <br>
+            bind_value1: {{bind_value1}}
+            <br>
+            all_values:{{all_values}}
+        </v-col>
+    </v-row>
+</v-box>
 
-            <v-form-item label="复选框4">
-                <v-checkbox  :items="items" ref="a4" v-bind:value="bind_value1"></v-checkbox>
-            </v-form-item>
-        </v-form>
-        <v-row>
-            <v-col>
-                <br>
-                <v-button @click="set_value">set_value</v-button>
-                <v-button @click="reset">reset</v-button>
-                <v-button @click="queryValues">all_values</v-button>
-                <br>
-                bind_value1: {{bind_value1}}
-                <br>
-                all_values:{{all_values}}
-            </v-col>
-        </v-row>
-    </v-box>
-
-
-
-</v-app>
-
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
+    var vue = new Vue({
+        el:"#app" ,
         data : {
             items : [
                 {code:'1' ,  label:'男' ,checked:false},
@@ -73,5 +57,3 @@
         }
     })
 </script>
-</body>
-</html>

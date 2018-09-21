@@ -1,8 +1,8 @@
 <template>
     <div :class="wrapClasses">
-        <input  :id="dynName"
+        <input :id="dynName"
                     :placeholder="placeholder"
-                    :value="value"
+                    :value="v"
                     ref="input"
                     :lay-verify="verify"
                     class="layui-input"
@@ -13,39 +13,40 @@
 <script>
 import {baseInput}  from '../baseInput'
 export default {
-  mixins: [baseInput],
-  name: 'v-date',
+    mixins: [baseInput],
+    name: 'v-date',
     props : {
         type: {
             type: String,
             default: 'datetime'
         },
-        range: {
-            type:Boolean ,
-            default:false
-        } ,
+        range: { type:String } ,
         format: String
     },
-  data() {
-      return {
-          currentValue : this.value
-      }
-  } ,
-  methods: {
-    setCurrentValue(value) {
-       this.currentValue = value
-    }
-  } ,
-  mounted : function() {
-    var config={elem: '#' + this.dynName ,type: this.type }
-    if(this.range)
-        config.range=this.range
-    if(this.format)
-        config.format=this.format
-    layui.use(['laydate'] , function(){
-        layui.laydate.render(config)
-    })
+    methods: {
 
-  }
+    } ,
+    mounted : function() {
+        var config={elem: '#' + this.dynName ,type: this.type }
+        if(this.range)
+            config.range=this.range
+        if(this.format)
+            config.format=this.format
+        if(this.value) {
+            if($.isNumeric(this.value))
+                config.value=$.toDateString(this.value, this.format)
+            else
+                config.value=this.value
+        }
+
+        var self =this
+        config.done = function(value, date, endDate) {
+            self.set_value(value)
+        }
+
+        layui.use(['laydate'] , function(){
+            layui.laydate.render(config)
+        })
+    }
 }
 </script>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/lib/jquery/dist/jquery.min.js" ></script>
+    <script src="/lib/axios/dist/axios.min.js" ></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/lib/vue/dist/vue.min.js" ></script>
+    <script src="/lib/layui-src/dist/layui.js" ></script>
+    <script src="/lib/base.js" ></script>
+    <script src="/lib/adminlte.js" ></script>
+    <script src="/lib/vue-adminlte/dist/js/vue-adminlte.min.js" ></script>
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/lib/admin-lte/dist/css/skins/_all-skins.min.css" rel="stylesheet">
+    <link href="/lib/admin-lte/dist/css/AdminLTE.min.css" rel="stylesheet">
+    <link href="/lib/layui-src/dist/css/layui.css" rel="stylesheet">
+    <link href="/lib/vue-adminlte/dist/css/base.css" rel="stylesheet">
+</head>
+<body class='hold-transition skin-blue sidebar-mini'>
+
+
+<!-- item template -->
+<script type="text/x-template" id="item-template">
+    <li>
+        <div
+                :class="{bold: isFolder}"
+                @click="toggle"
+                @dblclick="changeType">
+            {{ model.name }}
+            <span v-if="isFolder">[{{ open ? '-' : '+' }}]</span>
+        </div>
+        <ul v-show="open" v-if="isFolder">
+            <item
+                    class="item"
+                    v-for="(model, index) in model.children"
+                    :key="index"
+                    :model="model">
+            </item>
+            <li class="add" @click="addChild">+</li>
+        </ul>
+    </li>
+</script>
+
+<p>(You can double click on an item to turn it into a folder.)</p>
+<span class="el-tree-node__expand-icon el-icon-caret-right expanded"></span>
+<div id="demo">
+    <!-- the demo root element -->
+    <ul >
+        <item
+                class="item"
+                :model="treeData">
+        </item>
+    </ul>
+
+    <p>
+        <span class="tree_node_expand">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </p>
+
+
+
+
+</div>
+
+
+
+
+
+<link href="/lib/pace/pace.min.css" rel="stylesheet">
+<script src="/lib/pace/pace.min.js" ></script>
+<style>
+    body {
+        font-family: Menlo, Consolas, monospace;
+        color: #444;
+    }
+    .item {
+        cursor: pointer;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    ul {
+        padding-left: 1em;
+        line-height: 1.5em;
+        list-style-type: dot;
+    }
+
+</style>
+<script>
+    // demo data
+    var data = {
+        name: 'My Tree',
+        children: [
+            { name: 'hello' },
+            { name: 'wat' },
+            {
+                name: 'child folder',
+                children: [
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' }
+                        ]
+                    },
+                    { name: 'hello' },
+                    { name: 'wat' },
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+
+    // define the item component
+    Vue.component('item', {
+        template: '#item-template',
+        props: {
+            model: Object
+        },
+        data: function () {
+            return {
+                open: false
+            }
+        },
+        computed: {
+            isFolder: function () {
+                return this.model.children &&
+                    this.model.children.length
+            }
+        },
+        methods: {
+            toggle: function () {
+                if (this.isFolder) {
+                    this.open = !this.open
+                }
+            },
+            changeType: function () {
+                if (!this.isFolder) {
+                    Vue.set(this.model, 'children', [])
+                    this.addChild()
+                    this.open = true
+                }
+            },
+            addChild: function () {
+                this.model.children.push({
+                    name: 'new stuff'
+                })
+            }
+        }
+    })
+
+    // boot up the demo
+    var demo = new Vue({
+        el: '#demo',
+        data: {
+            treeData: data
+        } ,
+        methods : {
+            onNodeSelected: function (node) {
+                console.log(node)
+            }
+        }
+    })
+</script>
+</body>
+</html>

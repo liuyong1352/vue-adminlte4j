@@ -36,12 +36,12 @@
             },
             block: {
                 type: Boolean,
-                default: true
+                default: false
             },
             align: {
                 type: String,
                 default: ''
-            },
+            } ,
             icon : String
         },
         methods: {

@@ -16,51 +16,51 @@
 </template>
 
 <script>
-    import {baseDict}  from '../baseDict'
-    export default {
-        mixins: [baseDict],
-        name: 'v-select' ,
-        data() {
-            return {
-                pop_state: 0
+import {baseDict}  from '../baseDict'
+export default {
+    mixins: [baseDict],
+    name: 'v-select' ,
+    data() {
+        return {
+            pop_state: 0
+        }
+    } ,
+    methods: {
+        change_state(item) {
+            this.pop_state =0
+            if(item) {
+                this.reset_state()
+                item.state = 1
+                this.set_v(item.code)
+            } else {
+                this.reset()
             }
         } ,
-        methods: {
-            change_state(item) {
-                this.pop_state =0
-                if(item) {
-                    this.reset_state()
-                    item.state = 1
-                    this.set_v(item.code)
-                } else {
-                    this.reset()
-                }
-            } ,
-            pop_up() {
-                var self = this
-                this.pop_state ^=1
-                if(this.pop_state) {
-                    eventBus.$on('doc_click', this.doc_click_event)
-                }
-            },
-            get_text() {
-                for(var k in this.dict) {
-                    if(this.dict[k].state){
-                        return this.dict[k].label
-                    }
-                }
-            } ,
-            doc_click_event(e) {
-                if(!this.$el.contains(e.target)) {
-                    this.pop_state =0
-                }
+        pop_up() {
+            var self = this
+            this.pop_state ^=1
+            if(this.pop_state) {
+                eventBus.$on('doc_click', this.doc_click_event)
             }
         },
-        mounted() {
-
+        get_text() {
+            for(var k in this.dict) {
+                if(this.dict[k].state){
+                    return this.dict[k].label
+                }
+            }
         } ,
-        beforeDestroy(){
-
+        doc_click_event(e) {
+            if(!this.$el.contains(e.target)) {
+                this.pop_state =0
+            }
         }
+    },
+    mounted() {
+
+    } ,
+    beforeDestroy(){
+
     }
+}
 </script>

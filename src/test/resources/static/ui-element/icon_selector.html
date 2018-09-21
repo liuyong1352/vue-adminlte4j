@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<v-app :data="data">
-    <v-box title="图标使用">
+ <v-box title="图标使用">
     <v-form>
         <v-form-item label="图标">
             <div class="col-sm-7">
@@ -29,33 +21,9 @@
         </v-form-item>
     </v-form>
     </v-box>
-
-
-</v-app>
-</body>
-<script src="/lib/lib.js"></script>
-<script>
-    app.main({
-        data : {
-            bind_value1: 'fa fa-link' ,
-            bind_value2: 'fa fa-rocket' ,
-            all_values:''
-
-        } ,
-        methods : {
-            set_value() {
-                this.$refs.a1.set_value("fa fa-reply")
-            } ,
-            queryValues() {
-                this.all_values = this.$refs.a1.get_value()
-            } ,
-            reset() {
-                debugger
-                this.$refs.a1.reset()
-                this.$refs.a2.reset()
-                this.$refs.a3.reset()
-            }
-        }
-    })
-</script>
-</html>
+ <script>
+     new Vue({
+         el:"#app" ,
+         data :{ }
+     })
+ </script>

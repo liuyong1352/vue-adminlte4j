@@ -78,7 +78,7 @@ export default {
         } ,
         reset() {
             this.$children[0].reset()
-        },
+        } ,
         get_ext_val:function(item , key, defVal){
             if(item.ext)
                 return (item.ext)[key]
@@ -115,8 +115,8 @@ export default {
         }
     },
     components: {
-          'v-icon-selector': IconSelector,
           'v-input': VInput,
+          'v-icon-selector': IconSelector,
           'v-checkbox': VCheckBox,
           'v-switch': VSwitch,
           'v-date': VDate,

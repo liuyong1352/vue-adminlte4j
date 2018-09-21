@@ -20,7 +20,6 @@ export default {
                 type: String,
                 default: 'text'
         }
-    } ,
-
+    }
 }
 </script>

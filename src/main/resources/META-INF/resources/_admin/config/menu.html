@@ -1,0 +1,89 @@
+<v-row>
+        <v-col span="3">
+            <v-box title="菜单树">
+                <v-tree ajax_url="/admin/menu/_list" @on-node-selected="onNodeSelected" ref="tree"></v-tree>
+            </v-box>
+        </v-col>
+        <v-col span="9">
+            <v-box >
+                <div slot="header" class="btn-group">
+                    <button type="button" class="btn btn-default" @click="addChild">
+                        <li class="fa fa-plus">&nbsp;新增下级菜单</li>
+                    </button>
+                    <button type="button" class="btn btn-default" @click="deleteCur">
+                        <li class="fa fa-remove">&nbsp;删除当前菜单</li>
+                    </button>
+                </div>
+                <v-form ajax_url="/admin/menu/get/" ref="form"></v-form>
+
+                <div slot="footer" class="text-center">
+                    <button type="button" class="btn btn-primary" @click="upOrder">
+                        <li class="fa fa-long-arrow-up">&nbsp;提序</li>
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="onSaveOrUpdate">
+                        <li class="fa fa-save">&nbsp;保存</li>
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="saveRoot">
+                        <li class="fa fa-save">&nbsp;保存根菜单</li>
+                    </button>
+                </div>
+            </v-box>
+        </v-col>
+    </v-row>
+<script>
+    var form  , tree;
+    var vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods : {
+            saveRoot:function () {
+                debugger
+                form.set_item_value('pid' , 0)
+                form.submit('/admin/menu/add' , function (data) {
+                    message.msg(data)
+                    tree.refresh()
+                })
+            } ,
+
+            addChild: function() {
+                form.reset()
+                form.data.pid = tree.get_selected()
+            } ,
+            deleteCur: function () {
+                if(tree.get_selected()) {
+                    this.ajaxDelete("/admin/menu/delete/" + tree.get_selected() , null  , function (data) {
+                        message.msg(data)
+                        tree.refresh()
+                    })
+                } else {
+                    message.warn("请选择需要删除的菜单！")
+                }
+
+            } ,
+            upOrder: function () {
+                this.ajaxPost("/admin/menu/up/" + tree.get_selected() , null ,function(data){
+                    message.msg(data)
+                    tree.refresh()
+                })
+            } ,
+            onSaveOrUpdate : function () {
+                var url = "/admin/menu/add"
+                if(!$.isNullOrEmpty(this.$refs.form.get_value().id))
+                    url = "/admin/menu/update"
+                this.$refs.form.submit(url , function (data) {
+                    message.msg(data)
+                    tree.refresh()
+                })
+            },
+            onNodeSelected : function (node) {
+                form.refresh({id:node.id})
+            }
+        } ,
+        mounted : function () {
+            form = this.$refs.form
+            tree = this.$refs.tree
+        }
+    })
+</script>

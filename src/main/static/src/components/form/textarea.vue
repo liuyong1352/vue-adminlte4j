@@ -2,10 +2,9 @@
     <div :class="wrapClasses">
         <textarea class="layui-textarea"
             :name="dynName"
-            ref="input"
             :lay-verify="verify"
             :placeholder="placeholder"
-            :value="value"
+            :value="v"
             v-on:input="handleInput">
         </textarea>
     </div>

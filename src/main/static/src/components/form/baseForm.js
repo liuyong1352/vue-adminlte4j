@@ -1,56 +1,60 @@
 import {baseValidate}   from '../baseValidate'
+import {formModelValue}  from '../base/formModelValue'
 export const baseForm = {
-    mixins:[baseValidate] ,
+    mixins:[baseValidate , formModelValue] ,
     props: {
-        ajax_url : String,
-        submit_url:{type :String }
+        submit_url:{type :String } ,
+        model: String ,
+        submit_before: Function ,
+        submit_after: Function ,
+        has_reset: {type:String ,default:"true"}
     } ,
     data : function() {
         return {
-            items:[] ,
             row_items:[],
-            data : {},
             form_inline: false
         }
     } ,
-    computed : {
-        form_unique_id : function(){
-            return '$form_' + unique_id()
-        }
-    } ,
     methods:{
-        refresh: function(params) {
-            var vm = this
-            if(this.ajax_url) {
-                var self=this
-                $.get(this.ajax_url , params).then(function (data) {
-                    var formJson = data.FormModel.formItems
-                    self.items = formJson
-                    var row_items=[]
-                    var ts=0 , j=0
-                    row_items.push([])
-                    for(var i in self.items) {
-                        var item = self.items[i]
-                        ts+=item.span
-                        if(ts>12) {
-                            row_items.push([])
-                            j++
-                            ts=item.span
-                        }
-                        row_items[j].push(item)
-                    }
-                    self.row_items = row_items
-                    self.data = data.data||{}
-                    self.form_inline=data.FormModel.inline
-                    vm.$nextTick(function () {
-                        layui.use('form' , function(){
-                            var form = layui.form
-                            form.render()
-                        })
-                    })
-                })
+        set_formModel(formModel) {
+            if(formModel){
+                this.set_formItems(formModel.formItems)
+                this.form_inline=formModel.inline
             }
         } ,
+        set_formItems(formItems) {
+            this.formItems = formItems
+            var row_items=[]
+            var ts=0 , j=0
+            row_items.push([])
+            for(var i in formItems) {
+                var item = formItems[i]
+                ts+=item.span
+                if(ts>12) {
+                    row_items.push([])
+                    j++
+                    ts=item.span
+                }
+                row_items[j].push(item)
+            }
+            this.row_items = row_items
+        } ,
+
+        hide_item(key) {
+            for(var i in this.row_items) {
+                for(var j in this.row_items[i])
+                    if(this.row_items[i][j].key == key)
+                        this.row_items[i][j].hidden=true
+            }
+        },
+        show_item(key) {
+            for(var i in this.row_items) {
+                for(var j in this.row_items[i])
+                    if(this.row_items[i][j].key == key)
+                        this.row_items[i][j].hidden=false
+            }
+        } ,
+
         buildVal: function(item) {
             var val = this.data[item.key]
             if(0 == val) {
@@ -80,40 +84,46 @@ export const baseForm = {
         get_wrapper_class:function (item) {
             return 'layui-input-block'
         } ,
-        formData: function() {
+        get_item_value: function(key) {
+            return this.$refs[key][0].get_value()
+        } ,
+        set_item_value(key ,val) {
+            this.$refs[key][0].set_value(val)
+        } ,
+        get_value:function() {
             var jsonData = {}
-            for(var i in this.items){
-                var item=this.items[i]
+            for(var i in this.formItems){
+                var item=this.formItems[i]
                 jsonData[item.key]= this.get_item_value(item.key)
             }
             return jsonData
         } ,
-        get_item_value: function(key) {
-            return this.$refs[key][0].get_value()
-
-        } ,
-        get_value:function() {
-            return this.formData()
-        } ,
         submit: function(url ,callback) {
             if(!this.validate())
                 return
-            $.post(url,this.formData()).then(function(data){
+            var formData = this.get_value()
+            if(this.submit_before && !this.submit_before(url , formData)) {
+                return
+            }
+            var self=this
+            $.post(url,formData).then(function(data){
+                if(self.submit_after && !self.submit_after(data)) {
+                    return
+                }
                 callback(data)
             })
         } ,
         reset() {
-            for(var i in this.items){
-                var item = this.items[i]
-                this.$refs[item.key][0].set_value()
+            for(var k in this.$refs ) {
+                this.$refs[k][0].reset()
             }
         },
-        internal_submit: function(){
+        internal_submit(){
             this.submit(this.submit_url ,function (data) {
                 $.alert(data)
             })
         } ,
-        get_verify:function(item) {
+        get_verify(item) {
             if(!item.validate)
                 return ""
             var t=item.validate.type
@@ -126,7 +136,12 @@ export const baseForm = {
         }
 
     },
-    mounted : function() {
+    computed: {
+        dynName() {
+            return (this.name || '_form_' + unique_id())
+        }
+    },
+    mounted() {
         this.refresh()
     }
 }

@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>表格使用 </title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-
-<body>
-<v-app>
-    <v-tab ref="tab">
+<v-tab ref="tab">
         <v-tab-pane label="查询条件-表格">
             <v-row>
                 <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
@@ -32,7 +21,11 @@
     </v-tab>
     <v-tab>
         <v-tab-pane label="可编辑表格">
-            <v-table ajax_url="/xmodel/list"  ref="table2" :operations="operations" :render="render" editable="true"></v-table>
+            <v-button @click="add_row">增加一列</v-button>
+            <v-table ajax_url="/xmodel/list"  ref="table2" :render_operation="render_operation"
+                     :render="render" editable="true"
+                     @on-row-selected="row_selected"
+                     :edit_filter="edit_filter"></v-table>
         </v-tab-pane>
         <v-tab-pane label="html">
             <p>带查询表单的表格示例代码</p>
@@ -42,21 +35,13 @@
         </v-tab-pane>
 
     </v-tab>
-</v-app>
-<script src="/lib/lib.js"></script>
+
 <script>
 
-    app.main({
-        
-        data : function () {
-            return {
+    new Vue({
+        el:"#app",
+        data:{
                 operations : [
-                    {
-                        name : '编辑' ,
-                        method : function(row ) {
-                            this.$root.$refs.tab.change_tab(1)
-                        }
-                    } ,
                     {
                         name : '修改'  ,
                         class:'btn-info',
@@ -66,13 +51,26 @@
                                 $.alert(response.data)
                             })
                         }
-                    }
+                    } ,
+                    {
+                        name : '删除'  ,
+                        class:'btn-info',
+                        show: function (row , row_number) {
+                            return false
+                        } ,
+                        method : function(row , row_number) {
+                            this.delete_row(row_number)
+                        }
+                    } ,
+
                 ] ,
                 render:{
                     myIcon: function(row , $table) {
                         return '<i class="' + row.myIcon + '"></i>'
                     }
                 } ,
+
+
                 code :
 `<v-row>
     <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
@@ -83,13 +81,30 @@
 <v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
 `,
                 code2:
-``
-            }
+`1`
         } ,
         methods : {
             requery : function () {
+                debugger
                 this.$refs.table1.refresh(this.$refs.queryForm)
                 this.$refs.table2.refresh(this.$refs.queryForm)
+            } ,
+            add_row : function() {
+                this.$refs.table2.add_row({name:"来电内容" , love:1})
+            } ,
+            row_selected:function(row_index,data) {
+                this.$refs.table2.edit_row(row_index)
+            } ,
+            edit_filter:function (key , row) {
+                if(key == "lang")
+                    return false
+                return true
+            } ,
+            render_operation(row , index) {
+                return '<span >hi</span>'
+            } ,
+            show_cus(row) {
+                message.info(row)
             }
         }
     })

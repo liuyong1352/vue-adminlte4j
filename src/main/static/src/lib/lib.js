@@ -8,26 +8,24 @@
 ;!function(win){
     "use strict";
     var doc = document
-    //获取lib所在目录
-    ,getPath = function(){
-        var jsPath = doc.currentScript ? doc.currentScript.src : function(){
-                var js = doc.scripts
-                    ,last = js.length - 1
-                    ,src;
-                for(var i = last; i > 0; i--){
-                    if(js[i].readyState === 'interactive'){
-                        src = js[i].src;
-                        break;
+        //获取lib所在目录
+        ,getPath = function(){
+            var jsPath = doc.currentScript ? doc.currentScript.src : function(){
+                    var js = doc.scripts
+                        ,last = js.length - 1
+                        ,src;
+                    for(var i = last; i > 0; i--){
+                        if(js[i].readyState === 'interactive'){
+                            src = js[i].src;
+                            break;
+                        }
                     }
-                }
-                return src || js[last].src;
-            }();
-        return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
-    }()
+                    return src || js[last].src;
+                }();
+            return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
+        }()
     win.libpath = getPath
-    win.unique_id=function () {
-        return (window.$id = window.$id? (window.$id + 1) : 6)
-    }
+
 }(window);
 
 
@@ -164,12 +162,11 @@ app = function (scope) {
     function init(config) {
 
         var load_css = function (css) { document.write('<link href="'  + css + '" rel="stylesheet">') }
+        var body_el = document.getElementsByTagName('body')
+        body_el[0].setAttribute('style' , 'display:none')
+        body_el[0].setAttribute('class' , 'hold-transition skin-blue sidebar-mini')
         var el = document.getElementsByTagName('v-app')
         el[0].setAttribute("id","app")
-        var body_el = document.getElementsByTagName('body')
-        body_el[0].setAttribute('class' , 'hold-transition skin-blue sidebar-mini')
-        body_el[0].setAttribute('style' , 'display:none')
-
         var arr_js = ['/lib/jquery/dist/jquery.min.js' ,
             '/lib/vue/dist/vue.min.js' ,
             '/lib/axios/dist/axios.min.js'
@@ -182,7 +179,6 @@ app = function (scope) {
             '/lib/bootstrap/dist/js/bootstrap.min.js' ,
             '/lib/admin-lte/dist/js/adminlte.js',
             '/lib/bootstrap-treeview/dist/bootstrap-treeview.min.js' ,
-            '/lib/datatables.net/js/jquery.dataTables.js' ,
             '/lib/layui-src/dist/layui.js' ,
             '/lib/base.js'
         ]
@@ -238,7 +234,8 @@ app = function (scope) {
                 return config;
             }, function (error) {
                 // Do something with request error
-                return Promise.reject(error);
+                //return Promise.reject(error);
+                return
             });
 
             // Add a response interceptor
@@ -249,8 +246,8 @@ app = function (scope) {
             }, function (error) {
                 if(error.response.status == 401) //401 未授权
                     window.location.href = (error.response.headers.location || error.response.headers.Location)
-                // Do something with response error
-                return Promise.reject(error);
+                // Do something with response error Promise.reject(error);
+                return
             });
 
             var base_config = {

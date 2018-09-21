@@ -1,50 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>111111 </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-<body class="hold-transition skin-purple sidebar-mini   ">
+<v-box title="下拉选择框">
+    <v-form-item label="性别" inline="true" >
+        <v-select ref="a1" :items="items" v-model="bind_value1" placeholder="请选择"></v-select>
+    </v-form-item>
+    <v-form-item label="性别" inline="true" >
+        <v-select ref="a2" :items="items" v-model="bind_value2" ></v-select>
+    </v-form-item>
+    <v-form-item label="单选按钮" inline="true" >
+        <v-select ref="a3" :items="items"  value="3"></v-select>
+    </v-form-item>
 
-<v-app id="app" :data="data">
+    <v-form-item label="单选按钮"  >
+        <v-select :items="items" ></v-select>
+    </v-form-item>
+    <br>
+    <v-row>
+        <v-col>
+            <v-button @click="set_value">set_value</v-button>
+            <v-button @click="reset">reset</v-button>
+            <v-button @click="queryValues">get_value</v-button>
+            <br>
+            <br>
+            bind_value1: {{bind_value1}}<br>
+            bind_value2: {{bind_value2}}<br>
+            all_values:  {{all_values}}<br>
+        </v-col>
+    </v-row>
+</v-box>
 
-    <v-box title="下拉选择框">
-        <v-form-item label="性别" inline="true" >
-            <v-select ref="a1" :items="items" v-model="bind_value1" placeholder="请选择"></v-select>
-        </v-form-item>
-        <v-form-item label="性别" inline="true" >
-            <v-select ref="a2" :items="items" v-model="bind_value2" ></v-select>
-        </v-form-item>
-        <v-form-item label="单选按钮" inline="true" >
-            <v-select ref="a3" :items="items"  value="3"></v-select>
-        </v-form-item>
-
-        <v-form-item label="单选按钮"  >
-            <v-select :items="items" ></v-select>
-        </v-form-item>
-        <br>
-        <v-row>
-            <v-col>
-                <v-button @click="set_value">set_value</v-button>
-                <v-button @click="reset">reset</v-button>
-                <v-button @click="queryValues">get_value</v-button>
-                <br>
-                <br>
-                bind_value1: {{bind_value1}}<br>
-                bind_value2: {{bind_value2}}<br>
-                all_values:  {{all_values}}<br>
-            </v-col>
-        </v-row>
-    </v-box>
-
-</v-app>
-
-<script src="/lib/lib.js"></script>
 <script>
-    app.main({
+new Vue({
+        el:"#app" ,
         data : {
             items : [
                 {code:'1' ,  label:'男' },
@@ -71,5 +56,3 @@
         }
     })
 </script>
-</body>
-</html>

@@ -1,0 +1,22 @@
+<v-tab>
+    <v-tab-pane>
+        <v-table ajax_url= "/form/user/list" ref="dataTable" ></v-table>
+    </v-tab-pane>
+</v-tab>
+<v-box>
+    <v-form ref="form"  ajax_url= "/form/user/get" submit_url="/form/add" ></v-form>
+</v-box>
+<script>
+    new Vue({
+        el:"#app" ,
+        data :{ } ,
+        mounted() {
+            this.initModel('User,Role' , function (data) {
+                debugger
+                this.setModel('form' , data['User'])
+                this.hideItem('form' , 'id')
+                this.setModel('dataTable' , data['Role'])
+            })
+        }
+    })
+</script>

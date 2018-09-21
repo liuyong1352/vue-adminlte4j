@@ -1,0 +1,59 @@
+<v-box v-if="page1" title="列表">
+
+
+        <v-row>
+            <v-col span="10"><v-form  ajax_url="/xmodel/get_query" ref="queryForm"></v-form></v-col>
+            <v-col span="2">
+                <button class="layui-btn" ><i class="fa fa-search"></i> 查询</button>
+            </v-col>
+        </v-row>
+
+        <v-table ajax_url="/xmodel/list"  ref="table1" :operations="operations" :render="render" ></v-table>
+        <v-button @click="switch_to">切换页面</v-button>
+    </v-box>
+    <v-box v-else-if="!page1" title="Detail">
+        Detail
+        <v-button @click="switch_to">切换页面</v-button>
+    </v-box>
+<script>
+    new Vue({
+        el:"#app",
+        data : {
+
+                operations : [
+                    {
+                        name : '编辑' ,
+                        method : function(row ) {
+                            this.$root.$refs.tab.change_tab(1)
+                        }
+                    } ,
+                    {
+                        name : '修改'  ,
+                        class:'btn-info',
+                        method : function(row , row_number) {
+                            this.change_row(row)
+                            axios.post('/test/form/update' , row).then(function(response){
+                                $.alert(response.data)
+                            })
+                        }
+                    }
+                ] ,
+                render:{
+                    myIcon: function(row , $table) {
+                        return '<i class="' + row.myIcon + '"></i>'
+                    }
+                },
+                page1:true ,
+                items : [
+                    {code:'1' ,  label:'男' ,checked:false},
+                    {code:'2' ,   label:'女',checked:false},
+                    {code:'3' ,    label:'中性',checked:true}
+                ]
+        } ,
+        methods : {
+            switch_to:function() {
+                this.page1 = !this.page1
+            }
+        }
+    })
+</script>
