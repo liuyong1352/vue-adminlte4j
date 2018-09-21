@@ -13,4 +13,4 @@ myProps: #自定义的属性和值
     key1: value1
     key2: value2
 server:
-  port: 8081
+  port: 8082
