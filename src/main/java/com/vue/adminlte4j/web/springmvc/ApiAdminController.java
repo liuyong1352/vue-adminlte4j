@@ -5,6 +5,7 @@ import com.vue.adminlte4j.model.Menu;
 import com.vue.adminlte4j.model.TableData;
 import com.vue.adminlte4j.model.UIModel;
 import com.vue.adminlte4j.model.builder.TableBuilder;
+import com.vue.adminlte4j.service.DefaultServiceRegister;
 import com.vue.adminlte4j.util.MenuUtils;
 import com.vue.adminlte4j.util.Utils;
 import com.vue.adminlte4j.web.config.AdminApiConfig;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Created by bjliuyong on 2018/2/2.
  */
-public class ApiAdminController implements AdminApiConfig {
+public class ApiAdminController  extends DefaultServiceRegister implements AppInfoApiController{
 
     //@GetMapping("/admin/app_info/get_all")
     @RequestMapping(value = "/admin/app_info/get_all" , method = RequestMethod.GET)
@@ -55,34 +56,34 @@ public class ApiAdminController implements AdminApiConfig {
         }) ;
     }
 
-    //@PostMapping("/admin/menu/add")
-    @RequestMapping(value = "/admin/menu/add" , method = RequestMethod.POST)
-    @ResponseBody
-    public UIModel addMenu(@RequestBody Menu menu)  {
-        return Utils.run(() -> _addMenu(menu));
-    }
-
-    //@DeleteMapping("/admin/menu/delete/{id}")
-    @RequestMapping(value = "/admin/menu/delete/{id}" , method = RequestMethod.DELETE)
-    @ResponseBody
-    public UIModel deleteMenu(@PathVariable String id) {
-        return Utils.run(()-> _deleteMenu(id)) ;
-    }
-
-    //@PostMapping("/admin/menu/update")
-    @RequestMapping(value = "/admin/menu/update" , method = RequestMethod.POST)
-    @ResponseBody
-    public UIModel updateMenu(@RequestBody Menu menu) {
-        return Utils.run(()-> _updateMenu(menu) , "修改成功！") ;
-    }
-
-
-    //@PostMapping("/admin/menu/up/{id}")
-    @RequestMapping(value = "/admin/menu/up/{id}" , method = RequestMethod.POST)
-    @ResponseBody
-    public UIModel upMenuLevel(@PathVariable String id) {
-        return Utils.run(()-> _upMenuLevel(id)) ;
-    }
+//    //@PostMapping("/admin/menu/add")
+//    @RequestMapping(value = "/admin/menu/add" , method = RequestMethod.POST)
+//    @ResponseBody
+//    public UIModel addMenu(@RequestBody Menu menu)  {
+//        return Utils.run(() -> _addMenu(menu));
+//    }
+//
+//    //@DeleteMapping("/admin/menu/delete/{id}")
+//    @RequestMapping(value = "/admin/menu/delete/{id}" , method = RequestMethod.DELETE)
+//    @ResponseBody
+//    public UIModel deleteMenu(@PathVariable String id) {
+//        return Utils.run(()-> _deleteMenu(id)) ;
+//    }
+//
+//    //@PostMapping("/admin/menu/update")
+//    @RequestMapping(value = "/admin/menu/update" , method = RequestMethod.POST)
+//    @ResponseBody
+//    public UIModel updateMenu(@RequestBody Menu menu) {
+//        return Utils.run(()-> _updateMenu(menu) , "修改成功！") ;
+//    }
+//
+//
+//    //@PostMapping("/admin/menu/up/{id}")
+//    @RequestMapping(value = "/admin/menu/up/{id}" , method = RequestMethod.POST)
+//    @ResponseBody
+//    public UIModel upMenuLevel(@PathVariable String id) {
+//        return Utils.run(()-> _upMenuLevel(id)) ;
+//    }
 
     //@GetMapping("/admin/menu/get/{id}")
     @RequestMapping(value = "/admin/menu/get/{id}" , method = RequestMethod.GET)
