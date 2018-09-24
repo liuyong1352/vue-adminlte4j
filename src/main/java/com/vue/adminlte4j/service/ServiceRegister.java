@@ -3,9 +3,7 @@ package com.vue.adminlte4j.service;
 import com.vue.adminlte4j.service.impl.DefaultAppInfoService;
 import com.vue.adminlte4j.service.impl.DefaultMenuService;
 
-/**
- * Created by bjliuyong on 2018/3/27.
- */
+
 public interface ServiceRegister {
 
     ServiceRegister INSTANCE = new ServiceRegister() {
@@ -45,4 +43,7 @@ public interface ServiceRegister {
     MenuService getMenuService() ;
 
     AppInfoService getAppInfoService();
+
+//    ModelConfigService getModelConfigService();
+
 }
