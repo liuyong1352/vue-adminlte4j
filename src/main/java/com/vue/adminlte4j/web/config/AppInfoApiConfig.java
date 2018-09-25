@@ -17,8 +17,7 @@ public class AppInfoApiConfig {
     public static UIModel updateAppInfo(AppInfoService appInfoService , AppInfo appInfo) {
         return Utils.call(()->{
             appInfoService.update(appInfo);
-            return UIModel.success();
-//            return UIModel.success().msg("修改成功！") ;
+            return UIModel.success().setMsg("修改成功！");
         }) ;
     }
 }
