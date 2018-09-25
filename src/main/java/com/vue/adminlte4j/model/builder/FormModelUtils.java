@@ -1,5 +1,6 @@
 package com.vue.adminlte4j.model.builder;
 
+
 import com.vue.adminlte4j.annotation.Form;
 import com.vue.adminlte4j.annotation.UIFormItem;
 import com.vue.adminlte4j.annotation.Validate;
@@ -9,6 +10,7 @@ import com.vue.adminlte4j.model.form.FormItemType;
 import com.vue.adminlte4j.model.form.FormModel;
 import com.vue.adminlte4j.util.AnnotationUtils;
 import com.vue.adminlte4j.util.ReflectUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -20,37 +22,53 @@ import java.util.Map;
  */
 public class FormModelUtils {
 
-    private static Map<Class , FormModel> formModelCache = new HashMap<>() ;
-
-    public static Map<Class , FormModel> getFormModelCache() {
-        return formModelCache ;
-    }
-
-    public static FormModel getFormModel(Object object) {
-        return getOrCreate(object.getClass()) ;
-    }
+    private static Map<String , FormModel> formModelCache = new HashMap<>() ;
+    private static Map<String , FormModel> configFormModelCache = new HashMap<>() ;
 
     public static FormModel getFormModel(Class clazz) {
         return getOrCreate(clazz) ;
     }
 
+    public static FormModel getFormModelByFullName(String clsName) {
+        try {
+            Class cls = Class.forName(clsName , false , ReflectUtils.getDefaultClassLoader()) ;
+            return  getFormModel(cls) ;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null ;
+    }
+
+    public static FormModel getFormModel(String modelName) {
+        return configFormModelCache.get(modelName) ;
+    }
+
+    public static void cache(String modelName ,FormModel formModel) {
+        configFormModelCache.put(modelName , formModel) ;
+    }
+
+
+    public static void refreshModelCache(String clsName) {
+        configFormModelCache.remove(clsName) ;
+    }
+
     private static FormModel getOrCreate(Class clazz) {
-        FormModel formModel = formModelCache.get(clazz) ;
-        if(formModel == null ) {
+        String clsName = clazz.getName() ;
+        FormModel formModel = formModelCache.get(clsName) ;
+        if(formModel != null )
+            return  formModel ;
+
+        try {
             formModel = newFormModel(clazz) ;
-            formModelCache.put(clazz , formModel) ;
+            formModelCache.put(clsName , formModel) ;
+        } catch (Exception e) {
+            throw new RuntimeException(e) ;
         }
         return formModel ;
     }
 
-    public static FormModel getQueryModel(Class clazz) {
-        FormModel formModel = new FormModel() ;
-        return formModel ;
-    }
 
-
-
-    private static FormModel newFormModel(Class cType) {
+    public static FormModel newFormModel(Class cType) throws Exception {
 
         FormModel formModel = new FormModel() ;
         Form form = (Form) cType.getAnnotation(Form.class) ;
@@ -67,28 +85,17 @@ public class FormModelUtils {
 
         List<Field> fieldList = ReflectUtils.findAllField(cType);
 
-        /*Collections.sort(fieldList , (f1, f2)->{
-            UIFormItem uiFormItem1 , uiFormItem2 ;
-            if((uiFormItem1 = AnnotationUtils.findAnnotation(f1 , UIFormItem.class)) == null) {
-                return  -1 ;
-            } else if ((uiFormItem2 = AnnotationUtils.findAnnotation(f1 , UIFormItem.class)) == null){
-                return  1 ;
-            } else {
-                return uiFormItem1.order() - uiFormItem2.order() ;
-            }
-        });*/
-
         for(int i = 0 ; i < fieldList.size() ; i++) {
             Field field = fieldList.get(i) ;
             if(isConfigurable(field)) {
-               configFormItem(field, formModel ,ref );
+                configFormItem(field, formModel ,ref );
             }
         }
         return  formModel ;
     }
 
 
-    private static FormItem configFormItem(Field field ,FormModel formModel ,FormModel ref) {
+    private static FormItem configFormItem(Field field , FormModel formModel , FormModel ref) throws Exception {
 
         if(formModel.isIgnore() && !AnnotationUtils.hasAnnotation(field,UIFormItem.class)) {
             return null ;
@@ -123,9 +130,12 @@ public class FormModelUtils {
         //静态的 final修饰的 ， 非基础类型的或字符串类型 不进行处理
         if(Modifier.isFinal(mod) || Modifier.isStatic(mod))
             return false ;
-        if(!(ReflectUtils.isPrimitiveOrString(field.getType()) || ReflectUtils.isDateOrTime(field.getType())))
-            return  false ;
-        return true ;
+        Class clsType = field.getType() ;
+
+        return ReflectUtils.isPrimitiveOrString(clsType)
+                || ReflectUtils.isDateOrTime(clsType)
+                || clsType.isEnum() ;
+
     }
 
 }

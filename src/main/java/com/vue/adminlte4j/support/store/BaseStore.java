@@ -1,20 +1,16 @@
 package com.vue.adminlte4j.support.store;
 
-
-import com.vue.adminlte4j.model.builder.FormModelUtils;
 import com.vue.adminlte4j.util.EnvUtils;
+import com.vue.adminlte4j.util.FileUtils;
 
-import com.vue.adminlte4j.util.ReflectUtils;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,8 +21,6 @@ public interface BaseStore {
 
     String WORKSPACE_DIR = "ui-model" ;
 
-    String ESCAPE_PERCET = "%25" ;
-    String ESCAPE_COMMA  = "%2C" ;
 
     /**
      * 获取fileName的存储文件路劲
@@ -38,6 +32,8 @@ public interface BaseStore {
             return getWorkSpacePath(fileName) ;
         return getPathFromClassPath(fileName) ;
     }
+
+
 
     /**
      * 获取当前的工作空间
@@ -58,11 +54,12 @@ public interface BaseStore {
         return Paths.get(configPath , fileName) ;
     }
 
+    default boolean deleteStoreFile(String fileName) throws IOException {
+        return Files.deleteIfExists(getStorePath(fileName));
+    }
+
 
     default File getOrCreateFile(String fileName) throws IOException {
-        if(!EnvUtils.isDevelopment)
-            throw new IllegalStateException("current not in development Mode !") ;
-
         File storeFile =  getWorkSpacePath(fileName).toFile() ;
         if(!storeFile.exists()) {
             File parentFile = storeFile.getParentFile() ;
@@ -74,62 +71,40 @@ public interface BaseStore {
 
     }
 
-    default void writeObject(Object data , String fileName) throws IOException {
+    /**
+     * 检查是否为开发时
+     */
+    default void checkEnv() {
+        if(!EnvUtils.isDevelopment)
+            throw new IllegalStateException("current not in development Mode !") ;
+    }
 
-        List<Object> dataList = new ArrayList<>() ;
-        if(data instanceof List) {
-            dataList.addAll((List)data) ;
-        } else {
-            dataList.add(data) ;
-        }
-
-        Path storePath = getStorePath(fileName) ;
+    default void writeObject(Object data , String fileName) {
+        checkEnv();
+        Path storePath = getWorkSpacePath(fileName) ;
         if(storePath == null) {
             throw new IllegalStateException("can not modify , fileName=>" + fileName) ;
         }
-        if(dataList.isEmpty() ){
-            if(Files.deleteIfExists(storePath))
-                return;
-            else
-                throw new IllegalStateException("can not remove you record , fileName=>" + fileName) ;
+
+        List<Object> objectList  ;
+        if(data instanceof List) {
+            objectList = (List)data ;
+        } else {
+            objectList = Arrays.asList(data) ;
         }
 
-        final List<Field> fieldList = getAllField(dataList.get(0).getClass());
-
-        if(fieldList.isEmpty())
-            return;
-
-        final  StringBuilder headerBuilder = new StringBuilder() ;
-        final  List<String> lines = new ArrayList<>() ;
-        dataList.forEach(e->{
-            boolean isEmpty = lines.isEmpty() ;
-            StringBuilder valueBuilder = new StringBuilder() ;
-            for(Field field : fieldList) {
-                if(isEmpty)
-                    headerBuilder.append(field.getName()).append(",") ;
-                Object val = ReflectUtils.getValue(field , e) ;
-                if(val != null ) {
-                    if(field.getType().isPrimitive()) {
-                        valueBuilder.append(val) ;
-                    } else if(ReflectUtils.isDateOrTime(field.getType())) {
-                        valueBuilder.append(((Date)val).getTime()) ;
-                    } else {
-                        valueBuilder.append(encode(val)) ;
-                    }
-                }
-
-                valueBuilder.append(",") ;
+        try {
+            if(objectList.isEmpty() ){
+                Files.deleteIfExists(storePath);
+                return;
             }
-            if(isEmpty) {
-                lines.add(headerBuilder.toString());
-            }
-            lines.add(valueBuilder.toString()) ;
-        });
-
-        Files.write(getOrCreateFile(fileName).toPath() , lines);
+            Files.write(getOrCreateFile(fileName).toPath() , SerializeUtil.serialize(objectList));
+        } catch (Exception e) {
+            throw new RuntimeException(e) ;
+        }
     }
 
-    default <T> T readObject(String fileName , Class<T> requiredType) throws Exception {
+    default <T> T readObject(String fileName , Class<T> requiredType)  {
         List<T> resultLists = readListObject(fileName , requiredType) ;
         if(resultLists == null || resultLists.isEmpty()) {
             return  null ;
@@ -137,94 +112,41 @@ public interface BaseStore {
         return resultLists.get(0) ;
     }
 
-    default <T> List<T> readListObject(String fileName , Class<T> requiredType) throws Exception {
+    default <T> List<T> readListObject(String fileName , Class<T> requiredType) {
 
-        Path storePath = getStorePath(fileName) ;
+        if(!EnvUtils.isDevelopment)
+            return readListObjectInAllClassPath(fileName , requiredType) ;
+
+       /* Path storePath = getStorePath(fileName) ;
         if(storePath == null || !storePath.toFile().exists()) {
-            return null ;
-        }
 
-        List<String> lines = Files.readAllLines(getStorePath(fileName));
-        if(lines == null || lines.isEmpty())
-            return null ;
-        List<T> results = new ArrayList<>() ;
-        String[] headers = lines.get(0).split(",");
-        for(int i = 1 ; i < lines.size() ; i++ ) {
-            T o = requiredType.newInstance() ;
-            String[] values = lines.get(i).split(",") ;
-            for(int j = 0 ; j < headers.length && j < values.length; j++ ) {
-                Field field ;
-                try {
-                    field = requiredType.getDeclaredField(headers[j]);
-                } catch (NoSuchFieldException e) {
-                    //ignore this field
-                    continue;
-                }
-                if(field.getType().isPrimitive()) {
-                    String typeName = field.getType().getName() ;
-                    if(typeName.equals("int")  )
-                        ReflectUtils.setValue(field , o , Integer.valueOf(values[j]));
-                } else if(ReflectUtils.isDateOrTime(field.getType()))  {
-                    if(values[j].isEmpty())
-                        continue;
-                    Date newDate = new Date(Long.valueOf(values[j]));
-                    ReflectUtils.setValue(field , o , newDate);
-                } else {
-                    ReflectUtils.setValue(field , o , decode(values[j]));
-                }
+        }*/
 
-            }
-            results.add(o) ;
+        List<String> lines ;
+        try {
+            Path storePath = getWorkSpacePath(fileName) ;
+            if(storePath == null || !storePath.toFile().exists() )
+                return  null ;
+            lines = Files.readAllLines(storePath);
+            if(lines == null || lines.isEmpty())
+                return null ;
+            return SerializeUtil.deSerialize(lines , requiredType) ;
+        } catch (Exception e) {
+            throw  new RuntimeException(e);
         }
-        return  results ;
     }
 
-    default String encode(Object obj) {
-        if(obj == null )
+    default <T> List<T> readListObjectInAllClassPath(String fileName , Class<T> requiredType) {
+        /*if(EnvUtils.isDevelopment)
+            return  null ;*/
+        InputStream inputStream = FileUtils.openInputStream(Paths.get(WORKSPACE_DIR , fileName).toString()) ;
+        if(inputStream == null )
             return  null ;
-        String value = obj.toString() ;
-        StringBuilder out = new StringBuilder() ;
-        char[] chars = value.toCharArray() ;
-        for(char c : chars) {
-            if(c == '%')
-                out.append(ESCAPE_PERCET) ;
-            else if (c == ',')
-                out.append(ESCAPE_COMMA) ;
-            else
-                out.append(c) ;
+        try {
+            List<String> lines = FileUtils.readAllLines(inputStream) ;
+            return SerializeUtil.deSerialize(lines , requiredType) ;
+        } catch (Exception e) {
+            throw new RuntimeException(e) ;
         }
-        return out.toString() ;
     }
-
-    default String decode(String value) {
-        if(value == null || value.isEmpty())
-            return  value ;
-        StringBuilder out = new StringBuilder() ;
-        char[] chars = value.toCharArray() ;
-        for(int i = 0 ; i < chars.length ; i ++ ) {
-            if(chars[i] == '%') {
-                if(chars[i+2] == '5') {
-                    out.append('%') ;
-                } else {
-                    out.append(',');
-                }
-                i = i+2;
-                continue;
-            }
-            out.append(chars[i]);
-        }
-        return out.toString() ;
-    }
-
-    default List<Field> getAllField(Class cls) {
-        List<Field> fields = ReflectUtils.findAllField(cls) ;
-        List<Field> results = new ArrayList<>() ;
-        for(Field field : fields) {
-            if(FormModelUtils.isConfigurable(field))
-                results.add(field) ;
-        }
-        return results ;
-    }
-
-
 }

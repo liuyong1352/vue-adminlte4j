@@ -2,13 +2,12 @@ package com.vue.adminlte4j.model.form;
 
 import com.vue.adminlte4j.annotation.DictData;
 import com.vue.adminlte4j.annotation.DictEntry;
-import com.vue.adminlte4j.annotation.DictProvider;
 import com.vue.adminlte4j.annotation.UIDate;
 import com.vue.adminlte4j.model.Dict;
 import com.vue.adminlte4j.util.AnnotationUtils;
+import com.vue.adminlte4j.util.DictUtils;
+
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ExtInfo extends HashMap<String,Object> {
 
     public static final String DICT = "dict" ;
 
-    public static ExtInfo config(int formItemType, Field field ) {
+    public static ExtInfo config(int formItemType, Field field ) throws Exception {
         ExtInfo extInfo = null ;
         if(formItemType == FormItemType.DATE) {
             extInfo = ExtInfo.configDate(field);
@@ -45,14 +44,19 @@ public class ExtInfo extends HashMap<String,Object> {
         return  extInfo ;
     }
 
-    public static ExtInfo configDict(Field field) {
+    public static ExtInfo newDictExt(List<Dict> dictList) {
         ExtInfo extInfo = new ExtInfo() ;
-        List<Dict> dictList = parseDictData(field) ;
-        if(dictList == null )
-            dictList = parseDictProvider(field) ;
         extInfo.put(DICT , dictList) ;
         return  extInfo ;
     }
+
+    public static ExtInfo configDict(Field field) throws Exception {
+        List<Dict> dictList = parseDictData(field) ;
+        if(dictList == null )
+            dictList = DictUtils.parseDictProvider(field) ;
+        return  newDictExt(dictList) ;
+    }
+
 
     private static List<Dict> parseDictData(Field field) {
         DictData dictData = AnnotationUtils.findAnnotation(field , DictData.class) ;
@@ -72,28 +76,4 @@ public class ExtInfo extends HashMap<String,Object> {
         }
         return  dicts ;
     }
-
-    private static List<Dict> parseDictProvider(Field field) {
-        DictProvider dictProvider = AnnotationUtils.findAnnotation(field , DictProvider.class) ;
-
-        if(dictProvider == null)
-            return null;
-
-        Class providerCls = dictProvider.type()   ;
-        String method     = dictProvider.method() ;
-
-        try {
-            Method mtd = providerCls.getMethod(method) ;
-
-            if(Modifier.isStatic(mtd.getModifiers()))
-                return (List<Dict>) mtd.invoke(null ) ;
-            Object obj = providerCls.newInstance() ;
-            return (List<Dict>)mtd.invoke(obj) ;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e) ;
-        }
-    }
-
-
 }

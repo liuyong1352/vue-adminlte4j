@@ -1,6 +1,9 @@
 package com.vue.adminlte4j.model.form;
 
 import com.vue.adminlte4j.annotation.UIFormItem;
+import com.vue.adminlte4j.model.Dict;
+import com.vue.adminlte4j.util.Constants;
+
 import java.util.List;
 
 /**
@@ -8,8 +11,8 @@ import java.util.List;
  */
 public class FormItem {
 
-    private String      label ;
     private String      key   ;
+    private String      label ;
     private String      defVal ;
     private String      placeholder ;
     private int         type = FormItemType.INPUT;
@@ -39,7 +42,7 @@ public class FormItem {
         if(uiFormItem == null)
             return;
 
-        if(uiFormItem.type() != FormItemType.DEFAULT )
+        if(uiFormItem.type() != Constants.DEFAULT )
             this.type =  uiFormItem.type() ;
 
         this.hidden = uiFormItem.hidden() ;
@@ -49,9 +52,9 @@ public class FormItem {
         String key = uiFormItem.key() ;
         if(key != null && !key.isEmpty())
             this.key = key ;
-        
-        String label = uiFormItem.label() ; 
-        if(label != null && !label.isEmpty()) 
+
+        String label = uiFormItem.label() ;
+        if(label != null && !label.isEmpty())
             this.label = label ;
 
         String defVal = uiFormItem.defVal() ;
@@ -66,8 +69,7 @@ public class FormItem {
     public void configValidate(com.vue.adminlte4j.annotation.Validate validate) {
         if(validate == null)
             return;
-        this.validate = new Validate() ;
-        this.validate.setType(validate.type());
+        this.validate = Validate.newValidate(validate.type()) ;
     }
 
     public FormItem clone() {
@@ -80,6 +82,15 @@ public class FormItem {
         clone.validate      = validate      ;
         clone.ext           = ext           ;
         return clone ;
+    }
+
+    public FormItem setDict(List<Dict> dictList) {
+        this.ext = ExtInfo.newDictExt(dictList) ;
+        return this ;
+    }
+
+    public boolean hasDict() {
+        return  FormItemType.hasDict(type) ;
     }
 
     public String getLabel() {
@@ -163,3 +174,4 @@ public class FormItem {
         return this ;
     }
 }
+

@@ -20,7 +20,7 @@ public class TableData {
         return dataItems;
     }
 
-    public void setDataItems(List<Object> dataItems) {
+    public void setDataItems(List dataItems) {
         this.dataItems = dataItems;
     }
 

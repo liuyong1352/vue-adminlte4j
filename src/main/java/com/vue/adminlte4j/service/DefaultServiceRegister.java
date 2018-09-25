@@ -4,6 +4,7 @@ package com.vue.adminlte4j.service;
 import com.vue.adminlte4j.service.impl.DefaultAppInfoService;
 import com.vue.adminlte4j.service.impl.DefaultDictService;
 import com.vue.adminlte4j.service.impl.DefaultMenuService;
+import com.vue.adminlte4j.service.impl.DefaultModelConfigService;
 
 /**
  * Created by bjliuyong on 2018/6/5.
@@ -12,13 +13,13 @@ public class DefaultServiceRegister implements ServiceRegister {
 
     protected AppInfoService appInfoService ;
     protected MenuService menuService ;
-//    protected ModelConfigService modelConfigService ;
+    protected ModelConfigService modelConfigService ;
     protected DictService dictService ;
 
     public DefaultServiceRegister() {
         this.appInfoService     = new DefaultAppInfoService() ;
         this.menuService        = new DefaultMenuService() ;
-//        this.modelConfigService = new DefaultModelConfigService() ;
+        this.modelConfigService = new DefaultModelConfigService() ;
         this.dictService        = new DefaultDictService() ;
     }
 
@@ -32,10 +33,10 @@ public class DefaultServiceRegister implements ServiceRegister {
         return menuService;
     }
 
-//    @Override
-//    public ModelConfigService getModelConfigService() {
-//        return modelConfigService;
-//    }
+    @Override
+    public ModelConfigService getModelConfigService() {
+        return modelConfigService;
+    }
 
     @Override
     public DictService getDictService() {

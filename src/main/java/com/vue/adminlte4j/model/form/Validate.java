@@ -15,4 +15,14 @@ public class Validate extends HashMap {
     public void setType(int type) {
         put(TYPE , type) ;
     }
+
+    public Validate type(int type) {
+        put(TYPE , type) ;
+        return this ;
+    }
+
+    public static Validate newValidate(int validateType) {
+        Validate validate = new Validate() ;
+        return  validate.type(validateType) ;
+    }
 }

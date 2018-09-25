@@ -41,11 +41,7 @@ public class DefaultAppInfoService implements AppInfoService, BaseStore {
      * @param appInfo
      */
     @Override public synchronized void update(AppInfo appInfo) {
-        try {
-            this.appInfo = appInfo ;
-            writeObject(this.appInfo , APP_INFO_FILE);
-        } catch (IOException e) {
-            throw new RuntimeException(e) ;
-        }
+        this.appInfo = appInfo ;
+        writeObject(this.appInfo , APP_INFO_FILE);
     }
 }

@@ -20,6 +20,16 @@ public class UIModel extends HashMap implements Map {
     /** 失败返回的code   ***/
     public static final int FAIL    = 0 ;
 
+    /**
+     *  未登陆code
+     */
+    public static final int UNAUTHORIZED = 401 ;
+
+    /**
+     *  未登陆的跳转url
+     */
+    public static final String LOCATION = "location" ;
+
     /** 菜单列表Key     ***/
     public static final String MENU         = "menu_items" ;
 
@@ -31,6 +41,11 @@ public class UIModel extends HashMap implements Map {
 
     /** 表格数据的默认key ***/
     public static final String TABLE_DATA   = "tableData" ;
+
+    /**
+     * 数据字典数据
+     */
+    public static final String DICT_DATA    = "dictData" ;
 
     /** 树形数据的默认key ***/
     public static final String TREE_DATA    = "treeData" ;
@@ -44,6 +59,11 @@ public class UIModel extends HashMap implements Map {
     public static final String CODE         = "code"  ;
     /** 返回信息的key        ***/
     public static final String MSG          = "msg" ;
+
+    /**
+     * FormModel key
+     */
+    public static final String FORM_MODEL   = "formModel";
 
     /**
      *  用户名称对应的Key
@@ -113,10 +133,20 @@ public class UIModel extends HashMap implements Map {
         return put(USER_NAME , userName) ;
     }
 
-    public UIModel setCode(int code) {
+    public UIModel code(int code) {
         return put(CODE , code) ;
     }
 
+    /**
+     * 设置提示消息
+     * @param msg
+     * @return
+     */
+    public UIModel msg(String msg) {
+        return put(MSG , msg) ;
+    }
+
+    @Deprecated
     public UIModel setMsg(String msg) {
         return put(MSG , msg) ;
     }
@@ -150,14 +180,15 @@ public class UIModel extends HashMap implements Map {
     }
 
 
-    public UIModel  formData(Object bean) {
-        return put(FormModelUtils.getFormModel(bean)).data(bean) ;
+    public UIModel formData(Object bean) {
+        if(bean == null )
+            throw new NullPointerException("formData param can not be null!") ;
+        return formData(bean , bean.getClass()) ;
     }
 
     public UIModel formData(Object bean , Class clsType) {
         return put(FormModelUtils.getFormModel(clsType)).data(bean) ;
     }
-
 
     public UIModel tableData(TableBuilder builder){
         return put(TABLE_DATA , builder.build());
@@ -166,12 +197,6 @@ public class UIModel extends HashMap implements Map {
     public UIModel tableData(TableData tableData) {
         return put(TABLE_DATA , tableData) ;
     }
-
-   /* public TableData tableData(Class cls) {
-        TableData tableData = TableData.newInstance(cls);
-        put(TABLE_DATA , tableData) ;
-        return  tableData ;
-    }*/
 
     /**
      * 存放key=treeData, value为转换后的treeNode结构数据列表
@@ -193,11 +218,19 @@ public class UIModel extends HashMap implements Map {
     }
 
     public static UIModel success() {
-        return newInstance().setCode(SUCCESS);
+        return newInstance().code(SUCCESS);
     }
 
     public static UIModel fail() {
-        return newInstance().setCode(FAIL);
+        return newInstance().code(FAIL);
+    }
+
+    /**
+     * 创建一个未登陆实例返回
+     * @return
+     */
+    public static UIModel unauthorized(String location) {
+        return newInstance().code(UNAUTHORIZED).put(LOCATION , location) ;
     }
 
     public static UIModel newInstance() {

@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Created by bjliuyong on 2018/2/2.
  */
-public class ApiAdminController  extends DefaultServiceRegister implements AppInfoApiController,MenuApiController{
+public class ApiAdminController  extends DefaultServiceRegister
+        implements AppInfoApiController, MenuApiController, ModelApiController{
 
     @RequestMapping(value = "/admin/app_info/get_all" , method = RequestMethod.GET)
     @ResponseBody
