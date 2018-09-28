@@ -2,6 +2,7 @@ const requireComponent = require.context(
     '.', true, /\.vue$/
     //找到components文件夹下以.vue命名的文件
 )
+
 requireComponent.keys().forEach(filePath => {
     var componentConfig = requireComponent(filePath)
     Vue.component(componentConfig.default.name, componentConfig.default || componentConfig)
@@ -13,8 +14,10 @@ const install = function(Vue, opts = {}) {
     var vDialog = Vue.component(Dialog.name , Dialog)
     var dlg = new vDialog().$mount()
     Vue.prototype.$message= function(msg) {
+        dlg.$props.title=msg
         document.getElementById('app').appendChild(dlg.$el);
         dlg.show()
+        return dlg
     }
 }
 
