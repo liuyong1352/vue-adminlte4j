@@ -24,10 +24,13 @@ cd src\main\static
 npm i 
 npm start
 ```
--Dadmin.src.dir=D:\codeExercise\vue-adminlte4j
 
 运行test 下面ApplicationStarter
 访问地址 http://localhost:8080/index.html
+#### 后台显示菜单栏
+vmOptions里面添加:
+`-Dadmin.src.dir=D:\codeExercise\vue-adminlte4j`
+路径改为自己当前路径
 
 执行maven打包 得到jar即可
 
