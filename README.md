@@ -1,15 +1,24 @@
-###[Quick Starter](../../wiki/Quick-Starter)
+### [Quick Starter](../../wiki/Quick-Starter)
 
+## 页面展示
+### table展示
+![](/doc/table.png)
+### model 弹层展示
+![](/doc/model.png)
+### form 展示
+![](/doc/form.png)
 
+### 树形控件配置菜单栏
+![](/doc/config.png)
 
-#####工程构建
+##### 工程构建
 依赖环境：node , webpack ； node安装 ， 自行搜索安装最新版本
 
 前端基于webpack构建的 ， 所以需要先安装webpack
 ```
 npm install --save-dev webpack
 ```
-#####构建前端库文件
+##### 构建前端库文件
 ``` 
 cd src\main\static
 npm i 
