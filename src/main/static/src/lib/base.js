@@ -267,12 +267,12 @@
             if($.isNumeric(d))
                 d = Number(d)
             var date = new Date(d)
-            ,ymd = [
+                ,ymd = [
                 prefixFill(date.getFullYear(), 4)
                 ,prefixFill(date.getMonth() + 1)
                 ,prefixFill(date.getDate())
             ]
-            ,hms = [
+                ,hms = [
                 prefixFill(date.getHours())
                 ,prefixFill(date.getMinutes())
                 ,prefixFill(date.getSeconds())
@@ -345,7 +345,7 @@
     Vue.prototype.ajaxGet = function(url , params , fn) {
         this.ajax(url , 'GET' , params , {} , fn)
     }
-    
+
     Vue.prototype.ajaxPost = function (url , params , fn) {
         this.ajax(url , 'POST' , params , {} , fn)
     }

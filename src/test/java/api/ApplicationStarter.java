@@ -47,12 +47,11 @@ public class ApplicationStarter {
         Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
         Path baseCss = Paths.get("vue-adminlte","dist","css","base.css") ;
         fileChangeListener.listen(distLibPath , "base.js").to(targetLibPath , "base.js") ;
+        fileChangeListener.listen(distLibPath , "adminlte.js").to(targetLibPath , "adminlte.js") ;
         fileChangeListener.listen(distLibPath , "lib.js").to(targetLibPath , "lib.js") ;
         fileChangeListener.listen(distLibPath , vueAdminlteJs).to(targetLibPath , vueAdminlteJs) ;
         fileChangeListener.listen(distLibPath , baseCss).to(targetLibPath , baseCss) ;
-        fileChangeListener.autoConfig(FileChangeListener.SPRING_BOOT);
-
-        fileChangeListener.start();
+        fileChangeListener.autoConfig(FileChangeListener.SPRING_BOOT).start();
     }
 
     @Bean
@@ -65,15 +64,5 @@ public class ApplicationStarter {
         return new HttpMessageConverters(converter) ;
     }
 
-    @Bean
-    public FilterRegistrationBean testFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new StaticFileFilter());//添加过滤器
-        registration.addUrlPatterns("/*");//设置过滤路径，/*所有路径
-       /* registration.addInitParameter("name", "alue");//添加默认参数
-        registration.setName("MyFilter");//设置优先级
-        registration.setOrder(1);//设置优先级*/
-        return registration;
-    }
 
 }

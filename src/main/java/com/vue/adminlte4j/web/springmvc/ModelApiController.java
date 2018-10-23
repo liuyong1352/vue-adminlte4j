@@ -15,7 +15,6 @@ public interface ModelApiController extends BaseConfig {
     @RequestMapping(value = "/admin/model/list" , method = RequestMethod.GET)
     @ResponseBody
     default UIModel getModelList() {
-
         return ModelApiConfig.getModelList(getModelConfigService());
     }
 
@@ -33,20 +32,20 @@ public interface ModelApiController extends BaseConfig {
 
     @RequestMapping(value = "/admin/model/detail/update/{modelName:.+}" , method = RequestMethod.POST)
     @ResponseBody
-    default UIModel updateModelDetail(@PathVariable String modelName, @RequestBody List<ConfigFormItem> configFormItems) {
+    default UIModel updateModelDetail(@PathVariable String modelName , @RequestBody List<ConfigFormItem> configFormItems) {
         return ModelApiConfig.updateModelDetail(getModelConfigService() ,modelName , configFormItems);
     }
 
 
     @RequestMapping(value = "/admin/model/lookup" , method = RequestMethod.GET)
     @ResponseBody
-    default UIModel findModelDetail(String model) {
+    default UIModel findModelDetail(String model ) {
         return ModelApiConfig.findModelDetail(this , model) ;
     }
 
     @RequestMapping(value = "/admin/model/delete" , method = RequestMethod.DELETE)
     @ResponseBody
-    default UIModel deleteModel(@RequestBody ConfigModel configModel) {
+    default UIModel deleteModel(@RequestBody  ConfigModel configModel) {
         return ModelApiConfig.deleteModel(getModelConfigService() , configModel) ;
     }
 

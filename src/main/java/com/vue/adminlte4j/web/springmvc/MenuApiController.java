@@ -72,10 +72,10 @@ public interface MenuApiController extends MenuApiConfig {
     @ResponseBody
     default UIModel listMenu() throws Exception {
         TableData tableData = TableBuilder.newBuilder(Menu.class)
-            .ignoreColumn("children")
-            .isPage(false)
-            .data(_listMenu())
-            .build();
+                .ignoreColumn("children")
+                .isPage(false)
+                .data(_listMenu())
+                .build();
 
         return UIModel.success().tableData(tableData);
     }
@@ -86,7 +86,7 @@ public interface MenuApiController extends MenuApiConfig {
         return UIModel.success().treeData(_listMenu()) ;
     }
 
-    default List<Menu> _listMenu() throws Exception {
+    default List<Menu> _listMenu() throws Exception{
 
         UIModel uiModel = new UIModel();
         configureMenu(uiModel);
@@ -100,7 +100,7 @@ public interface MenuApiController extends MenuApiConfig {
         return  out ;
     }
 
-    default void _listChildMenu(Menu menu, List<Menu> out) {
+    default void _listChildMenu(Menu menu , List<Menu> out) {
         if(menu.getChildren() != null ) {
             for(Menu child : menu.getChildren()) {
                 child.setPid(menu.getId());
