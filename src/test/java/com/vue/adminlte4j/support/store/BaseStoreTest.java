@@ -1,8 +1,9 @@
 package com.vue.adminlte4j.support.store;
 
-import com.vue.adminlte4j.model.Menu;
-import com.vue.adminlte4j.support.store.menu.MenuStore;
+
 import java.util.ArrayList;
+
+import com.vue.adminlte4j.model.Menu;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,19 +13,38 @@ import org.junit.Test;
  */
 public class BaseStoreTest {
 
-    MenuStore menuStore = new MenuStore() ;
+    BaseStore baseStore = new BaseStore() {} ;
+    String fileName = "___test___.s" ;
 
     @Test
-    public void writeObject() throws Exception{
-        String fileName = "BaseStoreTest.s" ;
+    public void testWriteObject(){
+
+        _testWriteObject("这个是普通的内容而已") ;
+        //测试回车换行
+        _testWriteObject("小白\r\n很白");
+
+        _testWriteObject("小白\r很白");
+
+        _testWriteObject("小白\n很白");
+    }
+
+    private void _testWriteObject(String content) {
+
         Menu menu = new Menu();
-        menu.setDesc("a%25 %is ,");
+        menu.setDesc(content);
         menu.setId("1");
         menu.setOrder(1);
-        menuStore.writeObject(menu , fileName);
-        Menu menu1 = menuStore.readObject(fileName ,Menu.class) ;
-        Assert.assertEquals(menu.getDesc() , menu1.getDesc());
-        //删除测试数据文件
-        menuStore.writeObject(new ArrayList<Menu>(), fileName);
+
+        try {
+            baseStore.writeObject(menu , fileName);
+            Menu menu1 = baseStore.readObject(fileName ,Menu.class) ;
+            Assert.assertEquals(menu.getDesc() , menu1.getDesc());
+        } finally {
+            //删除测试数据文件
+            baseStore.writeObject(new ArrayList<Menu>(), fileName);
+        }
     }
+
+
 }
+

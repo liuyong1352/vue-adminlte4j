@@ -7,10 +7,14 @@ import com.vue.adminlte4j.support.FileChangeListener;
 import com.vue.adminlte4j.web.StaticFileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -19,13 +23,22 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ApplicationStarter {
 
+    private final static Logger LOG =  LoggerFactory.getLogger(ApplicationStarter.class);
+
+
     public static void main(String[] args) {
         configFileChangeListener();
-        SpringApplication.run(ApplicationStarter.class, args);
+
+        ApplicationContext context = SpringApplication.run(ApplicationStarter.class, args);
+        String serverPort = context.getEnvironment().getProperty("server.port");
+        LOG.info("Clay started at http://localhost:" + serverPort);
+
     }
 
 
-
+    /**
+     *  动态刷新资源
+     */
     private static void configFileChangeListener() {
         FileChangeListener fileChangeListener = FileChangeListener.getInstance();
 
@@ -33,7 +46,6 @@ public class ApplicationStarter {
         Path targetLibPath = Paths.get("target" , "classes" , "META-INF" , "resources" , "lib") ;
         Path vueAdminlteJs = Paths.get("vue-adminlte","dist","js","vue-adminlte.min.js") ;
         Path baseCss = Paths.get("vue-adminlte","dist","css","base.css") ;
-
         fileChangeListener.listen(distLibPath , "base.js").to(targetLibPath , "base.js") ;
         fileChangeListener.listen(distLibPath , "lib.js").to(targetLibPath , "lib.js") ;
         fileChangeListener.listen(distLibPath , vueAdminlteJs).to(targetLibPath , vueAdminlteJs) ;

@@ -1,0 +1,34 @@
+<v-box title="this is demo">
+    <v-row>
+        <v-col>
+            <v-table ajax_url="/xmodel/list"  ref="table"  ></v-table>
+        </v-col>
+    </v-row>
+</v-box>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+
+        } ,
+        methods : {
+            add_row : function() {
+                this.$refs.table.add_row({name:"来电内容" , love:1})
+            } ,
+            row_selected:function(row_index,data) {
+                this.$refs.table.edit_row(row_index)
+            } ,
+            edit_filter:function (key , row) {
+                if(key == "lang")
+                    return false
+                return true
+            } ,
+            render_operation(row , index) {
+                return '<span >hi</span>'
+            } ,
+            show_cus(row) {
+                message.info(row)
+            }
+        }
+    })
+</script>

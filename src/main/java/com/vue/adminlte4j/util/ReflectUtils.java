@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Created by bjliuyong on 2018/3/7.
@@ -29,10 +30,11 @@ public class ReflectUtils {
     }
 
     public static List<Field> findAllField(Class<?> clazz) {
-
         List<Field> fieldList = new ArrayList<>();
+        traverse(clazz , field ->  fieldList.add(field));
+        return fieldList ;
 
-        Class<?> searchType = clazz;
+       /* Class<?> searchType = clazz;
         while (!Object.class.equals(searchType) && searchType != null) {
             Field[] fields = searchType.getDeclaredFields();
             for (Field field : fields) {
@@ -40,7 +42,24 @@ public class ReflectUtils {
             }
             searchType = searchType.getSuperclass();
         }
-        return fieldList;
+        return fieldList;*/
+    }
+
+    /**
+     * 遍历Field
+     * @param clazz
+     * @param consumer
+     */
+    public static void traverse(Class<?> clazz ,Consumer<Field> consumer) {
+
+        Class<?> searchType = clazz;
+        while (!Object.class.equals(searchType) && searchType != null) {
+            Field[] fields = searchType.getDeclaredFields();
+            for (Field field : fields) {
+                consumer.accept(field);
+            }
+            searchType = searchType.getSuperclass();
+        }
     }
 
     /**
@@ -53,8 +72,12 @@ public class ReflectUtils {
     public static List<Field> findAllField(Class<?> clazz , int ignoreFilterModifiersMask) {
 
         List<Field> fieldList = new ArrayList<>();
-
-        Class<?> searchType = clazz;
+        traverse(clazz , field -> {
+            if((ignoreFilterModifiersMask & field.getModifiers()) == 0 )
+                fieldList.add(field);
+        });
+        return fieldList ;
+       /* Class<?> searchType = clazz;
         while (!Object.class.equals(searchType) && searchType != null) {
             Field[] fields = searchType.getDeclaredFields();
             for (Field field : fields) {
@@ -63,7 +86,7 @@ public class ReflectUtils {
             }
             searchType = searchType.getSuperclass();
         }
-        return fieldList;
+        return fieldList;*/
     }
 
     public static boolean isPrimitiveOrString(Class clsType ) {
@@ -90,6 +113,20 @@ public class ReflectUtils {
         try {
             field.set(target ,val);
         } catch (IllegalAccessException e) {
+            throw new RuntimeException(e) ;
+        }
+    }
+
+    /**
+     * newInstance method wrapper
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public static <T> T newInstance(Class<T> type) {
+        try {
+            return type.newInstance() ;
+        } catch (Exception e) {
             throw new RuntimeException(e) ;
         }
     }

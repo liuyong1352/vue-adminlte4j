@@ -3,13 +3,13 @@
         <div :class="['tree-node-content' , {'tree-node-selected' : model.id == model.tree.selected_node_id}]"
              :style="{ 'padding-left': (level  * 18) + 'px' }" @click="node_click">
         <span v-if="model.children && model.children.length"
-              :class="expand ? expand_icon : collapse_icon" @click.stop="toggle"></span>
+              :class="model.expand ? expand_icon : collapse_icon" @click.stop="toggle"></span>
             <span v-else class="glyphicon glyphicon-triangle-right is-leaf"></span>
             <span v-text="text" ></span>
         </div>
-        <template v-if="expand && model.children && model.children.length">
+        <template v-if="model.expand && model.children && model.children.length">
             <div class="tree-group">
-                <v-tree-node v-for="child in node.children"
+                <v-tree-node v-for="child in model.children"
                              :model="child"
                              :key="child.id"
                              :level="level+1">
@@ -29,11 +29,7 @@
             }
         } ,
         data(){
-            return {
-                node : this.model ,
-                expand : 0 ,
-                is_leaf : 1
-            }
+            return {}
         } ,
         computed : {
             expand_icon() {
@@ -48,17 +44,16 @@
         } ,
         methods : {
             toggle(){
-                this.expand ^=1
-
+                this.model.expand ^=1
             } ,
             selected() {
                 var model = this.model
                 model.tree.selected_node_id=model.id
+                model.tree.selected_node = model
                 model.tree.$emit('on-node-selected' , model)
             } ,
             node_click() {
                 this.selected()
-                console.log(this.model.text)
             }
         }
     }

@@ -9,7 +9,7 @@
 </template>
 <script>
     import TreeNode from './tree-node.vue'
-    import {buildTree} from '../../utils/util'
+    import {buildTree ,traverseTree} from '../../utils/util'
     export default {
         name: 'v-tree',
         props: {
@@ -23,12 +23,14 @@
         data(){
             return {
                 selected_node_id:null ,
+                selected_node : null ,
                 nodes : null
             }
         } ,
         methods : {
             refresh(data) {
                 this.selected_node_id = null
+                this.selected_node = null
                 if(this.ajax_url) {
                     this.ajaxGet(this.ajax_url , null , function(rep){
                         this.nodes = this.build_tree(rep.data)
@@ -36,12 +38,22 @@
                 }
             },
             build_tree(elements) {
-                return buildTree(elements , this)
+                var self=this
+                return buildTree(elements , this )
             } ,
-            get_selected() {
-                return this.selected_node_id
-            }
+            get_selected_node() {
+                return this.selected_node
+            } ,
+            get_node(nodeId) {
+                return traverseTree(this.nodes , function(e , i){
+                    if(e.id == nodeId) {
+                        return e //停止继续遍历
+                    }
+                })
+            } ,
+            delete_node() {
 
+            }
         } ,
         created() {
             if(this.data) {

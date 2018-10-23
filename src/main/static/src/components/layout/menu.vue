@@ -1,5 +1,5 @@
 <template>
-    <li v-if="model.children" :class="['treeview' , {'active' : model.id == model.tree.selected_node_id}]"  >
+    <li v-if="model.children && model.children.length" :class="['treeview' , {'active' : model.id === model.tree.selected_node_id}]"  >
         <a href="#"><i :class="icon"></i> <span v-text="text"></span>
             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
         </a>

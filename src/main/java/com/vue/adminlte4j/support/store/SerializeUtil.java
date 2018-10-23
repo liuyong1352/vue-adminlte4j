@@ -98,7 +98,7 @@ public class SerializeUtil {
         return  results ;
     }
 
-    private static List<Field> getAllField(Class cls) {
+    public static List<Field> getAllField(Class cls) {
         List<Field> fields = ReflectUtils.findAllField(cls) ;
         List<Field> results = new ArrayList<>() ;
         for(Field field : fields) {
@@ -149,7 +149,7 @@ public class SerializeUtil {
         return out.toString() ;
     }
 
-    private  static void setPrimitiveValue(Field field , String val , Object o) {
+    public  static void setPrimitiveValue(Field field , String val , Object o) {
         String typeName = field.getType().getName() ;
         Object v = 0 ;
         if(typeName.equals("int")  )

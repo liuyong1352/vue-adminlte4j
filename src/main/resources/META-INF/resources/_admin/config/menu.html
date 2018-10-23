@@ -32,6 +32,9 @@
     </v-row>
 <script>
     var form  , tree;
+    function getId() {
+        return tree ? tree.get_selected_node().id : null
+    }
     var vm = new Vue({
         el: '#app',
         data: {
@@ -48,12 +51,13 @@
             } ,
 
             addChild: function() {
+                debugger
                 form.reset()
-                form.data.pid = tree.get_selected()
+                form.data.pid = getId()
             } ,
             deleteCur: function () {
-                if(tree.get_selected()) {
-                    this.ajaxDelete("/admin/menu/delete/" + tree.get_selected() , null  , function (data) {
+                if(getId()) {
+                    this.ajaxDelete("/admin/menu/delete/" + getId(), null  , function (data) {
                         message.msg(data)
                         tree.refresh()
                     })
@@ -63,7 +67,7 @@
 
             } ,
             upOrder: function () {
-                this.ajaxPost("/admin/menu/up/" + tree.get_selected() , null ,function(data){
+                this.ajaxPost("/admin/menu/up/" + getId() , null ,function(data){
                     message.msg(data)
                     tree.refresh()
                 })

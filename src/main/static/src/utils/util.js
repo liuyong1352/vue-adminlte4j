@@ -16,7 +16,8 @@ export function buildTree(elements ,treeInstance , callback) {
             data : d ,
             expand: 0 ,
             show : 0 ,
-            tree : treeInstance
+            tree : treeInstance ,
+            children:[]
         }
         arr[i] = e
         map[e.id] = e
@@ -27,8 +28,6 @@ export function buildTree(elements ,treeInstance , callback) {
         var pid = e.pid
         if(pid  &&  map[pid]) {
             var parent = map[pid]
-            if(!parent.children)
-                parent.children = []
             parent.children.push(e)
             e.parent = parent
         } else {
@@ -50,4 +49,20 @@ export function findAncestorId(e) {
         return findAncestorId(e.parent)
     }
     return e
+}
+
+/**
+ * 遍历树
+ * @param tree
+ * @param callback fn(e ,index)  , 如果有返回值 停止遍历返回此结果 如果没有返回继续遍历
+ */
+export function traverseTree(tree , callback) {
+    if(tree && tree.length)
+        for(var i=0 ; i < tree.length ;i++ ){
+            var ret = callback(tree[i])
+            if(ret)
+                return ret
+            traverseTree(tree[i].children , callback)
+        }
+
 }

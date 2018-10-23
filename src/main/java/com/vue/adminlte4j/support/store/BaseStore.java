@@ -1,12 +1,13 @@
 package com.vue.adminlte4j.support.store;
 
+import com.vue.adminlte4j.support.store.serialize.FixLenSerializer;
 import com.vue.adminlte4j.util.EnvUtils;
 import com.vue.adminlte4j.util.FileUtils;
+import com.vue.adminlte4j.util.IOUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -79,7 +80,7 @@ public interface BaseStore {
             throw new IllegalStateException("current not in development Mode !") ;
     }
 
-    default void writeObject(Object data , String fileName) {
+    default void writeObject(Object data , String fileName)  {
         checkEnv();
         Path storePath = getWorkSpacePath(fileName) ;
         if(storePath == null) {
@@ -93,14 +94,22 @@ public interface BaseStore {
             objectList = Arrays.asList(data) ;
         }
 
+        OutputStream outputStream = null ;
+
         try {
             if(objectList.isEmpty() ){
                 Files.deleteIfExists(storePath);
                 return;
             }
-            Files.write(getOrCreateFile(fileName).toPath() , SerializeUtil.serialize(objectList));
+            FixLenSerializer fixLenSerializer = new FixLenSerializer() ;
+            byte[] bytes = fixLenSerializer.encode(objectList) ;
+            Path path = getOrCreateFile(fileName).toPath() ;
+            outputStream = Files.newOutputStream(path) ;
+            IOUtils.write(bytes , outputStream);
         } catch (Exception e) {
-            throw new RuntimeException(e) ;
+            throw  new RuntimeException(e) ;
+        } finally {
+            IOUtils.closeQuietly(outputStream);
         }
     }
 
@@ -112,41 +121,40 @@ public interface BaseStore {
         return resultLists.get(0) ;
     }
 
+
+
     default <T> List<T> readListObject(String fileName , Class<T> requiredType) {
-
-        if(!EnvUtils.isDevelopment)
-            return readListObjectInAllClassPath(fileName , requiredType) ;
-
-       /* Path storePath = getStorePath(fileName) ;
-        if(storePath == null || !storePath.toFile().exists()) {
-
-        }*/
-
-        List<String> lines ;
+        InputStream inputStream = null ;
         try {
-            Path storePath = getWorkSpacePath(fileName) ;
-            if(storePath == null || !storePath.toFile().exists() )
-                return  null ;
-            lines = Files.readAllLines(storePath);
-            if(lines == null || lines.isEmpty())
+            if(!EnvUtils.isDevelopment) {
+                inputStream = FileUtils.openInputStream(Paths.get(WORKSPACE_DIR , fileName).toString()) ;
+            } else {
+                Path path = getWorkSpacePath(fileName) ;
+                if(Files.exists(path))
+                    inputStream = Files.newInputStream(getWorkSpacePath(fileName)) ;
+            }
+
+            if(inputStream == null )
                 return null ;
-            return SerializeUtil.deSerialize(lines , requiredType) ;
-        } catch (Exception e) {
-            throw  new RuntimeException(e);
-        }
-    }
 
-    default <T> List<T> readListObjectInAllClassPath(String fileName , Class<T> requiredType) {
-        /*if(EnvUtils.isDevelopment)
-            return  null ;*/
-        InputStream inputStream = FileUtils.openInputStream(Paths.get(WORKSPACE_DIR , fileName).toString()) ;
-        if(inputStream == null )
-            return  null ;
-        try {
-            List<String> lines = FileUtils.readAllLines(inputStream) ;
-            return SerializeUtil.deSerialize(lines , requiredType) ;
+            FixLenSerializer fixLenSerializer = new FixLenSerializer() ;
+            byte[] bytes = IOUtils.toByteArray(inputStream) ;
+
+            if(fixLenSerializer.isSupport(bytes) ) {
+                return fixLenSerializer.decode(bytes , requiredType) ;
+            } else {
+                ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(bytes) ;
+                InputStreamReader reader = new InputStreamReader(arrayInputStream , StandardCharsets.UTF_8) ;
+                List<String> lines = IOUtils.readLines(reader) ;
+                IOUtils.closeQuietly(reader);
+                return SerializeUtil.deSerialize(lines , requiredType) ; //兼容老的
+            }
         } catch (Exception e) {
             throw new RuntimeException(e) ;
+        } finally {
+            IOUtils.closeQuietly(inputStream) ;
         }
     }
+
 }
+
