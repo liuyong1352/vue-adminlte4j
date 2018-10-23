@@ -2,7 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 var p = path.resolve(__dirname, '../')
 const lib_names = ['jquery/dist' , 'admin-lte/dist' , 'bootstrap/dist' , 'font-awesome/css' ,
-    'font-awesome/fonts' , 'select2/dist' ,'vue/dist' , 'axios/dist' ,'layui-src/dist']
+    'font-awesome/fonts' , 'vue/dist' , 'axios/dist' ,'layui-src/dist']
 const copyLibDir = []
 for(var index in lib_names) {
     var lib_name = lib_names[index]
@@ -11,6 +11,7 @@ for(var index in lib_names) {
 
 copyLibDir.push({from: __dirname + '/src/lib/lib.js' , to :__dirname + '/dist/lib'})
 copyLibDir.push({from: __dirname + '/src/lib/base.js' , to :__dirname + '/dist/lib'})
+copyLibDir.push({from: __dirname + '/src/lib/adminlte.js' , to :__dirname + '/dist/lib'})
 copyLibDir.push({from: __dirname + '/src/lib/plugin' , to :__dirname + '/dist/lib'})
 copyLibDir.push({from: __dirname + '/src/img' , to : __dirname + '/dist/lib/vue-adminlte/dist/img'})
 copyLibDir.push({from: __dirname + '/src/css' , to : __dirname + '/dist/lib/vue-adminlte/dist/css'})
