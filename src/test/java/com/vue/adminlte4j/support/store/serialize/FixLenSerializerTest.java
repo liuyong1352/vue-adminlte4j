@@ -3,7 +3,6 @@ package com.vue.adminlte4j.support.store.serialize;
 import com.vue.adminlte4j.model.AppInfo;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.List;
 
 /**
