@@ -44,7 +44,7 @@
         var fn = {
             error:opt.error || onError,
             success:opt.success || noop,
-            complete:opt.complete || noop
+            complete:opt.complete || onComplete
         }
         //扩展增强处理
         var _opt = $.extend(opt,{
