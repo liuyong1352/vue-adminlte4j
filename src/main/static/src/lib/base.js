@@ -2,6 +2,10 @@
     //首先备份下jquery的ajax方法
     var _ajax=$.ajax;
 
+    $(document).ajaxSuccess(function( event, request, settings ) {
+        console.log(request.status);
+    })
+
     //重写jquery的ajax方法
     $.ajax=function(opt){
         var method = opt.type
@@ -34,18 +38,20 @@
                 message.error("网络异常，请联系管理员！" , 5000 )
             }
         }
-        var onComplete=function (xhr, textStatus) {
-            if(xhr.status==200 ) {
-                if(xhr.responseJSON && xhr.responseJSON.code == 401)
-                    window.location.href =  xhr.responseJSON.location
-            }
-        }
+
+
         //备份opt中error和success方法
         var fn = {
             error:opt.error || onError,
-            success:opt.success || noop,
-            complete:opt.complete || onComplete
+            success:opt.success || noop
         }
+        var before_success=function (data, textStatus) {
+            if(data.is_login)
+                fn.success(data , textStatus)
+            else
+                window.location.href = data.login_url
+        }
+
         //扩展增强处理
         var _opt = $.extend(opt,{
             error:function(XMLHttpRequest, textStatus, errorThrown){
@@ -54,14 +60,11 @@
             },
             success:function(data, textStatus){
                 //成功回调方法增强处理
-                fn.success(data, textStatus);
+                before_success(data , textStatus)
             },
             beforeSend:function(xhr){
                 //提交前回调方法
                 //console.log( "hre1"+ xhr )
-            },
-            complete:function(xhr, textStatus){
-                fn.complete(xhr, textStatus)
             }
         });
         return _ajax(_opt);
