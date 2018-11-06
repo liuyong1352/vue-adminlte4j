@@ -46,10 +46,10 @@
             success:opt.success || noop
         }
         var before_success=function (data, textStatus) {
-            if(data.is_login)
-                fn.success(data , textStatus)
-            else
+            if(data.is_login == false)
                 window.location.href = data.login_url
+            else
+                fn.success(data , textStatus)
         }
 
         //扩展增强处理
