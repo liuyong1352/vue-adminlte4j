@@ -104,6 +104,8 @@ public class FixLenSerializer implements Serializer {
         List<Field> header = new ArrayList<>() ;
         int len = s.length() ;
         int i = PROTO_HEADER.length() + 1 ;
+        if(s.charAt(i) == '\n')
+            i++ ;
         //first get field name
         int start = i ;
         for(; i < len ; i++ ) {
